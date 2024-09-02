@@ -7,7 +7,7 @@ import re
 import requests
 
 from llm import AzureEmbedding, AzureChat, AzureChatApp
-from prompts import prompt_create,create_prompt_title
+from prompts import prompt_create, create_prompt_title
 from cluster import text_cluster
 
 
@@ -26,8 +26,6 @@ class EmbeddingError(Exception):
     """Raised when there's an error during the embedding process"""
     pass
 
-
-
 # 数据清洗
 import re
 def list_process(answers):
@@ -36,7 +34,6 @@ def list_process(answers):
     
     answer_clean=[]
     for s in answers:
-        #print(s)
         s = s.replace(" ","").replace("——","；").replace("\\","；")
         
         s = s.replace("（已追问）","").replace("（无追问）","")
@@ -72,32 +69,38 @@ def result_process(model, df,theme, emotion, start_num, step):
     """
     取[start_num: start_num + step]的非空回答拼成一个请求，
     返回的结果按照分割符@拆分到对应答案
-    每个答案的不同维度用；拆分，从（评价维度，原因）中提取dim和reason，与对应答案一同append
+    每个答案的不同维度用；拆分，从（评价维度，原因）中提取dim和opinion，与对应答案一同append
     """
     
     chunk = df.iloc[start_num: start_num + step,:] # 取50条
     chunk = chunk[(chunk.clean!='')&(chunk.clean.isna()==0)][['clean','mark']].reset_index()
+    if len(chunk)==0:
+        print('无有效数据，不打标')
+        return pd.DataFrame()
+    
     answer = ''
     for ind,row in chunk.iterrows():
         answer += f"{ind+1}. {row['clean']}\n"
 
 
     responses = model.chat(prompt_create(theme,emotion,answer))  # 调用
+    # print(prompt_create(theme,emotion,answer))
+    # print(responses)
 
     responses = re.sub(r'\b\d+\.', '@', responses).replace(" ","").replace("\n","")    
     responses = responses.split('@')[1:]  # 结果拆分
 
     if len(responses)==len(chunk): # 输入数与结果数相同
-        result_sub = pd.DataFrame(columns=['mark', 'dimension', 'reason'])
+        result_sub = pd.DataFrame(columns=['mark', 'aspect', 'opinion'])
         for index,response in enumerate(responses): 
             parts = response.strip("（）").split('）|（') 
             for part in parts:
                 if len(part)>0:
-                    dimension, reason= part.split('，',1) 
-                    result_sub.loc[len(result_sub)]=[chunk.loc[index,'mark'],dimension,reason]
+                    aspect, opinion= part.split('，',1) 
+                    result_sub.loc[len(result_sub)]=[chunk.loc[index,'mark'],aspect,opinion]
     else:
         print(responses)
-        raise ValueError(f"Error processing {step} items") 
+        raise ValueError(f"处理 {step} 条数据时出错") 
         
     return result_sub.drop_duplicates()
 
@@ -106,7 +109,7 @@ def sentiment_triplet_extraction(model, df,theme,emotion):
     #初始化
     start_num = 0
     step_default1, step_default2, step_default3 = 30, 10, 5
-    result = pd.DataFrame(columns=['mark', 'dimension', 'reason'])
+    result = pd.DataFrame(columns=['mark', 'aspect', 'opinion'])
     result_sub = pd.DataFrame()
     
     #如果50个跑不对跑30个，30个跑不对跑10个，10个再给一次机会，再不行就空着
@@ -142,11 +145,11 @@ def sentiment_triplet_extraction(model, df,theme,emotion):
                                 print(f"成功处理{start_num}~{start_num+step}")
                             except Exception as e:
                                 step = step_default3
-                                print(f"Error response {start_num}~{start_num+step}")
+                                print(f"处理 {start_num}~{start_num+step} 时出错")
                                 result_sub = pd.DataFrame({
                                     'mark': df.iloc[start_num:start_num+step_default3]['mark'],
-                                    'dimension': '未知',
-                                    'reason': '未知'
+                                    'aspect': '未知',
+                                    'opinion': '未知'
                                     })
                                 print(e)
         
@@ -168,12 +171,10 @@ def text_labelling(model, df, theme, emotion):
     except Exception as e:
         raise LabelingError(f"标注过程中出错: {str(e)}")
 
-
-
-
 def auto_analysis(theme,emotion,data,mode):
-    # try:
+    try:
         # 清洗
+        print('完成数据处理')
         clean_answer = list_process(data['origion'].tolist())
         data['clean'] = clean_answer
 
@@ -183,84 +184,86 @@ def auto_analysis(theme,emotion,data,mode):
         # 生成新的 mark 列
         data['mark'] = range(len(data))
 
-        print(f"标签数量：{data['mark'].nunique()}")
-        print(f"数据量：{data.shape}")
-
-
+        print('完成数据清洗')
+        print(f"输入数据量：{data.shape}")
+        
         # 打标
         if mode == 'uat':
             model = AzureChat()
         else:
             model = AzureChatApp()
 
-        print("Please wait for labeling...")
+        print("\n请等待打标...")
         df = text_labelling(model, data, theme, emotion)
 
-        #print(df)
-        print(f"标签数量：{df['mark'].nunique()}")
-        print(f"数据量：{df.shape}")
+        print(f"打标数据量：{df['mark'].nunique()}, 标签数：{df.shape}")
 
         # 打标结果处理
-        df_nonsense = df[df.reason == 'nonsense'].copy()
-        df_unknown = df[df.reason == '未知'].copy()
-
-        print(f"无意义结果数量:{df_nonsense.shape}")
-        print(f"未知结果数量:{df_unknown.shape}")
-
-
-        for col in ['dimension', 'reason', 'dim_reason', 'topic']:
+        df_nonsense = df[df.opinion.isna()].copy()
+        df_unknown = df[df.opinion == '未知'].copy()
+        for col in ['aspect', 'opinion', 'aspect_opinion', 'topic']:
             if df_nonsense.empty:
-                df_nonsense[col] = pd.Series(dtype='object')
+                df_nonsense[col] = pd.Series(dtype='object')# 如果为空，创建这些列但不赋值
             else:
-                df_nonsense.loc[:, col] = '无意义'
+                df_nonsense.loc[:, col] = '无意义'# 如果不为空，进行赋值
+                df_nonsense.loc[:, 'topic'] = ''# 如果不为空，进行赋值
 
-        if df_unknown.empty:
-            # 如果为空，创建这些列但不赋值
-            df_unknown['dim_reason'] = pd.Series(dtype='object')
-            df_unknown['topic'] = pd.Series(dtype='object')
-        else:
-            # 如果不为空，进行赋值
-            df_unknown.loc[:, 'dim_reason'] = '未知'
-            df_unknown.loc[:, 'topic'] = '未知'
+        for col in ['aspect_opinion', 'topic']:
+            if df_unknown.empty:
+                df_unknown[col] = pd.Series(dtype='object')
+            else:
+                df_unknown.loc[:, col] = '未知'
+                df_unknown.loc[:, 'topic'] = ''
 
-        df = df[(df.reason != 'nonsense') & (df.reason != '未知')].reset_index(drop=True)
-        df['dim_reason'] = df.apply(lambda x: f"{x['dimension']}_{x['reason']}", axis=1)
-        texts = df['dim_reason'].tolist()
+        
+
+        df = df[(df.opinion.isna()==0) & (df.opinion != '未知')].reset_index(drop=True)
+
+        print(f"有效：{df.shape[0]}，无意义:{df_nonsense.shape[0]}，未知:{df_unknown.shape[0]}")
+
+        df['aspect_opinion'] = df.apply(lambda x: f"{x['aspect']}_{x['opinion']}", axis=1)
+        texts = df['aspect_opinion'].tolist()
         
         if not texts:
-            print("No valid texts for embedding, skipping embedding and clustering")
+            print("\n无有效文本，跳过嵌入和聚类")
             result = pd.concat([df_nonsense, df_unknown], ignore_index=True)
 
-            print(f"标签数量：{result['mark'].nunique()}")
-            print(f"数据量：{result.shape}")
+            print(f"打标数据量：{result['mark'].nunique()}, 标签数：{result.shape}\n")
 
-            result = result[['origion', 'ids', 'clean', 'dimension', 'reason', 'dim_reason', 'topic']]
+            result = result[['origion', 'ids', 'clean', 'aspect', 'opinion', 'aspect_opinion', 'topic']]
 
             return result
-
-        # 向量化
-        print("Please wait for embedding...")
-        embedding = AzureEmbedding()
-        try:
-            
-            embeddings = np.array(embedding.embedding(texts))
-        except Exception as e:
-            print(f"Error during embedding process: {str(e)}")
-            raise EmbeddingError(f"Error during embedding process: {str(e)}")
         
-        # 确定聚类参数
-        n_samples = len(embeddings)
-        if n_samples < 2:
-            print("有效数据少于两条，不进行聚类")
+        unique_texts = list(set(texts))
+        n_unique_texts = len(unique_texts)
+
+        print(f"有效非重复数据：{unique_texts}")
+        print(f"有效非重复数据量：{n_unique_texts}")
+
+        if n_unique_texts<3:
+            print("\n有效非重复数据少于3，跳过嵌入和聚类")
+            n_samples = len(texts)
             best_n_clusters = 1
             cluster_labels = np.zeros(n_samples, dtype=int)
         else:
+            # 向量化
+            print("\n请等待嵌入...")
+            embedding = AzureEmbedding()
+            try:
+                embeddings = np.array(embedding.embedding(texts))
+            except Exception as e:
+                print(f"嵌入过程中出错: {str(e)}")
+                raise EmbeddingError(f"嵌入过程中出错: {str(e)}")
+            
+            # 确定聚类参数
+            n_samples = len(embeddings)
             if n_samples <= 30:
                 cn = [2, min(n_samples, 10)]
             else:
                 cn = [6, 20]
             best_n_clusters, cluster_labels = text_cluster(embeddings, if_reduce=False, cn=cn)# 聚类
 
+        print("\n请等待标题生成...")
         # 聚类完成后，为每个主题收集回答原文  
         category = {i: [] for i in range(best_n_clusters)}  
         category_index = {i: [] for i in range(best_n_clusters)} 
@@ -273,7 +276,7 @@ def auto_analysis(theme,emotion,data,mode):
             try:
                 title = model.chat(create_prompt_title(theme, emotion, answer_list))
             except Exception as e:
-                raise ModelCallError(f"Error calling language model for title generation: {str(e)}", "title_generation")
+                raise ModelCallError(f"生成标题时调用语言模型出错: {str(e)}", "title_generation")
             print(f"主题{i}：{title}：{len(answer_list)}")
             category_title[i] = title
 
@@ -281,15 +284,11 @@ def auto_analysis(theme,emotion,data,mode):
         df['topic_num'] = [label for label in cluster_labels]
         df['topic'] = [category_title[label] for label in cluster_labels]
 
-        
         result = pd.concat([df, df_nonsense, df_unknown], ignore_index=True)
-        print(f"标签数量：{result['mark'].nunique()}")
-        print(f"数据量：{result.shape}")
+        print(f"打标数据量：{result['mark'].nunique()}, 标签数：{result.shape}\n")
 
-        result = result[['origion', 'ids', 'clean', 'dimension', 'reason', 'dim_reason', 'topic']]
+        result = result[['origion', 'ids', 'clean', 'aspect', 'opinion', 'aspect_opinion', 'topic']]
         
-        
-
 
         # # 输出展示
         # for label in range(best_n_clusters): 
@@ -297,7 +296,7 @@ def auto_analysis(theme,emotion,data,mode):
         #     print(f"主题{label}：{category_title[label]}，声量{len(topic_answers)}")
         #     print('回答原文：')
         #     for i,row in topic_answers.iterrows():
-        #         print(f"- {row['dim_reason']}（原文：{row['clean']}）")
+        #         print(f"- {row['aspect_opinion']}（原文：{row['clean']}）")
         #     print()
 
         # print('主题：未知')
@@ -310,17 +309,17 @@ def auto_analysis(theme,emotion,data,mode):
 
         return result
 
-    # except ModelCallError as e:
-    #     print(f"模型调用错误: {e}")
-    #     raise
-    # except LabelingError as e:
-    #     print(f"标注错误: {e}")
-    #     raise
-    # except EmbeddingError as e:
-    #     print(f"嵌入错误: {e}")
-    #     raise
-    # except Exception as e:
-    #     print(f"auto_analysis 中出现意外错误: {e}")
-    #     raise
+    except ModelCallError as e:
+        print(f"模型调用错误: {e}")
+        raise
+    except LabelingError as e:
+        print(f"标注错误: {e}")
+        raise
+    except EmbeddingError as e:
+        print(f"嵌入错误: {e}")
+        raise
+    except Exception as e:
+        print(f"auto_analysis 中出现意外错误: {e}")
+        raise
     
 

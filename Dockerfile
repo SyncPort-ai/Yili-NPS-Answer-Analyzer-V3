@@ -7,10 +7,10 @@ RUN pip config set global.index-url https://mirrors.aliyun.com/pypi/simple
 RUN mkdir -p /opt/app
 COPY requirements.txt /opt/app/requirements.txt
 RUN pip install -r /opt/app/requirements.txt --default-timeout=1200
-COPY app /opt/app
+COPY . /opt/app
 
-RUN mkdir -p /opt/resources
-COPY resources /opt/resources
+#RUN mkdir -p /opt/resources
+#COPY resources /opt/resources
 
 RUN useradd dota
 ENV PYTHONPATH /opt

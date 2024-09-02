@@ -1,6 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.9-slim
-
+FROM python:3.11.0
 # pip配置
 RUN pip config set global.index-url https://mirrors.aliyun.com/pypi/simple
 

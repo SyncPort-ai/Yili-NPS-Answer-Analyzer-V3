@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.11-slim
+FROM yldc-docker.pkg.coding.yili.com/ai-algorithm/docker/python-llmydy-3.11:v1.0.0
 # pip配置
 RUN pip config set global.index-url https://mirrors.aliyun.com/pypi/simple
 

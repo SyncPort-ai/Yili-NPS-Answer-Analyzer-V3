@@ -1,5 +1,6 @@
 # Use an official Python runtime as a parent image
 FROM yldc-docker.pkg.coding.yili.com/ai-algorithm/docker/python-llmydy-3.11:v1.0.0
+
 # pip配置
 RUN pip config set global.index-url https://mirrors.aliyun.com/pypi/simple
 
@@ -11,7 +12,7 @@ COPY . /opt/app
 #RUN mkdir -p /opt/resources
 #COPY resources /opt/resources
 
-RUN useradd dota
+# RUN useradd dota
 ENV PYTHONPATH /opt
 WORKDIR /opt/app
 CMD ["python3", "api.py"]

@@ -68,11 +68,17 @@ class AzureChatApp():
     
             response = requests.post(self.url, json=data, headers=headers)       
             response.raise_for_status()  # Will raise an HTTPError if the HTTP request returned an unsuccessful status code
-            
+            response_json= response.json()
+
+            if response_json['code']==0:
+                return response.json()['data']['responseVO']
+            else:
+                raise Exception(f"API返回错误: {response_json}")
+
         except requests.RequestException as e:
             raise SystemExit(f"Failed to make the request. Error: {e}")
     
-        return response.json()['data']['responseVO']
+       
 
 import time
 class AzureEmbedding():

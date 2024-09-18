@@ -257,10 +257,11 @@ def auto_analysis(theme,emotion,data,mode):
             
             # 确定聚类参数
             n_samples = len(embeddings)
-            if n_samples <= 30:
-                cn = [2, min(n_samples, 10)]
+            min_cluster = min(int(n_samples/4)+1,20)
+            if n_samples <= 40:
+                cn = [2, max(min_cluster, 3)]
             else:
-                cn = [6, 20]
+                cn = [6, max(min_cluster, 7)]
             best_n_clusters, cluster_labels = text_cluster(embeddings, if_reduce=False, cn=cn)# 聚类
 
         print("\n请等待标题生成...")
@@ -273,10 +274,21 @@ def auto_analysis(theme,emotion,data,mode):
             category_index[label].append(i)
         for i in range(best_n_clusters): 
             answer_list = category[i]
-            try:
-                title = model.chat(create_prompt_title(theme, emotion, answer_list))
-            except Exception as e:
-                raise ModelCallError(f"生成标题时调用语言模型出错: {str(e)}", "title_generation")
+            retry_count = 0
+            max_retries = 3
+            title = "标题生成异常"
+            
+            while retry_count < max_retries:
+                try:
+                    title = model.chat(create_prompt_title(theme, emotion, answer_list))
+                    break
+                except Exception as e:
+                    retry_count += 1
+                    if retry_count == max_retries:
+                        print(f"生成标题失败，已重试{max_retries}次: {str(e)}")
+                    else:
+                        print(f"生成标题失败，正在进行第{retry_count}次重试: {str(e)}")
+                        time.sleep(1)  # 每次重试等待1秒
             print(f"主题{i}：{title}：{len(answer_list)}")
             category_title[i] = title
 

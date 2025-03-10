@@ -64,8 +64,7 @@ def list_process(answers):
 
     return answer_clean
 
-
-def result_process(model, df,theme, emotion, start_num, step):
+def result_process(model, df, question, theme, emotion, start_num, step):
     """
     取[start_num: start_num + step]的非空回答拼成一个请求，
     返回的结果按照分割符@拆分到对应答案
@@ -83,9 +82,7 @@ def result_process(model, df,theme, emotion, start_num, step):
         answer += f"{ind+1}. {row['clean']}\n"
 
 
-    responses = model.chat(prompt_create(theme,emotion,answer))  # 调用
-    # print(prompt_create(theme,emotion,answer))
-    # print(responses)
+    responses = model.chat(prompt_create(question,theme,emotion,answer))  # 调用
 
     responses = re.sub(r'\b\d+\.', '@', responses).replace(" ","").replace("\n","")    
     responses = responses.split('@')[1:]  # 结果拆分
@@ -105,7 +102,8 @@ def result_process(model, df,theme, emotion, start_num, step):
     return result_sub.drop_duplicates()
 
 # 批次拆分，调用大模型打标
-def sentiment_triplet_extraction(model, df,theme,emotion):
+def sentiment_triplet_extraction(model, df, question, theme, emotion):
+
     #初始化
     start_num = 0
     step_default1, step_default2, step_default3 = 30, 10, 5
@@ -116,32 +114,32 @@ def sentiment_triplet_extraction(model, df,theme,emotion):
     while start_num < len(df):
         try:
             step = 50
-            result_sub = result_process(model, df,theme,emotion,start_num,step)
+            result_sub = result_process(model, df, question,theme,emotion,start_num,step)
             print(f"成功处理{start_num}~{start_num+step}")
         except Exception as e:
             try:
                 step = step_default1
-                result_sub = result_process(model,df,theme,emotion,start_num,step)
+                result_sub = result_process(model,df, question,theme,emotion,start_num,step)
                 print(f"成功处理{start_num}~{start_num+step}")
             except Exception as e:
                 try:
                     step = step_default2
-                    result_sub = result_process(model,df,theme,emotion,start_num,step)
+                    result_sub = result_process(model,df, question,theme,emotion,start_num,step)
                     print(f"成功处理{start_num}~{start_num+step}")
                 except Exception as e:
                     try:
                         step=step_default2
-                        result_sub = result_process(model,df,theme,emotion,start_num,step)
+                        result_sub = result_process(model,df, question,theme,emotion,start_num,step)
                         print(f"成功处理{start_num}~{start_num+step}")
                     except Exception as e:
                         try:
                             step=step_default3
-                            result_sub = result_process(model,df,theme,emotion,start_num,step)
+                            result_sub = result_process(model,df, question,theme,emotion,start_num,step)
                             print(f"成功处理{start_num}~{start_num+step}")
                         except Exception as e:
                             try:
                                 step=step_default3
-                                result_sub = result_process(model,df,theme,emotion,start_num,step)
+                                result_sub = result_process(model,df, question,theme,emotion,start_num,step)
                                 print(f"成功处理{start_num}~{start_num+step}")
                             except Exception as e:
                                 step = step_default3
@@ -158,10 +156,11 @@ def sentiment_triplet_extraction(model, df,theme,emotion):
     return result
 
 # 打标函数
-def text_labelling(model, df, theme, emotion):
+def text_labelling(model, df, question, theme, emotion):
+# def text_labelling(model, df, theme, emotion):
     start_time = time.time()
     try:
-        temp_result = sentiment_triplet_extraction(model, df, theme, emotion)
+        temp_result = sentiment_triplet_extraction(model, df, question, theme, emotion)
         df1 = df.merge(temp_result, on='mark', how='left')
         end_time = time.time()
         print(f"处理{len(df)}条耗时{end_time-start_time}秒，平均{(end_time-start_time)/len(df)*10}秒/10条")
@@ -171,8 +170,8 @@ def text_labelling(model, df, theme, emotion):
     except Exception as e:
         raise LabelingError(f"标注过程中出错: {str(e)}")
 
-def auto_analysis(theme,emotion,data,mode):
-    try:
+def auto_analysis(question,theme,emotion,data,mode):
+    # try:
         # 清洗
         print('完成数据处理')
         clean_answer = list_process(data['origion'].tolist())
@@ -194,7 +193,7 @@ def auto_analysis(theme,emotion,data,mode):
             model = AzureChatApp()
 
         print("\n请等待打标...")
-        df = text_labelling(model, data, theme, emotion)
+        df = text_labelling(model, data, question, theme, emotion)
 
         print(f"打标数据量：{df['mark'].nunique()}, 标签数：{df.shape}")
 
@@ -321,17 +320,17 @@ def auto_analysis(theme,emotion,data,mode):
 
         return result
 
-    except ModelCallError as e:
-        print(f"模型调用错误: {e}")
-        raise
-    except LabelingError as e:
-        print(f"标注错误: {e}")
-        raise
-    except EmbeddingError as e:
-        print(f"嵌入错误: {e}")
-        raise
-    except Exception as e:
-        print(f"auto_analysis 中出现意外错误: {e}")
-        raise
+    # except ModelCallError as e:
+    #     print(f"模型调用错误: {e}")
+    #     raise
+    # except LabelingError as e:
+    #     print(f"标注错误: {e}")
+    #     raise
+    # except EmbeddingError as e:
+    #     print(f"嵌入错误: {e}")
+    #     raise
+    # except Exception as e:
+    #     print(f"auto_analysis 中出现意外错误: {e}")
+    #     raise
     
 

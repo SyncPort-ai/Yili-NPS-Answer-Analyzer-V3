@@ -59,6 +59,11 @@ async def analyze(request: Request):
         taskType = validate_not_none(body.get('taskType'), 'taskType')
         validate_in_list(taskType, 'taskType', [0, 1, 2, 3])
         
+        # 读取并验证 question
+        question = body.get('question')
+        if taskType == 0 and not question:
+            raise CustomValidationError('当taskType为0时，question不能为空')
+        
         # 读取并验证 wordInfos
         wordInfos = validate_not_none(body.get('wordInfos'), 'wordInfos')
         if not isinstance(wordInfos, list) or not wordInfos:
@@ -91,7 +96,7 @@ async def analyze(request: Request):
             raise ValueError(f"DataFrame 必须包含以下列: {', '.join(required_columns)}")
         
         # 调用 auto_analysis 函数
-        result = auto_analysis(theme, emotion, df, mode='prod')
+        result = auto_analysis(question, theme, emotion, df, mode='prod')
         
         # 将结果 DataFrame 转换为字典列表
         result_json = result.to_dict(orient='records')

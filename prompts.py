@@ -78,14 +78,14 @@ aspect_dict={
 # """
 #     return prompt
 
-def prompt_create(theme, emotion, answers):
+def prompt_create(question, theme, emotion, answers):
     # theme_emotion = f"{theme}_{emotion}"
     # sample = sample_dict[theme_emotion]
-    theme_specific = f'针对"对于这个新品的{theme}，你{emotion}的原因是什么？"的' if theme != "未知设计" else ""
-    emotion_specific = f'只提炼{emotion}的点。' if theme != "未知设计" else ""
-    aspect = f'<预设标签>：\n{aspect_dict[theme]}\n\n' if theme != "未知设计" else ""
+    theme_specific = f"对于这个新品的{theme}，你{emotion}的原因是什么？" if theme != "其他设计" else f"{question}"
+    emotion_specific = f'只提炼{emotion}的点。' if theme != "其他设计" else ""
+    aspect = f'<预设标签>：\n{aspect_dict[theme]}\n\n' if theme != "其他设计" else ""
     
-    prompt = f"""作为伊利乳制品公司的资深市场分析师，你的任务是对以下{theme_specific}多个消费者回答进行深入的观点提取与精准打标。这对公司的产品改进和市场策略至关重要。
+    prompt = f"""作为伊利乳制品公司的资深市场分析师，你的任务是针对问卷题目“{theme_specific}”的多个消费者回答进行深入的观点提取与精准打标。这对公司的产品改进和市场策略至关重要。
 
 要求：
 1. 整体分析：将每个回答视为一个完整的观点单元，不要过度拆分。
@@ -96,11 +96,11 @@ def prompt_create(theme, emotion, answers):
     - 去除标点、程度词、非必要修饰词。
     - 确保明确突出。
 3. 标签分配：
-    - {'优先从<预设标签>中选择最贴合的标签。如果预设标签不足以准确描述，再' if theme != "未知设计" else ''}自主创建准确、简洁的标签。
+    - {'优先从<预设标签>中选择最贴合的标签。如果预设标签不足以准确描述，再' if theme != "其他设计" else ''}自主创建准确、简洁的标签。
     - 标签应精准反映观点的核心评价维度。
-    - 如果实在无法提取明确的观点或分配合适的标签，再使用"（未知，未知）"。
+    - {'如果实在无法提取明确的观点或分配合适的标签，使用"（未知，未知）"' if theme != "其他设计" else '如果回答与问题无关或表意不清，使用"（未知，未知）"'}。
 4. 多维度分析：如果一个回答包含多个不同维度的观点，请分别列出所有相关的标签和观点对。
-5. 语境理解：考虑产品类型和消费者可能的关注点，合理推断隐含的评价维度。
+5. 语境理解：{'考虑产品类型和消费者可能的关注点，合理推断隐含的评价维度' if theme != "其他设计" else '严格对照问题内容，确保提取的观点与问题相关'}。
 
 输出格式：
 - 使用数字编号标识每个回答。
@@ -124,8 +124,8 @@ def prompt_create(theme, emotion, answers):
 
 def create_prompt_title(theme,emotion,answer_list):
     answer_text = "；".join(answer_list)
-    theme_specific = f'针对"对于这个新品的{theme}，你{emotion}的原因是什么？"的' if theme != "未知设计" else ""
-    report_type = "新品测试报告" if theme != "未知设计" else "市场研究报告"
+    theme_specific = f'针对"对于这个新品的{theme}，你{emotion}的原因是什么？"的' if theme != "其他设计" else ""
+    report_type = "新品测试报告" if theme != "其他设计" else "市场研究报告"
     
     prompt_title = f"""你是专业的市场研究人员。{theme_specific}多个回答，已经进行了分类，以下的回答来自同一分类(不同回答用；隔开）：
 "{answer_text}"

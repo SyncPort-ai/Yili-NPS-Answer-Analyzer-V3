@@ -66,6 +66,9 @@ async def analyze(request: Request):
         question = body.get('question')
         if taskType == 0 and not question:
             raise CustomValidationError('当taskType为0时，question不能为空')
+            
+        # 读取并验证题号
+        questionId = validate_not_none(body.get('questionId'), 'questionId')
         
         # 读取并验证 wordInfos
         wordInfos = validate_not_none(body.get('wordInfos'), 'wordInfos')
@@ -116,7 +119,8 @@ async def analyze(request: Request):
             content={
                 "status_code": 200,
                 "status_message": "分析成功完成",
-                "result": result_json
+                "result": result_json,
+                "questionId": questionId
             }
         )
     except ModelCallError as e:
@@ -125,7 +129,8 @@ async def analyze(request: Request):
             content={
                 "status_code": 503,
                 "status_message": f"模型调用错误: {e.stage}: {str(e)}",
-                "result": None
+                "result": None,
+                "questionId": body.get('questionId')
             }
         )
     except LabelingError as e:
@@ -134,7 +139,8 @@ async def analyze(request: Request):
             content={
                 "status_code": 500,
                 "status_message": f"标注错误: {str(e)}",
-                "result": None
+                "result": None,
+                "questionId": body.get('questionId')
             }
         )
     except EmbeddingError as e:
@@ -143,7 +149,8 @@ async def analyze(request: Request):
             content={
                 "status_code": 500,
                 "status_message": f"嵌入错误: {str(e)}",
-                "result": None
+                "result": None,
+                "questionId": body.get('questionId')
             }
         )
     except ValueError as e:
@@ -152,7 +159,8 @@ async def analyze(request: Request):
             content={
                 "status_code": 400,
                 "status_message": f"无效输入: {str(e)}",
-                "result": None
+                "result": None,
+                "questionId": body.get('questionId')
             }
         )
     except CustomValidationError as e:
@@ -161,7 +169,8 @@ async def analyze(request: Request):
             content={
                 "status_code": 400,
                 "status_message": e.message,
-                "result": None
+                "result": None,
+                "questionId": body.get('questionId')
             }
         )
     except Exception as e:
@@ -170,7 +179,8 @@ async def analyze(request: Request):
             content={
                 "status_code": 500,
                 "status_message": f"意外错误: {str(e)}",
-                "result": None
+                "result": None,
+                "questionId": body.get('questionId')
             }
         )
 

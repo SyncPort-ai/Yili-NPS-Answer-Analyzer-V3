@@ -2,6 +2,9 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 import pandas as pd
 from opening_question_analysis import auto_analysis, ModelCallError, LabelingError, EmbeddingError
+import asyncio
+from functools import partial
+
 
 app = FastAPI()
 
@@ -96,7 +99,14 @@ async def analyze(request: Request):
             raise ValueError(f"DataFrame 必须包含以下列: {', '.join(required_columns)}")
         
         # 调用 auto_analysis 函数
-        result = auto_analysis(question, theme, emotion, df, mode='prod')
+        #result = auto_analysis(question, theme, emotion, df, mode='prod')
+        # 将同步的 auto_analysis 转换为异步操作
+        loop = asyncio.get_event_loop()
+        result = await loop.run_in_executor(
+            None,
+            partial(auto_analysis, question, theme, emotion, df, mode='prod')
+        )
+
         
         # 将结果 DataFrame 转换为字典列表
         result_json = result.to_dict(orient='records')

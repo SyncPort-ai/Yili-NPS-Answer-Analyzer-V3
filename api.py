@@ -7,6 +7,8 @@ from functools import partial
 
 
 app = FastAPI()
+# 创建一个信号量来限制并发请求数为2
+request_semaphore = asyncio.Semaphore(2)
 
 # 自定义验证错误类
 class CustomValidationError(Exception):
@@ -51,78 +53,80 @@ def validate_word(word):
 @app.post("/analyze")
 async def analyze(request: Request):
     try:
-        # 从请求中读取 JSON 数据
-        body = await request.json()
-        
-        # 读取并验证 emotionalType
-        emotionalType = validate_not_none(body.get('emotionalType'), 'emotionalType')
-        validate_in_list(emotionalType, 'emotionalType', [0, 1, 2])
-        
-        # 读取并验证 taskType
-        taskType = validate_not_none(body.get('taskType'), 'taskType')
-        validate_in_list(taskType, 'taskType', [0, 1, 2, 3])
-        
-        # 读取并验证 question
-        question = body.get('question')
-        if taskType == 0 and not question:
-            raise CustomValidationError('当taskType为0时，question不能为空')
+        # 使用信号量控制并发
+        async with request_semaphore:
+            # 从请求中读取 JSON 数据
+            body = await request.json()
             
-        # 读取并验证题号
-        questionId = validate_not_none(body.get('questionId'), 'questionId')
-        
-        # 读取并验证 wordInfos
-        wordInfos = validate_not_none(body.get('wordInfos'), 'wordInfos')
-        if not isinstance(wordInfos, list) or not wordInfos:
-            raise CustomValidationError('wordInfos 不能为空')
-        
-        # 验证每个 wordInfo
-        for wordInfo in wordInfos:
-            ids = validate_ids(wordInfo.get('ids'))
-            word = validate_word(wordInfo.get('word'))
-        
-        # 检查 ids 列是否有重复值
-        ids_list = [wordInfo.get('ids') for wordInfo in wordInfos]
-        flat_ids_list = [item for sublist in ids_list for item in sublist]
-        if len(flat_ids_list) != len(set(flat_ids_list)):
-            raise CustomValidationError("输入数据中的 'ids' 列存在重复值，请确保 'ids' 列中的值唯一。")
-        
-        # 将情感类型和任务类型转换为对应的字符串
-        emotion_map = {0: "其他", 1: "喜欢", 2: "不喜欢"}
-        emotion = emotion_map[emotionalType]
-        theme_map = {0: "其他设计", 1: "概念设计", 2: "口味设计", 3: "包装设计"}
-        theme = theme_map[taskType]
+            # 读取并验证 emotionalType
+            emotionalType = validate_not_none(body.get('emotionalType'), 'emotionalType')
+            validate_in_list(emotionalType, 'emotionalType', [0, 1, 2])
+            
+            # 读取并验证 taskType
+            taskType = validate_not_none(body.get('taskType'), 'taskType')
+            validate_in_list(taskType, 'taskType', [0, 1, 2, 3])
+            
+            # 读取并验证 question
+            question = body.get('question')
+            if taskType == 0 and not question:
+                raise CustomValidationError('当taskType为0时，question不能为空')
+                
+            # 读取并验证题号
+            questionId = validate_not_none(body.get('questionId'), 'questionId')
+            
+            # 读取并验证 wordInfos
+            wordInfos = validate_not_none(body.get('wordInfos'), 'wordInfos')
+            if not isinstance(wordInfos, list) or not wordInfos:
+                raise CustomValidationError('wordInfos 不能为空')
+            
+            # 验证每个 wordInfo
+            for wordInfo in wordInfos:
+                ids = validate_ids(wordInfo.get('ids'))
+                word = validate_word(wordInfo.get('word'))
+            
+            # 检查 ids 列是否有重复值
+            ids_list = [wordInfo.get('ids') for wordInfo in wordInfos]
+            flat_ids_list = [item for sublist in ids_list for item in sublist]
+            if len(flat_ids_list) != len(set(flat_ids_list)):
+                raise CustomValidationError("输入数据中的 'ids' 列存在重复值，请确保 'ids' 列中的值唯一。")
+            
+            # 将情感类型和任务类型转换为对应的字符串
+            emotion_map = {0: "其他", 1: "喜欢", 2: "不喜欢"}
+            emotion = emotion_map[emotionalType]
+            theme_map = {0: "其他设计", 1: "概念设计", 2: "口味设计", 3: "包装设计"}
+            theme = theme_map[taskType]
 
-        # 将输入数据转换为 DataFrame
-        data = [{"origion": word_info['word'], "mark": word_info['ids']} for word_info in wordInfos]
-        df = pd.DataFrame(data)
+            # 将输入数据转换为 DataFrame
+            data = [{"origion": word_info['word'], "mark": word_info['ids']} for word_info in wordInfos]
+            df = pd.DataFrame(data)
 
-        # 验证 DataFrame 是否包含必要的列
-        required_columns = ['origion', 'mark']
-        if not all(col in df.columns for col in required_columns):
-            raise ValueError(f"DataFrame 必须包含以下列: {', '.join(required_columns)}")
-        
-        # 调用 auto_analysis 函数
-        #result = auto_analysis(question, theme, emotion, df, mode='prod')
-        # 将同步的 auto_analysis 转换为异步操作
-        loop = asyncio.get_event_loop()
-        result = await loop.run_in_executor(
-            None,
-            partial(auto_analysis, question, theme, emotion, df, mode='prod')
-        )
+            # 验证 DataFrame 是否包含必要的列
+            required_columns = ['origion', 'mark']
+            if not all(col in df.columns for col in required_columns):
+                raise ValueError(f"DataFrame 必须包含以下列: {', '.join(required_columns)}")
+            
+            # 调用 auto_analysis 函数
+            result =await auto_analysis(question, theme, emotion, df, mode='prod')
+            # # 将同步的 auto_analysis 转换为异步操作
+            # loop = asyncio.get_event_loop()
+            # result = await loop.run_in_executor(
+            #     None,
+            #     partial(auto_analysis, question, theme, emotion, df, mode='prod')
+            # )
 
-        
-        # 将结果 DataFrame 转换为字典列表
-        result_json = result.to_dict(orient='records')
-        
-        return JSONResponse(
-            status_code=200,
-            content={
-                "status_code": 200,
-                "status_message": "分析成功完成",
-                "result": result_json,
-                "questionId": questionId
-            }
-        )
+            
+            # 将结果 DataFrame 转换为字典列表
+            result_json = result.to_dict(orient='records')
+            
+            return JSONResponse(
+                status_code=200,
+                content={
+                    "status_code": 200,
+                    "status_message": "分析成功完成",
+                    "result": result_json,
+                    "questionId": questionId
+                }
+            )
     except ModelCallError as e:
         return JSONResponse(
             status_code=503,
@@ -186,5 +190,5 @@ async def analyze(request: Request):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=7000)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 

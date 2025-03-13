@@ -10,6 +10,10 @@ from llm import AzureEmbedding, AzureChat, AzureChatApp
 from prompts import prompt_create, create_prompt_title
 from cluster import text_cluster
 
+import asyncio
+from concurrent.futures import ThreadPoolExecutor
+from functools import partial
+
 
 class ModelCallError(Exception):
     """Raised when there's an error calling the large language model"""
@@ -64,14 +68,11 @@ def list_process(answers):
 
     return answer_clean
 
-def result_process(model, df, question, theme, emotion, start_num, step):
+async def result_process(model, df, question, theme, emotion, start_num, step):
     """
-    取[start_num: start_num + step]的非空回答拼成一个请求，
-    返回的结果按照分割符@拆分到对应答案
-    每个答案的不同维度用；拆分，从（评价维度，原因）中提取dim和opinion，与对应答案一同append
+    异步处理单个批次的数据
     """
-    
-    chunk = df.iloc[start_num: start_num + step,:] # 取50条
+    chunk = df.iloc[start_num: start_num + step,:] # 取10条
     chunk = chunk[(chunk.clean!='')&(chunk.clean.isna()==0)][['clean','mark']].reset_index()
     if len(chunk)==0:
         print('无有效数据，不打标')
@@ -81,8 +82,9 @@ def result_process(model, df, question, theme, emotion, start_num, step):
     for ind,row in chunk.iterrows():
         answer += f"{ind+1}. {row['clean']}\n"
 
-
-    responses = model.chat(prompt_create(question,theme,emotion,answer))  # 调用
+    # 如果 model.chat 是同步的，使用 loop.run_in_executor 将其转换为异步
+    loop = asyncio.get_event_loop()
+    responses = await loop.run_in_executor(None, model.chat, prompt_create(question,theme,emotion,answer))
 
     responses = re.sub(r'\b\d+\.', '@', responses).replace(" ","").replace("\n","")    
     responses = responses.split('@')[1:]  # 结果拆分
@@ -101,76 +103,190 @@ def result_process(model, df, question, theme, emotion, start_num, step):
         
     return result_sub.drop_duplicates()
 
-# 批次拆分，调用大模型打标
-def sentiment_triplet_extraction(model, df, question, theme, emotion):
 
-    #初始化
-    start_num = 0
-    step_default1, step_default2, step_default3 = 30, 10, 5
-    result = pd.DataFrame(columns=['mark', 'aspect', 'opinion'])
-    result_sub = pd.DataFrame()
-    
-    #如果50个跑不对跑30个，30个跑不对跑10个，10个再给一次机会，再不行就空着
-    while start_num < len(df):
+async def process_batch_with_retry(model, df, question, theme, emotion, start_num, step, max_retries=10):
+    """处理单个批次，带重试机制"""
+    for attempt in range(max_retries):
         try:
-            step = 50
-            result_sub = result_process(model, df, question,theme,emotion,start_num,step)
+            result = await result_process(model, df, question, theme, emotion, start_num, step)
             print(f"成功处理{start_num}~{start_num+step}")
+            return result
         except Exception as e:
-            try:
-                step = step_default1
-                result_sub = result_process(model,df, question,theme,emotion,start_num,step)
-                print(f"成功处理{start_num}~{start_num+step}")
-            except Exception as e:
-                try:
-                    step = step_default2
-                    result_sub = result_process(model,df, question,theme,emotion,start_num,step)
-                    print(f"成功处理{start_num}~{start_num+step}")
-                except Exception as e:
-                    try:
-                        step=step_default2
-                        result_sub = result_process(model,df, question,theme,emotion,start_num,step)
-                        print(f"成功处理{start_num}~{start_num+step}")
-                    except Exception as e:
-                        try:
-                            step=step_default3
-                            result_sub = result_process(model,df, question,theme,emotion,start_num,step)
-                            print(f"成功处理{start_num}~{start_num+step}")
-                        except Exception as e:
-                            try:
-                                step=step_default3
-                                result_sub = result_process(model,df, question,theme,emotion,start_num,step)
-                                print(f"成功处理{start_num}~{start_num+step}")
-                            except Exception as e:
-                                step = step_default3
-                                print(f"处理 {start_num}~{start_num+step} 时出错")
-                                result_sub = pd.DataFrame({
-                                    'mark': df.iloc[start_num:start_num+step_default3]['mark'],
-                                    'aspect': '未知',
-                                    'opinion': '未知'
-                                    })
-                                print(e)
-        
-        start_num += step
-        result = pd.concat([result,result_sub], ignore_index=True)
-    return result
+            if attempt == max_retries - 1:  # 最后一次尝试也失败
+                print(f"处理 {start_num}~{start_num+step} 时出错，已重试{max_retries}次")
+                return pd.DataFrame({
+                    'mark': df.iloc[start_num:start_num+step]['mark'],
+                    'aspect': '未知',
+                    'opinion': '未知'
+                })
+            wait_time = min(2 ** attempt, 8)  # 指数退避，最大等待60秒
+            print(f"处理 {start_num}~{start_num+step} 时出错，{wait_time}秒后进行第{attempt+1}次重试")
+            await asyncio.sleep(wait_time)
 
-# 打标函数
-def text_labelling(model, df, question, theme, emotion):
-# def text_labelling(model, df, theme, emotion):
+
+async def sentiment_triplet_extraction(model, df, question, theme, emotion):
+    """使用异步并发处理数据批次"""
     start_time = time.time()
+    
+    # 计算批次
+    batch_size = 20
+    total_batches = (len(df) + batch_size - 1) // batch_size
+    
+    # 创建信号量来限制并发数
+    semaphore = asyncio.Semaphore(3)  # 最大并发数为5
+    
+    async def process_with_semaphore(batch_start):
+        async with semaphore:
+            # 获取当前批次的数据
+            batch_end = min(batch_start + batch_size, len(df))
+            batch_df = df.iloc[batch_start:batch_end].copy()
+            
+            # 处理当前批次
+            result = await process_batch_with_retry(
+                model, df, question, theme, emotion, 
+                batch_start, batch_size
+            )
+            
+            # 直接与原始数据合并
+            if not result.empty:
+                batch_df = batch_df.merge(result, on='mark', how='left')
+            else:
+                batch_df['aspect'] = '未知'
+                batch_df['opinion'] = '未知'
+            
+            return batch_df
+    
+    # 创建所有任务
+    tasks = [process_with_semaphore(i * batch_size) for i in range(total_batches)]
+    
+    # 并发执行所有任务
+    results = await asyncio.gather(*tasks)
+    
+    # 合并所有结果
+    final_df = pd.concat(results, ignore_index=True)
+    
+    end_time = time.time()
+    print(f"处理{len(df)}条耗时{end_time-start_time}秒，平均{(end_time-start_time)/len(df)*10}秒/10条")
+    
+    return final_df
+
+# 修改 text_labelling 函数以支持异步操作
+async def text_labelling(model, df, question, theme, emotion):
     try:
-        temp_result = sentiment_triplet_extraction(model, df, question, theme, emotion)
-        df1 = df.merge(temp_result, on='mark', how='left')
-        end_time = time.time()
-        print(f"处理{len(df)}条耗时{end_time-start_time}秒，平均{(end_time-start_time)/len(df)*10}秒/10条")
-        return df1
+        # 直接返回处理后的结果，因为合并操作已经在 sentiment_triplet_extraction 中完成
+        return await sentiment_triplet_extraction(model, df, question, theme, emotion)
     except requests.RequestException as e:
         raise ModelCallError(f"调用语言模型时出错: {str(e)}", "labeling")
     except Exception as e:
         raise LabelingError(f"标注过程中出错: {str(e)}")
+    
 
-def auto_analysis(question,theme,emotion,data,mode):
+
+
+# # 批次拆分，调用大模型打标
+# def sentiment_triplet_extraction(model, df, question, theme, emotion):
+
+#     #初始化
+#     start_num = 0
+#     step_default1, step_default2, step_default3 = 30, 10, 5
+#     result = pd.DataFrame(columns=['mark', 'aspect', 'opinion'])
+#     result_sub = pd.DataFrame()
+    
+#     #如果50个跑不对跑30个，30个跑不对跑10个，10个再给一次机会，再不行就空着
+#     while start_num < len(df):
+#         try:
+#             step = 50
+#             result_sub = result_process(model, df, question,theme,emotion,start_num,step)
+#             print(f"成功处理{start_num}~{start_num+step}")
+#         except Exception as e:
+#             try:
+#                 step = step_default1
+#                 result_sub = result_process(model,df, question,theme,emotion,start_num,step)
+#                 print(f"成功处理{start_num}~{start_num+step}")
+#             except Exception as e:
+#                 try:
+#                     step = step_default2
+#                     result_sub = result_process(model,df, question,theme,emotion,start_num,step)
+#                     print(f"成功处理{start_num}~{start_num+step}")
+#                 except Exception as e:
+#                     try:
+#                         step=step_default2
+#                         result_sub = result_process(model,df, question,theme,emotion,start_num,step)
+#                         print(f"成功处理{start_num}~{start_num+step}")
+#                     except Exception as e:
+#                         try:
+#                             step=step_default3
+#                             result_sub = result_process(model,df, question,theme,emotion,start_num,step)
+#                             print(f"成功处理{start_num}~{start_num+step}")
+#                         except Exception as e:
+#                             try:
+#                                 step=step_default3
+#                                 result_sub = result_process(model,df, question,theme,emotion,start_num,step)
+#                                 print(f"成功处理{start_num}~{start_num+step}")
+#                             except Exception as e:
+#                                 step = step_default3
+#                                 print(f"处理 {start_num}~{start_num+step} 时出错")
+#                                 result_sub = pd.DataFrame({
+#                                     'mark': df.iloc[start_num:start_num+step_default3]['mark'],
+#                                     'aspect': '未知',
+#                                     'opinion': '未知'
+#                                     })
+#                                 print(e)
+        
+#         start_num += step
+#         result = pd.concat([result,result_sub], ignore_index=True)
+#     return result
+
+# # 打标函数
+# def text_labelling(model, df, question, theme, emotion):
+# # def text_labelling(model, df, theme, emotion):
+#     start_time = time.time()
+#     try:
+#         temp_result = sentiment_triplet_extraction(model, df, question, theme, emotion)
+#         df1 = df.merge(temp_result, on='mark', how='left')
+#         end_time = time.time()
+#         print(f"处理{len(df)}条耗时{end_time-start_time}秒，平均{(end_time-start_time)/len(df)*10}秒/10条")
+#         return df1
+#     except requests.RequestException as e:
+#         raise ModelCallError(f"调用语言模型时出错: {str(e)}", "labeling")
+#     except Exception as e:
+#         raise LabelingError(f"标注过程中出错: {str(e)}")
+
+
+async def generate_title_with_retry(model, theme, emotion, answer_list, max_retries=3):
+    """异步生成标题，带重试机制"""
+    title = "标题生成异常"
+    for retry_count in range(max_retries):
+        try:
+            title = model.chat(create_prompt_title(theme, emotion, answer_list))
+            break
+        except Exception as e:
+            if retry_count == max_retries - 1:
+                print(f"生成标题失败，已重试{max_retries}次: {str(e)}")
+            else:
+                print(f"生成标题失败，正在进行第{retry_count+1}次重试: {str(e)}")
+                await asyncio.sleep(1)
+    return title
+
+async def generate_titles(model, theme, emotion, category, best_n_clusters):
+    """并发生成所有标题"""
+    semaphore = asyncio.Semaphore(3)  # 最大并发数为5
+    
+    async def generate_with_semaphore(cluster_id):
+        async with semaphore:
+            answer_list = category[cluster_id]
+            title = await generate_title_with_retry(model, theme, emotion, answer_list)
+            return cluster_id, title
+    
+    tasks = [generate_with_semaphore(i) for i in range(best_n_clusters)]
+    results = await asyncio.gather(*tasks)
+    
+    # 将结果转换为字典
+    category_title = {cluster_id: title for cluster_id, title in results}
+    return category_title
+
+
+async def auto_analysis(question,theme,emotion,data,mode):
     try:
         # 清洗
         print('完成数据处理')
@@ -193,7 +309,7 @@ def auto_analysis(question,theme,emotion,data,mode):
             model = AzureChatApp()
 
         print("\n请等待打标...")
-        df = text_labelling(model, data, question, theme, emotion)
+        df = await text_labelling(model, data, question, theme, emotion)
 
         print(f"打标数据量：{df['mark'].nunique()}, 标签数：{df.shape}")
 
@@ -267,29 +383,40 @@ def auto_analysis(question,theme,emotion,data,mode):
         # 聚类完成后，为每个主题收集回答原文  
         category = {i: [] for i in range(best_n_clusters)}  
         category_index = {i: [] for i in range(best_n_clusters)} 
-        category_title = {i: [] for i in range(best_n_clusters)}
         for i, label in enumerate(cluster_labels):  
             category[label].append(texts[i])
             category_index[label].append(i)
-        for i in range(best_n_clusters): 
-            answer_list = category[i]
-            retry_count = 0
-            max_retries = 3
-            title = "标题生成异常"
+        
+        # 并发生成标题    
+        category_title = await generate_titles(model, theme, emotion, category, best_n_clusters)
+        for i in range(best_n_clusters):
+            print(f"主题{i}：{category_title[i]}：{len(category[i])}")
+
+        # category = {i: [] for i in range(best_n_clusters)}  
+        # category_index = {i: [] for i in range(best_n_clusters)} 
+        # category_title = {i: [] for i in range(best_n_clusters)}
+        # for i, label in enumerate(cluster_labels):  
+        #     category[label].append(texts[i])
+        #     category_index[label].append(i)
+        # for i in range(best_n_clusters): 
+        #     answer_list = category[i]
+        #     retry_count = 0
+        #     max_retries = 3
+        #     title = "标题生成异常"
             
-            while retry_count < max_retries:
-                try:
-                    title = model.chat(create_prompt_title(theme, emotion, answer_list))
-                    break
-                except Exception as e:
-                    retry_count += 1
-                    if retry_count == max_retries:
-                        print(f"生成标题失败，已重试{max_retries}次: {str(e)}")
-                    else:
-                        print(f"生成标题失败，正在进行第{retry_count}次重试: {str(e)}")
-                        time.sleep(1)  # 每次重试等待1秒
-            print(f"主题{i}：{title}：{len(answer_list)}")
-            category_title[i] = title
+        #     while retry_count < max_retries:
+        #         try:
+        #             title = model.chat(create_prompt_title(theme, emotion, answer_list))
+        #             break
+        #         except Exception as e:
+        #             retry_count += 1
+        #             if retry_count == max_retries:
+        #                 print(f"生成标题失败，已重试{max_retries}次: {str(e)}")
+        #             else:
+        #                 print(f"生成标题失败，正在进行第{retry_count}次重试: {str(e)}")
+        #                 time.sleep(1)  # 每次重试等待1秒
+        #     print(f"主题{i}：{title}：{len(answer_list)}")
+        #     category_title[i] = title
 
         # 聚类主体回填
         df['topic_num'] = [label for label in cluster_labels]

@@ -46,39 +46,56 @@ class AzureChatApp():
                   app_key = '649aa4671fa7b91962caa01d'):
         self.url = url
         self.app_key = app_key
+        # 添加 session 对象以重用连接
+        self.session = requests.Session()
+        # 设置超时时间
+        self.timeout = 30
+        # 设置重试次数
+        self.max_retries = 3
         
     def chat(self,prompt):
-        try:
-            headers = {  
-                'AppKey': self.app_key,  
-                'Content-Type': 'application/json' 
-            } 
-            data = {  
-                "channelCode": "wvEO", 
-                "tenantsCode": "Yun8457",
-                "choiceModel":1,
-                "isMultiSession":1,
-                "requestContent": prompt,  
-                "requestType": 1,  
-                #"responseLengthLimit":8000,
-                "streamFlag":0,
-                "userCode": "wvEO10047252", 
-                "requestGroupCode": "1243112808144896"
-            }  
-    
-            response = requests.post(self.url, json=data, headers=headers)       
-            response.raise_for_status()  # Will raise an HTTPError if the HTTP request returned an unsuccessful status code
-            response_json= response.json()
+        for attempt in range(self.max_retries):
+            try:
+                headers = {  
+                    'AppKey': self.app_key,  
+                    'Content-Type': 'application/json' 
+                } 
+                data = {  
+                    "channelCode": "wvEO", 
+                    "tenantsCode": "Yun8457",
+                    "choiceModel": 1,
+                    "isMultiSession": 1,
+                    "requestContent": prompt,  
+                    "requestType": 1,  
+                    "streamFlag": 0,
+                    "userCode": "wvEO10047252", 
+                    "requestGroupCode": "1243112808144896"
+                }  
+        
+                response = self.session.post(
+                    self.url, 
+                    json=data, 
+                    headers=headers,
+                    timeout=self.timeout
+                )       
+                response.raise_for_status()
+                response_json = response.json()
 
-            if response_json['code']==0:
-                return response.json()['data']['responseVO']
-            else:
-                raise Exception(f"API返回错误: {response_json}")
+                if response_json['code'] == 0:
+                    return response_json['data']['responseVO']
+                else:
+                    raise Exception(f"API返回错误: {response_json}")
 
-        except requests.RequestException as e:
-            raise SystemExit(f"Failed to make the request. Error: {e}")
-    
-       
+            except requests.RequestException as e:
+                if attempt == self.max_retries - 1:  # 最后一次尝试
+                    raise SystemExit(f"Failed to make the request after {self.max_retries} attempts. Error: {e}")
+                print(f"请求失败，正在进行第{attempt + 1}次重试: {e}")
+                time.sleep(1)  # 重试前等待1秒
+
+                
+    def __del__(self):
+        # 确保 session 被正确关闭
+        self.session.close()       
 
 import time
 class AzureEmbedding():

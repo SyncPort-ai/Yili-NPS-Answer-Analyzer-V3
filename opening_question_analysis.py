@@ -171,7 +171,7 @@ def text_labelling(model, df, question, theme, emotion):
         raise LabelingError(f"标注过程中出错: {str(e)}")
 
 def auto_analysis(question,theme,emotion,data,mode):
-    # try:
+    try:
         # 清洗
         print('完成数据处理')
         clean_answer = list_process(data['origion'].tolist())
@@ -320,17 +320,17 @@ def auto_analysis(question,theme,emotion,data,mode):
 
         return result
 
-    # except ModelCallError as e:
-    #     print(f"模型调用错误: {e}")
-    #     raise
-    # except LabelingError as e:
-    #     print(f"标注错误: {e}")
-    #     raise
-    # except EmbeddingError as e:
-    #     print(f"嵌入错误: {e}")
-    #     raise
-    # except Exception as e:
-    #     print(f"auto_analysis 中出现意外错误: {e}")
-    #     raise
+    except ModelCallError as e:
+        print(f"模型调用错误: {e}")
+        raise
+    except LabelingError as e:
+        print(f"标注错误: {e}")
+        raise
+    except EmbeddingError as e:
+        print(f"嵌入错误: {e}")
+        raise
+    except Exception as e:
+        print(f"auto_analysis 中出现意外错误: {e}")
+        raise
     
 

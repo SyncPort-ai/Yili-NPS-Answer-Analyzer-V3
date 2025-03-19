@@ -133,7 +133,7 @@ async def sentiment_triplet_extraction(model, df, question, theme, emotion):
     total_batches = (len(df) + batch_size - 1) // batch_size
     
     # 创建信号量来限制并发数
-    semaphore = asyncio.Semaphore(3)  # 最大并发数为5
+    semaphore = asyncio.Semaphore(4)  # 最大并发数为5
     
     async def process_with_semaphore(batch_start):
         async with semaphore:
@@ -203,7 +203,8 @@ async def generate_title_with_retry(model, theme, emotion, answer_list, max_retr
 async def generate_titles(model, theme, emotion, category, best_n_clusters):
     """批量并发生成所有标题"""
     # 使用较小的并发数以避免API限制
-    semaphore = asyncio.Semaphore(3)
+    num=best_n_clusters
+    semaphore = asyncio.Semaphore(4)
     
     # 预处理所有prompt
     prompts = []

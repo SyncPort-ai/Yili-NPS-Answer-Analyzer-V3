@@ -181,84 +181,16 @@ async def text_labelling(model, df, question, theme, emotion):
         raise LabelingError(f"标注过程中出错: {str(e)}")
     
 
-
-
-# # 批次拆分，调用大模型打标
-# def sentiment_triplet_extraction(model, df, question, theme, emotion):
-
-#     #初始化
-#     start_num = 0
-#     step_default1, step_default2, step_default3 = 30, 10, 5
-#     result = pd.DataFrame(columns=['mark', 'aspect', 'opinion'])
-#     result_sub = pd.DataFrame()
-    
-#     #如果50个跑不对跑30个，30个跑不对跑10个，10个再给一次机会，再不行就空着
-#     while start_num < len(df):
-#         try:
-#             step = 50
-#             result_sub = result_process(model, df, question,theme,emotion,start_num,step)
-#             print(f"成功处理{start_num}~{start_num+step}")
-#         except Exception as e:
-#             try:
-#                 step = step_default1
-#                 result_sub = result_process(model,df, question,theme,emotion,start_num,step)
-#                 print(f"成功处理{start_num}~{start_num+step}")
-#             except Exception as e:
-#                 try:
-#                     step = step_default2
-#                     result_sub = result_process(model,df, question,theme,emotion,start_num,step)
-#                     print(f"成功处理{start_num}~{start_num+step}")
-#                 except Exception as e:
-#                     try:
-#                         step=step_default2
-#                         result_sub = result_process(model,df, question,theme,emotion,start_num,step)
-#                         print(f"成功处理{start_num}~{start_num+step}")
-#                     except Exception as e:
-#                         try:
-#                             step=step_default3
-#                             result_sub = result_process(model,df, question,theme,emotion,start_num,step)
-#                             print(f"成功处理{start_num}~{start_num+step}")
-#                         except Exception as e:
-#                             try:
-#                                 step=step_default3
-#                                 result_sub = result_process(model,df, question,theme,emotion,start_num,step)
-#                                 print(f"成功处理{start_num}~{start_num+step}")
-#                             except Exception as e:
-#                                 step = step_default3
-#                                 print(f"处理 {start_num}~{start_num+step} 时出错")
-#                                 result_sub = pd.DataFrame({
-#                                     'mark': df.iloc[start_num:start_num+step_default3]['mark'],
-#                                     'aspect': '未知',
-#                                     'opinion': '未知'
-#                                     })
-#                                 print(e)
-        
-#         start_num += step
-#         result = pd.concat([result,result_sub], ignore_index=True)
-#     return result
-
-# # 打标函数
-# def text_labelling(model, df, question, theme, emotion):
-# # def text_labelling(model, df, theme, emotion):
-#     start_time = time.time()
-#     try:
-#         temp_result = sentiment_triplet_extraction(model, df, question, theme, emotion)
-#         df1 = df.merge(temp_result, on='mark', how='left')
-#         end_time = time.time()
-#         print(f"处理{len(df)}条耗时{end_time-start_time}秒，平均{(end_time-start_time)/len(df)*10}秒/10条")
-#         return df1
-#     except requests.RequestException as e:
-#         raise ModelCallError(f"调用语言模型时出错: {str(e)}", "labeling")
-#     except Exception as e:
-#         raise LabelingError(f"标注过程中出错: {str(e)}")
-
-
 async def generate_title_with_retry(model, theme, emotion, answer_list, max_retries=3):
     """异步生成标题，带重试机制"""
     title = "标题生成异常"
+    loop = asyncio.get_event_loop()
+    
     for retry_count in range(max_retries):
         try:
-            title = model.chat(create_prompt_title(theme, emotion, answer_list))
+            # 使用 run_in_executor 将同步的 model.chat 转换为异步操作
+            prompt = create_prompt_title(theme, emotion, answer_list)
+            title = await loop.run_in_executor(None, model.chat, prompt)
             break
         except Exception as e:
             if retry_count == max_retries - 1:
@@ -269,16 +201,28 @@ async def generate_title_with_retry(model, theme, emotion, answer_list, max_retr
     return title
 
 async def generate_titles(model, theme, emotion, category, best_n_clusters):
-    """并发生成所有标题"""
-    semaphore = asyncio.Semaphore(3)  # 最大并发数为5
+    """批量并发生成所有标题"""
+    # 使用较小的并发数以避免API限制
+    semaphore = asyncio.Semaphore(3)
     
-    async def generate_with_semaphore(cluster_id):
+    # 预处理所有prompt
+    prompts = []
+    for cluster_id in range(best_n_clusters):
+        answer_list = category[cluster_id]
+        prompts.append((cluster_id, answer_list))
+        
+    async def generate_with_semaphore(cluster_id, answer_list):
         async with semaphore:
-            answer_list = category[cluster_id]
+            # 现在使用异步的generate_title_with_retry
             title = await generate_title_with_retry(model, theme, emotion, answer_list)
+            print(title)
             return cluster_id, title
+            
+    # 创建所有任务
+    tasks = [generate_with_semaphore(cluster_id, answer_list) 
+             for cluster_id, answer_list in prompts]
     
-    tasks = [generate_with_semaphore(i) for i in range(best_n_clusters)]
+    # gather并发执行
     results = await asyncio.gather(*tasks)
     
     # 将结果转换为字典

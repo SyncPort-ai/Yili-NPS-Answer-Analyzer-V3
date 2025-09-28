@@ -1,0 +1,964 @@
+"""
+C5 - Executive Synthesizer Agent
+Final Consulting Pass Agent that synthesizes all consulting outputs into executive insights.
+"""
+
+import logging
+from typing import Dict, Any, List, Optional
+from collections import Counter
+from datetime import datetime
+
+from ..base import ConsultingAgent, AgentResult, AgentStatus
+from ...llm import LLMClient
+
+logger = logging.getLogger(__name__)
+
+
+class ExecutiveRecommendation(dict):
+    """Executive recommendation structure"""
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Ensure required fields exist
+        self.setdefault("recommendation_id", "")
+        self.setdefault("title", "")
+        self.setdefault("executive_summary", "")
+        self.setdefault("strategic_priority", "")
+        self.setdefault("business_impact", "")
+        self.setdefault("implementation_complexity", "")
+        self.setdefault("timeline", "")
+        self.setdefault("resource_requirements", [])
+        self.setdefault("success_metrics", [])
+        self.setdefault("risk_mitigation", [])
+        self.setdefault("dependencies", [])
+
+
+class ExecutiveSynthesizerAgent(ConsultingAgent):
+    """
+    C5 - Executive Synthesizer Agent
+
+    Responsibilities:
+    - Synthesize all consulting outputs (C1-C4) into executive insights
+    - Generate 5-7 strategic executive recommendations
+    - Create executive dashboard with KPIs and action items
+    - Provide holistic business assessment and priorities
+    - Generate board-level presentation materials
+    """
+
+    def __init__(self, agent_id: str = "C5", agent_name: str = "Executive Synthesizer Agent",
+                 llm_client: Optional[LLMClient] = None, **kwargs):
+        super().__init__(agent_id, agent_name, **kwargs)
+        self.llm_client = llm_client
+        self.min_confidence = 0.2  # Realistic threshold for 100+ sample analysis - Executive synthesis with limited consulting inputs
+
+        # Executive priority frameworks
+        self.strategic_priorities = {
+            "customer_centricity": {
+                "title": "客户中心战略",
+                "kpis": ["NPS", "客户满意度", "客户流失率", "客户生命周期价值"],
+                "time_horizon": "immediate"
+            },
+            "operational_excellence": {
+                "title": "卓越运营",
+                "kpis": ["运营效率", "成本控制", "质量指标", "流程优化"],
+                "time_horizon": "short_term"
+            },
+            "market_leadership": {
+                "title": "市场领导地位",
+                "kpis": ["市场份额", "品牌价值", "竞争优势", "创新指数"],
+                "time_horizon": "medium_term"
+            },
+            "sustainable_growth": {
+                "title": "可持续增长",
+                "kpis": ["收入增长", "盈利能力", "市场扩张", "产品创新"],
+                "time_horizon": "long_term"
+            }
+        }
+
+        # Business impact assessment criteria
+        self.impact_criteria = {
+            "revenue_impact": {
+                "high": "预期收入影响>5%",
+                "medium": "预期收入影响2-5%",
+                "low": "预期收入影响<2%"
+            },
+            "customer_impact": {
+                "high": "影响所有客户群体或核心客户",
+                "medium": "影响特定客户群体",
+                "low": "影响少数客户"
+            },
+            "operational_impact": {
+                "high": "需要重大流程变革",
+                "medium": "需要中等程度调整",
+                "low": "轻微运营调整"
+            },
+            "strategic_alignment": {
+                "high": "直接支持核心战略目标",
+                "medium": "支持重要战略目标",
+                "low": "支持一般业务目标"
+            }
+        }
+
+    async def process(self, state: Dict[str, Any]) -> AgentResult:
+        """
+        Execute executive synthesis and generate strategic recommendations.
+
+        Args:
+            state: Current workflow state with all analysis and consulting results
+
+        Returns:
+            AgentResult with executive synthesis and recommendations
+        """
+        try:
+            # Check confidence in consulting outputs
+            confidence_check = self._assess_synthesis_confidence(state)
+
+            if confidence_check["confidence"] < self.min_confidence:
+                logger.warning(f"Synthesis confidence {confidence_check['confidence']:.2f} below threshold {self.min_confidence}")
+                return AgentResult(
+                    agent_id=self.agent_id,
+                    status=AgentStatus.FAILED,
+                    errors=[f"Insufficient confidence for executive synthesis: {confidence_check['issues']}"],
+                    confidence_score=0.0
+                )
+
+            # Extract and synthesize consulting outputs
+            consulting_synthesis = await self._synthesize_consulting_outputs(state)
+
+            # Generate executive assessment
+            executive_assessment = self._generate_executive_assessment(consulting_synthesis, state)
+
+            # Create strategic recommendations
+            strategic_recommendations = await self._create_strategic_recommendations(
+                consulting_synthesis, executive_assessment, state
+            )
+
+            # Prioritize recommendations for executive action
+            prioritized_recommendations = self._prioritize_executive_recommendations(strategic_recommendations)
+
+            # Create executive dashboard
+            executive_dashboard = self._create_executive_dashboard(
+                prioritized_recommendations, executive_assessment, state
+            )
+
+            # Generate board presentation materials
+            presentation_materials = self._generate_presentation_materials(
+                prioritized_recommendations, executive_assessment, state
+            )
+
+            # Create implementation roadmap
+            implementation_roadmap = self._create_implementation_roadmap(prioritized_recommendations)
+
+            logger.info(f"Generated {len(prioritized_recommendations)} executive recommendations")
+
+            return AgentResult(
+                agent_id=self.agent_id,
+                status=AgentStatus.COMPLETED,
+                data={
+                    "executive_recommendations": prioritized_recommendations,
+                    "executive_assessment": executive_assessment,
+                    "executive_dashboard": executive_dashboard,
+                    "presentation_materials": presentation_materials,
+                    "implementation_roadmap": implementation_roadmap,
+                    "consulting_synthesis": consulting_synthesis,
+                    "confidence": confidence_check["confidence"]
+                },
+                insights=[{"type": "executive", "count": len(prioritized_recommendations)}],
+                confidence_score=confidence_check["confidence"]
+            )
+
+        except Exception as e:
+            logger.error(f"Executive synthesis failed: {e}")
+            return AgentResult(
+                agent_id=self.agent_id,
+                status=AgentStatus.FAILED,
+                errors=[str(e)],
+                confidence_score=0.0
+            )
+
+    def _assess_synthesis_confidence(self, state: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Assess confidence in executive synthesis based on consulting outputs.
+
+        Args:
+            state: Current workflow state
+
+        Returns:
+            Confidence assessment
+        """
+        confidence_factors = []
+        issues = []
+
+        # Check availability of consulting outputs
+        consulting_outputs = ["strategic_recommendations", "product_recommendations",
+                            "marketing_recommendations", "risk_assessments"]
+
+        available_outputs = sum(1 for output in consulting_outputs if state.get(output))
+
+        if available_outputs == 4:
+            confidence_factors.append(0.9)
+        elif available_outputs >= 3:
+            confidence_factors.append(0.7)
+        elif available_outputs >= 2:
+            confidence_factors.append(0.5)
+        elif available_outputs >= 1:
+            confidence_factors.append(0.4)
+            issues.append(f"仅有{available_outputs}个咨询模块输出，综合分析受限")
+        else:
+            confidence_factors.append(0.2)  # Still allow processing with NPS data alone
+            issues.append(f"仅有{available_outputs}个咨询模块输出，基于基础NPS数据提供有限分析")
+
+        # Check quality of strategic recommendations (C1)
+        strategic_recs = state.get("strategic_recommendations", [])
+        if len(strategic_recs) >= 3:
+            confidence_factors.append(0.8)
+        elif len(strategic_recs) >= 1:
+            confidence_factors.append(0.6)
+        else:
+            confidence_factors.append(0.2)  # Still allow basic NPS-based recommendations
+            issues.append("缺乏专门的战略建议，基于NPS数据提供基础建议")
+
+        # Check risk assessment quality (C4)
+        risk_assessments = state.get("risk_assessments", [])
+        critical_risks = [r for r in risk_assessments if r.get("severity") == "critical"]
+
+        if len(risk_assessments) >= 3:
+            confidence_factors.append(0.8)
+        elif len(risk_assessments) >= 1:
+            confidence_factors.append(0.6)
+        else:
+            confidence_factors.append(0.2)  # Allow basic risk awareness from NPS data
+            issues.append("风险评估模块未提供输出，基于NPS数据识别基础风险")
+
+        # Check foundation metrics quality
+        nps_metrics = state.get("nps_metrics", {})
+        sample_size = nps_metrics.get("sample_size", 0)
+
+        if sample_size >= 100:
+            confidence_factors.append(0.9)
+        elif sample_size >= 50:
+            confidence_factors.append(0.7)
+        elif sample_size >= 30:
+            confidence_factors.append(0.5)
+            issues.append("样本量中等，战略建议需谨慎解读")
+        else:
+            confidence_factors.append(0.3)
+            issues.append("样本量较小影响战略建议可信度")
+
+        overall_confidence = sum(confidence_factors) / len(confidence_factors) if confidence_factors else 0
+
+        return {
+            "confidence": overall_confidence,
+            "factors": confidence_factors,
+            "issues": issues
+        }
+
+    async def _synthesize_consulting_outputs(self, state: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Synthesize all consulting outputs into unified insights.
+
+        Args:
+            state: Current workflow state
+
+        Returns:
+            Synthesized consulting insights
+        """
+        synthesis = {
+            "strategic_themes": [],
+            "critical_priorities": [],
+            "business_opportunities": [],
+            "major_risks": [],
+            "resource_requirements": {},
+            "implementation_complexity": {},
+            "success_factors": []
+        }
+
+        # Synthesize strategic recommendations (C1)
+        strategic_recs = state.get("strategic_recommendations", [])
+        immediate_strategic = [r for r in strategic_recs if r.get("priority") == "immediate"]
+
+        if immediate_strategic:
+            synthesis["critical_priorities"].extend([
+                f"战略优先级：{rec['title']}" for rec in immediate_strategic[:3]
+            ])
+
+        # Extract strategic themes
+        all_impact_areas = []
+        for rec in strategic_recs:
+            all_impact_areas.extend(rec.get("impact_areas", []))
+
+        if all_impact_areas:
+            theme_counts = Counter(all_impact_areas)
+            synthesis["strategic_themes"] = [
+                {"theme": theme, "frequency": count}
+                for theme, count in theme_counts.most_common(5)
+            ]
+
+        # Synthesize product recommendations (C2)
+        product_recs = state.get("product_recommendations", [])
+        high_impact_products = [r for r in product_recs if r.get("development_effort") == "low" and r.get("priority") in ["immediate", "short_term"]]
+
+        if high_impact_products:
+            synthesis["business_opportunities"].extend([
+                f"产品机会：{rec['title']}" for rec in high_impact_products[:2]
+            ])
+
+        # Synthesize marketing recommendations (C3)
+        marketing_recs = state.get("marketing_recommendations", [])
+        brand_positioning_recs = [r for r in marketing_recs if r.get("category") == "brand_positioning"]
+
+        if brand_positioning_recs:
+            synthesis["critical_priorities"].append("品牌定位优化")
+
+        # Synthesize risk assessments (C4)
+        risk_assessments = state.get("risk_assessments", [])
+        critical_risks = [r for r in risk_assessments if r.get("severity") in ["critical", "high"]]
+
+        synthesis["major_risks"] = [
+            {
+                "title": risk["title"],
+                "severity": risk.get("severity", "medium"),
+                "impact_areas": risk.get("impact_areas", [])
+            }
+            for risk in critical_risks[:3]
+        ]
+
+        # Aggregate resource requirements
+        all_recommendations = strategic_recs + product_recs + marketing_recs
+
+        budget_categories = []
+        timeline_patterns = []
+
+        for rec in all_recommendations:
+            if "budget_range" in rec:
+                budget_categories.append(rec["budget_range"])
+            if "timeline" in rec:
+                timeline_patterns.append(rec.get("timeline", ""))
+            elif "estimated_timeline" in rec:
+                timeline_patterns.append(rec.get("estimated_timeline", ""))
+
+        if budget_categories:
+            synthesis["resource_requirements"] = {
+                "budget_distribution": dict(Counter(budget_categories)),
+                "total_initiatives": len(all_recommendations)
+            }
+
+        # Assess implementation complexity
+        immediate_actions = len([r for r in all_recommendations if r.get("priority") == "immediate"])
+        short_term_actions = len([r for r in all_recommendations if r.get("priority") == "short_term"])
+
+        synthesis["implementation_complexity"] = {
+            "immediate_bandwidth": immediate_actions,
+            "short_term_bandwidth": short_term_actions,
+            "complexity_assessment": "high" if immediate_actions > 5 else "medium" if immediate_actions > 2 else "low"
+        }
+
+        # Identify success factors
+        synthesis["success_factors"] = self._identify_success_factors(all_recommendations, state)
+
+        return synthesis
+
+    def _identify_success_factors(self, all_recommendations: List[Dict], state: Dict[str, Any]) -> List[str]:
+        """
+        Identify critical success factors for implementation.
+
+        Args:
+            all_recommendations: All consulting recommendations
+            state: Current workflow state
+
+        Returns:
+            List of critical success factors
+        """
+        factors = []
+
+        # Leadership commitment factor
+        immediate_count = len([r for r in all_recommendations if r.get("priority") == "immediate"])
+        if immediate_count >= 3:
+            factors.append("高级管理层的强力推动和资源保障")
+
+        # Customer focus factor
+        nps_score = state.get("nps_metrics", {}).get("nps_score", 0)
+        if nps_score < 30:
+            factors.append("以客户满意度提升为核心的组织协调")
+
+        # Operational excellence factor
+        risk_assessments = state.get("risk_assessments", [])
+        operational_risks = [r for r in risk_assessments if r.get("risk_type") in ["supply_chain", "customer_satisfaction"]]
+        if len(operational_risks) >= 2:
+            factors.append("运营流程优化和质量管控能力")
+
+        # Change management factor
+        total_initiatives = len(all_recommendations)
+        if total_initiatives >= 10:
+            factors.append("有效的变革管理和项目协调机制")
+
+        # Market responsiveness factor
+        marketing_recs = state.get("marketing_recommendations", [])
+        competitive_recs = [r for r in marketing_recs if "竞争" in r.get("title", "")]
+        if competitive_recs:
+            factors.append("快速的市场响应和竞争适应能力")
+
+        return factors
+
+    def _generate_executive_assessment(
+        self,
+        consulting_synthesis: Dict[str, Any],
+        state: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """
+        Generate executive-level business assessment.
+
+        Args:
+            consulting_synthesis: Synthesized consulting insights
+            state: Current workflow state
+
+        Returns:
+            Executive assessment
+        """
+        assessment = {
+            "overall_health_score": 0,
+            "business_status": "",
+            "key_strengths": [],
+            "critical_challenges": [],
+            "strategic_position": "",
+            "competitive_outlook": "",
+            "investment_priorities": [],
+            "performance_indicators": {}
+        }
+
+        # Calculate overall health score
+        nps_score = state.get("nps_metrics", {}).get("nps_score", 0)
+        major_risks_count = len(consulting_synthesis["major_risks"])
+        critical_priorities_count = len(consulting_synthesis["critical_priorities"])
+
+        # Health score formula (0-100)
+        nps_component = max(0, min(50, nps_score))  # NPS contributes 0-50 points
+        risk_penalty = min(30, major_risks_count * 10)  # Each major risk reduces 10 points, max 30
+        urgency_penalty = min(20, critical_priorities_count * 5)  # Each critical priority reduces 5 points, max 20
+
+        assessment["overall_health_score"] = max(0, nps_component + 50 - risk_penalty - urgency_penalty)
+
+        # Determine business status
+        if assessment["overall_health_score"] >= 70:
+            assessment["business_status"] = "健康发展"
+        elif assessment["overall_health_score"] >= 50:
+            assessment["business_status"] = "稳定改进"
+        elif assessment["overall_health_score"] >= 30:
+            assessment["business_status"] = "需要关注"
+        else:
+            assessment["business_status"] = "需要紧急行动"
+
+        # Identify key strengths
+        if nps_score >= 50:
+            assessment["key_strengths"].append("客户忠诚度高，口碑效应明显")
+        elif nps_score >= 30:
+            assessment["key_strengths"].append("客户满意度良好，有提升空间")
+
+        # Extract strengths from strategic themes
+        top_themes = consulting_synthesis.get("strategic_themes", [])[:3]
+        for theme in top_themes:
+            if theme["frequency"] >= 3:
+                assessment["key_strengths"].append(f"{theme['theme']}表现突出")
+
+        # Identify critical challenges
+        assessment["critical_challenges"] = consulting_synthesis["critical_priorities"][:5]
+
+        for risk in consulting_synthesis["major_risks"][:2]:
+            assessment["critical_challenges"].append(f"风险管控：{risk['title']}")
+
+        # Assess strategic position
+        business_opportunities = consulting_synthesis["business_opportunities"]
+        if len(business_opportunities) >= 3:
+            assessment["strategic_position"] = "市场机会丰富，具备增长潜力"
+        elif len(business_opportunities) >= 1:
+            assessment["strategic_position"] = "存在发展机会，需要重点把握"
+        else:
+            assessment["strategic_position"] = "市场竞争激烈，需要突破创新"
+
+        # Competitive outlook
+        risk_types = [risk.get("title", "") for risk in consulting_synthesis["major_risks"]]
+        competitive_risks = [r for r in risk_types if "竞争" in r or "市场" in r]
+
+        if len(competitive_risks) >= 2:
+            assessment["competitive_outlook"] = "竞争压力较大，需要差异化策略"
+        elif len(competitive_risks) == 1:
+            assessment["competitive_outlook"] = "竞争环境适中，保持竞争优势"
+        else:
+            assessment["competitive_outlook"] = "竞争地位相对稳固"
+
+        # Investment priorities
+        complexity = consulting_synthesis["implementation_complexity"]
+        if complexity["immediate_bandwidth"] >= 3:
+            assessment["investment_priorities"].append("增加变革管理投入")
+
+        if major_risks_count >= 2:
+            assessment["investment_priorities"].append("加强风险管控投入")
+
+        if nps_score < 30:
+            assessment["investment_priorities"].append("优先投入客户体验改善")
+
+        # Performance indicators
+        assessment["performance_indicators"] = {
+            "customer_satisfaction": {
+                "current": nps_score,
+                "target": max(nps_score + 10, 50),
+                "status": "good" if nps_score >= 50 else "attention" if nps_score >= 30 else "critical"
+            },
+            "risk_exposure": {
+                "current": major_risks_count,
+                "target": max(0, major_risks_count - 1),
+                "status": "critical" if major_risks_count >= 3 else "attention" if major_risks_count >= 1 else "good"
+            },
+            "strategic_readiness": {
+                "current": len(business_opportunities),
+                "target": max(len(business_opportunities), 3),
+                "status": "good" if len(business_opportunities) >= 3 else "attention"
+            }
+        }
+
+        return assessment
+
+    async def _create_strategic_recommendations(
+        self,
+        consulting_synthesis: Dict[str, Any],
+        executive_assessment: Dict[str, Any],
+        state: Dict[str, Any]
+    ) -> List[ExecutiveRecommendation]:
+        """
+        Create 5-7 strategic executive recommendations.
+
+        Args:
+            consulting_synthesis: Synthesized consulting insights
+            executive_assessment: Executive assessment
+            state: Current workflow state
+
+        Returns:
+            List of executive recommendations
+        """
+        recommendations = []
+
+        # Recommendation 1: Customer Experience Excellence (always include if NPS < 50)
+        nps_score = state.get("nps_metrics", {}).get("nps_score", 0)
+        if nps_score < 50:
+            rec = ExecutiveRecommendation(
+                recommendation_id="EXEC_001",
+                title="客户体验卓越计划",
+                executive_summary="基于NPS分析结果，系统性提升客户满意度和忠诚度",
+                strategic_priority="customer_centricity",
+                business_impact=f"预期NPS提升至50+，客户流失率降低15-20%",
+                implementation_complexity="medium",
+                timeline="6个月",
+                resource_requirements=["客户体验团队", "中等预算投入", "跨部门协调"],
+                success_metrics=["NPS提升至50+", "客户投诉率下降30%", "客户满意度90%+"],
+                risk_mitigation=["分阶段实施", "快速反馈机制", "持续监控调整"],
+                dependencies=["管理层支持", "员工培训", "系统升级"]
+            )
+            recommendations.append(rec)
+
+        # Recommendation 2: Risk Management Optimization (if high/critical risks exist)
+        major_risks = consulting_synthesis["major_risks"]
+        critical_risks = [r for r in major_risks if r["severity"] == "critical"]
+
+        if len(critical_risks) >= 1 or len(major_risks) >= 3:
+            rec = ExecutiveRecommendation(
+                recommendation_id="EXEC_002",
+                title="全面风险管控体系升级",
+                executive_summary="建立前瞻性风险识别和快速响应机制",
+                strategic_priority="operational_excellence",
+                business_impact="降低业务中断风险，保护品牌价值和市场地位",
+                implementation_complexity="high",
+                timeline="3个月启动，12个月完善",
+                resource_requirements=["风险管理专家", "高级预算", "全员参与"],
+                success_metrics=["关键风险控制在可接受范围", "事故应急响应时间<24小时"],
+                risk_mitigation=["逐步推进", "外部专家支持", "定期评估调整"],
+                dependencies=["董事会支持", "法务合规", "技术平台"]
+            )
+            recommendations.append(rec)
+
+        # Recommendation 3: Market Competitiveness Enhancement
+        business_opportunities = consulting_synthesis["business_opportunities"]
+        if len(business_opportunities) >= 2:
+            rec = ExecutiveRecommendation(
+                recommendation_id="EXEC_003",
+                title="市场竞争力全面提升",
+                executive_summary="抓住关键市场机会，强化差异化竞争优势",
+                strategic_priority="market_leadership",
+                business_impact="市场份额提升2-5%，品牌竞争地位巩固",
+                implementation_complexity="medium",
+                timeline="9个月",
+                resource_requirements=["市场团队扩充", "产品开发投入", "营销预算增加"],
+                success_metrics=["市场份额增长", "品牌认知度提升", "新产品成功率"],
+                risk_mitigation=["市场测试验证", "分阶段投入", "竞争监控"],
+                dependencies=["研发能力", "供应链支持", "渠道合作"]
+            )
+            recommendations.append(rec)
+
+        # Recommendation 4: Operational Excellence Initiative
+        complexity = consulting_synthesis["implementation_complexity"]
+        if complexity["complexity_assessment"] in ["medium", "high"]:
+            rec = ExecutiveRecommendation(
+                recommendation_id="EXEC_004",
+                title="运营卓越与变革管理",
+                executive_summary="优化组织效率，确保战略落地执行",
+                strategic_priority="operational_excellence",
+                business_impact="运营效率提升15-25%，执行力显著改善",
+                implementation_complexity="medium",
+                timeline="12个月持续改进",
+                resource_requirements=["变革管理顾问", "培训投入", "流程优化"],
+                success_metrics=["项目按时完成率90%+", "员工满意度提升", "成本效率改善"],
+                risk_mitigation=["分批推进", "充分沟通", "激励机制"],
+                dependencies=["管理层示范", "文化建设", "技能培训"]
+            )
+            recommendations.append(rec)
+
+        # Recommendation 5: Innovation and Growth Strategy
+        product_recs = state.get("product_recommendations", [])
+        innovation_recs = [r for r in product_recs if "创新" in r.get("title", "")]
+
+        if len(product_recs) >= 3 or len(innovation_recs) >= 1:
+            rec = ExecutiveRecommendation(
+                recommendation_id="EXEC_005",
+                title="产品创新与增长战略",
+                executive_summary="加速产品创新，拓展增长边界",
+                strategic_priority="sustainable_growth",
+                business_impact="新产品贡献收入增长10-15%",
+                implementation_complexity="high",
+                timeline="18个月",
+                resource_requirements=["研发投入翻倍", "创新团队", "市场验证预算"],
+                success_metrics=["新产品上市数量", "创新收入占比", "客户接受度"],
+                risk_mitigation=["小规模试点", "市场验证", "快速迭代"],
+                dependencies=["技术平台", "供应链灵活性", "市场洞察能力"]
+            )
+            recommendations.append(rec)
+
+        # LLM-enhanced strategic recommendations
+        if self.llm_client and len(recommendations) < 7:
+            llm_recs = await self._llm_generate_executive_recommendations(
+                consulting_synthesis, executive_assessment, state
+            )
+            recommendations.extend(llm_recs)
+
+        return recommendations[:7]  # Limit to 7 recommendations
+
+    async def _llm_generate_executive_recommendations(
+        self,
+        consulting_synthesis: Dict[str, Any],
+        executive_assessment: Dict[str, Any],
+        state: Dict[str, Any]
+    ) -> List[ExecutiveRecommendation]:
+        """
+        Use LLM to generate additional executive recommendations.
+        """
+        if not self.llm_client:
+            return []
+
+        try:
+            nps_score = state.get("nps_metrics", {}).get("nps_score", 0)
+            health_score = executive_assessment.get("overall_health_score", 50)
+            business_status = executive_assessment.get("business_status", "")
+
+            prompt = f"""
+作为伊利集团的高级管理顾问，基于以下企业综合评估提供2-3个战略性执行建议：
+
+综合健康得分：{health_score}/100
+业务状态：{business_status}
+NPS得分：{nps_score:.1f}
+
+关键挑战：
+{chr(10).join([f"• {challenge}" for challenge in executive_assessment.get("critical_challenges", [])[:3]])}
+
+战略机会：
+{chr(10).join([f"• {opp}" for opp in consulting_synthesis.get("business_opportunities", [])[:3]])}
+
+请提供2-3个董事会级别的战略建议，每个建议包括：
+1. 建议标题
+2. 执行摘要
+3. 战略优先级（customer_centricity/operational_excellence/market_leadership/sustainable_growth）
+4. 商业影响描述
+5. 实施复杂度（low/medium/high）
+6. 实施时间线
+7. 资源需求
+8. 成功指标
+9. 风险缓解措施
+
+以JSON格式返回：
+[
+    {{
+        "title": "战略建议标题",
+        "executive_summary": "执行摘要",
+        "strategic_priority": "战略优先级",
+        "business_impact": "商业影响描述",
+        "implementation_complexity": "实施复杂度",
+        "timeline": "实施时间线",
+        "resource_requirements": ["资源需求1", "资源需求2"],
+        "success_metrics": ["成功指标1", "成功指标2"],
+        "risk_mitigation": ["风险缓解1", "风险缓解2"]
+    }}
+]
+"""
+
+            response = await self.llm_client.call(prompt, temperature=0.2)
+
+            # Parse JSON response
+            import json
+            recommendations_data = json.loads(response)
+
+            recommendations = []
+            for idx, rec_data in enumerate(recommendations_data):
+                rec = ExecutiveRecommendation(
+                    recommendation_id=f"EXEC_LLM_{idx+6:03d}",
+                    title=rec_data.get("title", ""),
+                    executive_summary=rec_data.get("executive_summary", ""),
+                    strategic_priority=rec_data.get("strategic_priority", "operational_excellence"),
+                    business_impact=rec_data.get("business_impact", ""),
+                    implementation_complexity=rec_data.get("implementation_complexity", "medium"),
+                    timeline=rec_data.get("timeline", "12个月"),
+                    resource_requirements=rec_data.get("resource_requirements", []),
+                    success_metrics=rec_data.get("success_metrics", []),
+                    risk_mitigation=rec_data.get("risk_mitigation", []),
+                    dependencies=[]
+                )
+                recommendations.append(rec)
+
+            return recommendations
+
+        except Exception as e:
+            logger.debug(f"LLM executive recommendation generation failed: {e}")
+            return []
+
+    def _prioritize_executive_recommendations(
+        self,
+        strategic_recommendations: List[ExecutiveRecommendation]
+    ) -> List[ExecutiveRecommendation]:
+        """
+        Prioritize executive recommendations by strategic impact.
+        """
+        # Priority weights for strategic priorities
+        priority_weights = {
+            "customer_centricity": 0,    # Highest priority
+            "operational_excellence": 1,
+            "market_leadership": 2,
+            "sustainable_growth": 3
+        }
+
+        # Implementation complexity weights (easier first for quick wins)
+        complexity_weights = {
+            "low": 0,
+            "medium": 1,
+            "high": 2
+        }
+
+        def sort_key(rec):
+            priority_score = priority_weights.get(rec.get("strategic_priority", "operational_excellence"), 1)
+            complexity_score = complexity_weights.get(rec.get("implementation_complexity", "medium"), 1) * 0.3
+            return priority_score + complexity_score
+
+        strategic_recommendations.sort(key=sort_key)
+        return strategic_recommendations
+
+    def _create_executive_dashboard(
+        self,
+        prioritized_recommendations: List[ExecutiveRecommendation],
+        executive_assessment: Dict[str, Any],
+        state: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """
+        Create executive dashboard with KPIs and action items.
+        """
+        dashboard = {
+            "executive_summary": {
+                "overall_health_score": executive_assessment["overall_health_score"],
+                "business_status": executive_assessment["business_status"],
+                "strategic_readiness": len(prioritized_recommendations),
+                "critical_actions": len([r for r in prioritized_recommendations
+                                      if r.get("strategic_priority") == "customer_centricity"])
+            },
+            "key_performance_indicators": executive_assessment.get("performance_indicators", {}),
+            "strategic_initiatives": [
+                {
+                    "title": rec["title"],
+                    "priority": rec.get("strategic_priority", ""),
+                    "timeline": rec.get("timeline", ""),
+                    "complexity": rec.get("implementation_complexity", "medium"),
+                    "impact": rec.get("business_impact", "")[:100] + "..."
+                }
+                for rec in prioritized_recommendations[:5]
+            ],
+            "immediate_actions": [
+                {
+                    "action": rec["title"],
+                    "deadline": "30天内启动" if rec.get("strategic_priority") == "customer_centricity" else "90天内启动",
+                    "owner": "高级管理层",
+                    "success_metric": rec.get("success_metrics", ["待定"])[0] if rec.get("success_metrics") else "待定"
+                }
+                for rec in prioritized_recommendations[:3]
+            ],
+            "resource_allocation": {
+                "high_investment": len([r for r in prioritized_recommendations
+                                      if r.get("implementation_complexity") == "high"]),
+                "medium_investment": len([r for r in prioritized_recommendations
+                                        if r.get("implementation_complexity") == "medium"]),
+                "quick_wins": len([r for r in prioritized_recommendations
+                                 if r.get("implementation_complexity") == "low"])
+            },
+            "risk_alerts": [
+                {
+                    "risk": challenge,
+                    "impact": "high",
+                    "status": "monitoring"
+                }
+                for challenge in executive_assessment.get("critical_challenges", [])[:3]
+            ]
+        }
+
+        return dashboard
+
+    def _generate_presentation_materials(
+        self,
+        prioritized_recommendations: List[ExecutiveRecommendation],
+        executive_assessment: Dict[str, Any],
+        state: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """
+        Generate board presentation materials.
+        """
+        materials = {
+            "executive_slide": {
+                "title": "伊利集团NPS客户洞察战略建议",
+                "subtitle": f"基于{state.get('nps_metrics', {}).get('sample_size', 0)}个客户样本的综合分析",
+                "key_message": f"整体健康得分{executive_assessment['overall_health_score']}/100，{executive_assessment['business_status']}",
+                "call_to_action": f"建议实施{len(prioritized_recommendations)}项战略行动"
+            },
+            "situation_analysis": {
+                "current_state": {
+                    "nps_score": state.get("nps_metrics", {}).get("nps_score", 0),
+                    "health_score": executive_assessment["overall_health_score"],
+                    "business_status": executive_assessment["business_status"]
+                },
+                "key_challenges": executive_assessment.get("critical_challenges", [])[:4],
+                "market_position": executive_assessment.get("strategic_position", ""),
+                "competitive_outlook": executive_assessment.get("competitive_outlook", "")
+            },
+            "strategic_recommendations": [
+                {
+                    "priority_rank": idx + 1,
+                    "title": rec["title"],
+                    "summary": rec.get("executive_summary", ""),
+                    "business_case": rec.get("business_impact", ""),
+                    "timeline": rec.get("timeline", ""),
+                    "investment": rec.get("implementation_complexity", "medium")
+                }
+                for idx, rec in enumerate(prioritized_recommendations[:5])
+            ],
+            "implementation_roadmap": {
+                "phase_1": "0-3个月：启动关键客户体验项目",
+                "phase_2": "3-6个月：实施运营优化措施",
+                "phase_3": "6-12个月：推进增长战略项目",
+                "success_metrics": "NPS>50, 运营效率提升20%, 市场份额增长"
+            },
+            "resource_requirements": {
+                "total_initiatives": len(prioritized_recommendations),
+                "high_priority": len([r for r in prioritized_recommendations
+                                    if r.get("strategic_priority") == "customer_centricity"]),
+                "estimated_investment": self._estimate_total_investment(prioritized_recommendations),
+                "management_attention": "高级管理层每月评审"
+            }
+        }
+
+        return materials
+
+    def _estimate_total_investment(self, recommendations: List[ExecutiveRecommendation]) -> str:
+        """
+        Estimate total investment level for all recommendations.
+        """
+        complexity_counts = Counter(rec.get("implementation_complexity", "medium") for rec in recommendations)
+
+        high_count = complexity_counts.get("high", 0)
+        medium_count = complexity_counts.get("medium", 0)
+        low_count = complexity_counts.get("low", 0)
+
+        if high_count >= 3:
+            return "重大投资级别（需要董事会批准）"
+        elif high_count >= 1 or medium_count >= 4:
+            return "中高投资级别（需要高管决策）"
+        elif medium_count >= 2 or low_count >= 3:
+            return "中等投资级别（部门预算范围）"
+        else:
+            return "低投资级别（运营预算范围）"
+
+    def _create_implementation_roadmap(
+        self,
+        prioritized_recommendations: List[ExecutiveRecommendation]
+    ) -> Dict[str, Any]:
+        """
+        Create detailed implementation roadmap.
+        """
+        roadmap = {
+            "immediate_phase": {
+                "timeframe": "0-3个月",
+                "initiatives": [],
+                "key_milestones": [],
+                "resource_focus": "客户体验和风险控制"
+            },
+            "acceleration_phase": {
+                "timeframe": "3-9个月",
+                "initiatives": [],
+                "key_milestones": [],
+                "resource_focus": "运营优化和市场响应"
+            },
+            "growth_phase": {
+                "timeframe": "9-18个月",
+                "initiatives": [],
+                "key_milestones": [],
+                "resource_focus": "创新增长和可持续发展"
+            },
+            "success_metrics": {
+                "phase_1_targets": ["NPS>35", "关键风险控制"],
+                "phase_2_targets": ["NPS>45", "运营效率提升15%"],
+                "phase_3_targets": ["NPS>50", "新增长引擎建立"]
+            }
+        }
+
+        # Distribute recommendations across phases
+        for rec in prioritized_recommendations:
+            timeline = rec.get("timeline", "12个月")
+            priority = rec.get("strategic_priority", "")
+
+            if "3个月" in timeline or priority == "customer_centricity":
+                roadmap["immediate_phase"]["initiatives"].append({
+                    "title": rec["title"],
+                    "complexity": rec.get("implementation_complexity", "medium"),
+                    "success_metric": rec.get("success_metrics", ["待定"])[0] if rec.get("success_metrics") else "待定"
+                })
+            elif "6个月" in timeline or "9个月" in timeline:
+                roadmap["acceleration_phase"]["initiatives"].append({
+                    "title": rec["title"],
+                    "complexity": rec.get("implementation_complexity", "medium"),
+                    "success_metric": rec.get("success_metrics", ["待定"])[0] if rec.get("success_metrics") else "待定"
+                })
+            else:
+                roadmap["growth_phase"]["initiatives"].append({
+                    "title": rec["title"],
+                    "complexity": rec.get("implementation_complexity", "medium"),
+                    "success_metric": rec.get("success_metrics", ["待定"])[0] if rec.get("success_metrics") else "待定"
+                })
+
+        # Set key milestones for each phase
+        roadmap["immediate_phase"]["key_milestones"] = [
+            "客户满意度提升专项启动",
+            "关键风险缓解措施到位",
+            "管理层战略共识达成"
+        ]
+
+        roadmap["acceleration_phase"]["key_milestones"] = [
+            "运营流程优化见效",
+            "市场竞争力提升显现",
+            "组织执行力增强"
+        ]
+
+        roadmap["growth_phase"]["key_milestones"] = [
+            "可持续增长模式确立",
+            "创新能力显著增强",
+            "行业领导地位巩固"
+        ]
+
+        return roadmap

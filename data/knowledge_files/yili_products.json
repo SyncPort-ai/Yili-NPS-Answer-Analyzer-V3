@@ -1,0 +1,489 @@
+{
+  "metadata": {
+    "title": "伊利集团洞察智能体品类品牌渠道清单",
+    "description": "伊利集团各事业部产品线、品牌和小程序渠道的完整清单，用于NPS调研和产品概念测试",
+    "version": "1.0",
+    "last_updated": "2024-09-10",
+    "total_business_units": 8,
+    "total_products": 79,
+    "total_channels": 12
+  },
+  "business_units": [
+    {
+      "name": "液奶事业部",
+      "categories": [
+        "常温白奶", "成人常温酸奶", "常温乳酸菌", "儿童奶", "成人酸味奶", 
+        "中性谷物奶", "休闲口味奶", "包装水", "植物蛋白", "其他"
+      ],
+      "products": [
+        {
+          "brand_id": 2,
+          "brand_name": "金典",
+          "category": "常温白奶",
+          "product_examples": "金典有机奶、金典娟姗奶、金典超滤牛奶",
+          "channel_code": "YILI_APP_3",
+          "channel_name": "金典小程序"
+        },
+        {
+          "brand_id": 3,
+          "brand_name": "伊利母品牌",
+          "category": "常温白奶", 
+          "product_examples": "伊利核桃奶、伊利早餐奶",
+          "channel_code": "YILI_APP_11",
+          "channel_name": "活力伊利小程序"
+        },
+        {
+          "brand_id": 4,
+          "brand_name": "臻浓",
+          "category": "常温白奶",
+          "product_examples": "臻浓金装高钙牛奶、臻浓臻选牧场纯牛奶",
+          "channel_code": "YILI_APP_11",
+          "channel_name": "活力伊利小程序"
+        },
+        {
+          "brand_id": 5,
+          "brand_name": "舒化",
+          "category": "常温白奶",
+          "product_examples": "舒化高钙牛奶、舒化低脂牛奶",
+          "channel_code": "YILI_APP_11",
+          "channel_name": "活力伊利小程序"
+        },
+        {
+          "brand_id": 7,
+          "brand_name": "安慕希",
+          "category": "成人常温酸奶",
+          "product_examples": "安慕希AMX酸奶、安慕希益生菌酸奶、安慕希高端畅饮酸奶",
+          "channel_code": "YILI_APP_2",
+          "channel_name": "安慕希小程序"
+        },
+        {
+          "brand_id": 9,
+          "brand_name": "畅意100%",
+          "category": "常温乳酸菌",
+          "channel_code": "YILI_APP_11",
+          "channel_name": "活力伊利小程序"
+        },
+        {
+          "brand_id": 11,
+          "brand_name": "QQ星",
+          "category": "儿童奶",
+          "channel_code": "YILI_APP_11",
+          "channel_name": "活力伊利小程序"
+        },
+        {
+          "brand_id": 13,
+          "brand_name": "优酸乳",
+          "category": "成人酸味奶",
+          "channel_code": "YILI_APP_11",
+          "channel_name": "活力伊利小程序"
+        },
+        {
+          "brand_id": 15,
+          "brand_name": "谷粒多",
+          "category": "中性谷物奶",
+          "channel_code": "YILI_APP_11",
+          "channel_name": "活力伊利小程序"
+        },
+        {
+          "brand_id": 17,
+          "brand_name": "味可滋",
+          "category": "休闲口味奶",
+          "channel_code": "YILI_APP_11",
+          "channel_name": "活力伊利小程序"
+        },
+        {
+          "brand_id": 19,
+          "brand_name": "伊刻活泉",
+          "category": "包装水",
+          "channel_code": "YILI_APP_11",
+          "channel_name": "活力伊利小程序"
+        },
+        {
+          "brand_id": 21,
+          "brand_name": "植选",
+          "category": "植物蛋白",
+          "channel_code": "YILI_APP_11",
+          "channel_name": "活力伊利小程序"
+        }
+      ]
+    },
+    {
+      "name": "婴幼儿营养品事业部",
+      "categories": [
+        "婴儿牛奶粉", "婴儿羊奶粉", "特配粉", "儿童粉", "婴儿水", "营养剂", "其他"
+      ],
+      "products": [
+        {
+          "brand_id": 32,
+          "brand_name": "金领冠珍护铂萃",
+          "category": "婴儿牛奶粉",
+          "product_examples": "金领冠珍护铂萃婴幼儿配方奶粉",
+          "channel_code": "YILI_APP_21",
+          "channel_name": "金领冠福利站小程序"
+        },
+        {
+          "brand_id": 33,
+          "brand_name": "金领冠珍护",
+          "category": "婴儿牛奶粉",
+          "product_examples": "金领冠珍护婴幼儿配方奶粉、金领冠珍护菁赐有机婴幼儿配方奶粉",
+          "channel_code": "YILI_APP_21",
+          "channel_name": "金领冠福利站小程序"
+        },
+        {
+          "brand_id": 34,
+          "brand_name": "金领冠育护",
+          "category": "婴儿牛奶粉",
+          "channel_code": "YILI_APP_21",
+          "channel_name": "金领冠福利站小程序"
+        },
+        {
+          "brand_id": 35,
+          "brand_name": "金领冠睿护",
+          "category": "婴儿牛奶粉",
+          "channel_code": "YILI_APP_21",
+          "channel_name": "金领冠福利站小程序"
+        },
+        {
+          "brand_id": 36,
+          "brand_name": "金领冠塞纳牧",
+          "category": "婴儿牛奶粉",
+          "channel_code": "YILI_APP_21",
+          "channel_name": "金领冠福利站小程序"
+        },
+        {
+          "brand_id": 38,
+          "brand_name": "金领冠悠滋小羊",
+          "category": "婴儿羊奶粉",
+          "channel_code": "YILI_APP_21",
+          "channel_name": "金领冠福利站小程序"
+        },
+        {
+          "brand_id": 41,
+          "brand_name": "QQ星榛高",
+          "category": "儿童粉",
+          "channel_code": "YILI_APP_27",
+          "channel_name": "伊利爱儿心选小程序"
+        }
+      ]
+    },
+    {
+      "name": "酸奶事业部",
+      "categories": [
+        "低温酸奶", "儿童酸奶", "活性乳酸菌", "含乳饮料", "植物基饮料", 
+        "MilkTalk", "低温鲜奶", "其他"
+      ],
+      "products": [
+        {
+          "brand_name": "畅轻",
+          "category": "低温酸奶",
+          "product_examples": "畅轻0添加利乐冠、畅轻一杯优酪、畅轻利乐冠",
+          "channel_code": "YILI_APP_12",
+          "channel_name": "低温会员福利社"
+        },
+        {
+          "brand_name": "JoyDay芯趣多",
+          "category": "低温酸奶",
+          "channel_code": "YILI_APP_12",
+          "channel_name": "低温会员福利社"
+        },
+        {
+          "brand_name": "大果粒",
+          "category": "低温酸奶",
+          "channel_code": "YILI_APP_12",
+          "channel_name": "低温会员福利社"
+        },
+        {
+          "brand_name": "益消",
+          "category": "低温酸奶",
+          "channel_code": "YILI_APP_12",
+          "channel_name": "低温会员福利社"
+        },
+        {
+          "brand_name": "宫酪",
+          "category": "低温酸奶",
+          "channel_code": "YILI_APP_12",
+          "channel_name": "低温会员福利社"
+        },
+        {
+          "brand_name": "褐色炭烧",
+          "category": "低温酸奶",
+          "channel_code": "YILI_APP_12",
+          "channel_name": "低温会员福利社"
+        },
+        {
+          "brand_name": "每益添",
+          "category": "活性乳酸菌",
+          "product_examples": "每益添小白乳、每益添小瓶、每益添大瓶",
+          "channel_code": "YILI_APP_12",
+          "channel_name": "低温会员福利社"
+        },
+        {
+          "brand_name": "心选滋味",
+          "category": "含乳饮料",
+          "channel_code": "YILI_APP_12",
+          "channel_name": "低温会员福利社"
+        },
+        {
+          "brand_name": "植鲜",
+          "category": "植物基饮料",
+          "channel_code": "YILI_APP_12",
+          "channel_name": "低温会员福利社"
+        },
+        {
+          "brand_name": "MilkTalk",
+          "category": "MilkTalk",
+          "channel_code": "YILI_APP_12",
+          "channel_name": "低温会员福利社"
+        },
+        {
+          "brand_name": "天然牧场",
+          "category": "低温鲜奶",
+          "channel_code": "YILI_APP_12",
+          "channel_name": "低温会员福利社"
+        }
+      ]
+    },
+    {
+      "name": "成人营养品事业部",
+      "categories": [
+        "中老年奶粉", "羊奶粉", "进口奶粉", "全家奶粉", "女士奶粉", 
+        "学生奶粉", "休闲乳制品", "其他"
+      ],
+      "products": [
+        {
+          "brand_name": "欣活",
+          "category": "中老年奶粉",
+          "product_examples": "欣活骨能膳底配方奶粉、欣活心活膳底配方奶粉、欣活纾糖膳底配方奶粉",
+          "channel_code": "YILI_APP_17",
+          "channel_name": "伊家乐享会小程序"
+        },
+        {
+          "brand_name": "倍畅",
+          "category": "羊奶粉",
+          "product_examples": "倍畅羊奶粉、倍畅勉益羊奶粉",
+          "channel_code": "YILI_APP_17",
+          "channel_name": "伊家乐享会小程序"
+        },
+        {
+          "brand_name": "轻慕",
+          "category": "女士奶粉",
+          "channel_code": "YILI_APP_17",
+          "channel_name": "伊家乐享会小程序"
+        },
+        {
+          "brand_name": "全聪",
+          "category": "学生奶粉",
+          "channel_code": "YILI_APP_17",
+          "channel_name": "伊家乐享会小程序"
+        },
+        {
+          "brand_name": "高个子",
+          "category": "学生奶粉",
+          "channel_code": "YILI_APP_17",
+          "channel_name": "伊家乐享会小程序"
+        },
+        {
+          "brand_name": "新食机",
+          "category": "休闲乳制品",
+          "channel_code": "YILI_APP_17",
+          "channel_name": "伊家乐享会小程序"
+        },
+        {
+          "brand_name": "斯谷",
+          "category": "休闲乳制品",
+          "channel_code": "YILI_APP_17",
+          "channel_name": "伊家乐享会小程序"
+        }
+      ]
+    },
+    {
+      "name": "冷饮事业部",
+      "categories": [
+        "巧冰", "奶冰", "水冰", "火炬", "豆冰", "印尼市场", "其他"
+      ],
+      "products": [
+        {
+          "brand_name": "巧乐兹",
+          "category": "巧冰",
+          "product_examples": "巧乐兹四个圈、巧乐兹巧丝绒、巧乐兹熔岩巧巧",
+          "channel_code": "YILI_APP_20",
+          "channel_name": "巧乐兹小程序"
+        },
+        {
+          "brand_name": "绮炫",
+          "category": "巧冰",
+          "channel_code": "YILI_APP_11",
+          "channel_name": "活力伊利小程序"
+        },
+        {
+          "brand_name": "甄稀",
+          "category": "奶冰",
+          "channel_code": "YILI_APP_19",
+          "channel_name": "甄稀小程序"
+        },
+        {
+          "brand_name": "NOC须尽欢",
+          "category": "奶冰",
+          "channel_code": "YILI_APP_18",
+          "channel_name": "须尽欢小程序"
+        },
+        {
+          "brand_name": "妙趣",
+          "category": "奶冰",
+          "channel_code": "YILI_APP_11",
+          "channel_name": "活力伊利小程序"
+        },
+        {
+          "brand_name": "伊利牧场",
+          "category": "奶冰",
+          "channel_code": "YILI_APP_11",
+          "channel_name": "活力伊利小程序"
+        },
+        {
+          "brand_name": "冰工厂",
+          "category": "水冰",
+          "product_examples": "冰工厂炫菠萝、冰工厂山楂爽、冰工厂冰片蜜桃、冰工厂清爽蓝莓",
+          "channel_code": "YILI_APP_11",
+          "channel_name": "活力伊利小程序"
+        },
+        {
+          "brand_name": "火炬",
+          "category": "火炬",
+          "channel_code": "YILI_APP_11",
+          "channel_name": "活力伊利小程序"
+        },
+        {
+          "brand_name": "Joyday",
+          "category": "印尼市场",
+          "channel_code": "YILI_APP_11",
+          "channel_name": "活力伊利小程序"
+        }
+      ]
+    },
+    {
+      "name": "奶酪事业部",
+      "categories": ["奶酪", "其他"],
+      "products": [
+        {
+          "brand_name": "伊家好奶酪",
+          "category": "奶酪",
+          "product_examples": "高钙奶酪弹、双层奶酪棒、乳酪小圆、马苏里拉芝士碎",
+          "channel_code": "YILI_APP_23",
+          "channel_name": "伊家好奶酪"
+        },
+        {
+          "brand_name": "伊利Pro",
+          "category": "奶酪",
+          "product_examples": "东方灵感淡奶油、东方灵感黄油",
+          "channel_code": "YILI_APP_23",
+          "channel_name": "伊家好奶酪"
+        },
+        {
+          "brand_name": "牧恩",
+          "category": "奶酪",
+          "channel_code": "YILI_APP_23",
+          "channel_name": "伊家好奶酪"
+        }
+      ]
+    },
+    {
+      "name": "伊知牛公司",
+      "categories": ["牛肉", "其他"],
+      "products": [
+        {
+          "brand_name": "伊知牛",
+          "category": "牛肉",
+          "product_examples": "牛肉烤肠、国产安格斯牛肉块、酱牛肉",
+          "channel_code": "YILI_APP_11",
+          "channel_name": "活力伊利小程序"
+        }
+      ]
+    },
+    {
+      "name": "康益佳公司",
+      "categories": ["依宝", "其他"],
+      "products": [
+        {
+          "brand_name": "依宝",
+          "category": "依宝",
+          "product_examples": "全价猫粮、全价犬粮、宠物牛奶",
+          "channel_code": "YILI_APP_35",
+          "channel_name": "依宝eBorn小程序"
+        }
+      ]
+    }
+  ],
+  "mini_program_channels": [
+    {
+      "channel_code": "YILI_APP_11",
+      "channel_name": "活力伊利小程序",
+      "description": "伊利集团主要的综合小程序平台，涵盖多个品牌和产品线"
+    },
+    {
+      "channel_code": "YILI_APP_2",
+      "channel_name": "安慕希小程序",
+      "description": "安慕希品牌专属小程序平台"
+    },
+    {
+      "channel_code": "YILI_APP_3",
+      "channel_name": "金典小程序",
+      "description": "金典品牌专属小程序平台"
+    },
+    {
+      "channel_code": "YILI_APP_21",
+      "channel_name": "金领冠福利站小程序",
+      "description": "金领冠婴幼儿营养品专属平台"
+    },
+    {
+      "channel_code": "YILI_APP_12",
+      "channel_name": "低温会员福利社小程序",
+      "description": "酸奶事业部低温产品专属平台"
+    },
+    {
+      "channel_code": "YILI_APP_17",
+      "channel_name": "伊家乐享会小程序",
+      "description": "成人营养品事业部专属平台"
+    },
+    {
+      "channel_code": "YILI_APP_18",
+      "channel_name": "须尽欢小程序",
+      "description": "NOC须尽欢品牌专属平台"
+    },
+    {
+      "channel_code": "YILI_APP_19",
+      "channel_name": "甄稀小程序",
+      "description": "甄稀品牌专属平台"
+    },
+    {
+      "channel_code": "YILI_APP_20",
+      "channel_name": "巧乐兹小程序",
+      "description": "巧乐兹品牌专属平台"
+    },
+    {
+      "channel_code": "YILI_APP_23",
+      "channel_name": "伊家好奶酪小程序",
+      "description": "奶酪事业部专属平台"
+    },
+    {
+      "channel_code": "YILI_APP_35",
+      "channel_name": "依宝eBorn小程序",
+      "description": "依宝宠物用品专属平台"
+    },
+    {
+      "channel_code": "YILI_APP_27",
+      "channel_name": "伊利爱儿心选小程序",
+      "description": "婴幼儿特配粉和儿童产品专属平台"
+    }
+  ],
+  "key_brands": [
+    "金典", "安慕希", "舒化", "QQ星", "优酸乳", "谷粒多", "味可滋", "植选",
+    "金领冠珍护", "金领冠珍护铂萃", "畅轻", "大果粒", "每益添", "巧乐兹", 
+    "甄稀", "须尽欢", "欣活", "倍畅", "伊家好奶酪", "伊知牛", "依宝"
+  ],
+  "usage_scenarios": [
+    "产品NPS调研",
+    "产品概念测试", 
+    "系统NPS调研",
+    "智能体投放策略生成"
+  ]
+}

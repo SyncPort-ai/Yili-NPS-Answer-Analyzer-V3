@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}数据分析实验室 · 伊利智能 NPS 研究中心{% endblock %}
+{% block header_title %}数据分析实验室{% endblock %}
+{% block header_desc %}探索产品、人群、渠道的多维 NPS 洞察，验证多智能体分析能力与推理链路。{% endblock %}
+{% block content %}
+  <section class="grid gap-6 xl:grid-cols-[3fr,2fr]">
+    <div class="card p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="text-lg font-semibold text-slate-900">产品线 NPS 对比</h2>
+          <p class="text-xs text-slate-500">来源：最近一次调研样本，适合校准产品与渠道策略。</p>
+        </div>
+        <a href="/nps-report-v2/demo" class="text-xs text-blue-600">运行 Demo →</a>
+      </div>
+      <div class="space-y-3">
+        {% for item in nps_data %}
+        <div class="flex items-center justify-between rounded-lg border border-slate-100 px-4 py-3">
+          <div class="flex items-center space-x-3">
+            <span class="h-2.5 w-2.5 rounded-full {{ 'bg-blue-600' if item.trend=='up' else 'bg-rose-500' }}"></span>
+            <span class="text-sm font-medium text-slate-900">{{ item.category }}</span>
+          </div>
+          <div class="flex items-center space-x-4">
+            <span class="text-2xl font-semibold text-slate-900">{{ item.nps }}</span>
+            <span class="text-sm {{ 'text-emerald-600' if item.trend=='up' else 'text-rose-500' }}">{{ item.change }}</span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="card p-6">
+      <h3 class="text-lg font-semibold text-slate-900 mb-2">模拟器 · 评分分布</h3>
+      <p class="text-xs text-slate-500 mb-4">根据样本量与偏置，生成拓展分析情景，快速感知不同场景下的分类比例。</p>
+      <form class="mb-4 text-sm" hx-post="/api/simulate/responses" hx-target="#sim-result" hx-swap="innerHTML">
+        <div class="grid grid-cols-3 gap-3">
+          <label class="block text-xs text-slate-500">
+            <span>样本量</span>
+            <input class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2" name="sample_size" value="200" />
+          </label>
+          <label class="block text-xs text-slate-500">
+            <span>推荐者偏置</span>
+            <input class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2" name="promoter_bias" value="0.3" />
+          </label>
+          <label class="block text-xs text-slate-500">
+            <span>贬损者偏置</span>
+            <input class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2" name="detractor_bias" value="0.2" />
+          </label>
+        </div>
+        <button type="submit" class="mt-4 inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-blue-500">生成模拟分布</button>
+      </form>
+      <div id="sim-result" class="text-sm text-slate-700"></div>
+    </div>
+  </section>
+
+  <section class="grid gap-6 lg:grid-cols-2">
+    <div class="card p-6">
+      <h3 class="text-lg font-semibold text-slate-900 mb-2">分析视角手册</h3>
+      <p class="text-xs text-slate-500 mb-4">形成标准化的洞察框架，支撑团队协作。</p>
+      <ul class="space-y-4 text-sm text-slate-600">
+        {% for view in analysis_perspectives %}
+        <li class="rounded-lg border border-slate-100 px-4 py-3">
+          <div class="flex items-center justify-between">
+            <p class="font-medium text-slate-900">{{ view.title }}</p>
+            <span class="badge bg-slate-100 text-slate-600">{{ view.owner }}</span>
+          </div>
+          <p class="text-xs text-slate-500 mt-2">{{ view.details }}</p>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="card p-6">
+      <h3 class="text-lg font-semibold text-slate-900 mb-2">典型细分情景</h3>
+      <p class="text-xs text-slate-500 mb-4">结合人群与渠道识别增长机会与风险。</p>
+      <ul class="space-y-4 text-sm text-slate-600">
+        {% for seg in segment_scenarios %}
+        <li class="rounded-lg border border-slate-100 px-4 py-3">
+          <p class="font-medium text-slate-900">{{ seg.name }}</p>
+          <p class="text-xs text-slate-500 mt-2">{{ seg.insight }}</p>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+
+  <script>
+    document.body.addEventListener('htmx:afterOnLoad', (evt) => {
+      if (!evt.detail || !evt.detail.xhr) return;
+      try {
+        const data = JSON.parse(evt.detail.xhr.response);
+        const target = document.querySelector('#sim-result');
+        if (!target || !data.user_distribution) return;
+        const rows = data.user_distribution.map(u => `<tr><td class='px-2 py-1'>${u.score}</td><td class='px-2 py-1'>${u.people_number}</td><td class='px-2 py-1'>${(u.percentage*100).toFixed(1)}%</td></tr>`).join('');
+        target.innerHTML = `
+          <div class='card p-3 space-y-2'>
+            <p class='text-sm'>NPS: <b>${(data.nps_percent).toFixed(2)}%</b>｜推荐者 ${(data.analysis_type_list[0].type_percentage*100).toFixed(1)}%，中立者 ${(data.analysis_type_list[1].type_percentage*100).toFixed(1)}%，贬损者 ${(data.analysis_type_list[2].type_percentage*100).toFixed(1)}%</p>
+            <div class='overflow-x-auto'>
+              <table class='min-w-full divide-y divide-slate-200 text-xs'>
+                <thead class='bg-slate-50'><tr><th class='px-2 py-1 text-left'>分数</th><th class='px-2 py-1 text-left'>人数</th><th class='px-2 py-1 text-left'>占比</th></tr></thead>
+                <tbody class='divide-y divide-slate-100'>${rows}</tbody>
+              </table>
+            </div>
+          </div>`;
+      } catch (_) {}
+    });
+  </script>
+{% endblock %}

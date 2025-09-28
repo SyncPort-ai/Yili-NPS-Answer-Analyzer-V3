@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% block title %}智能洞察 · 伊利智能 NPS 研究中心{% endblock %}
+{% block header_title %}智能洞察工作台{% endblock %}
+{% block header_desc %}整合 AI 推理与专家观点，聚焦机会、风险与行动闭环。{% endblock %}
+{% block content %}
+  {% set impact_map = {'高':'bg-red-100 text-red-700','中':'bg-amber-100 text-amber-700','低':'bg-emerald-100 text-emerald-700'} %}
+  <section class="grid gap-6 lg:grid-cols-4">
+    <div class="card p-5 space-y-1">
+      <p class="text-xs text-slate-500">洞察总数</p>
+      <p class="text-3xl font-semibold text-blue-600">{{ insight_metrics.insight_total }}</p>
+      <p class="text-xs text-slate-400">待评审与执行</p>
+    </div>
+    <div class="card p-5 space-y-1">
+      <p class="text-xs text-slate-500">增长机会</p>
+      <p class="text-3xl font-semibold text-emerald-600">{{ insight_metrics.opportunities }}</p>
+      <p class="text-xs text-slate-400">含高端市场、年轻客群</p>
+    </div>
+    <div class="card p-5 space-y-1">
+      <p class="text-xs text-slate-500">风险预警</p>
+      <p class="text-3xl font-semibold text-rose-600">{{ insight_metrics.risks }}</p>
+      <p class="text-xs text-slate-400">关注渠道与价格敏感群体</p>
+    </div>
+    <div class="card p-5 space-y-1">
+      <p class="text-xs text-slate-500">NPS 领先优势</p>
+      <p class="text-3xl font-semibold text-violet-600">{{ insight_metrics.advantage }}</p>
+      <p class="text-xs text-slate-400">相较行业平均水平</p>
+    </div>
+  </section>
+
+  <section class="card p-5 flex flex-col gap-3 text-sm text-slate-600">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <p class="text-sm font-semibold text-slate-900">方法论基线 · {{ methodology_doc.title }}</p>
+        <p class="text-xs text-slate-500 mt-1">{{ methodology_doc.summary }}</p>
+      </div>
+      <a href="{{ methodology_doc.href }}" class="inline-flex items-center rounded-lg border border-blue-200 px-3 py-1.5 text-xs font-medium text-blue-700 hover:bg-blue-100">查看方法论 →</a>
+    </div>
+    <p class="text-xs text-slate-500">洞察归因、机会排序与风险提示均以该方法论的“样本质量 / 指标解释 / 行动闭环”原则为准。</p>
+  </section>
+
+  <section class="grid gap-6 xl:grid-cols-[3fr,2fr]">
+    <div class="card p-6">
+      <h2 class="text-lg font-semibold text-slate-900 mb-2">核心洞察</h2>
+      <p class="text-xs text-slate-500 mb-4">汇总多智能体分析结果，提炼可执行洞察。</p>
+      <div class="space-y-4 text-sm text-slate-600">
+        {% for insight in key_insights %}
+        <div class="rounded-lg border border-slate-100 px-5 py-4 hover:bg-slate-50 transition-colors">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div class="flex items-start space-x-3">
+              <div class="h-10 w-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-sm font-semibold">
+                {{ loop.index }}
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-slate-900">{{ insight.title }}</p>
+                <span class="badge bg-slate-100 text-slate-600 mt-1">{{ insight.category }}</span>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2">
+              <span class="badge {{ impact_map.get(insight.impact, 'bg-slate-100 text-slate-600') }}">{{ insight.impact }}影响</span>
+              <div class="flex items-center space-x-1 text-xs">
+                {% if insight.trend == 'up' %}
+                  <span class="text-emerald-600">↑</span>
+                {% else %}
+                  <span class="text-rose-500">↓</span>
+                {% endif %}
+                <span class="text-slate-600 font-medium">{{ insight.delta }}</span>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-slate-600">{{ insight.summary }}</p>
+          {% if insight.actionable %}
+          <div class="mt-3 flex justify-end">
+            <a href="/projects" class="inline-flex items-center rounded-lg border border-slate-200 px-3 py-1.5 text-xs text-blue-600 hover:border-blue-200">制定行动计划 →</a>
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="space-y-6">
+      <div class="card p-6">
+        <h3 class="text-lg font-semibold text-slate-900 mb-2">竞品对比分析</h3>
+        <p class="text-xs text-slate-500 mb-4">结合行业监测与 AI 推理输出的优势/短板对比。</p>
+        <div class="space-y-3 text-sm text-slate-600">
+          {% for competitor in competitor_matrix %}
+          <div class="rounded-lg border border-slate-100 px-4 py-3">
+            <div class="flex items-center justify-between">
+              <p class="text-sm font-medium text-slate-900">{{ competitor.name }}</p>
+              <span class="text-xs font-medium {{ 'text-emerald-600' if competitor.gap >= 0 else 'text-rose-600' }}">
+                {% if competitor.gap > 0 %}+{% endif %}{{ competitor.gap }} pts vs 我们
+              </span>
+            </div>
+            <div class="mt-2 grid gap-2">
+              <p class="text-xs text-emerald-600">核心优势：{{ competitor.strength }}</p>
+              <p class="text-xs text-rose-500">改进机会：{{ competitor.improve }}</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="mt-4 rounded-lg bg-slate-50 px-4 py-3 text-xs text-slate-600">
+          <p>总结：</p>
+          <ul class="mt-2 space-y-1">
+            <li>• 整体 NPS 领先行业 3.2 个百分点，需巩固领先优势。</li>
+            <li>• 高端市场与年轻客群表现突出，继续加强投入。</li>
+            <li>• 下沉市场渠道体验是短板，需联动渠道团队优化。</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card p-6">
+        <h3 class="text-lg font-semibold text-slate-900 mb-2">AI 洞察信号</h3>
+        <p class="text-xs text-slate-500 mb-4">实时采集多智能体输出，支持策略预判。</p>
+        <ul class="space-y-3 text-sm text-slate-600">
+          {% for signal in ai_signals %}
+          <li class="rounded-lg border border-slate-100 px-4 py-3">
+            <div class="flex items-center justify-between">
+              <p class="text-sm font-medium text-slate-900">{{ signal.title }}</p>
+              <span class="badge bg-slate-100 text-slate-600">{{ signal.category }}</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-1">{{ signal.detail }}</p>
+            <p class="text-[11px] text-slate-400 mt-1">置信度：{{ (signal.confidence * 100) | round(0) }}%</p>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid gap-6 lg:grid-cols-[3fr,2fr]">
+    <div class="card p-6">
+      <h3 class="text-lg font-semibold text-slate-900 mb-2">行动建议优先级</h3>
+      <p class="text-xs text-slate-500 mb-4">根据影响力与紧急程度排序执行策略。</p>
+      <div class="space-y-3 text-sm text-slate-600">
+        {% for item in action_plan %}
+        <div class="rounded-lg border border-slate-100 px-4 py-3 flex items-center gap-4">
+          <div class="h-9 w-9 rounded-full bg-blue-100 text-blue-600 font-semibold flex items-center justify-center">{{ item.priority }}</div>
+          <div class="flex-1">
+            <p class="text-sm font-medium text-slate-900">{{ item.title }}</p>
+            <p class="text-xs text-slate-500 mt-1">责任团队：{{ item.owner }} · 时间：{{ item.timeline }}</p>
+          </div>
+          <span class="badge {{ impact_map.get(item.impact, 'bg-slate-100 text-slate-600') }}">{{ item.impact }}影响</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="card p-6">
+      <h3 class="text-lg font-semibold text-slate-900 mb-2">专家观点精选</h3>
+      <p class="text-xs text-slate-500 mb-4">结合行业专家与顾问意见，辅助策略共创。</p>
+      <ul class="space-y-3 text-sm text-slate-600">
+        {% for expert in expert_spotlights %}
+        <li class="rounded-lg border border-slate-100 px-4 py-3">
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <p class="text-sm font-medium text-slate-900">{{ expert.name }} · {{ expert.title }}</p>
+              <p class="text-xs text-slate-500">{{ expert.institution }} · {{ expert.topic }}</p>
+            </div>
+            <span class="badge bg-slate-100 text-slate-600">评分 {{ expert.rating }}</span>
+          </div>
+          <p class="text-xs text-slate-500 mt-2">{{ expert.insight }}</p>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,515 @@
+{
+  "survey_response_data": {
+    "survey_metadata": {
+      "survey_type": "system_platform",
+      "survey_title": "定量智能体-系统平台NPS调研模板",
+      "data_source": "定量智能体-系统平台NPS调研模板_答案文本数据列表_202509101848.xlsx",
+      "export_timestamp": "2025-09-10T18:48:00Z",
+      "version": "2.0.0"
+    },
+    "survey_config": {
+      "nps_question": {
+        "question_id": "Q1",
+        "question_text": "您向同事推荐XXXX的可能性多大？",
+        "scale": {
+          "min": 0,
+          "max": 10,
+          "format": "分值制"
+        }
+      },
+      "factor_questions": {
+        "negative_factors": {
+          "question_id": "Q2",
+          "question_text": "您不推荐XXX的原因有哪些？",
+          "factor_list": [
+            "操作复杂难上手",
+            "界面内容不清晰",
+            "功能难找",
+            "性能不稳定",
+            "界面不好看",
+            "性能不全",
+            "内容没价值",
+            "内容太有限",
+            "内容更新滞后",
+            "数据帮助不大",
+            "应用与服务介绍不清晰",
+            "活动单调",
+            "其他"
+          ]
+        },
+        "positive_factors": {
+          "question_id": "Q6",
+          "question_text": "您推荐XXX的原因有哪些？",
+          "factor_list": [
+            "容易上手",
+            "界面清晰易理解",
+            "能高效完成任务",
+            "性能稳定",
+            "界面美观",
+            "功能完善",
+            "内容质量高",
+            "内容时效性高",
+            "数据有帮助",
+            "内容很丰富",
+            "应用与服务介绍清晰",
+            "活动丰富",
+            "其他"
+          ]
+        }
+      },
+      "open_ended_questions": [
+        {
+          "question_id": "Q5",
+          "question_text": "您还期待XXX提供哪些方面的内容或数据？",
+          "question_type": "expectation"
+        },
+        {
+          "question_id": "Q3",
+          "question_text": "您对XXX还有哪些建议？",
+          "question_type": "suggestion"
+        }
+      ]
+    },
+    "response_data": [
+      {
+        "response_metadata": {
+          "user_id": "10",
+          "response_id": "vb1oD4XQ",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-01T16:51:47",
+            "submit_time": "2025-09-01T16:52:20",
+            "duration": "33秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          }
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": ["活动单调"],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": "暂无",
+          "suggestions": "没有",
+          "specific_reasons": {
+            "negative": null,
+            "positive": null
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "9",
+          "response_id": "5Dw6q4rZ",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-01T15:45:29",
+            "submit_time": "2025-09-01T15:47:02",
+            "duration": "1分钟33秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          }
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": ["界面内容不清晰", "数据帮助不大"],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": "完整的产品/服务说明（功能、参数、使用场景）",
+          "suggestions": "交互设计细节（操作流程图、界面规范）",
+          "specific_reasons": {
+            "negative": null,
+            "positive": null
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "8",
+          "response_id": "8Gwk7wzV",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-01T14:07:07",
+            "submit_time": "2025-09-01T14:07:50",
+            "duration": "43秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          }
+        },
+        "nps_score": {
+          "value": 10,
+          "raw_value": "10分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": ["界面美观", "功能完善", "内容质量高", "活动丰富"],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": "口味多样性",
+          "suggestions": "容量多一些",
+          "specific_reasons": {
+            "negative": null,
+            "positive": null
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "7",
+          "response_id": "9O43aMa0",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-01T14:06:11",
+            "submit_time": "2025-09-01T14:06:42",
+            "duration": "30秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          }
+        },
+        "nps_score": {
+          "value": 9,
+          "raw_value": "9分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": ["界面清晰易理解", "性能稳定", "应用与服务介绍清晰"],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": "提供一些真实有效的数据",
+          "suggestions": "优化使用流程",
+          "specific_reasons": {
+            "negative": null,
+            "positive": null
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "6",
+          "response_id": "GkMbEwKa",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-01T14:05:02",
+            "submit_time": "2025-09-01T14:05:43",
+            "duration": "40秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          }
+        },
+        "nps_score": {
+          "value": 9,
+          "raw_value": "9分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": ["能高效完成任务", "功能完善", "活动丰富"],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": "可以分类展示，分类选择",
+          "suggestions": "没有建议了",
+          "specific_reasons": {
+            "negative": null,
+            "positive": null
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "5",
+          "response_id": "k9wV94gZ",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "进行中",
+          "timing": {
+            "start_time": "2025-09-01T14:04:35",
+            "submit_time": null,
+            "duration": ""
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          }
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": ["操作复杂难上手", "功能难找"],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": "",
+          "suggestions": "",
+          "specific_reasons": {
+            "negative": null,
+            "positive": null
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "4",
+          "response_id": "2X1eq1rD",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "进行中",
+          "timing": {
+            "start_time": "2025-09-01T14:04:21",
+            "submit_time": null,
+            "duration": ""
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          }
+        },
+        "nps_score": {
+          "value": null,
+          "raw_value": "",
+          "category": null
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": "",
+          "suggestions": "",
+          "specific_reasons": {
+            "negative": null,
+            "positive": null
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "3",
+          "response_id": "bKwXYM2X",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-01T14:02:13",
+            "submit_time": "2025-09-01T14:03:18",
+            "duration": "1分钟4秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          }
+        },
+        "nps_score": {
+          "value": 8,
+          "raw_value": "8分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": "倾向营养成分",
+          "suggestions": "价格适中、包装漂亮（也很重要，看了就心情愉悦）",
+          "specific_reasons": {
+            "negative": null,
+            "positive": null
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "2",
+          "response_id": "pV4dmw0B",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-01T14:01:25",
+            "submit_time": "2025-09-01T14:05:13",
+            "duration": "3分钟47秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          }
+        },
+        "nps_score": {
+          "value": 8,
+          "raw_value": "8分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": "实时新闻",
+          "suggestions": "没有建议",
+          "specific_reasons": {
+            "negative": null,
+            "positive": null
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "1",
+          "response_id": "dowR54JZ",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-01T14:00:33",
+            "submit_time": "2025-09-01T14:03:09",
+            "duration": "2分钟36秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          }
+        },
+        "nps_score": {
+          "value": 3,
+          "raw_value": "3分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": ["操作复杂难上手", "数据帮助不大"],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": "提供一些操作的历史数据",
+          "suggestions": "希望优化操作流程",
+          "specific_reasons": {
+            "negative": null,
+            "positive": null
+          }
+        }
+      }
+    ]
+  },
+  "survey_analysis_data": {
+    "base_analysis_result": "1. 用户不推荐XXX的主要原因：操作复杂难上手、界面内容不清晰、活动单调和数据帮助不大，其中数据帮助不大占比最高（66.67%）。功能难找、性能不稳定等问题未被提及。<br>2. 用户推荐XXX的主要原因：功能完善和活动丰富（各占66.67%），其次是界面清晰易理解、能高效完成任务、性能稳定、界面美观、内容质量高和应用与服务介绍清晰（各占33.33%）。容易上手、内容时效性高等未被提及。<br>3. 用户最期待XXX改进的内容或数据：信息透明与分类展示（占比62.5%），其次是产品多样性与营养价值优化（占比25%）。<br>4. 用户对XXX的主要建议：使用流程优化建议（占比50%），其次是产品包装与价格优势（占比37.5%）。<br>综上所述，XXX在功能完善和活动丰富方面表现较好，但在数据帮助、操作便捷性和信息透明度方面有待改进。用户更关注信息透明与分类展示，同时对使用流程优化和产品包装与价格优势提出了较多建议。",
+    "cross_analysis_result": null,
+    "kano_analysis_result": null,
+    "psm_analysis_result": null,
+    "maxdiff_analysis_result": null,
+    "nps_analysis_result": "1. NPS值为-0.1111，表明用户整体满意度较低，贬损者比例高于推荐者。 <br>2. 贬损者占比44%，显著高于推荐者（33%）和中立者（22%），说明存在较多不满意的用户。 <br>3. 推荐者（9-10分）和中立者（7-8分）合计占比55%，仍有部分用户对产品或服务持积极或中立态度。 <br>4. 总体来看，用户反馈呈现负面倾向，需重点关注贬损者的不满原因并采取改进措施，以提升整体满意度。"
+  },
+  "persist_outputs": true
+}

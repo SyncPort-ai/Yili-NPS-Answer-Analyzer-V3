@@ -1,0 +1,5590 @@
+{
+  "workflow_id": "workflow_d181f0e8",
+  "workflow_phase": "completed",
+  "workflow_start_time": "2025-09-25 02:16:48.602127",
+  "workflow_version": "3.0.0",
+  "raw_data": [
+    {
+      "response_id": "rich_test_001",
+      "customer_data": {
+        "customer_id": "test_001",
+        "demographics": {
+          "survey_method": "链接二维码",
+          "completion_time": "5分钟",
+          "status": "已完成",
+          "ai_tag_status": "未标记",
+          "response_type": "正式"
+        }
+      },
+      "nps_score": 9,
+      "feedback_text": "不推荐原因: 包装设计确实需要改进，颜色搭配不够吸引人，而且材质感觉有点廉价。希望能设计得更高档一些，符合伊利品牌的定位。. 推荐原因: 伊利安慕希的口感真的很棒，浓郁顺滑，而且蛋白质含量高，营养价值好。杨幂代言的形象也很不错，感觉很有品质保证。价格虽然不算便宜，但是物有所值。我已经喝了两年多了，品质一直很稳定，所以很愿意推荐给朋友们。. 不满意因素: 包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）. 满意因素: 喜欢品牌或代言人、赞助综艺等宣传内容. 满意因素: 产品物有所值、性价比高. 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应",
+      "metadata": {
+        "survey_date": "2025-09-25 10:00:00",
+        "submit_time": "2025-09-25 10:05:00",
+        "channel": "链接二维码",
+        "response_type": "正式",
+        "duration": "5分钟",
+        "ai_tag_reason": "",
+        "manual_tag_status": "未标记",
+        "manual_tag_reason": ""
+      }
+    },
+    {
+      "response_id": "rich_test_002",
+      "customer_data": {
+        "customer_id": "test_002",
+        "demographics": {
+          "survey_method": "链接二维码",
+          "completion_time": "3分钟",
+          "status": "已完成",
+          "ai_tag_status": "未标记",
+          "response_type": "正式"
+        }
+      },
+      "nps_score": 3,
+      "feedback_text": "不推荐原因: 价格确实太高了，一盒12支要30多块钱，比普通酸奶贵了一倍。而且口味有点过甜，不够天然。广告说的那些功能我也没感觉到，感觉就是普通的酸奶。性价比不高，不值得这个价钱。. 推荐原因: 包装设计还是不错的，看起来比较高档，送人也拿得出手。. 不满意因素: 产品价格太贵，性价比不高. 不满意因素: 产品口味口感不好. 不满意因素: 没有感知到产品宣传的功能. 满意因素: 包装设计好（如醒目、美观，材质好，便携、方便打开等）",
+      "metadata": {
+        "survey_date": "2025-09-25 11:00:00",
+        "submit_time": "2025-09-25 11:03:00",
+        "channel": "链接二维码",
+        "response_type": "正式",
+        "duration": "3分钟",
+        "ai_tag_reason": "",
+        "manual_tag_status": "未标记",
+        "manual_tag_reason": ""
+      }
+    },
+    {
+      "response_id": "rich_test_003",
+      "customer_data": {
+        "customer_id": "test_003",
+        "demographics": {
+          "survey_method": "链接二维码",
+          "completion_time": "4分钟",
+          "status": "已完成",
+          "ai_tag_status": "未标记",
+          "response_type": "正式"
+        }
+      },
+      "nps_score": 7,
+      "feedback_text": "不推荐原因: 促销活动太少了，而且折扣力度不大。另外网购的时候物流有点慢，有一次还收到了过期的产品，售后处理也不够及时。希望能改善服务质量。. 推荐原因: 口感确实很好，比其他品牌的酸奶更浓稠，蛋白质含量也高。喝了之后确实感觉消化好了一些，可能是益生菌的作用。总体来说产品质量还是值得信赖的，就是服务需要提升。. 不满意因素: 促销活动不好（如对赠品、活动力度/规则等不满意）. 不满意因素: 物流配送、门店导购、售后等服务体验不好. 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应. 满意因素: 满意产品宣传的功能（如促进消化、增强免疫、助睡眠等）",
+      "metadata": {
+        "survey_date": "2025-09-25 12:00:00",
+        "submit_time": "2025-09-25 12:04:00",
+        "channel": "链接二维码",
+        "response_type": "正式",
+        "duration": "4分钟",
+        "ai_tag_reason": "",
+        "manual_tag_status": "未标记",
+        "manual_tag_reason": ""
+      }
+    }
+  ],
+  "input_metadata": {},
+  "agent_outputs": {},
+  "agent_sequence": [],
+  "checkpoints": [],
+  "total_tokens_used": 0,
+  "total_llm_calls": 0,
+  "total_processing_time_ms": 0,
+  "memory_peak_mb": 0.0,
+  "errors": [],
+  "warnings": [],
+  "retry_count": 0,
+  "failed_agents": [],
+  "language": "zh-CN",
+  "report_format_preferences": {},
+  "emphasis_areas": [],
+  "excluded_topics": [],
+  "input_data": {
+    "survey_responses": [
+      {
+        "response_id": "rich_test_001",
+        "customer_data": {
+          "customer_id": "test_001",
+          "demographics": {
+            "survey_method": "链接二维码",
+            "completion_time": "5分钟",
+            "status": "已完成",
+            "ai_tag_status": "未标记",
+            "response_type": "正式"
+          }
+        },
+        "nps_score": 9,
+        "feedback_text": "不推荐原因: 包装设计确实需要改进，颜色搭配不够吸引人，而且材质感觉有点廉价。希望能设计得更高档一些，符合伊利品牌的定位。. 推荐原因: 伊利安慕希的口感真的很棒，浓郁顺滑，而且蛋白质含量高，营养价值好。杨幂代言的形象也很不错，感觉很有品质保证。价格虽然不算便宜，但是物有所值。我已经喝了两年多了，品质一直很稳定，所以很愿意推荐给朋友们。. 不满意因素: 包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）. 满意因素: 喜欢品牌或代言人、赞助综艺等宣传内容. 满意因素: 产品物有所值、性价比高. 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应",
+        "metadata": {
+          "survey_date": "2025-09-25 10:00:00",
+          "submit_time": "2025-09-25 10:05:00",
+          "channel": "链接二维码",
+          "response_type": "正式",
+          "duration": "5分钟",
+          "ai_tag_reason": "",
+          "manual_tag_status": "未标记",
+          "manual_tag_reason": ""
+        }
+      },
+      {
+        "response_id": "rich_test_002",
+        "customer_data": {
+          "customer_id": "test_002",
+          "demographics": {
+            "survey_method": "链接二维码",
+            "completion_time": "3分钟",
+            "status": "已完成",
+            "ai_tag_status": "未标记",
+            "response_type": "正式"
+          }
+        },
+        "nps_score": 3,
+        "feedback_text": "不推荐原因: 价格确实太高了，一盒12支要30多块钱，比普通酸奶贵了一倍。而且口味有点过甜，不够天然。广告说的那些功能我也没感觉到，感觉就是普通的酸奶。性价比不高，不值得这个价钱。. 推荐原因: 包装设计还是不错的，看起来比较高档，送人也拿得出手。. 不满意因素: 产品价格太贵，性价比不高. 不满意因素: 产品口味口感不好. 不满意因素: 没有感知到产品宣传的功能. 满意因素: 包装设计好（如醒目、美观，材质好，便携、方便打开等）",
+        "metadata": {
+          "survey_date": "2025-09-25 11:00:00",
+          "submit_time": "2025-09-25 11:03:00",
+          "channel": "链接二维码",
+          "response_type": "正式",
+          "duration": "3分钟",
+          "ai_tag_reason": "",
+          "manual_tag_status": "未标记",
+          "manual_tag_reason": ""
+        }
+      },
+      {
+        "response_id": "rich_test_003",
+        "customer_data": {
+          "customer_id": "test_003",
+          "demographics": {
+            "survey_method": "链接二维码",
+            "completion_time": "4分钟",
+            "status": "已完成",
+            "ai_tag_status": "未标记",
+            "response_type": "正式"
+          }
+        },
+        "nps_score": 7,
+        "feedback_text": "不推荐原因: 促销活动太少了，而且折扣力度不大。另外网购的时候物流有点慢，有一次还收到了过期的产品，售后处理也不够及时。希望能改善服务质量。. 推荐原因: 口感确实很好，比其他品牌的酸奶更浓稠，蛋白质含量也高。喝了之后确实感觉消化好了一些，可能是益生菌的作用。总体来说产品质量还是值得信赖的，就是服务需要提升。. 不满意因素: 促销活动不好（如对赠品、活动力度/规则等不满意）. 不满意因素: 物流配送、门店导购、售后等服务体验不好. 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应. 满意因素: 满意产品宣传的功能（如促进消化、增强免疫、助睡眠等）",
+        "metadata": {
+          "survey_date": "2025-09-25 12:00:00",
+          "submit_time": "2025-09-25 12:04:00",
+          "channel": "链接二维码",
+          "response_type": "正式",
+          "duration": "4分钟",
+          "ai_tag_reason": "",
+          "manual_tag_status": "未标记",
+          "manual_tag_reason": ""
+        }
+      }
+    ],
+    "responses": [
+      {
+        "response_id": "rich_test_001",
+        "customer_data": {
+          "customer_id": "test_001",
+          "demographics": {
+            "survey_method": "链接二维码",
+            "completion_time": "5分钟",
+            "status": "已完成",
+            "ai_tag_status": "未标记",
+            "response_type": "正式"
+          }
+        },
+        "nps_score": 9,
+        "feedback_text": "不推荐原因: 包装设计确实需要改进，颜色搭配不够吸引人，而且材质感觉有点廉价。希望能设计得更高档一些，符合伊利品牌的定位。. 推荐原因: 伊利安慕希的口感真的很棒，浓郁顺滑，而且蛋白质含量高，营养价值好。杨幂代言的形象也很不错，感觉很有品质保证。价格虽然不算便宜，但是物有所值。我已经喝了两年多了，品质一直很稳定，所以很愿意推荐给朋友们。. 不满意因素: 包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）. 满意因素: 喜欢品牌或代言人、赞助综艺等宣传内容. 满意因素: 产品物有所值、性价比高. 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应",
+        "metadata": {
+          "survey_date": "2025-09-25 10:00:00",
+          "submit_time": "2025-09-25 10:05:00",
+          "channel": "链接二维码",
+          "response_type": "正式",
+          "duration": "5分钟",
+          "ai_tag_reason": "",
+          "manual_tag_status": "未标记",
+          "manual_tag_reason": ""
+        }
+      },
+      {
+        "response_id": "rich_test_002",
+        "customer_data": {
+          "customer_id": "test_002",
+          "demographics": {
+            "survey_method": "链接二维码",
+            "completion_time": "3分钟",
+            "status": "已完成",
+            "ai_tag_status": "未标记",
+            "response_type": "正式"
+          }
+        },
+        "nps_score": 3,
+        "feedback_text": "不推荐原因: 价格确实太高了，一盒12支要30多块钱，比普通酸奶贵了一倍。而且口味有点过甜，不够天然。广告说的那些功能我也没感觉到，感觉就是普通的酸奶。性价比不高，不值得这个价钱。. 推荐原因: 包装设计还是不错的，看起来比较高档，送人也拿得出手。. 不满意因素: 产品价格太贵，性价比不高. 不满意因素: 产品口味口感不好. 不满意因素: 没有感知到产品宣传的功能. 满意因素: 包装设计好（如醒目、美观，材质好，便携、方便打开等）",
+        "metadata": {
+          "survey_date": "2025-09-25 11:00:00",
+          "submit_time": "2025-09-25 11:03:00",
+          "channel": "链接二维码",
+          "response_type": "正式",
+          "duration": "3分钟",
+          "ai_tag_reason": "",
+          "manual_tag_status": "未标记",
+          "manual_tag_reason": ""
+        }
+      },
+      {
+        "response_id": "rich_test_003",
+        "customer_data": {
+          "customer_id": "test_003",
+          "demographics": {
+            "survey_method": "链接二维码",
+            "completion_time": "4分钟",
+            "status": "已完成",
+            "ai_tag_status": "未标记",
+            "response_type": "正式"
+          }
+        },
+        "nps_score": 7,
+        "feedback_text": "不推荐原因: 促销活动太少了，而且折扣力度不大。另外网购的时候物流有点慢，有一次还收到了过期的产品，售后处理也不够及时。希望能改善服务质量。. 推荐原因: 口感确实很好，比其他品牌的酸奶更浓稠，蛋白质含量也高。喝了之后确实感觉消化好了一些，可能是益生菌的作用。总体来说产品质量还是值得信赖的，就是服务需要提升。. 不满意因素: 促销活动不好（如对赠品、活动力度/规则等不满意）. 不满意因素: 物流配送、门店导购、售后等服务体验不好. 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应. 满意因素: 满意产品宣传的功能（如促进消化、增强免疫、助睡眠等）",
+        "metadata": {
+          "survey_date": "2025-09-25 12:00:00",
+          "submit_time": "2025-09-25 12:04:00",
+          "channel": "链接二维码",
+          "response_type": "正式",
+          "duration": "4分钟",
+          "ai_tag_reason": "",
+          "manual_tag_status": "未标记",
+          "manual_tag_reason": ""
+        }
+      }
+    ]
+  },
+  "cleaned_data": {
+    "total_responses": 3,
+    "valid_responses": 3,
+    "invalid_responses": 0,
+    "cleaned_responses": [
+      {
+        "response_id": "rich_test_001",
+        "timestamp": "2025-09-25 02:16:48.604001",
+        "nps_score": 9,
+        "comment": "不推荐原因: 包装设计确实需要改进，颜色搭配不够吸引人，而且材质感觉有点廉价。希望能设计得更[姓名]，符合伊利品牌的定位。. 推荐原因: 伊利安慕希的口感真的很棒，浓郁顺滑，而且蛋[姓名]高，营养价值好。[姓名]的形象也很不错，感觉很有品质保证。价格虽然不算便宜，但是物有所值。我已经喝了两年多了，品质一直很稳定，所以很愿意推荐给朋友们。. 不满意因素: 包装设计不好（如不够醒目、美观，材质不好，不便携、不[姓名]等）. 满意因素: 喜欢品牌或代言人、赞助综艺等宣传内容. 满意因素: 产品物有所值、性价比[姓名] 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应",
+        "product_line": null,
+        "customer_segment": null,
+        "channel": null,
+        "metadata": {
+          "survey_date": "2025-09-25 10:00:00",
+          "submit_time": "2025-09-25 10:05:00",
+          "channel": "链接二维码",
+          "response_type": "正式",
+          "duration": "5分钟",
+          "ai_tag_reason": "",
+          "manual_tag_status": "未标记",
+          "manual_tag_reason": ""
+        }
+      },
+      {
+        "response_id": "rich_test_002",
+        "timestamp": "2025-09-25 02:16:48.604145",
+        "nps_score": 3,
+        "comment": "不推荐原因: 价格确实太[姓名]，一盒12支要30多块钱，比普通酸奶贵了一倍。而且口味有点过甜，不够天然。广告说的那些功能我也没感觉到，感觉就是普通的酸奶。性价比不高，不值得这个价钱。. 推荐原因: 包装设计还是不错的，看起来比较[姓名]，送人也拿得出手。. 不满意因素: 产品价格太贵，性价比不[姓名] 不满意因素: 产品口味口感不好. 不满意因素: 没有感知到产品宣传的功能. 满意因素: 包装设计好（如醒目、美观，材质好，便携、[姓名]等）",
+        "product_line": null,
+        "customer_segment": null,
+        "channel": null,
+        "metadata": {
+          "survey_date": "2025-09-25 11:00:00",
+          "submit_time": "2025-09-25 11:03:00",
+          "channel": "链接二维码",
+          "response_type": "正式",
+          "duration": "3分钟",
+          "ai_tag_reason": "",
+          "manual_tag_status": "未标记",
+          "manual_tag_reason": ""
+        }
+      },
+      {
+        "response_id": "rich_test_003",
+        "timestamp": "2025-09-25 02:16:48.604292",
+        "nps_score": 7,
+        "comment": "不推荐原因: 促销活动太少了，而且折扣力度不大。另外网购的时候物流有点慢，有一次还收到了过期的产品，售后处理也不够及时。希望能改善服务质量。. 推荐原因: 口感确实很好，比其他品牌的酸奶更浓稠，蛋[姓名]也高。喝了之后确实感觉消化好了一些，可能是益生菌的作用。总体来说产品质量还是值得信赖的，就是服务需要提升。. 不满意因素: 促销活动不好（如对赠品、活动力度/规则等不满意）. 不满意因素: 物流配送、门店导购、售后等服务体验不好. 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应. 满意因素: 满意产品宣传的功能（如促进消化、增强免疫、助睡眠等）",
+        "product_line": null,
+        "customer_segment": null,
+        "channel": null,
+        "metadata": {
+          "survey_date": "2025-09-25 12:00:00",
+          "submit_time": "2025-09-25 12:04:00",
+          "channel": "链接二维码",
+          "response_type": "正式",
+          "duration": "4分钟",
+          "ai_tag_reason": "",
+          "manual_tag_status": "未标记",
+          "manual_tag_reason": ""
+        }
+      }
+    ],
+    "data_quality": "high",
+    "cleaning_notes": [],
+    "pii_scrubbed": true
+  },
+  "summary": {
+    "total_analyzed": 3,
+    "sentiment_distribution": {
+      "mixed": {
+        "count": 3,
+        "percentage": 100.0
+      }
+    },
+    "top_themes": [
+      {
+        "theme": "品质",
+        "count": 3
+      },
+      {
+        "theme": "口感",
+        "count": 3
+      },
+      {
+        "theme": "包装",
+        "count": 2
+      },
+      {
+        "theme": "价格",
+        "count": 2
+      },
+      {
+        "theme": "功效",
+        "count": 2
+      },
+      {
+        "theme": "产品_安慕希",
+        "count": 1
+      },
+      {
+        "theme": "服务",
+        "count": 1
+      }
+    ],
+    "key_phrases": [
+      "满意因素",
+      "满意",
+      "因素",
+      "姓名",
+      "推荐",
+      "推荐原因",
+      "活动",
+      "产品"
+    ],
+    "emotion_summary": {
+      "joy": 0.36,
+      "trust": 0.19,
+      "anticipation": 0.14,
+      "surprise": 0.0,
+      "sadness": 0.0,
+      "disgust": 0.0,
+      "anger": 0.31,
+      "fear": 0.0
+    }
+  },
+  "nps_metrics": {
+    "nps_score": 0.0,
+    "promoters_count": 1,
+    "passives_count": 1,
+    "detractors_count": 1,
+    "promoters_percentage": 33.33333333333333,
+    "passives_percentage": 33.33333333333333,
+    "detractors_percentage": 33.33333333333333,
+    "confidence_interval": [
+      -75.4404351741111,
+      75.4404351741111
+    ],
+    "sample_size": 3,
+    "statistical_significance": "False"
+  },
+  "segment_analysis": {
+    "score_distribution": {
+      "9": 1,
+      "3": 1,
+      "7": 1
+    },
+    "quartiles": {
+      "q1": 5.0,
+      "median": 7.0,
+      "q3": 8.0,
+      "mean": 6.333333333333333,
+      "std": 2.494438257849294
+    }
+  },
+  "temporal_analysis": {},
+  "statistical_analysis": {},
+  "quantitative_insights": [
+    "NPS得分为0.0，处于中等水平，有改进空间",
+    "95%置信区间为[-75.4, 75.4]，样本量3具有统计代表性"
+  ],
+  "tagged_responses": [
+    {
+      "response_id": "rich_test_001",
+      "original_text": "不推荐原因: 包装设计确实需要改进，颜色搭配不够吸引人，而且材质感觉有点廉价。希望能设计得更[姓名]，符合伊利品牌的定位。. 推荐原因: 伊利安慕希的口感真的很棒，浓郁顺滑，而且蛋[姓名]高，营养价值好。[姓名]的形象也很不错，感觉很有品质保证。价格虽然不算便宜，但是物有所值。我已经喝了两年多了，品质一直很稳定，所以很愿意推荐给朋友们。. 不满意因素: 包装设计不好（如不够醒目、美观，材质不好，不便携、不[姓名]等）. 满意因素: 喜欢品牌或代言人、赞助综艺等宣传内容. 满意因素: 产品物有所值、性价比[姓名] 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应",
+      "tags": [
+        "品质",
+        "包装",
+        "产品_安慕希",
+        "价格",
+        "功效",
+        "口感"
+      ],
+      "sentiment": "mixed",
+      "emotion_scores": {
+        "joy": 0.33,
+        "trust": 0.33,
+        "anticipation": 0.17,
+        "surprise": 0.0,
+        "sadness": 0.0,
+        "disgust": 0.0,
+        "anger": 0.17,
+        "fear": 0.0
+      },
+      "key_phrases": [
+        "满意因素",
+        "姓名",
+        "满意",
+        "因素",
+        "推荐"
+      ]
+    },
+    {
+      "response_id": "rich_test_002",
+      "original_text": "不推荐原因: 价格确实太[姓名]，一盒12支要30多块钱，比普通酸奶贵了一倍。而且口味有点过甜，不够天然。广告说的那些功能我也没感觉到，感觉就是普通的酸奶。性价比不高，不值得这个价钱。. 推荐原因: 包装设计还是不错的，看起来比较[姓名]，送人也拿得出手。. 不满意因素: 产品价格太贵，性价比不[姓名] 不满意因素: 产品口味口感不好. 不满意因素: 没有感知到产品宣传的功能. 满意因素: 包装设计好（如醒目、美观，材质好，便携、[姓名]等）",
+      "tags": [
+        "口感",
+        "品质",
+        "价格",
+        "包装"
+      ],
+      "sentiment": "mixed",
+      "emotion_scores": {
+        "joy": 0.5,
+        "trust": 0.0,
+        "anticipation": 0.0,
+        "surprise": 0.0,
+        "sadness": 0.0,
+        "disgust": 0.0,
+        "anger": 0.5,
+        "fear": 0.0
+      },
+      "key_phrases": [
+        "满意因素",
+        "姓名",
+        "满意",
+        "因素",
+        "推荐原因"
+      ]
+    },
+    {
+      "response_id": "rich_test_003",
+      "original_text": "不推荐原因: 促销活动太少了，而且折扣力度不大。另外网购的时候物流有点慢，有一次还收到了过期的产品，售后处理也不够及时。希望能改善服务质量。. 推荐原因: 口感确实很好，比其他品牌的酸奶更浓稠，蛋[姓名]也高。喝了之后确实感觉消化好了一些，可能是益生菌的作用。总体来说产品质量还是值得信赖的，就是服务需要提升。. 不满意因素: 促销活动不好（如对赠品、活动力度/规则等不满意）. 不满意因素: 物流配送、门店导购、售后等服务体验不好. 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应. 满意因素: 满意产品宣传的功能（如促进消化、增强免疫、助睡眠等）",
+      "tags": [
+        "服务",
+        "口感",
+        "品质",
+        "功效"
+      ],
+      "sentiment": "mixed",
+      "emotion_scores": {
+        "joy": 0.25,
+        "trust": 0.25,
+        "anticipation": 0.25,
+        "surprise": 0.0,
+        "sadness": 0.0,
+        "disgust": 0.0,
+        "anger": 0.25,
+        "fear": 0.0
+      },
+      "key_phrases": [
+        "满意",
+        "满意因素",
+        "因素",
+        "活动",
+        "产品"
+      ]
+    }
+  ],
+  "qualitative_insights": [
+    "客户情感呈现多样化，正负面评价并存",
+    "客户主要关注：品质, 口感, 包装",
+    "客户主要情绪为愉悦(36.0%)"
+  ],
+  "semantic_clusters": [
+    {
+      "cluster_id": "cluster_0",
+      "theme": "设计 / 包装 / 性价比",
+      "description": "包含 3 条相关反馈",
+      "response_ids": [
+        "rich_test_001",
+        "rich_test_002",
+        "rich_test_003"
+      ],
+      "size": 3,
+      "representative_quotes": [
+        "不推荐原因: 包装设计确实需要改进，颜色搭配不够吸引人，而且材质感觉有点廉价。希望能设计得更[姓名]，符合伊利品牌的定位。. 推荐原因: 伊利安慕希的口感真的很棒，浓郁顺滑，而且蛋[姓名]高，营...",
+        "不推荐原因: 价格确实太[姓名]，一盒12支要30多块钱，比普通酸奶贵了一倍。而且口味有点过甜，不够天然。广告说的那些功能我也没感觉到，感觉就是普通的酸奶。性价比不高，不值得这个价钱。. 推荐原...",
+        "不推荐原因: 促销活动太少了，而且折扣力度不大。另外网购的时候物流有点慢，有一次还收到了过期的产品，售后处理也不够及时。希望能改善服务质量。. 推荐原因: 口感确实很好，比其他品牌的酸奶更浓稠，..."
+      ],
+      "sentiment_distribution": {
+        "positive": 0.0,
+        "negative": 0.0,
+        "neutral": 0.0,
+        "mixed": 1.0
+      }
+    }
+  ],
+  "clustering_summary": {
+    "total_clusters": 1,
+    "clustered_responses": 3,
+    "unclustered_responses": 0,
+    "coverage_rate": 100.0,
+    "avg_cluster_size": 3.0,
+    "largest_cluster": "设计 / 包装 / 性价比",
+    "largest_cluster_size": 3,
+    "overall_sentiment": {
+      "positive": 0.0,
+      "negative": 0.0,
+      "neutral": 0.0,
+      "mixed": 1.0
+    }
+  },
+  "clustering_insights": [
+    "聚类覆盖率高达100.0%，反馈具有明显的主题集中性",
+    "主要反馈主题：设计 / 包装 / 性价比"
+  ],
+  "pass1_foundation": {
+    "workflow_start_time": "2025-09-25 02:16:48.602127",
+    "workflow_version": "3.0.0",
+    "input_metadata": {},
+    "agent_outputs": {},
+    "agent_sequence": [],
+    "checkpoints": [],
+    "total_tokens_used": 0,
+    "total_llm_calls": 0,
+    "total_processing_time_ms": 0,
+    "memory_peak_mb": 0.0,
+    "errors": [],
+    "warnings": [],
+    "retry_count": 0,
+    "failed_agents": [],
+    "report_format_preferences": {},
+    "emphasis_areas": [],
+    "excluded_topics": [],
+    "cleaned_data": {
+      "total_responses": 3,
+      "valid_responses": 3,
+      "invalid_responses": 0,
+      "cleaned_responses": [
+        {
+          "response_id": "rich_test_001",
+          "timestamp": "2025-09-25 02:16:48.604001",
+          "nps_score": 9,
+          "comment": "不推荐原因: 包装设计确实需要改进，颜色搭配不够吸引人，而且材质感觉有点廉价。希望能设计得更[姓名]，符合伊利品牌的定位。. 推荐原因: 伊利安慕希的口感真的很棒，浓郁顺滑，而且蛋[姓名]高，营养价值好。[姓名]的形象也很不错，感觉很有品质保证。价格虽然不算便宜，但是物有所值。我已经喝了两年多了，品质一直很稳定，所以很愿意推荐给朋友们。. 不满意因素: 包装设计不好（如不够醒目、美观，材质不好，不便携、不[姓名]等）. 满意因素: 喜欢品牌或代言人、赞助综艺等宣传内容. 满意因素: 产品物有所值、性价比[姓名] 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应",
+          "product_line": null,
+          "customer_segment": null,
+          "channel": null,
+          "metadata": {
+            "survey_date": "2025-09-25 10:00:00",
+            "submit_time": "2025-09-25 10:05:00",
+            "channel": "链接二维码",
+            "response_type": "正式",
+            "duration": "5分钟",
+            "ai_tag_reason": "",
+            "manual_tag_status": "未标记",
+            "manual_tag_reason": ""
+          }
+        },
+        {
+          "response_id": "rich_test_002",
+          "timestamp": "2025-09-25 02:16:48.604145",
+          "nps_score": 3,
+          "comment": "不推荐原因: 价格确实太[姓名]，一盒12支要30多块钱，比普通酸奶贵了一倍。而且口味有点过甜，不够天然。广告说的那些功能我也没感觉到，感觉就是普通的酸奶。性价比不高，不值得这个价钱。. 推荐原因: 包装设计还是不错的，看起来比较[姓名]，送人也拿得出手。. 不满意因素: 产品价格太贵，性价比不[姓名] 不满意因素: 产品口味口感不好. 不满意因素: 没有感知到产品宣传的功能. 满意因素: 包装设计好（如醒目、美观，材质好，便携、[姓名]等）",
+          "product_line": null,
+          "customer_segment": null,
+          "channel": null,
+          "metadata": {
+            "survey_date": "2025-09-25 11:00:00",
+            "submit_time": "2025-09-25 11:03:00",
+            "channel": "链接二维码",
+            "response_type": "正式",
+            "duration": "3分钟",
+            "ai_tag_reason": "",
+            "manual_tag_status": "未标记",
+            "manual_tag_reason": ""
+          }
+        },
+        {
+          "response_id": "rich_test_003",
+          "timestamp": "2025-09-25 02:16:48.604292",
+          "nps_score": 7,
+          "comment": "不推荐原因: 促销活动太少了，而且折扣力度不大。另外网购的时候物流有点慢，有一次还收到了过期的产品，售后处理也不够及时。希望能改善服务质量。. 推荐原因: 口感确实很好，比其他品牌的酸奶更浓稠，蛋[姓名]也高。喝了之后确实感觉消化好了一些，可能是益生菌的作用。总体来说产品质量还是值得信赖的，就是服务需要提升。. 不满意因素: 促销活动不好（如对赠品、活动力度/规则等不满意）. 不满意因素: 物流配送、门店导购、售后等服务体验不好. 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应. 满意因素: 满意产品宣传的功能（如促进消化、增强免疫、助睡眠等）",
+          "product_line": null,
+          "customer_segment": null,
+          "channel": null,
+          "metadata": {
+            "survey_date": "2025-09-25 12:00:00",
+            "submit_time": "2025-09-25 12:04:00",
+            "channel": "链接二维码",
+            "response_type": "正式",
+            "duration": "4分钟",
+            "ai_tag_reason": "",
+            "manual_tag_status": "未标记",
+            "manual_tag_reason": ""
+          }
+        }
+      ],
+      "data_quality": "high",
+      "cleaning_notes": [],
+      "pii_scrubbed": true
+    },
+    "summary": {
+      "total_analyzed": 3,
+      "sentiment_distribution": {
+        "mixed": {
+          "count": 3,
+          "percentage": 100.0
+        }
+      },
+      "top_themes": [
+        {
+          "theme": "品质",
+          "count": 3
+        },
+        {
+          "theme": "口感",
+          "count": 3
+        },
+        {
+          "theme": "包装",
+          "count": 2
+        },
+        {
+          "theme": "价格",
+          "count": 2
+        },
+        {
+          "theme": "功效",
+          "count": 2
+        },
+        {
+          "theme": "产品_安慕希",
+          "count": 1
+        },
+        {
+          "theme": "服务",
+          "count": 1
+        }
+      ],
+      "key_phrases": [
+        "满意因素",
+        "满意",
+        "因素",
+        "姓名",
+        "推荐",
+        "推荐原因",
+        "活动",
+        "产品"
+      ],
+      "emotion_summary": {
+        "joy": 0.36,
+        "trust": 0.19,
+        "anticipation": 0.14,
+        "surprise": 0.0,
+        "sadness": 0.0,
+        "disgust": 0.0,
+        "anger": 0.31,
+        "fear": 0.0
+      }
+    },
+    "nps_metrics": {
+      "nps_score": 0.0,
+      "promoters_count": 1,
+      "passives_count": 1,
+      "detractors_count": 1,
+      "promoters_percentage": 33.33333333333333,
+      "passives_percentage": 33.33333333333333,
+      "detractors_percentage": 33.33333333333333,
+      "confidence_interval": [
+        -75.4404351741111,
+        75.4404351741111
+      ],
+      "sample_size": 3,
+      "statistical_significance": "False"
+    },
+    "segment_analysis": {
+      "score_distribution": {
+        "9": 1,
+        "3": 1,
+        "7": 1
+      },
+      "quartiles": {
+        "q1": 5.0,
+        "median": 7.0,
+        "q3": 8.0,
+        "mean": 6.333333333333333,
+        "std": 2.494438257849294
+      }
+    },
+    "temporal_analysis": {},
+    "statistical_analysis": {},
+    "quantitative_insights": [
+      "NPS得分为0.0，处于中等水平，有改进空间",
+      "95%置信区间为[-75.4, 75.4]，样本量3具有统计代表性"
+    ],
+    "tagged_responses": [
+      {
+        "response_id": "rich_test_001",
+        "original_text": "不推荐原因: 包装设计确实需要改进，颜色搭配不够吸引人，而且材质感觉有点廉价。希望能设计得更[姓名]，符合伊利品牌的定位。. 推荐原因: 伊利安慕希的口感真的很棒，浓郁顺滑，而且蛋[姓名]高，营养价值好。[姓名]的形象也很不错，感觉很有品质保证。价格虽然不算便宜，但是物有所值。我已经喝了两年多了，品质一直很稳定，所以很愿意推荐给朋友们。. 不满意因素: 包装设计不好（如不够醒目、美观，材质不好，不便携、不[姓名]等）. 满意因素: 喜欢品牌或代言人、赞助综艺等宣传内容. 满意因素: 产品物有所值、性价比[姓名] 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应",
+        "tags": [
+          "品质",
+          "包装",
+          "产品_安慕希",
+          "价格",
+          "功效",
+          "口感"
+        ],
+        "sentiment": "mixed",
+        "emotion_scores": {
+          "joy": 0.33,
+          "trust": 0.33,
+          "anticipation": 0.17,
+          "surprise": 0.0,
+          "sadness": 0.0,
+          "disgust": 0.0,
+          "anger": 0.17,
+          "fear": 0.0
+        },
+        "key_phrases": [
+          "满意因素",
+          "姓名",
+          "满意",
+          "因素",
+          "推荐"
+        ]
+      },
+      {
+        "response_id": "rich_test_002",
+        "original_text": "不推荐原因: 价格确实太[姓名]，一盒12支要30多块钱，比普通酸奶贵了一倍。而且口味有点过甜，不够天然。广告说的那些功能我也没感觉到，感觉就是普通的酸奶。性价比不高，不值得这个价钱。. 推荐原因: 包装设计还是不错的，看起来比较[姓名]，送人也拿得出手。. 不满意因素: 产品价格太贵，性价比不[姓名] 不满意因素: 产品口味口感不好. 不满意因素: 没有感知到产品宣传的功能. 满意因素: 包装设计好（如醒目、美观，材质好，便携、[姓名]等）",
+        "tags": [
+          "口感",
+          "品质",
+          "价格",
+          "包装"
+        ],
+        "sentiment": "mixed",
+        "emotion_scores": {
+          "joy": 0.5,
+          "trust": 0.0,
+          "anticipation": 0.0,
+          "surprise": 0.0,
+          "sadness": 0.0,
+          "disgust": 0.0,
+          "anger": 0.5,
+          "fear": 0.0
+        },
+        "key_phrases": [
+          "满意因素",
+          "姓名",
+          "满意",
+          "因素",
+          "推荐原因"
+        ]
+      },
+      {
+        "response_id": "rich_test_003",
+        "original_text": "不推荐原因: 促销活动太少了，而且折扣力度不大。另外网购的时候物流有点慢，有一次还收到了过期的产品，售后处理也不够及时。希望能改善服务质量。. 推荐原因: 口感确实很好，比其他品牌的酸奶更浓稠，蛋[姓名]也高。喝了之后确实感觉消化好了一些，可能是益生菌的作用。总体来说产品质量还是值得信赖的，就是服务需要提升。. 不满意因素: 促销活动不好（如对赠品、活动力度/规则等不满意）. 不满意因素: 物流配送、门店导购、售后等服务体验不好. 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应. 满意因素: 满意产品宣传的功能（如促进消化、增强免疫、助睡眠等）",
+        "tags": [
+          "服务",
+          "口感",
+          "品质",
+          "功效"
+        ],
+        "sentiment": "mixed",
+        "emotion_scores": {
+          "joy": 0.25,
+          "trust": 0.25,
+          "anticipation": 0.25,
+          "surprise": 0.0,
+          "sadness": 0.0,
+          "disgust": 0.0,
+          "anger": 0.25,
+          "fear": 0.0
+        },
+        "key_phrases": [
+          "满意",
+          "满意因素",
+          "因素",
+          "活动",
+          "产品"
+        ]
+      }
+    ],
+    "qualitative_insights": [
+      "客户情感呈现多样化，正负面评价并存",
+      "客户主要关注：品质, 口感, 包装",
+      "客户主要情绪为愉悦(36.0%)"
+    ],
+    "semantic_clusters": [
+      {
+        "cluster_id": "cluster_0",
+        "theme": "设计 / 包装 / 性价比",
+        "description": "包含 3 条相关反馈",
+        "response_ids": [
+          "rich_test_001",
+          "rich_test_002",
+          "rich_test_003"
+        ],
+        "size": 3,
+        "representative_quotes": [
+          "不推荐原因: 包装设计确实需要改进，颜色搭配不够吸引人，而且材质感觉有点廉价。希望能设计得更[姓名]，符合伊利品牌的定位。. 推荐原因: 伊利安慕希的口感真的很棒，浓郁顺滑，而且蛋[姓名]高，营...",
+          "不推荐原因: 价格确实太[姓名]，一盒12支要30多块钱，比普通酸奶贵了一倍。而且口味有点过甜，不够天然。广告说的那些功能我也没感觉到，感觉就是普通的酸奶。性价比不高，不值得这个价钱。. 推荐原...",
+          "不推荐原因: 促销活动太少了，而且折扣力度不大。另外网购的时候物流有点慢，有一次还收到了过期的产品，售后处理也不够及时。希望能改善服务质量。. 推荐原因: 口感确实很好，比其他品牌的酸奶更浓稠，..."
+        ],
+        "sentiment_distribution": {
+          "positive": 0.0,
+          "negative": 0.0,
+          "neutral": 0.0,
+          "mixed": 1.0
+        }
+      }
+    ],
+    "clustering_summary": {
+      "total_clusters": 1,
+      "clustered_responses": 3,
+      "unclustered_responses": 0,
+      "coverage_rate": 100.0,
+      "avg_cluster_size": 3.0,
+      "largest_cluster": "设计 / 包装 / 性价比",
+      "largest_cluster_size": 3,
+      "overall_sentiment": {
+        "positive": 0.0,
+        "negative": 0.0,
+        "neutral": 0.0,
+        "mixed": 1.0
+      }
+    },
+    "clustering_insights": [
+      "聚类覆盖率高达100.0%，反馈具有明显的主题集中性",
+      "主要反馈主题：设计 / 包装 / 性价比"
+    ],
+    "nps_calculation": {
+      "nps_score": 0.0,
+      "promoters_count": 1,
+      "passives_count": 1,
+      "detractors_count": 1,
+      "promoters_percentage": 33.33333333333333,
+      "passives_percentage": 33.33333333333333,
+      "detractors_percentage": 33.33333333333333,
+      "confidence_interval": [
+        -75.4404351741111,
+        75.4404351741111
+      ],
+      "sample_size": 3,
+      "statistical_significance": "False",
+      "total_responses": 3,
+      "valid_responses": 3
+    },
+    "confidence_assessment": {
+      "confidence": 0.22500000000000003,
+      "status": "low_confidence"
+    }
+  },
+  "technical_requirements": [],
+  "requirements_summary": {
+    "total": 0,
+    "by_category": {},
+    "by_priority": {},
+    "by_feasibility": {}
+  },
+  "technical_insights": [],
+  "passive_analysis": {
+    "total_passive": 0,
+    "conversion_opportunities": [],
+    "barriers": [],
+    "recommendations": []
+  },
+  "detractor_analysis": {
+    "total_detractors": 0,
+    "pain_points": [],
+    "churn_risks": [],
+    "recovery_strategies": []
+  },
+  "text_clustering": {
+    "total_texts": 3,
+    "clusters": [
+      {
+        "cluster_id": "keyword_cluster_0",
+        "name": "关键词聚类: 口味",
+        "type": "keyword_based",
+        "size": 3,
+        "responses": [
+          "rich_test_001",
+          "rich_test_002",
+          "rich_test_003"
+        ],
+        "keywords": [
+          "口味"
+        ],
+        "dominant_topics": [
+          "topic_0"
+        ],
+        "cluster_coherence": 0.16718375904911667
+      },
+      {
+        "cluster_id": "keyword_cluster_1",
+        "name": "关键词聚类: 口感",
+        "type": "keyword_based",
+        "size": 3,
+        "responses": [
+          "rich_test_001",
+          "rich_test_002",
+          "rich_test_003"
+        ],
+        "keywords": [
+          "口感"
+        ],
+        "dominant_topics": [
+          "topic_0"
+        ],
+        "cluster_coherence": 0.16718375904911667
+      },
+      {
+        "cluster_id": "keyword_cluster_2",
+        "name": "关键词聚类: 包装",
+        "type": "keyword_based",
+        "size": 2,
+        "responses": [
+          "rich_test_001",
+          "rich_test_002"
+        ],
+        "keywords": [
+          "包装"
+        ],
+        "dominant_topics": [
+          "topic_0"
+        ],
+        "cluster_coherence": 0.16718375904911667
+      }
+    ],
+    "topics": [
+      {
+        "topic_id": "topic_0",
+        "title": "口味相关讨论",
+        "keywords": [
+          "推荐",
+          "推荐原因:",
+          "满意因素:",
+          "口味",
+          "不满",
+          "满意",
+          "不推荐原因:",
+          "口感",
+          "不满意因素:",
+          "包装"
+        ],
+        "strength": 1.264,
+        "document_count": 3,
+        "representative_responses": [
+          "rich_test_001",
+          "rich_test_002",
+          "rich_test_003"
+        ],
+        "dairy_relevance": 0.3
+      }
+    ],
+    "sentiment_analysis": {
+      "overall_sentiment": {
+        "positive": 0,
+        "negative": 2,
+        "neutral": 1
+      },
+      "sentiment_by_nps": {},
+      "dairy_specific_sentiment": {},
+      "cultural_insights": [
+        "健康意识强烈，营养价值是重要考虑因素",
+        "品牌忠诚度较高，习惯性购买行为明显",
+        "价格敏感度较高，性价比是关键决策因素",
+        "质量要求严格，产品安全性是基础要求"
+      ],
+      "llm_insights": {}
+    },
+    "word_cloud_data": [
+      {
+        "word": "口味",
+        "frequency": 3,
+        "weight": 3.6,
+        "category": "attribute"
+      },
+      {
+        "word": "口感",
+        "frequency": 3,
+        "weight": 3.6,
+        "category": "attribute"
+      },
+      {
+        "word": "推荐",
+        "frequency": 3,
+        "weight": 3,
+        "category": "sentiment"
+      },
+      {
+        "word": "推荐原因:",
+        "frequency": 3,
+        "weight": 3,
+        "category": "general"
+      },
+      {
+        "word": "满意因素:",
+        "frequency": 3,
+        "weight": 3,
+        "category": "general"
+      },
+      {
+        "word": "不满",
+        "frequency": 3,
+        "weight": 3,
+        "category": "sentiment"
+      },
+      {
+        "word": "满意",
+        "frequency": 3,
+        "weight": 3,
+        "category": "sentiment"
+      },
+      {
+        "word": "不推荐原因:",
+        "frequency": 3,
+        "weight": 3,
+        "category": "general"
+      },
+      {
+        "word": "不满意因素:",
+        "frequency": 3,
+        "weight": 3,
+        "category": "general"
+      },
+      {
+        "word": "价格",
+        "frequency": 2,
+        "weight": 2.6,
+        "category": "attribute"
+      },
+      {
+        "word": "美观",
+        "frequency": 2,
+        "weight": 2,
+        "category": "general"
+      },
+      {
+        "word": "饮用后体感舒适",
+        "frequency": 2,
+        "weight": 2,
+        "category": "general"
+      },
+      {
+        "word": "产品口味口感好.",
+        "frequency": 2,
+        "weight": 2,
+        "category": "general"
+      },
+      {
+        "word": "不错",
+        "frequency": 2,
+        "weight": 2,
+        "category": "sentiment"
+      },
+      {
+        "word": "包装",
+        "frequency": 2,
+        "weight": 1.8,
+        "category": "attribute"
+      },
+      {
+        "word": "安慕希",
+        "frequency": 1,
+        "weight": 1.5,
+        "category": "product"
+      },
+      {
+        "word": "营养",
+        "frequency": 1,
+        "weight": 1.1,
+        "category": "attribute"
+      },
+      {
+        "word": "营养价值好",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "产品物有所值",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "颜色搭配不够吸引人",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "包装设计确实需要改进",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "希望能设计得更[姓名]",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "感觉很有品质保证",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "赞助综艺等宣传内容.",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "如不够醒目",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "不便携",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "价格虽然不算便宜",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "但是物有所值",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "材质不好",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "无不良反应",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "而且蛋[姓名]高",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "浓郁顺滑",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "符合伊利品牌的定位",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "喜欢",
+        "frequency": 1,
+        "weight": 1,
+        "category": "sentiment"
+      },
+      {
+        "word": "不[姓名]等",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "包装设计不好",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "我已经喝了两年多了",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "性价比[姓名]",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "品质一直很稳定",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "[姓名]的形象也很不错",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "而且材质感觉有点廉价",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "所以很愿意推荐给朋友们",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "伊利安慕希的口感真的很棒",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "喜欢品牌或代言人",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "没有感知到产品宣传的功能.",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "而且口味有点过甜",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "包装设计好",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "看起来比较[姓名]",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      },
+      {
+        "word": "普通",
+        "frequency": 1,
+        "weight": 1,
+        "category": "sentiment"
+      },
+      {
+        "word": "性价比不高",
+        "frequency": 1,
+        "weight": 1,
+        "category": "general"
+      }
+    ],
+    "theme_insights": [
+      "主要讨论主题：口味相关讨论（涉及3条反馈）",
+      "最大客户群体：关键词聚类: 口味（3人）",
+      "存在较多负面情绪（负面66.7%），需要关注",
+      "健康意识强烈，营养价值是重要考虑因素",
+      "品牌忠诚度较高，习惯性购买行为明显"
+    ],
+    "cluster_summaries": [
+      {
+        "cluster_id": "keyword_cluster_0",
+        "name": "关键词聚类: 口味",
+        "size": 3,
+        "key_characteristics": [],
+        "main_topics": [
+          {
+            "title": "口味相关讨论",
+            "keywords": [
+              "推荐",
+              "推荐原因:",
+              "满意因素:",
+              "口味",
+              "不满"
+            ]
+          }
+        ],
+        "actionable_insights": []
+      },
+      {
+        "cluster_id": "keyword_cluster_1",
+        "name": "关键词聚类: 口感",
+        "size": 3,
+        "key_characteristics": [],
+        "main_topics": [
+          {
+            "title": "口味相关讨论",
+            "keywords": [
+              "推荐",
+              "推荐原因:",
+              "满意因素:",
+              "口味",
+              "不满"
+            ]
+          }
+        ],
+        "actionable_insights": []
+      },
+      {
+        "cluster_id": "keyword_cluster_2",
+        "name": "关键词聚类: 包装",
+        "size": 2,
+        "key_characteristics": [],
+        "main_topics": [
+          {
+            "title": "口味相关讨论",
+            "keywords": [
+              "推荐",
+              "推荐原因:",
+              "满意因素:",
+              "口味",
+              "不满"
+            ]
+          }
+        ],
+        "actionable_insights": []
+      }
+    ]
+  },
+  "driver_analysis": {
+    "total_responses": 3,
+    "driver_scores": {
+      "product_quality": {
+        "name": "产品质量",
+        "category": "product",
+        "importance": 1.0,
+        "satisfaction": 0.533,
+        "mention_count": 3,
+        "mention_frequency": 1.0,
+        "response_coverage": 1.0,
+        "mentions_detail": [
+          {
+            "response_id": "rich_test_001",
+            "mentions": 2,
+            "nps_score": 5,
+            "sentiment": 0.3333333333333333
+          },
+          {
+            "response_id": "rich_test_002",
+            "mentions": 1,
+            "nps_score": 5,
+            "sentiment": 0.0
+          },
+          {
+            "response_id": "rich_test_003",
+            "mentions": 1,
+            "nps_score": 5,
+            "sentiment": 0.3333333333333333
+          }
+        ]
+      },
+      "taste_flavor": {
+        "name": "口味口感",
+        "category": "product",
+        "importance": 1.0,
+        "satisfaction": 0.525,
+        "mention_count": 1,
+        "mention_frequency": 0.333,
+        "response_coverage": 0.333,
+        "mentions_detail": [
+          {
+            "response_id": "rich_test_001",
+            "mentions": 1,
+            "nps_score": 5,
+            "sentiment": 0.16666666666666666
+          }
+        ]
+      },
+      "packaging": {
+        "name": "包装设计",
+        "category": "product",
+        "importance": 1.0,
+        "satisfaction": 0.55,
+        "mention_count": 2,
+        "mention_frequency": 0.667,
+        "response_coverage": 0.667,
+        "mentions_detail": [
+          {
+            "response_id": "rich_test_001",
+            "mentions": 4,
+            "nps_score": 5,
+            "sentiment": 0.0
+          },
+          {
+            "response_id": "rich_test_002",
+            "mentions": 4,
+            "nps_score": 5,
+            "sentiment": 0.6666666666666666
+          }
+        ]
+      },
+      "price_value": {
+        "name": "价格性价比",
+        "category": "value",
+        "importance": 1.0,
+        "satisfaction": 0.5,
+        "mention_count": 3,
+        "mention_frequency": 1.0,
+        "response_coverage": 1.0,
+        "mentions_detail": [
+          {
+            "response_id": "rich_test_001",
+            "mentions": 2,
+            "nps_score": 5,
+            "sentiment": 0.0
+          },
+          {
+            "response_id": "rich_test_002",
+            "mentions": 3,
+            "nps_score": 5,
+            "sentiment": 0.0
+          },
+          {
+            "response_id": "rich_test_003",
+            "mentions": 1,
+            "nps_score": 5,
+            "sentiment": 0.0
+          }
+        ]
+      },
+      "availability": {
+        "name": "购买便利性",
+        "category": "convenience",
+        "importance": 0.0,
+        "satisfaction": 0.5,
+        "mention_count": 0,
+        "mention_frequency": 0.0,
+        "response_coverage": 0.0,
+        "mentions_detail": []
+      },
+      "brand_trust": {
+        "name": "品牌信赖度",
+        "category": "brand",
+        "importance": 1.0,
+        "satisfaction": 0.525,
+        "mention_count": 2,
+        "mention_frequency": 0.667,
+        "response_coverage": 0.667,
+        "mentions_detail": [
+          {
+            "response_id": "rich_test_001",
+            "mentions": 2,
+            "nps_score": 5,
+            "sentiment": 0.0
+          },
+          {
+            "response_id": "rich_test_003",
+            "mentions": 1,
+            "nps_score": 5,
+            "sentiment": 0.3333333333333333
+          }
+        ]
+      },
+      "customer_service": {
+        "name": "客户服务",
+        "category": "service",
+        "importance": 0.933,
+        "satisfaction": 0.5,
+        "mention_count": 1,
+        "mention_frequency": 0.333,
+        "response_coverage": 0.333,
+        "mentions_detail": [
+          {
+            "response_id": "rich_test_003",
+            "mentions": 2,
+            "nps_score": 5,
+            "sentiment": 0.0
+          }
+        ]
+      },
+      "delivery_logistics": {
+        "name": "配送物流",
+        "category": "service",
+        "importance": 1.0,
+        "satisfaction": 0.508,
+        "mention_count": 3,
+        "mention_frequency": 1.0,
+        "response_coverage": 1.0,
+        "mentions_detail": [
+          {
+            "response_id": "rich_test_001",
+            "mentions": 1,
+            "nps_score": 5,
+            "sentiment": 0.0
+          },
+          {
+            "response_id": "rich_test_002",
+            "mentions": 1,
+            "nps_score": 5,
+            "sentiment": 0.16666666666666666
+          },
+          {
+            "response_id": "rich_test_003",
+            "mentions": 3,
+            "nps_score": 5,
+            "sentiment": 0.0
+          }
+        ]
+      }
+    },
+    "importance_satisfaction_matrix": [
+      {
+        "driver_id": "price_value",
+        "name": "价格性价比",
+        "category": "value",
+        "importance": 1.0,
+        "satisfaction": 0.5,
+        "mention_count": 3,
+        "quadrant": "maintain",
+        "correlation": 0,
+        "priority_score": 0.3
+      },
+      {
+        "driver_id": "delivery_logistics",
+        "name": "配送物流",
+        "category": "service",
+        "importance": 1.0,
+        "satisfaction": 0.508,
+        "mention_count": 3,
+        "quadrant": "maintain",
+        "correlation": 0,
+        "priority_score": 0.29519999999999996
+      },
+      {
+        "driver_id": "taste_flavor",
+        "name": "口味口感",
+        "category": "product",
+        "importance": 1.0,
+        "satisfaction": 0.525,
+        "mention_count": 1,
+        "quadrant": "maintain",
+        "correlation": 0,
+        "priority_score": 0.285
+      },
+      {
+        "driver_id": "brand_trust",
+        "name": "品牌信赖度",
+        "category": "brand",
+        "importance": 1.0,
+        "satisfaction": 0.525,
+        "mention_count": 2,
+        "quadrant": "maintain",
+        "correlation": 0,
+        "priority_score": 0.285
+      },
+      {
+        "driver_id": "product_quality",
+        "name": "产品质量",
+        "category": "product",
+        "importance": 1.0,
+        "satisfaction": 0.533,
+        "mention_count": 3,
+        "quadrant": "maintain",
+        "correlation": 0,
+        "priority_score": 0.28019999999999995
+      },
+      {
+        "driver_id": "customer_service",
+        "name": "客户服务",
+        "category": "service",
+        "importance": 0.933,
+        "satisfaction": 0.5,
+        "mention_count": 1,
+        "quadrant": "maintain",
+        "correlation": 0,
+        "priority_score": 0.2799
+      },
+      {
+        "driver_id": "packaging",
+        "name": "包装设计",
+        "category": "product",
+        "importance": 1.0,
+        "satisfaction": 0.55,
+        "mention_count": 2,
+        "quadrant": "maintain",
+        "correlation": 0,
+        "priority_score": 0.26999999999999996
+      },
+      {
+        "driver_id": "availability",
+        "name": "购买便利性",
+        "category": "convenience",
+        "importance": 0.0,
+        "satisfaction": 0.5,
+        "mention_count": 0,
+        "quadrant": "over_investment",
+        "correlation": 0,
+        "priority_score": 0.0
+      }
+    ],
+    "quadrant_analysis": {
+      "quadrant_distribution": {
+        "critical": 0,
+        "maintain": 7,
+        "opportunity": 0,
+        "over_investment": 1
+      },
+      "quadrant_details": {
+        "maintain": {
+          "name": "保持优势区",
+          "count": 7,
+          "avg_importance": 0.99,
+          "avg_satisfaction": 0.52,
+          "top_drivers": [
+            {
+              "name": "价格性价比",
+              "priority_score": 0.3
+            },
+            {
+              "name": "配送物流",
+              "priority_score": 0.29519999999999996
+            },
+            {
+              "name": "口味口感",
+              "priority_score": 0.285
+            }
+          ],
+          "strategic_action": "保持现有优势，防止满意度下降"
+        },
+        "over_investment": {
+          "name": "过度投资区",
+          "count": 1,
+          "avg_importance": 0.0,
+          "avg_satisfaction": 0.5,
+          "top_drivers": [
+            {
+              "name": "购买便利性",
+              "priority_score": 0.0
+            }
+          ],
+          "strategic_action": "减少资源投入，将重点转移到其他领域"
+        }
+      },
+      "strategic_focus": [
+        "保持7个优势驱动因素的表现"
+      ],
+      "resource_allocation": {
+        "critical_focus": "0%的资源用于关键改进",
+        "maintain_investment": "88%的资源用于优势保持",
+        "explore_opportunities": "考虑在机会领域进行适度投资"
+      }
+    },
+    "correlations": {},
+    "impact_analysis": {
+      "high_impact_drivers": [],
+      "improvement_potential": {},
+      "roi_estimates": {},
+      "risk_assessment": {}
+    },
+    "recommendations": [
+      {
+        "recommendation_id": "maintain_0",
+        "priority": "high",
+        "title": "保持价格性价比优势",
+        "description": "继续保持价格性价比的高满意度表现",
+        "quadrant": "maintain",
+        "expected_impact": "medium",
+        "timeline": "持续执行",
+        "resource_requirement": "medium",
+        "success_metrics": [
+          "性价比评分提升",
+          "价格敏感度下降",
+          "购买意愿增强"
+        ],
+        "action_items": [
+          "价格竞争力维护",
+          "价值宣传持续",
+          "成本效率保持"
+        ]
+      },
+      {
+        "recommendation_id": "maintain_1",
+        "priority": "high",
+        "title": "保持配送物流优势",
+        "description": "继续保持配送物流的高满意度表现",
+        "quadrant": "maintain",
+        "expected_impact": "medium",
+        "timeline": "持续执行",
+        "resource_requirement": "medium",
+        "success_metrics": [
+          "配送满意度提升",
+          "准时率提升",
+          "包装完好率提升"
+        ],
+        "action_items": [
+          "配送质量维护",
+          "物流效率保持",
+          "服务标准监控"
+        ]
+      }
+    ],
+    "driver_insights": [
+      "分析了8个关键驱动因素的重要性和满意度表现",
+      "7个驱动因素表现优秀，需要保持优势",
+      "表现最佳的驱动因素：包装设计（满意度0.55）",
+      "最重要的驱动因素：产品质量（重要性1.00）",
+      "当前优势明显，应重点保持现有高满意度驱动因素"
+    ]
+  },
+  "product_dimension": {
+    "total_responses": 3,
+    "product_performance": {
+      "安慕希": {
+        "product_info": {
+          "category": "premium_yogurt",
+          "type": "希腊酸奶",
+          "price_tier": "premium",
+          "target_audience": "高端消费者",
+          "key_features": [
+            "蛋白质含量高",
+            "口感浓郁",
+            "品质优良"
+          ],
+          "competitors": [
+            "蒙牛纯甄",
+            "光明莫斯利安",
+            "达能碧悠"
+          ]
+        },
+        "mentions": [
+          {
+            "response_id": "rich_test_001",
+            "text": "不推荐原因: 包装设计确实需要改进，颜色搭配不够吸引人，而且材质感觉有点廉价。希望能设计得更[姓名]，符合伊利品牌的定位。. 推荐原因: 伊利安慕希的口感真的很棒，浓郁顺滑，而且蛋[姓名]高，营养价值好。[姓名]的形象也很不错，感觉很有品质保证。价格虽然不算便宜，但是物有所值。我已经喝了两年多了，品质一直很稳定，所以很愿意推荐给朋友们。. 不满意因素: 包装设计不好（如不够醒目、美观，材质不好，不便携、不[姓名]等）. 满意因素: 喜欢品牌或代言人、赞助综艺等宣传内容. 满意因素: 产品物有所值、性价比[姓名] 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应",
+            "nps_score": null
+          },
+          {
+            "response_id": "rich_test_002",
+            "text": "不推荐原因: 价格确实太[姓名]，一盒12支要30多块钱，比普通酸奶贵了一倍。而且口味有点过甜，不够天然。广告说的那些功能我也没感觉到，感觉就是普通的酸奶。性价比不高，不值得这个价钱。. 推荐原因: 包装设计还是不错的，看起来比较[姓名]，送人也拿得出手。. 不满意因素: 产品价格太贵，性价比不[姓名] 不满意因素: 产品口味口感不好. 不满意因素: 没有感知到产品宣传的功能. 满意因素: 包装设计好（如醒目、美观，材质好，便携、[姓名]等）",
+            "nps_score": null
+          },
+          {
+            "response_id": "rich_test_003",
+            "text": "不推荐原因: 促销活动太少了，而且折扣力度不大。另外网购的时候物流有点慢，有一次还收到了过期的产品，售后处理也不够及时。希望能改善服务质量。. 推荐原因: 口感确实很好，比其他品牌的酸奶更浓稠，蛋[姓名]也高。喝了之后确实感觉消化好了一些，可能是益生菌的作用。总体来说产品质量还是值得信赖的，就是服务需要提升。. 不满意因素: 促销活动不好（如对赠品、活动力度/规则等不满意）. 不满意因素: 物流配送、门店导购、售后等服务体验不好. 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应. 满意因素: 满意产品宣传的功能（如促进消化、增强免疫、助睡眠等）",
+            "nps_score": null
+          }
+        ],
+        "nps_scores": [],
+        "sentiment_distribution": {
+          "positive": 1,
+          "negative": 0,
+          "neutral": 2
+        },
+        "key_themes": [
+          "营养价值"
+        ],
+        "performance_metrics": {
+          "mention_count": 3,
+          "avg_nps": 0,
+          "nps_distribution": {
+            "promoters": 0,
+            "passives": 0,
+            "detractors": 0
+          },
+          "sentiment_score": 0.333,
+          "engagement_level": "high",
+          "theme_frequency": {
+            "营养价值": 1
+          }
+        }
+      }
+    },
+    "competitive_analysis": {
+      "competitor_mentions": {},
+      "brand_comparisons": [],
+      "competitive_position": {
+        "market_perception": "neutral",
+        "key_advantages": [],
+        "competitive_threats": [],
+        "market_share_indicators": {}
+      },
+      "market_insights": []
+    },
+    "portfolio_analysis": {
+      "portfolio_health": {
+        "performing_products": [],
+        "underperforming_products": [],
+        "portfolio_balance": 0.0
+      },
+      "category_performance": {
+        "premium_yogurt": [
+          {
+            "product": "安慕希",
+            "nps": 0,
+            "sentiment": 0.333
+          }
+        ]
+      },
+      "strategic_gaps": [],
+      "portfolio_optimization": {}
+    },
+    "cross_selling_opportunities": [],
+    "product_recommendations": [],
+    "product_insights": [
+      "分析了1个伊利产品的市场表现",
+      "表现最佳产品：安慕希（平均NPS 0.0）",
+      "高端产品线平均NPS 0.0，有待提升"
+    ]
+  },
+  "geographic_dimension": {
+    "total_responses": 3,
+    "regional_analysis": {
+      "华东": {
+        "region_info": {
+          "provinces": [
+            "上海",
+            "江苏",
+            "浙江",
+            "安徽",
+            "福建",
+            "江西",
+            "山东"
+          ],
+          "characteristics": [
+            "经济发达",
+            "消费升级",
+            "健康意识强"
+          ],
+          "dairy_preferences": [
+            "有机产品",
+            "高端消费",
+            "口感品质要求高"
+          ]
+        },
+        "responses": [
+          "rich_test_002",
+          "rich_test_003"
+        ],
+        "nps_scores": [],
+        "sentiment_distribution": {
+          "positive": 2,
+          "negative": 0,
+          "neutral": 0
+        },
+        "key_themes": [
+          "品质追求"
+        ],
+        "performance_metrics": {
+          "response_count": 2,
+          "avg_nps": 0,
+          "nps_distribution": {
+            "promoters": 0,
+            "passives": 0,
+            "detractors": 0
+          },
+          "sentiment_score": 1.0,
+          "theme_diversity": 1,
+          "regional_engagement": "low"
+        }
+      },
+      "华中": {
+        "region_info": {
+          "provinces": [
+            "河南",
+            "湖北",
+            "湖南"
+          ],
+          "characteristics": [
+            "人口密集",
+            "农业传统",
+            "价格敏感"
+          ],
+          "dairy_preferences": [
+            "性价比重视",
+            "家庭装偏好",
+            "传统口味"
+          ]
+        },
+        "responses": [
+          "rich_test_001"
+        ],
+        "nps_scores": [],
+        "sentiment_distribution": {
+          "positive": 1,
+          "negative": 0,
+          "neutral": 0
+        },
+        "key_themes": [
+          "经济实用"
+        ],
+        "performance_metrics": {
+          "response_count": 1,
+          "avg_nps": 0,
+          "nps_distribution": {
+            "promoters": 0,
+            "passives": 0,
+            "detractors": 0
+          },
+          "sentiment_score": 1.0,
+          "theme_diversity": 1,
+          "regional_engagement": "low"
+        }
+      }
+    },
+    "city_tier_analysis": {
+      "tier1": {
+        "tier_info": {
+          "cities": [
+            "北京",
+            "上海",
+            "广州",
+            "深圳"
+          ],
+          "characteristics": [
+            "消费力强",
+            "国际化",
+            "品牌意识强",
+            "创新接受度高"
+          ],
+          "consumption_patterns": [
+            "高端产品",
+            "便利性需求",
+            "品牌溢价接受度高"
+          ]
+        },
+        "responses": [
+          "rich_test_001",
+          "rich_test_003"
+        ],
+        "nps_scores": [],
+        "consumption_patterns": [
+          "高端消费",
+          "高端消费"
+        ],
+        "performance_metrics": {
+          "response_count": 2,
+          "avg_nps": 0,
+          "pattern_frequency": {
+            "高端消费": 2
+          },
+          "market_penetration": "low",
+          "consumption_sophistication": "high"
+        }
+      },
+      "tier2": {
+        "tier_info": {
+          "cities": [
+            "成都",
+            "杭州",
+            "武汉",
+            "西安",
+            "苏州",
+            "天津",
+            "南京",
+            "长沙",
+            "沈阳",
+            "青岛"
+          ],
+          "characteristics": [
+            "快速发展",
+            "中产阶级",
+            "消费升级",
+            "品质要求提升"
+          ],
+          "consumption_patterns": [
+            "性价比关注",
+            "品质追求",
+            "品牌选择理性"
+          ]
+        },
+        "responses": [
+          "rich_test_002"
+        ],
+        "nps_scores": [],
+        "consumption_patterns": [
+          "理性消费"
+        ],
+        "performance_metrics": {
+          "response_count": 1,
+          "avg_nps": 0,
+          "pattern_frequency": {
+            "理性消费": 1
+          },
+          "market_penetration": "low",
+          "consumption_sophistication": "medium"
+        }
+      },
+      "tier3": {
+        "tier_info": {
+          "cities": [
+            "温州",
+            "佛山",
+            "无锡",
+            "烟台",
+            "太原",
+            "合肥",
+            "南昌",
+            "贵阳",
+            "石家庄"
+          ],
+          "characteristics": [
+            "经济增长",
+            "消费潜力",
+            "价格敏感",
+            "品牌教育需要"
+          ],
+          "consumption_patterns": [
+            "实用导向",
+            "口碑影响",
+            "促销响应度高"
+          ]
+        },
+        "responses": [],
+        "nps_scores": [],
+        "consumption_patterns": [],
+        "performance_metrics": {}
+      },
+      "tier4_below": {
+        "tier_info": {
+          "characteristics": [
+            "县市及以下",
+            "农村市场",
+            "价格主导",
+            "渠道下沉"
+          ],
+          "consumption_patterns": [
+            "基础需求",
+            "量大优惠",
+            "本土品牌接受度"
+          ]
+        },
+        "responses": [],
+        "nps_scores": [],
+        "consumption_patterns": [],
+        "performance_metrics": {}
+      }
+    },
+    "demographic_analysis": {
+      "age_group_analysis": {
+        "gen_z": {
+          "info": {
+            "age": "18-25",
+            "characteristics": [
+              "数字原生",
+              "个性化",
+              "社交驱动"
+            ]
+          },
+          "responses": [],
+          "preferences": [],
+          "nps_scores": []
+        },
+        "millennials": {
+          "info": {
+            "age": "26-35",
+            "characteristics": [
+              "消费主力",
+              "品质追求",
+              "便利需求"
+            ]
+          },
+          "responses": [],
+          "preferences": [],
+          "nps_scores": []
+        },
+        "gen_x": {
+          "info": {
+            "age": "36-45",
+            "characteristics": [
+              "家庭责任",
+              "理性消费",
+              "品牌忠诚"
+            ]
+          },
+          "responses": [],
+          "preferences": [],
+          "nps_scores": []
+        },
+        "boomers": {
+          "info": {
+            "age": "46+",
+            "characteristics": [
+              "传统观念",
+              "健康关注",
+              "价格敏感"
+            ]
+          },
+          "responses": [],
+          "preferences": [],
+          "nps_scores": []
+        }
+      },
+      "income_level_analysis": {},
+      "lifestyle_segments": {},
+      "demographic_insights": [],
+      "llm_insights": {}
+    },
+    "expansion_opportunities": [
+      {
+        "type": "city_tier_expansion",
+        "target": "tier2",
+        "opportunity_score": 0.7,
+        "rationale": "tier2城市市场渗透率低但增长潜力大",
+        "target_characteristics": [
+          "快速发展",
+          "中产阶级",
+          "消费升级",
+          "品质要求提升"
+        ],
+        "expansion_strategy": [
+          "品质差异化",
+          "中高端定位",
+          "渠道下沉",
+          "本地化营销"
+        ]
+      },
+      {
+        "type": "city_tier_expansion",
+        "target": "tier3",
+        "opportunity_score": 0.6,
+        "rationale": "tier3城市市场渗透率低但增长潜力大",
+        "target_characteristics": [
+          "经济增长",
+          "消费潜力",
+          "价格敏感",
+          "品牌教育需要"
+        ],
+        "expansion_strategy": [
+          "性价比突出",
+          "渠道密集化",
+          "口碑营销",
+          "促销活动"
+        ]
+      }
+    ],
+    "geographic_recommendations": [
+      {
+        "recommendation_id": "regional_华东",
+        "type": "regional_improvement",
+        "target": "华东",
+        "priority": "high",
+        "title": "改善华东地区市场表现",
+        "description": "华东地区NPS低于平均水平，需要针对性改进",
+        "specific_actions": [
+          "高端产品导入",
+          "品质宣传重点"
+        ],
+        "target_characteristics": [
+          "经济发达",
+          "消费升级",
+          "健康意识强"
+        ]
+      },
+      {
+        "recommendation_id": "regional_华中",
+        "type": "regional_improvement",
+        "target": "华中",
+        "priority": "high",
+        "title": "改善华中地区市场表现",
+        "description": "华中地区NPS低于平均水平，需要针对性改进",
+        "specific_actions": [
+          "性价比产品推广",
+          "促销活动加强"
+        ],
+        "target_characteristics": [
+          "人口密集",
+          "农业传统",
+          "价格敏感"
+        ]
+      },
+      {
+        "recommendation_id": "expansion_tier2",
+        "type": "market_expansion",
+        "target": "tier2",
+        "priority": "medium",
+        "title": "拓展tier2市场",
+        "description": "tier2城市市场渗透率低但增长潜力大",
+        "expansion_strategy": [
+          "品质差异化",
+          "中高端定位",
+          "渠道下沉",
+          "本地化营销"
+        ],
+        "opportunity_score": 0.7
+      },
+      {
+        "recommendation_id": "expansion_tier3",
+        "type": "market_expansion",
+        "target": "tier3",
+        "priority": "medium",
+        "title": "拓展tier3市场",
+        "description": "tier3城市市场渗透率低但增长潜力大",
+        "expansion_strategy": [
+          "性价比突出",
+          "渠道密集化",
+          "口碑营销",
+          "促销活动"
+        ],
+        "opportunity_score": 0.6
+      }
+    ],
+    "geographic_insights": [
+      "表现最佳区域：华东（平均NPS 0.0）",
+      "在0个主要区域有较好市场表现",
+      "一线城市平均NPS 0.0，市场基础稳固",
+      "最活跃用户群体：gen_z（0条反馈）",
+      "不同地域和人群呈现差异化消费特征，需要精准化营销策略"
+    ]
+  },
+  "channel_dimension": {
+    "total_responses": 3,
+    "channel_analysis": {
+      "ecommerce": {
+        "channel_info": {
+          "name": "电商平台",
+          "characteristics": [
+            "线上购买",
+            "送货上门",
+            "价格比较",
+            "评价参考"
+          ],
+          "touchpoints": [
+            "商品页面",
+            "客服咨询",
+            "支付流程",
+            "物流配送",
+            "售后服务"
+          ],
+          "typical_mentions": [
+            "天猫",
+            "京东",
+            "淘宝",
+            "拼多多",
+            "苏宁",
+            "网购",
+            "线上",
+            "APP"
+          ]
+        },
+        "responses": [
+          "rich_test_003"
+        ],
+        "nps_scores": [],
+        "experience_ratings": {
+          "product_availability": [
+            2
+          ],
+          "checkout_efficiency": [
+            2
+          ]
+        },
+        "touchpoint_mentions": {
+          "物流配送": 1
+        },
+        "performance_metrics": {
+          "response_count": 1,
+          "avg_nps": 0,
+          "nps_distribution": {
+            "promoters": 0,
+            "passives": 0,
+            "detractors": 0
+          },
+          "experience_scores": {
+            "product_availability": 2.0,
+            "checkout_efficiency": 2.0
+          },
+          "touchpoint_engagement": 1,
+          "channel_satisfaction": 2.0
+        }
+      },
+      "fresh_market": {
+        "channel_info": {
+          "name": "生鲜市场",
+          "characteristics": [
+            "新鲜保证",
+            "价格实惠",
+            "现场挑选",
+            "人情味"
+          ],
+          "touchpoints": [
+            "商品挑选",
+            "价格谈判",
+            "现金支付",
+            "打包服务"
+          ],
+          "typical_mentions": [
+            "菜市场",
+            "农贸市场",
+            "生鲜店",
+            "社区店",
+            "早市"
+          ]
+        },
+        "responses": [
+          "rich_test_001"
+        ],
+        "nps_scores": [],
+        "experience_ratings": {
+          "convenience": [
+            2
+          ],
+          "price_competitiveness": [
+            4
+          ]
+        },
+        "touchpoint_mentions": {},
+        "performance_metrics": {
+          "response_count": 1,
+          "avg_nps": 0,
+          "nps_distribution": {
+            "promoters": 0,
+            "passives": 0,
+            "detractors": 0
+          },
+          "experience_scores": {
+            "convenience": 2.0,
+            "price_competitiveness": 4.0
+          },
+          "touchpoint_engagement": 0,
+          "channel_satisfaction": 3.0
+        }
+      }
+    },
+    "touchpoint_analysis": {
+      "物流配送": {
+        "total_mentions": 1,
+        "channel_distribution": {},
+        "experience_sentiment": {
+          "positive": 1,
+          "negative": 0,
+          "neutral": 0
+        },
+        "pain_points": [],
+        "success_factors": [
+          "配送及时"
+        ],
+        "satisfaction_score": 1.0
+      }
+    },
+    "journey_analysis": {
+      "stage_analysis": {
+        "awareness": {
+          "stage_info": {
+            "name": "认知阶段",
+            "touchpoints": [
+              "广告展示",
+              "口碑推荐",
+              "社交媒体",
+              "促销活动"
+            ],
+            "experience_factors": [
+              "品牌知名度",
+              "产品认知",
+              "渠道可见性"
+            ]
+          },
+          "mentions": 1,
+          "experience_quality": [
+            3
+          ],
+          "channel_performance": {}
+        },
+        "consideration": {
+          "stage_info": {
+            "name": "考虑阶段",
+            "touchpoints": [
+              "产品比较",
+              "价格查询",
+              "评价阅读",
+              "朋友咨询"
+            ],
+            "experience_factors": [
+              "产品信息",
+              "价格竞争力",
+              "用户评价",
+              "购买便利性"
+            ]
+          },
+          "mentions": 0,
+          "experience_quality": [],
+          "channel_performance": {}
+        },
+        "purchase": {
+          "stage_info": {
+            "name": "购买阶段",
+            "touchpoints": [
+              "商品选择",
+              "支付结账",
+              "服务咨询",
+              "会员登记"
+            ],
+            "experience_factors": [
+              "购买体验",
+              "服务质量",
+              "支付便利",
+              "等待时间"
+            ]
+          },
+          "mentions": 0,
+          "experience_quality": [],
+          "channel_performance": {}
+        },
+        "usage": {
+          "stage_info": {
+            "name": "使用阶段",
+            "touchpoints": [
+              "产品消费",
+              "口感体验",
+              "包装处理",
+              "保存储藏"
+            ],
+            "experience_factors": [
+              "产品质量",
+              "使用体验",
+              "包装设计",
+              "实用性"
+            ]
+          },
+          "mentions": 0,
+          "experience_quality": [],
+          "channel_performance": {}
+        },
+        "advocacy": {
+          "stage_info": {
+            "name": "推荐阶段",
+            "touchpoints": [
+              "口碑分享",
+              "评价发布",
+              "社交推荐",
+              "复购行为"
+            ],
+            "experience_factors": [
+              "满意度",
+              "推荐意愿",
+              "复购率",
+              "忠诚度"
+            ]
+          },
+          "mentions": 0,
+          "experience_quality": [],
+          "channel_performance": {}
+        }
+      },
+      "journey_patterns": [],
+      "cross_channel_behavior": {},
+      "friction_points": [],
+      "llm_insights": {}
+    },
+    "omnichannel_insights": [
+      {
+        "type": "channel_performance_gap",
+        "description": "ecommerce表现最佳（NPS 0.0），ecommerce有改进空间（NPS 0.0）",
+        "best_channel": "ecommerce",
+        "worst_channel": "ecommerce",
+        "performance_gap": 0
+      },
+      {
+        "type": "high_performing_touchpoints",
+        "description": "表现优秀的触点：物流配送",
+        "touchpoints": [
+          "物流配送"
+        ],
+        "optimization_potential": "可以在其他渠道复制成功经验"
+      }
+    ],
+    "optimization_opportunities": [
+      {
+        "type": "channel_improvement",
+        "channel": "ecommerce",
+        "priority": "high",
+        "current_nps": 0,
+        "improvement_areas": [
+          "product_availability",
+          "checkout_efficiency"
+        ],
+        "potential_impact": "high"
+      },
+      {
+        "type": "channel_improvement",
+        "channel": "fresh_market",
+        "priority": "high",
+        "current_nps": 0,
+        "improvement_areas": [
+          "convenience"
+        ],
+        "potential_impact": "high"
+      }
+    ],
+    "channel_recommendations": [
+      {
+        "recommendation_id": "channel_ecommerce",
+        "type": "channel_improvement",
+        "channel": "ecommerce",
+        "priority": "high",
+        "title": "改善电商平台渠道体验",
+        "description": "该渠道NPS为0.0，需要重点改进",
+        "improvement_areas": [
+          "product_availability",
+          "checkout_efficiency"
+        ],
+        "suggested_actions": [
+          "简化支付流程",
+          "优化页面加载",
+          "提供多种支付方式"
+        ],
+        "expected_impact": "high"
+      },
+      {
+        "recommendation_id": "channel_fresh_market",
+        "type": "channel_improvement",
+        "channel": "fresh_market",
+        "priority": "high",
+        "title": "改善生鲜市场渠道体验",
+        "description": "该渠道NPS为0.0，需要重点改进",
+        "improvement_areas": [
+          "convenience"
+        ],
+        "suggested_actions": [
+          "提升服务质量",
+          "优化客户体验",
+          "加强员工培训"
+        ],
+        "expected_impact": "high"
+      },
+      {
+        "recommendation_id": "best_practice_replication",
+        "type": "best_practice",
+        "priority": "medium",
+        "title": "复制电商平台成功经验",
+        "description": "该渠道NPS达0.0，成功经验可推广",
+        "best_practices": [
+          "线上购物体验优化"
+        ],
+        "target_channels": [],
+        "expected_impact": "high"
+      }
+    ],
+    "channel_insights": [
+      "分析了2个销售渠道的客户体验表现",
+      "表现最佳渠道：电商平台（NPS 0.0）",
+      "电商平台是主要使用渠道",
+      "ecommerce表现最佳（NPS 0.0），ecommerce有改进空间（NPS 0.0）",
+      "表现优秀的触点：物流配送"
+    ]
+  },
+  "analysis_coordination": {
+    "total_raw_insights": 23,
+    "total_coordinated_insights": 5,
+    "coordinated_insights": [
+      {
+        "agent_id": "B5",
+        "insight_type": "satisfaction_driver",
+        "content": "7个驱动因素表现优秀，需要保持优势",
+        "category": "strategic_direction",
+        "source_data": "driver_analysis",
+        "supporting_agents": [
+          "B5"
+        ],
+        "conflict_resolved": true,
+        "priority_score": 1.0,
+        "quality_score": 0.6,
+        "business_impact": 0.8999999999999999,
+        "overall_score": 0.8500000000000001
+      },
+      {
+        "agent_id": "B6",
+        "insight_type": "product_performance",
+        "content": "分析了1个伊利产品的市场表现",
+        "category": "competitive_advantage",
+        "source_data": "product_dimension",
+        "supporting_agents": [
+          "B6"
+        ],
+        "conflict_resolved": true,
+        "priority_score": 1.0,
+        "quality_score": 0.55,
+        "business_impact": 0.65,
+        "overall_score": 0.76
+      },
+      {
+        "agent_id": "B4",
+        "insight_type": "thematic_pattern",
+        "content": "品牌忠诚度较高，习惯性购买行为明显",
+        "category": "market_trend",
+        "source_data": "text_clustering",
+        "supporting_agents": [
+          "B4"
+        ],
+        "conflict_resolved": true,
+        "priority_score": 1.0,
+        "quality_score": 0.5,
+        "business_impact": 0.5,
+        "overall_score": 0.7000000000000001
+      },
+      {
+        "agent_id": "B7",
+        "insight_type": "regional_pattern",
+        "content": "在0个主要区域有较好市场表现",
+        "category": "market_trend",
+        "source_data": "geographic_dimension",
+        "supporting_agents": [
+          "B7"
+        ],
+        "conflict_resolved": true,
+        "priority_score": 1.0,
+        "quality_score": 0.5,
+        "business_impact": 0.5,
+        "overall_score": 0.7000000000000001
+      },
+      {
+        "agent_id": "B8",
+        "insight_type": "channel_experience",
+        "content": "电商平台是主要使用渠道",
+        "category": "operational_insight",
+        "source_data": "channel_dimension",
+        "supporting_agents": [
+          "B8"
+        ],
+        "conflict_resolved": true,
+        "priority_score": 1.0,
+        "quality_score": 0.5,
+        "business_impact": 0.5,
+        "overall_score": 0.7000000000000001
+      }
+    ],
+    "priority_recommendations": [
+      {
+        "recommendation_id": "strategic_0",
+        "priority": "high",
+        "title": "战略重点：7个驱动因素表现优秀，需要保持优势",
+        "description": "7个驱动因素表现优秀，需要保持优势",
+        "category": "strategic_direction",
+        "source_agents": [
+          "B5"
+        ],
+        "business_impact": 0.8999999999999999,
+        "urgency": "medium_term",
+        "implementation_complexity": "high",
+        "expected_outcome": "长期价值创造，业务增长"
+      }
+    ],
+    "validation_results": {
+      "consistency_score": 0.0,
+      "validation_flags": [],
+      "cross_confirmations": [],
+      "data_gaps": [
+        {
+          "agent": "B3",
+          "missing_data": [
+            "incomplete_structure"
+          ]
+        },
+        {
+          "agent": "B4",
+          "missing_data": [
+            "incomplete_structure"
+          ]
+        },
+        {
+          "agent": "B6",
+          "missing_data": [
+            "incomplete_structure"
+          ]
+        },
+        {
+          "agent": "B7",
+          "missing_data": [
+            "incomplete_structure"
+          ]
+        },
+        {
+          "agent": "B8",
+          "missing_data": [
+            "incomplete_structure"
+          ]
+        }
+      ]
+    },
+    "synthesis_summary": {
+      "executive_overview": "综合分析识别出5项关键洞察，其中0项紧急议题需要立即关注，1项战略性发现指引长期发展方向。",
+      "key_findings": [
+        {
+          "finding": "7个驱动因素表现优秀，需要保持优势",
+          "category": "strategic_direction",
+          "confidence": 0.6,
+          "impact": 0.8999999999999999
+        },
+        {
+          "finding": "分析了1个伊利产品的市场表现",
+          "category": "competitive_advantage",
+          "confidence": 0.55,
+          "impact": 0.65
+        },
+        {
+          "finding": "品牌忠诚度较高，习惯性购买行为明显",
+          "category": "market_trend",
+          "confidence": 0.5,
+          "impact": 0.5
+        },
+        {
+          "finding": "在0个主要区域有较好市场表现",
+          "category": "market_trend",
+          "confidence": 0.5,
+          "impact": 0.5
+        },
+        {
+          "finding": "电商平台是主要使用渠道",
+          "category": "operational_insight",
+          "confidence": 0.5,
+          "impact": 0.5
+        }
+      ],
+      "strategic_priorities": [
+        {
+          "priority": "战略重点：7个驱动因素表现优秀，需要保持优势",
+          "description": "7个驱动因素表现优秀，需要保持优势",
+          "urgency": "medium_term",
+          "complexity": "high"
+        }
+      ],
+      "immediate_actions": [],
+      "performance_metrics": {
+        "total_insights_generated": 5,
+        "cross_validated_insights": 0,
+        "high_confidence_insights": 0,
+        "agent_coverage": 7,
+        "consistency_score": 0.0
+      },
+      "confidence_assessment": {
+        "overall_confidence": "medium",
+        "data_completeness": 0.2857142857142857,
+        "cross_validation_rate": 0.0,
+        "recommendation_confidence": 0.53
+      }
+    },
+    "meta_insights": [
+      "多角度分析覆盖7个维度，确保洞察全面性",
+      "部分洞察质量有待提升，需要更多数据验证",
+      "分析覆盖面广，从多个角度深入理解客户反馈"
+    ]
+  },
+  "pass2_analysis": {
+    "workflow_start_time": "2025-09-25 02:16:48.602127",
+    "workflow_version": "3.0.0",
+    "input_metadata": {},
+    "agent_outputs": {},
+    "agent_sequence": [],
+    "checkpoints": [],
+    "total_tokens_used": 0,
+    "total_llm_calls": 0,
+    "total_processing_time_ms": 0,
+    "memory_peak_mb": 0.0,
+    "errors": [],
+    "warnings": [],
+    "retry_count": 0,
+    "failed_agents": [],
+    "report_format_preferences": {},
+    "emphasis_areas": [],
+    "excluded_topics": [],
+    "cleaned_data": {
+      "total_responses": 3,
+      "valid_responses": 3,
+      "invalid_responses": 0,
+      "cleaned_responses": [
+        {
+          "response_id": "rich_test_001",
+          "timestamp": "2025-09-25 02:16:48.604001",
+          "nps_score": 9,
+          "comment": "不推荐原因: 包装设计确实需要改进，颜色搭配不够吸引人，而且材质感觉有点廉价。希望能设计得更[姓名]，符合伊利品牌的定位。. 推荐原因: 伊利安慕希的口感真的很棒，浓郁顺滑，而且蛋[姓名]高，营养价值好。[姓名]的形象也很不错，感觉很有品质保证。价格虽然不算便宜，但是物有所值。我已经喝了两年多了，品质一直很稳定，所以很愿意推荐给朋友们。. 不满意因素: 包装设计不好（如不够醒目、美观，材质不好，不便携、不[姓名]等）. 满意因素: 喜欢品牌或代言人、赞助综艺等宣传内容. 满意因素: 产品物有所值、性价比[姓名] 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应",
+          "product_line": null,
+          "customer_segment": null,
+          "channel": null,
+          "metadata": {
+            "survey_date": "2025-09-25 10:00:00",
+            "submit_time": "2025-09-25 10:05:00",
+            "channel": "链接二维码",
+            "response_type": "正式",
+            "duration": "5分钟",
+            "ai_tag_reason": "",
+            "manual_tag_status": "未标记",
+            "manual_tag_reason": ""
+          }
+        },
+        {
+          "response_id": "rich_test_002",
+          "timestamp": "2025-09-25 02:16:48.604145",
+          "nps_score": 3,
+          "comment": "不推荐原因: 价格确实太[姓名]，一盒12支要30多块钱，比普通酸奶贵了一倍。而且口味有点过甜，不够天然。广告说的那些功能我也没感觉到，感觉就是普通的酸奶。性价比不高，不值得这个价钱。. 推荐原因: 包装设计还是不错的，看起来比较[姓名]，送人也拿得出手。. 不满意因素: 产品价格太贵，性价比不[姓名] 不满意因素: 产品口味口感不好. 不满意因素: 没有感知到产品宣传的功能. 满意因素: 包装设计好（如醒目、美观，材质好，便携、[姓名]等）",
+          "product_line": null,
+          "customer_segment": null,
+          "channel": null,
+          "metadata": {
+            "survey_date": "2025-09-25 11:00:00",
+            "submit_time": "2025-09-25 11:03:00",
+            "channel": "链接二维码",
+            "response_type": "正式",
+            "duration": "3分钟",
+            "ai_tag_reason": "",
+            "manual_tag_status": "未标记",
+            "manual_tag_reason": ""
+          }
+        },
+        {
+          "response_id": "rich_test_003",
+          "timestamp": "2025-09-25 02:16:48.604292",
+          "nps_score": 7,
+          "comment": "不推荐原因: 促销活动太少了，而且折扣力度不大。另外网购的时候物流有点慢，有一次还收到了过期的产品，售后处理也不够及时。希望能改善服务质量。. 推荐原因: 口感确实很好，比其他品牌的酸奶更浓稠，蛋[姓名]也高。喝了之后确实感觉消化好了一些，可能是益生菌的作用。总体来说产品质量还是值得信赖的，就是服务需要提升。. 不满意因素: 促销活动不好（如对赠品、活动力度/规则等不满意）. 不满意因素: 物流配送、门店导购、售后等服务体验不好. 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应. 满意因素: 满意产品宣传的功能（如促进消化、增强免疫、助睡眠等）",
+          "product_line": null,
+          "customer_segment": null,
+          "channel": null,
+          "metadata": {
+            "survey_date": "2025-09-25 12:00:00",
+            "submit_time": "2025-09-25 12:04:00",
+            "channel": "链接二维码",
+            "response_type": "正式",
+            "duration": "4分钟",
+            "ai_tag_reason": "",
+            "manual_tag_status": "未标记",
+            "manual_tag_reason": ""
+          }
+        }
+      ],
+      "data_quality": "high",
+      "cleaning_notes": [],
+      "pii_scrubbed": true
+    },
+    "summary": {
+      "total_analyzed": 3,
+      "sentiment_distribution": {
+        "mixed": {
+          "count": 3,
+          "percentage": 100.0
+        }
+      },
+      "top_themes": [
+        {
+          "theme": "品质",
+          "count": 3
+        },
+        {
+          "theme": "口感",
+          "count": 3
+        },
+        {
+          "theme": "包装",
+          "count": 2
+        },
+        {
+          "theme": "价格",
+          "count": 2
+        },
+        {
+          "theme": "功效",
+          "count": 2
+        },
+        {
+          "theme": "产品_安慕希",
+          "count": 1
+        },
+        {
+          "theme": "服务",
+          "count": 1
+        }
+      ],
+      "key_phrases": [
+        "满意因素",
+        "满意",
+        "因素",
+        "姓名",
+        "推荐",
+        "推荐原因",
+        "活动",
+        "产品"
+      ],
+      "emotion_summary": {
+        "joy": 0.36,
+        "trust": 0.19,
+        "anticipation": 0.14,
+        "surprise": 0.0,
+        "sadness": 0.0,
+        "disgust": 0.0,
+        "anger": 0.31,
+        "fear": 0.0
+      }
+    },
+    "nps_metrics": {
+      "nps_score": 0.0,
+      "promoters_count": 1,
+      "passives_count": 1,
+      "detractors_count": 1,
+      "promoters_percentage": 33.33333333333333,
+      "passives_percentage": 33.33333333333333,
+      "detractors_percentage": 33.33333333333333,
+      "confidence_interval": [
+        -75.4404351741111,
+        75.4404351741111
+      ],
+      "sample_size": 3,
+      "statistical_significance": "False"
+    },
+    "segment_analysis": {
+      "score_distribution": {
+        "9": 1,
+        "3": 1,
+        "7": 1
+      },
+      "quartiles": {
+        "q1": 5.0,
+        "median": 7.0,
+        "q3": 8.0,
+        "mean": 6.333333333333333,
+        "std": 2.494438257849294
+      }
+    },
+    "temporal_analysis": {},
+    "statistical_analysis": {},
+    "quantitative_insights": [
+      "NPS得分为0.0，处于中等水平，有改进空间",
+      "95%置信区间为[-75.4, 75.4]，样本量3具有统计代表性"
+    ],
+    "tagged_responses": [
+      {
+        "response_id": "rich_test_001",
+        "original_text": "不推荐原因: 包装设计确实需要改进，颜色搭配不够吸引人，而且材质感觉有点廉价。希望能设计得更[姓名]，符合伊利品牌的定位。. 推荐原因: 伊利安慕希的口感真的很棒，浓郁顺滑，而且蛋[姓名]高，营养价值好。[姓名]的形象也很不错，感觉很有品质保证。价格虽然不算便宜，但是物有所值。我已经喝了两年多了，品质一直很稳定，所以很愿意推荐给朋友们。. 不满意因素: 包装设计不好（如不够醒目、美观，材质不好，不便携、不[姓名]等）. 满意因素: 喜欢品牌或代言人、赞助综艺等宣传内容. 满意因素: 产品物有所值、性价比[姓名] 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应",
+        "tags": [
+          "品质",
+          "包装",
+          "产品_安慕希",
+          "价格",
+          "功效",
+          "口感"
+        ],
+        "sentiment": "mixed",
+        "emotion_scores": {
+          "joy": 0.33,
+          "trust": 0.33,
+          "anticipation": 0.17,
+          "surprise": 0.0,
+          "sadness": 0.0,
+          "disgust": 0.0,
+          "anger": 0.17,
+          "fear": 0.0
+        },
+        "key_phrases": [
+          "满意因素",
+          "姓名",
+          "满意",
+          "因素",
+          "推荐"
+        ]
+      },
+      {
+        "response_id": "rich_test_002",
+        "original_text": "不推荐原因: 价格确实太[姓名]，一盒12支要30多块钱，比普通酸奶贵了一倍。而且口味有点过甜，不够天然。广告说的那些功能我也没感觉到，感觉就是普通的酸奶。性价比不高，不值得这个价钱。. 推荐原因: 包装设计还是不错的，看起来比较[姓名]，送人也拿得出手。. 不满意因素: 产品价格太贵，性价比不[姓名] 不满意因素: 产品口味口感不好. 不满意因素: 没有感知到产品宣传的功能. 满意因素: 包装设计好（如醒目、美观，材质好，便携、[姓名]等）",
+        "tags": [
+          "口感",
+          "品质",
+          "价格",
+          "包装"
+        ],
+        "sentiment": "mixed",
+        "emotion_scores": {
+          "joy": 0.5,
+          "trust": 0.0,
+          "anticipation": 0.0,
+          "surprise": 0.0,
+          "sadness": 0.0,
+          "disgust": 0.0,
+          "anger": 0.5,
+          "fear": 0.0
+        },
+        "key_phrases": [
+          "满意因素",
+          "姓名",
+          "满意",
+          "因素",
+          "推荐原因"
+        ]
+      },
+      {
+        "response_id": "rich_test_003",
+        "original_text": "不推荐原因: 促销活动太少了，而且折扣力度不大。另外网购的时候物流有点慢，有一次还收到了过期的产品，售后处理也不够及时。希望能改善服务质量。. 推荐原因: 口感确实很好，比其他品牌的酸奶更浓稠，蛋[姓名]也高。喝了之后确实感觉消化好了一些，可能是益生菌的作用。总体来说产品质量还是值得信赖的，就是服务需要提升。. 不满意因素: 促销活动不好（如对赠品、活动力度/规则等不满意）. 不满意因素: 物流配送、门店导购、售后等服务体验不好. 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应. 满意因素: 满意产品宣传的功能（如促进消化、增强免疫、助睡眠等）",
+        "tags": [
+          "服务",
+          "口感",
+          "品质",
+          "功效"
+        ],
+        "sentiment": "mixed",
+        "emotion_scores": {
+          "joy": 0.25,
+          "trust": 0.25,
+          "anticipation": 0.25,
+          "surprise": 0.0,
+          "sadness": 0.0,
+          "disgust": 0.0,
+          "anger": 0.25,
+          "fear": 0.0
+        },
+        "key_phrases": [
+          "满意",
+          "满意因素",
+          "因素",
+          "活动",
+          "产品"
+        ]
+      }
+    ],
+    "qualitative_insights": [
+      "客户情感呈现多样化，正负面评价并存",
+      "客户主要关注：品质, 口感, 包装",
+      "客户主要情绪为愉悦(36.0%)"
+    ],
+    "semantic_clusters": [
+      {
+        "cluster_id": "cluster_0",
+        "theme": "设计 / 包装 / 性价比",
+        "description": "包含 3 条相关反馈",
+        "response_ids": [
+          "rich_test_001",
+          "rich_test_002",
+          "rich_test_003"
+        ],
+        "size": 3,
+        "representative_quotes": [
+          "不推荐原因: 包装设计确实需要改进，颜色搭配不够吸引人，而且材质感觉有点廉价。希望能设计得更[姓名]，符合伊利品牌的定位。. 推荐原因: 伊利安慕希的口感真的很棒，浓郁顺滑，而且蛋[姓名]高，营...",
+          "不推荐原因: 价格确实太[姓名]，一盒12支要30多块钱，比普通酸奶贵了一倍。而且口味有点过甜，不够天然。广告说的那些功能我也没感觉到，感觉就是普通的酸奶。性价比不高，不值得这个价钱。. 推荐原...",
+          "不推荐原因: 促销活动太少了，而且折扣力度不大。另外网购的时候物流有点慢，有一次还收到了过期的产品，售后处理也不够及时。希望能改善服务质量。. 推荐原因: 口感确实很好，比其他品牌的酸奶更浓稠，..."
+        ],
+        "sentiment_distribution": {
+          "positive": 0.0,
+          "negative": 0.0,
+          "neutral": 0.0,
+          "mixed": 1.0
+        }
+      }
+    ],
+    "clustering_summary": {
+      "total_clusters": 1,
+      "clustered_responses": 3,
+      "unclustered_responses": 0,
+      "coverage_rate": 100.0,
+      "avg_cluster_size": 3.0,
+      "largest_cluster": "设计 / 包装 / 性价比",
+      "largest_cluster_size": 3,
+      "overall_sentiment": {
+        "positive": 0.0,
+        "negative": 0.0,
+        "neutral": 0.0,
+        "mixed": 1.0
+      }
+    },
+    "clustering_insights": [
+      "聚类覆盖率高达100.0%，反馈具有明显的主题集中性",
+      "主要反馈主题：设计 / 包装 / 性价比"
+    ],
+    "technical_requirements": [],
+    "requirements_summary": {
+      "total": 0,
+      "by_category": {},
+      "by_priority": {},
+      "by_feasibility": {}
+    },
+    "technical_insights": [],
+    "passive_analysis": {
+      "total_passive": 0,
+      "conversion_opportunities": [],
+      "barriers": [],
+      "recommendations": []
+    },
+    "detractor_analysis": {
+      "total_detractors": 0,
+      "pain_points": [],
+      "churn_risks": [],
+      "recovery_strategies": []
+    },
+    "text_clustering": {
+      "total_texts": 3,
+      "clusters": [
+        {
+          "cluster_id": "keyword_cluster_0",
+          "name": "关键词聚类: 口味",
+          "type": "keyword_based",
+          "size": 3,
+          "responses": [
+            "rich_test_001",
+            "rich_test_002",
+            "rich_test_003"
+          ],
+          "keywords": [
+            "口味"
+          ],
+          "dominant_topics": [
+            "topic_0"
+          ],
+          "cluster_coherence": 0.16718375904911667
+        },
+        {
+          "cluster_id": "keyword_cluster_1",
+          "name": "关键词聚类: 口感",
+          "type": "keyword_based",
+          "size": 3,
+          "responses": [
+            "rich_test_001",
+            "rich_test_002",
+            "rich_test_003"
+          ],
+          "keywords": [
+            "口感"
+          ],
+          "dominant_topics": [
+            "topic_0"
+          ],
+          "cluster_coherence": 0.16718375904911667
+        },
+        {
+          "cluster_id": "keyword_cluster_2",
+          "name": "关键词聚类: 包装",
+          "type": "keyword_based",
+          "size": 2,
+          "responses": [
+            "rich_test_001",
+            "rich_test_002"
+          ],
+          "keywords": [
+            "包装"
+          ],
+          "dominant_topics": [
+            "topic_0"
+          ],
+          "cluster_coherence": 0.16718375904911667
+        }
+      ],
+      "topics": [
+        {
+          "topic_id": "topic_0",
+          "title": "口味相关讨论",
+          "keywords": [
+            "推荐",
+            "推荐原因:",
+            "满意因素:",
+            "口味",
+            "不满",
+            "满意",
+            "不推荐原因:",
+            "口感",
+            "不满意因素:",
+            "包装"
+          ],
+          "strength": 1.264,
+          "document_count": 3,
+          "representative_responses": [
+            "rich_test_001",
+            "rich_test_002",
+            "rich_test_003"
+          ],
+          "dairy_relevance": 0.3
+        }
+      ],
+      "sentiment_analysis": {
+        "overall_sentiment": {
+          "positive": 0,
+          "negative": 2,
+          "neutral": 1
+        },
+        "sentiment_by_nps": {},
+        "dairy_specific_sentiment": {},
+        "cultural_insights": [
+          "健康意识强烈，营养价值是重要考虑因素",
+          "品牌忠诚度较高，习惯性购买行为明显",
+          "价格敏感度较高，性价比是关键决策因素",
+          "质量要求严格，产品安全性是基础要求"
+        ],
+        "llm_insights": {}
+      },
+      "word_cloud_data": [
+        {
+          "word": "口味",
+          "frequency": 3,
+          "weight": 3.6,
+          "category": "attribute"
+        },
+        {
+          "word": "口感",
+          "frequency": 3,
+          "weight": 3.6,
+          "category": "attribute"
+        },
+        {
+          "word": "推荐",
+          "frequency": 3,
+          "weight": 3,
+          "category": "sentiment"
+        },
+        {
+          "word": "推荐原因:",
+          "frequency": 3,
+          "weight": 3,
+          "category": "general"
+        },
+        {
+          "word": "满意因素:",
+          "frequency": 3,
+          "weight": 3,
+          "category": "general"
+        },
+        {
+          "word": "不满",
+          "frequency": 3,
+          "weight": 3,
+          "category": "sentiment"
+        },
+        {
+          "word": "满意",
+          "frequency": 3,
+          "weight": 3,
+          "category": "sentiment"
+        },
+        {
+          "word": "不推荐原因:",
+          "frequency": 3,
+          "weight": 3,
+          "category": "general"
+        },
+        {
+          "word": "不满意因素:",
+          "frequency": 3,
+          "weight": 3,
+          "category": "general"
+        },
+        {
+          "word": "价格",
+          "frequency": 2,
+          "weight": 2.6,
+          "category": "attribute"
+        },
+        {
+          "word": "美观",
+          "frequency": 2,
+          "weight": 2,
+          "category": "general"
+        },
+        {
+          "word": "饮用后体感舒适",
+          "frequency": 2,
+          "weight": 2,
+          "category": "general"
+        },
+        {
+          "word": "产品口味口感好.",
+          "frequency": 2,
+          "weight": 2,
+          "category": "general"
+        },
+        {
+          "word": "不错",
+          "frequency": 2,
+          "weight": 2,
+          "category": "sentiment"
+        },
+        {
+          "word": "包装",
+          "frequency": 2,
+          "weight": 1.8,
+          "category": "attribute"
+        },
+        {
+          "word": "安慕希",
+          "frequency": 1,
+          "weight": 1.5,
+          "category": "product"
+        },
+        {
+          "word": "营养",
+          "frequency": 1,
+          "weight": 1.1,
+          "category": "attribute"
+        },
+        {
+          "word": "营养价值好",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "产品物有所值",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "颜色搭配不够吸引人",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "包装设计确实需要改进",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "希望能设计得更[姓名]",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "感觉很有品质保证",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "赞助综艺等宣传内容.",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "如不够醒目",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "不便携",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "价格虽然不算便宜",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "但是物有所值",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "材质不好",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "无不良反应",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "而且蛋[姓名]高",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "浓郁顺滑",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "符合伊利品牌的定位",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "喜欢",
+          "frequency": 1,
+          "weight": 1,
+          "category": "sentiment"
+        },
+        {
+          "word": "不[姓名]等",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "包装设计不好",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "我已经喝了两年多了",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "性价比[姓名]",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "品质一直很稳定",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "[姓名]的形象也很不错",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "而且材质感觉有点廉价",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "所以很愿意推荐给朋友们",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "伊利安慕希的口感真的很棒",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "喜欢品牌或代言人",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "没有感知到产品宣传的功能.",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "而且口味有点过甜",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "包装设计好",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "看起来比较[姓名]",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        },
+        {
+          "word": "普通",
+          "frequency": 1,
+          "weight": 1,
+          "category": "sentiment"
+        },
+        {
+          "word": "性价比不高",
+          "frequency": 1,
+          "weight": 1,
+          "category": "general"
+        }
+      ],
+      "theme_insights": [
+        "主要讨论主题：口味相关讨论（涉及3条反馈）",
+        "最大客户群体：关键词聚类: 口味（3人）",
+        "存在较多负面情绪（负面66.7%），需要关注",
+        "健康意识强烈，营养价值是重要考虑因素",
+        "品牌忠诚度较高，习惯性购买行为明显"
+      ],
+      "cluster_summaries": [
+        {
+          "cluster_id": "keyword_cluster_0",
+          "name": "关键词聚类: 口味",
+          "size": 3,
+          "key_characteristics": [],
+          "main_topics": [
+            {
+              "title": "口味相关讨论",
+              "keywords": [
+                "推荐",
+                "推荐原因:",
+                "满意因素:",
+                "口味",
+                "不满"
+              ]
+            }
+          ],
+          "actionable_insights": []
+        },
+        {
+          "cluster_id": "keyword_cluster_1",
+          "name": "关键词聚类: 口感",
+          "size": 3,
+          "key_characteristics": [],
+          "main_topics": [
+            {
+              "title": "口味相关讨论",
+              "keywords": [
+                "推荐",
+                "推荐原因:",
+                "满意因素:",
+                "口味",
+                "不满"
+              ]
+            }
+          ],
+          "actionable_insights": []
+        },
+        {
+          "cluster_id": "keyword_cluster_2",
+          "name": "关键词聚类: 包装",
+          "size": 2,
+          "key_characteristics": [],
+          "main_topics": [
+            {
+              "title": "口味相关讨论",
+              "keywords": [
+                "推荐",
+                "推荐原因:",
+                "满意因素:",
+                "口味",
+                "不满"
+              ]
+            }
+          ],
+          "actionable_insights": []
+        }
+      ]
+    },
+    "driver_analysis": {
+      "total_responses": 3,
+      "driver_scores": {
+        "product_quality": {
+          "name": "产品质量",
+          "category": "product",
+          "importance": 1.0,
+          "satisfaction": 0.533,
+          "mention_count": 3,
+          "mention_frequency": 1.0,
+          "response_coverage": 1.0,
+          "mentions_detail": [
+            {
+              "response_id": "rich_test_001",
+              "mentions": 2,
+              "nps_score": 5,
+              "sentiment": 0.3333333333333333
+            },
+            {
+              "response_id": "rich_test_002",
+              "mentions": 1,
+              "nps_score": 5,
+              "sentiment": 0.0
+            },
+            {
+              "response_id": "rich_test_003",
+              "mentions": 1,
+              "nps_score": 5,
+              "sentiment": 0.3333333333333333
+            }
+          ]
+        },
+        "taste_flavor": {
+          "name": "口味口感",
+          "category": "product",
+          "importance": 1.0,
+          "satisfaction": 0.525,
+          "mention_count": 1,
+          "mention_frequency": 0.333,
+          "response_coverage": 0.333,
+          "mentions_detail": [
+            {
+              "response_id": "rich_test_001",
+              "mentions": 1,
+              "nps_score": 5,
+              "sentiment": 0.16666666666666666
+            }
+          ]
+        },
+        "packaging": {
+          "name": "包装设计",
+          "category": "product",
+          "importance": 1.0,
+          "satisfaction": 0.55,
+          "mention_count": 2,
+          "mention_frequency": 0.667,
+          "response_coverage": 0.667,
+          "mentions_detail": [
+            {
+              "response_id": "rich_test_001",
+              "mentions": 4,
+              "nps_score": 5,
+              "sentiment": 0.0
+            },
+            {
+              "response_id": "rich_test_002",
+              "mentions": 4,
+              "nps_score": 5,
+              "sentiment": 0.6666666666666666
+            }
+          ]
+        },
+        "price_value": {
+          "name": "价格性价比",
+          "category": "value",
+          "importance": 1.0,
+          "satisfaction": 0.5,
+          "mention_count": 3,
+          "mention_frequency": 1.0,
+          "response_coverage": 1.0,
+          "mentions_detail": [
+            {
+              "response_id": "rich_test_001",
+              "mentions": 2,
+              "nps_score": 5,
+              "sentiment": 0.0
+            },
+            {
+              "response_id": "rich_test_002",
+              "mentions": 3,
+              "nps_score": 5,
+              "sentiment": 0.0
+            },
+            {
+              "response_id": "rich_test_003",
+              "mentions": 1,
+              "nps_score": 5,
+              "sentiment": 0.0
+            }
+          ]
+        },
+        "availability": {
+          "name": "购买便利性",
+          "category": "convenience",
+          "importance": 0.0,
+          "satisfaction": 0.5,
+          "mention_count": 0,
+          "mention_frequency": 0.0,
+          "response_coverage": 0.0,
+          "mentions_detail": []
+        },
+        "brand_trust": {
+          "name": "品牌信赖度",
+          "category": "brand",
+          "importance": 1.0,
+          "satisfaction": 0.525,
+          "mention_count": 2,
+          "mention_frequency": 0.667,
+          "response_coverage": 0.667,
+          "mentions_detail": [
+            {
+              "response_id": "rich_test_001",
+              "mentions": 2,
+              "nps_score": 5,
+              "sentiment": 0.0
+            },
+            {
+              "response_id": "rich_test_003",
+              "mentions": 1,
+              "nps_score": 5,
+              "sentiment": 0.3333333333333333
+            }
+          ]
+        },
+        "customer_service": {
+          "name": "客户服务",
+          "category": "service",
+          "importance": 0.933,
+          "satisfaction": 0.5,
+          "mention_count": 1,
+          "mention_frequency": 0.333,
+          "response_coverage": 0.333,
+          "mentions_detail": [
+            {
+              "response_id": "rich_test_003",
+              "mentions": 2,
+              "nps_score": 5,
+              "sentiment": 0.0
+            }
+          ]
+        },
+        "delivery_logistics": {
+          "name": "配送物流",
+          "category": "service",
+          "importance": 1.0,
+          "satisfaction": 0.508,
+          "mention_count": 3,
+          "mention_frequency": 1.0,
+          "response_coverage": 1.0,
+          "mentions_detail": [
+            {
+              "response_id": "rich_test_001",
+              "mentions": 1,
+              "nps_score": 5,
+              "sentiment": 0.0
+            },
+            {
+              "response_id": "rich_test_002",
+              "mentions": 1,
+              "nps_score": 5,
+              "sentiment": 0.16666666666666666
+            },
+            {
+              "response_id": "rich_test_003",
+              "mentions": 3,
+              "nps_score": 5,
+              "sentiment": 0.0
+            }
+          ]
+        }
+      },
+      "importance_satisfaction_matrix": [
+        {
+          "driver_id": "price_value",
+          "name": "价格性价比",
+          "category": "value",
+          "importance": 1.0,
+          "satisfaction": 0.5,
+          "mention_count": 3,
+          "quadrant": "maintain",
+          "correlation": 0,
+          "priority_score": 0.3
+        },
+        {
+          "driver_id": "delivery_logistics",
+          "name": "配送物流",
+          "category": "service",
+          "importance": 1.0,
+          "satisfaction": 0.508,
+          "mention_count": 3,
+          "quadrant": "maintain",
+          "correlation": 0,
+          "priority_score": 0.29519999999999996
+        },
+        {
+          "driver_id": "taste_flavor",
+          "name": "口味口感",
+          "category": "product",
+          "importance": 1.0,
+          "satisfaction": 0.525,
+          "mention_count": 1,
+          "quadrant": "maintain",
+          "correlation": 0,
+          "priority_score": 0.285
+        },
+        {
+          "driver_id": "brand_trust",
+          "name": "品牌信赖度",
+          "category": "brand",
+          "importance": 1.0,
+          "satisfaction": 0.525,
+          "mention_count": 2,
+          "quadrant": "maintain",
+          "correlation": 0,
+          "priority_score": 0.285
+        },
+        {
+          "driver_id": "product_quality",
+          "name": "产品质量",
+          "category": "product",
+          "importance": 1.0,
+          "satisfaction": 0.533,
+          "mention_count": 3,
+          "quadrant": "maintain",
+          "correlation": 0,
+          "priority_score": 0.28019999999999995
+        },
+        {
+          "driver_id": "customer_service",
+          "name": "客户服务",
+          "category": "service",
+          "importance": 0.933,
+          "satisfaction": 0.5,
+          "mention_count": 1,
+          "quadrant": "maintain",
+          "correlation": 0,
+          "priority_score": 0.2799
+        },
+        {
+          "driver_id": "packaging",
+          "name": "包装设计",
+          "category": "product",
+          "importance": 1.0,
+          "satisfaction": 0.55,
+          "mention_count": 2,
+          "quadrant": "maintain",
+          "correlation": 0,
+          "priority_score": 0.26999999999999996
+        },
+        {
+          "driver_id": "availability",
+          "name": "购买便利性",
+          "category": "convenience",
+          "importance": 0.0,
+          "satisfaction": 0.5,
+          "mention_count": 0,
+          "quadrant": "over_investment",
+          "correlation": 0,
+          "priority_score": 0.0
+        }
+      ],
+      "quadrant_analysis": {
+        "quadrant_distribution": {
+          "critical": 0,
+          "maintain": 7,
+          "opportunity": 0,
+          "over_investment": 1
+        },
+        "quadrant_details": {
+          "maintain": {
+            "name": "保持优势区",
+            "count": 7,
+            "avg_importance": 0.99,
+            "avg_satisfaction": 0.52,
+            "top_drivers": [
+              {
+                "name": "价格性价比",
+                "priority_score": 0.3
+              },
+              {
+                "name": "配送物流",
+                "priority_score": 0.29519999999999996
+              },
+              {
+                "name": "口味口感",
+                "priority_score": 0.285
+              }
+            ],
+            "strategic_action": "保持现有优势，防止满意度下降"
+          },
+          "over_investment": {
+            "name": "过度投资区",
+            "count": 1,
+            "avg_importance": 0.0,
+            "avg_satisfaction": 0.5,
+            "top_drivers": [
+              {
+                "name": "购买便利性",
+                "priority_score": 0.0
+              }
+            ],
+            "strategic_action": "减少资源投入，将重点转移到其他领域"
+          }
+        },
+        "strategic_focus": [
+          "保持7个优势驱动因素的表现"
+        ],
+        "resource_allocation": {
+          "critical_focus": "0%的资源用于关键改进",
+          "maintain_investment": "88%的资源用于优势保持",
+          "explore_opportunities": "考虑在机会领域进行适度投资"
+        }
+      },
+      "correlations": {},
+      "impact_analysis": {
+        "high_impact_drivers": [],
+        "improvement_potential": {},
+        "roi_estimates": {},
+        "risk_assessment": {}
+      },
+      "recommendations": [
+        {
+          "recommendation_id": "maintain_0",
+          "priority": "high",
+          "title": "保持价格性价比优势",
+          "description": "继续保持价格性价比的高满意度表现",
+          "quadrant": "maintain",
+          "expected_impact": "medium",
+          "timeline": "持续执行",
+          "resource_requirement": "medium",
+          "success_metrics": [
+            "性价比评分提升",
+            "价格敏感度下降",
+            "购买意愿增强"
+          ],
+          "action_items": [
+            "价格竞争力维护",
+            "价值宣传持续",
+            "成本效率保持"
+          ]
+        },
+        {
+          "recommendation_id": "maintain_1",
+          "priority": "high",
+          "title": "保持配送物流优势",
+          "description": "继续保持配送物流的高满意度表现",
+          "quadrant": "maintain",
+          "expected_impact": "medium",
+          "timeline": "持续执行",
+          "resource_requirement": "medium",
+          "success_metrics": [
+            "配送满意度提升",
+            "准时率提升",
+            "包装完好率提升"
+          ],
+          "action_items": [
+            "配送质量维护",
+            "物流效率保持",
+            "服务标准监控"
+          ]
+        }
+      ],
+      "driver_insights": [
+        "分析了8个关键驱动因素的重要性和满意度表现",
+        "7个驱动因素表现优秀，需要保持优势",
+        "表现最佳的驱动因素：包装设计（满意度0.55）",
+        "最重要的驱动因素：产品质量（重要性1.00）",
+        "当前优势明显，应重点保持现有高满意度驱动因素"
+      ]
+    },
+    "product_dimension": {
+      "total_responses": 3,
+      "product_performance": {
+        "安慕希": {
+          "product_info": {
+            "category": "premium_yogurt",
+            "type": "希腊酸奶",
+            "price_tier": "premium",
+            "target_audience": "高端消费者",
+            "key_features": [
+              "蛋白质含量高",
+              "口感浓郁",
+              "品质优良"
+            ],
+            "competitors": [
+              "蒙牛纯甄",
+              "光明莫斯利安",
+              "达能碧悠"
+            ]
+          },
+          "mentions": [
+            {
+              "response_id": "rich_test_001",
+              "text": "不推荐原因: 包装设计确实需要改进，颜色搭配不够吸引人，而且材质感觉有点廉价。希望能设计得更[姓名]，符合伊利品牌的定位。. 推荐原因: 伊利安慕希的口感真的很棒，浓郁顺滑，而且蛋[姓名]高，营养价值好。[姓名]的形象也很不错，感觉很有品质保证。价格虽然不算便宜，但是物有所值。我已经喝了两年多了，品质一直很稳定，所以很愿意推荐给朋友们。. 不满意因素: 包装设计不好（如不够醒目、美观，材质不好，不便携、不[姓名]等）. 满意因素: 喜欢品牌或代言人、赞助综艺等宣传内容. 满意因素: 产品物有所值、性价比[姓名] 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应",
+              "nps_score": null
+            },
+            {
+              "response_id": "rich_test_002",
+              "text": "不推荐原因: 价格确实太[姓名]，一盒12支要30多块钱，比普通酸奶贵了一倍。而且口味有点过甜，不够天然。广告说的那些功能我也没感觉到，感觉就是普通的酸奶。性价比不高，不值得这个价钱。. 推荐原因: 包装设计还是不错的，看起来比较[姓名]，送人也拿得出手。. 不满意因素: 产品价格太贵，性价比不[姓名] 不满意因素: 产品口味口感不好. 不满意因素: 没有感知到产品宣传的功能. 满意因素: 包装设计好（如醒目、美观，材质好，便携、[姓名]等）",
+              "nps_score": null
+            },
+            {
+              "response_id": "rich_test_003",
+              "text": "不推荐原因: 促销活动太少了，而且折扣力度不大。另外网购的时候物流有点慢，有一次还收到了过期的产品，售后处理也不够及时。希望能改善服务质量。. 推荐原因: 口感确实很好，比其他品牌的酸奶更浓稠，蛋[姓名]也高。喝了之后确实感觉消化好了一些，可能是益生菌的作用。总体来说产品质量还是值得信赖的，就是服务需要提升。. 不满意因素: 促销活动不好（如对赠品、活动力度/规则等不满意）. 不满意因素: 物流配送、门店导购、售后等服务体验不好. 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应. 满意因素: 满意产品宣传的功能（如促进消化、增强免疫、助睡眠等）",
+              "nps_score": null
+            }
+          ],
+          "nps_scores": [],
+          "sentiment_distribution": {
+            "positive": 1,
+            "negative": 0,
+            "neutral": 2
+          },
+          "key_themes": [
+            "营养价值"
+          ],
+          "performance_metrics": {
+            "mention_count": 3,
+            "avg_nps": 0,
+            "nps_distribution": {
+              "promoters": 0,
+              "passives": 0,
+              "detractors": 0
+            },
+            "sentiment_score": 0.333,
+            "engagement_level": "high",
+            "theme_frequency": {
+              "营养价值": 1
+            }
+          }
+        }
+      },
+      "competitive_analysis": {
+        "competitor_mentions": {},
+        "brand_comparisons": [],
+        "competitive_position": {
+          "market_perception": "neutral",
+          "key_advantages": [],
+          "competitive_threats": [],
+          "market_share_indicators": {}
+        },
+        "market_insights": []
+      },
+      "portfolio_analysis": {
+        "portfolio_health": {
+          "performing_products": [],
+          "underperforming_products": [],
+          "portfolio_balance": 0.0
+        },
+        "category_performance": {
+          "premium_yogurt": [
+            {
+              "product": "安慕希",
+              "nps": 0,
+              "sentiment": 0.333
+            }
+          ]
+        },
+        "strategic_gaps": [],
+        "portfolio_optimization": {}
+      },
+      "cross_selling_opportunities": [],
+      "product_recommendations": [],
+      "product_insights": [
+        "分析了1个伊利产品的市场表现",
+        "表现最佳产品：安慕希（平均NPS 0.0）",
+        "高端产品线平均NPS 0.0，有待提升"
+      ]
+    },
+    "geographic_dimension": {
+      "total_responses": 3,
+      "regional_analysis": {
+        "华东": {
+          "region_info": {
+            "provinces": [
+              "上海",
+              "江苏",
+              "浙江",
+              "安徽",
+              "福建",
+              "江西",
+              "山东"
+            ],
+            "characteristics": [
+              "经济发达",
+              "消费升级",
+              "健康意识强"
+            ],
+            "dairy_preferences": [
+              "有机产品",
+              "高端消费",
+              "口感品质要求高"
+            ]
+          },
+          "responses": [
+            "rich_test_002",
+            "rich_test_003"
+          ],
+          "nps_scores": [],
+          "sentiment_distribution": {
+            "positive": 2,
+            "negative": 0,
+            "neutral": 0
+          },
+          "key_themes": [
+            "品质追求"
+          ],
+          "performance_metrics": {
+            "response_count": 2,
+            "avg_nps": 0,
+            "nps_distribution": {
+              "promoters": 0,
+              "passives": 0,
+              "detractors": 0
+            },
+            "sentiment_score": 1.0,
+            "theme_diversity": 1,
+            "regional_engagement": "low"
+          }
+        },
+        "华中": {
+          "region_info": {
+            "provinces": [
+              "河南",
+              "湖北",
+              "湖南"
+            ],
+            "characteristics": [
+              "人口密集",
+              "农业传统",
+              "价格敏感"
+            ],
+            "dairy_preferences": [
+              "性价比重视",
+              "家庭装偏好",
+              "传统口味"
+            ]
+          },
+          "responses": [
+            "rich_test_001"
+          ],
+          "nps_scores": [],
+          "sentiment_distribution": {
+            "positive": 1,
+            "negative": 0,
+            "neutral": 0
+          },
+          "key_themes": [
+            "经济实用"
+          ],
+          "performance_metrics": {
+            "response_count": 1,
+            "avg_nps": 0,
+            "nps_distribution": {
+              "promoters": 0,
+              "passives": 0,
+              "detractors": 0
+            },
+            "sentiment_score": 1.0,
+            "theme_diversity": 1,
+            "regional_engagement": "low"
+          }
+        }
+      },
+      "city_tier_analysis": {
+        "tier1": {
+          "tier_info": {
+            "cities": [
+              "北京",
+              "上海",
+              "广州",
+              "深圳"
+            ],
+            "characteristics": [
+              "消费力强",
+              "国际化",
+              "品牌意识强",
+              "创新接受度高"
+            ],
+            "consumption_patterns": [
+              "高端产品",
+              "便利性需求",
+              "品牌溢价接受度高"
+            ]
+          },
+          "responses": [
+            "rich_test_001",
+            "rich_test_003"
+          ],
+          "nps_scores": [],
+          "consumption_patterns": [
+            "高端消费",
+            "高端消费"
+          ],
+          "performance_metrics": {
+            "response_count": 2,
+            "avg_nps": 0,
+            "pattern_frequency": {
+              "高端消费": 2
+            },
+            "market_penetration": "low",
+            "consumption_sophistication": "high"
+          }
+        },
+        "tier2": {
+          "tier_info": {
+            "cities": [
+              "成都",
+              "杭州",
+              "武汉",
+              "西安",
+              "苏州",
+              "天津",
+              "南京",
+              "长沙",
+              "沈阳",
+              "青岛"
+            ],
+            "characteristics": [
+              "快速发展",
+              "中产阶级",
+              "消费升级",
+              "品质要求提升"
+            ],
+            "consumption_patterns": [
+              "性价比关注",
+              "品质追求",
+              "品牌选择理性"
+            ]
+          },
+          "responses": [
+            "rich_test_002"
+          ],
+          "nps_scores": [],
+          "consumption_patterns": [
+            "理性消费"
+          ],
+          "performance_metrics": {
+            "response_count": 1,
+            "avg_nps": 0,
+            "pattern_frequency": {
+              "理性消费": 1
+            },
+            "market_penetration": "low",
+            "consumption_sophistication": "medium"
+          }
+        },
+        "tier3": {
+          "tier_info": {
+            "cities": [
+              "温州",
+              "佛山",
+              "无锡",
+              "烟台",
+              "太原",
+              "合肥",
+              "南昌",
+              "贵阳",
+              "石家庄"
+            ],
+            "characteristics": [
+              "经济增长",
+              "消费潜力",
+              "价格敏感",
+              "品牌教育需要"
+            ],
+            "consumption_patterns": [
+              "实用导向",
+              "口碑影响",
+              "促销响应度高"
+            ]
+          },
+          "responses": [],
+          "nps_scores": [],
+          "consumption_patterns": [],
+          "performance_metrics": {}
+        },
+        "tier4_below": {
+          "tier_info": {
+            "characteristics": [
+              "县市及以下",
+              "农村市场",
+              "价格主导",
+              "渠道下沉"
+            ],
+            "consumption_patterns": [
+              "基础需求",
+              "量大优惠",
+              "本土品牌接受度"
+            ]
+          },
+          "responses": [],
+          "nps_scores": [],
+          "consumption_patterns": [],
+          "performance_metrics": {}
+        }
+      },
+      "demographic_analysis": {
+        "age_group_analysis": {
+          "gen_z": {
+            "info": {
+              "age": "18-25",
+              "characteristics": [
+                "数字原生",
+                "个性化",
+                "社交驱动"
+              ]
+            },
+            "responses": [],
+            "preferences": [],
+            "nps_scores": []
+          },
+          "millennials": {
+            "info": {
+              "age": "26-35",
+              "characteristics": [
+                "消费主力",
+                "品质追求",
+                "便利需求"
+              ]
+            },
+            "responses": [],
+            "preferences": [],
+            "nps_scores": []
+          },
+          "gen_x": {
+            "info": {
+              "age": "36-45",
+              "characteristics": [
+                "家庭责任",
+                "理性消费",
+                "品牌忠诚"
+              ]
+            },
+            "responses": [],
+            "preferences": [],
+            "nps_scores": []
+          },
+          "boomers": {
+            "info": {
+              "age": "46+",
+              "characteristics": [
+                "传统观念",
+                "健康关注",
+                "价格敏感"
+              ]
+            },
+            "responses": [],
+            "preferences": [],
+            "nps_scores": []
+          }
+        },
+        "income_level_analysis": {},
+        "lifestyle_segments": {},
+        "demographic_insights": [],
+        "llm_insights": {}
+      },
+      "expansion_opportunities": [
+        {
+          "type": "city_tier_expansion",
+          "target": "tier2",
+          "opportunity_score": 0.7,
+          "rationale": "tier2城市市场渗透率低但增长潜力大",
+          "target_characteristics": [
+            "快速发展",
+            "中产阶级",
+            "消费升级",
+            "品质要求提升"
+          ],
+          "expansion_strategy": [
+            "品质差异化",
+            "中高端定位",
+            "渠道下沉",
+            "本地化营销"
+          ]
+        },
+        {
+          "type": "city_tier_expansion",
+          "target": "tier3",
+          "opportunity_score": 0.6,
+          "rationale": "tier3城市市场渗透率低但增长潜力大",
+          "target_characteristics": [
+            "经济增长",
+            "消费潜力",
+            "价格敏感",
+            "品牌教育需要"
+          ],
+          "expansion_strategy": [
+            "性价比突出",
+            "渠道密集化",
+            "口碑营销",
+            "促销活动"
+          ]
+        }
+      ],
+      "geographic_recommendations": [
+        {
+          "recommendation_id": "regional_华东",
+          "type": "regional_improvement",
+          "target": "华东",
+          "priority": "high",
+          "title": "改善华东地区市场表现",
+          "description": "华东地区NPS低于平均水平，需要针对性改进",
+          "specific_actions": [
+            "高端产品导入",
+            "品质宣传重点"
+          ],
+          "target_characteristics": [
+            "经济发达",
+            "消费升级",
+            "健康意识强"
+          ]
+        },
+        {
+          "recommendation_id": "regional_华中",
+          "type": "regional_improvement",
+          "target": "华中",
+          "priority": "high",
+          "title": "改善华中地区市场表现",
+          "description": "华中地区NPS低于平均水平，需要针对性改进",
+          "specific_actions": [
+            "性价比产品推广",
+            "促销活动加强"
+          ],
+          "target_characteristics": [
+            "人口密集",
+            "农业传统",
+            "价格敏感"
+          ]
+        },
+        {
+          "recommendation_id": "expansion_tier2",
+          "type": "market_expansion",
+          "target": "tier2",
+          "priority": "medium",
+          "title": "拓展tier2市场",
+          "description": "tier2城市市场渗透率低但增长潜力大",
+          "expansion_strategy": [
+            "品质差异化",
+            "中高端定位",
+            "渠道下沉",
+            "本地化营销"
+          ],
+          "opportunity_score": 0.7
+        },
+        {
+          "recommendation_id": "expansion_tier3",
+          "type": "market_expansion",
+          "target": "tier3",
+          "priority": "medium",
+          "title": "拓展tier3市场",
+          "description": "tier3城市市场渗透率低但增长潜力大",
+          "expansion_strategy": [
+            "性价比突出",
+            "渠道密集化",
+            "口碑营销",
+            "促销活动"
+          ],
+          "opportunity_score": 0.6
+        }
+      ],
+      "geographic_insights": [
+        "表现最佳区域：华东（平均NPS 0.0）",
+        "在0个主要区域有较好市场表现",
+        "一线城市平均NPS 0.0，市场基础稳固",
+        "最活跃用户群体：gen_z（0条反馈）",
+        "不同地域和人群呈现差异化消费特征，需要精准化营销策略"
+      ]
+    },
+    "channel_dimension": {
+      "total_responses": 3,
+      "channel_analysis": {
+        "ecommerce": {
+          "channel_info": {
+            "name": "电商平台",
+            "characteristics": [
+              "线上购买",
+              "送货上门",
+              "价格比较",
+              "评价参考"
+            ],
+            "touchpoints": [
+              "商品页面",
+              "客服咨询",
+              "支付流程",
+              "物流配送",
+              "售后服务"
+            ],
+            "typical_mentions": [
+              "天猫",
+              "京东",
+              "淘宝",
+              "拼多多",
+              "苏宁",
+              "网购",
+              "线上",
+              "APP"
+            ]
+          },
+          "responses": [
+            "rich_test_003"
+          ],
+          "nps_scores": [],
+          "experience_ratings": {
+            "product_availability": [
+              2
+            ],
+            "checkout_efficiency": [
+              2
+            ]
+          },
+          "touchpoint_mentions": {
+            "物流配送": 1
+          },
+          "performance_metrics": {
+            "response_count": 1,
+            "avg_nps": 0,
+            "nps_distribution": {
+              "promoters": 0,
+              "passives": 0,
+              "detractors": 0
+            },
+            "experience_scores": {
+              "product_availability": 2.0,
+              "checkout_efficiency": 2.0
+            },
+            "touchpoint_engagement": 1,
+            "channel_satisfaction": 2.0
+          }
+        },
+        "fresh_market": {
+          "channel_info": {
+            "name": "生鲜市场",
+            "characteristics": [
+              "新鲜保证",
+              "价格实惠",
+              "现场挑选",
+              "人情味"
+            ],
+            "touchpoints": [
+              "商品挑选",
+              "价格谈判",
+              "现金支付",
+              "打包服务"
+            ],
+            "typical_mentions": [
+              "菜市场",
+              "农贸市场",
+              "生鲜店",
+              "社区店",
+              "早市"
+            ]
+          },
+          "responses": [
+            "rich_test_001"
+          ],
+          "nps_scores": [],
+          "experience_ratings": {
+            "convenience": [
+              2
+            ],
+            "price_competitiveness": [
+              4
+            ]
+          },
+          "touchpoint_mentions": {},
+          "performance_metrics": {
+            "response_count": 1,
+            "avg_nps": 0,
+            "nps_distribution": {
+              "promoters": 0,
+              "passives": 0,
+              "detractors": 0
+            },
+            "experience_scores": {
+              "convenience": 2.0,
+              "price_competitiveness": 4.0
+            },
+            "touchpoint_engagement": 0,
+            "channel_satisfaction": 3.0
+          }
+        }
+      },
+      "touchpoint_analysis": {
+        "物流配送": {
+          "total_mentions": 1,
+          "channel_distribution": {},
+          "experience_sentiment": {
+            "positive": 1,
+            "negative": 0,
+            "neutral": 0
+          },
+          "pain_points": [],
+          "success_factors": [
+            "配送及时"
+          ],
+          "satisfaction_score": 1.0
+        }
+      },
+      "journey_analysis": {
+        "stage_analysis": {
+          "awareness": {
+            "stage_info": {
+              "name": "认知阶段",
+              "touchpoints": [
+                "广告展示",
+                "口碑推荐",
+                "社交媒体",
+                "促销活动"
+              ],
+              "experience_factors": [
+                "品牌知名度",
+                "产品认知",
+                "渠道可见性"
+              ]
+            },
+            "mentions": 1,
+            "experience_quality": [
+              3
+            ],
+            "channel_performance": {}
+          },
+          "consideration": {
+            "stage_info": {
+              "name": "考虑阶段",
+              "touchpoints": [
+                "产品比较",
+                "价格查询",
+                "评价阅读",
+                "朋友咨询"
+              ],
+              "experience_factors": [
+                "产品信息",
+                "价格竞争力",
+                "用户评价",
+                "购买便利性"
+              ]
+            },
+            "mentions": 0,
+            "experience_quality": [],
+            "channel_performance": {}
+          },
+          "purchase": {
+            "stage_info": {
+              "name": "购买阶段",
+              "touchpoints": [
+                "商品选择",
+                "支付结账",
+                "服务咨询",
+                "会员登记"
+              ],
+              "experience_factors": [
+                "购买体验",
+                "服务质量",
+                "支付便利",
+                "等待时间"
+              ]
+            },
+            "mentions": 0,
+            "experience_quality": [],
+            "channel_performance": {}
+          },
+          "usage": {
+            "stage_info": {
+              "name": "使用阶段",
+              "touchpoints": [
+                "产品消费",
+                "口感体验",
+                "包装处理",
+                "保存储藏"
+              ],
+              "experience_factors": [
+                "产品质量",
+                "使用体验",
+                "包装设计",
+                "实用性"
+              ]
+            },
+            "mentions": 0,
+            "experience_quality": [],
+            "channel_performance": {}
+          },
+          "advocacy": {
+            "stage_info": {
+              "name": "推荐阶段",
+              "touchpoints": [
+                "口碑分享",
+                "评价发布",
+                "社交推荐",
+                "复购行为"
+              ],
+              "experience_factors": [
+                "满意度",
+                "推荐意愿",
+                "复购率",
+                "忠诚度"
+              ]
+            },
+            "mentions": 0,
+            "experience_quality": [],
+            "channel_performance": {}
+          }
+        },
+        "journey_patterns": [],
+        "cross_channel_behavior": {},
+        "friction_points": [],
+        "llm_insights": {}
+      },
+      "omnichannel_insights": [
+        {
+          "type": "channel_performance_gap",
+          "description": "ecommerce表现最佳（NPS 0.0），ecommerce有改进空间（NPS 0.0）",
+          "best_channel": "ecommerce",
+          "worst_channel": "ecommerce",
+          "performance_gap": 0
+        },
+        {
+          "type": "high_performing_touchpoints",
+          "description": "表现优秀的触点：物流配送",
+          "touchpoints": [
+            "物流配送"
+          ],
+          "optimization_potential": "可以在其他渠道复制成功经验"
+        }
+      ],
+      "optimization_opportunities": [
+        {
+          "type": "channel_improvement",
+          "channel": "ecommerce",
+          "priority": "high",
+          "current_nps": 0,
+          "improvement_areas": [
+            "product_availability",
+            "checkout_efficiency"
+          ],
+          "potential_impact": "high"
+        },
+        {
+          "type": "channel_improvement",
+          "channel": "fresh_market",
+          "priority": "high",
+          "current_nps": 0,
+          "improvement_areas": [
+            "convenience"
+          ],
+          "potential_impact": "high"
+        }
+      ],
+      "channel_recommendations": [
+        {
+          "recommendation_id": "channel_ecommerce",
+          "type": "channel_improvement",
+          "channel": "ecommerce",
+          "priority": "high",
+          "title": "改善电商平台渠道体验",
+          "description": "该渠道NPS为0.0，需要重点改进",
+          "improvement_areas": [
+            "product_availability",
+            "checkout_efficiency"
+          ],
+          "suggested_actions": [
+            "简化支付流程",
+            "优化页面加载",
+            "提供多种支付方式"
+          ],
+          "expected_impact": "high"
+        },
+        {
+          "recommendation_id": "channel_fresh_market",
+          "type": "channel_improvement",
+          "channel": "fresh_market",
+          "priority": "high",
+          "title": "改善生鲜市场渠道体验",
+          "description": "该渠道NPS为0.0，需要重点改进",
+          "improvement_areas": [
+            "convenience"
+          ],
+          "suggested_actions": [
+            "提升服务质量",
+            "优化客户体验",
+            "加强员工培训"
+          ],
+          "expected_impact": "high"
+        },
+        {
+          "recommendation_id": "best_practice_replication",
+          "type": "best_practice",
+          "priority": "medium",
+          "title": "复制电商平台成功经验",
+          "description": "该渠道NPS达0.0，成功经验可推广",
+          "best_practices": [
+            "线上购物体验优化"
+          ],
+          "target_channels": [],
+          "expected_impact": "high"
+        }
+      ],
+      "channel_insights": [
+        "分析了2个销售渠道的客户体验表现",
+        "表现最佳渠道：电商平台（NPS 0.0）",
+        "电商平台是主要使用渠道",
+        "ecommerce表现最佳（NPS 0.0），ecommerce有改进空间（NPS 0.0）",
+        "表现优秀的触点：物流配送"
+      ]
+    },
+    "analysis_coordination": {
+      "total_raw_insights": 23,
+      "total_coordinated_insights": 5,
+      "coordinated_insights": [
+        {
+          "agent_id": "B5",
+          "insight_type": "satisfaction_driver",
+          "content": "7个驱动因素表现优秀，需要保持优势",
+          "category": "strategic_direction",
+          "source_data": "driver_analysis",
+          "supporting_agents": [
+            "B5"
+          ],
+          "conflict_resolved": true,
+          "priority_score": 1.0,
+          "quality_score": 0.6,
+          "business_impact": 0.8999999999999999,
+          "overall_score": 0.8500000000000001
+        },
+        {
+          "agent_id": "B6",
+          "insight_type": "product_performance",
+          "content": "分析了1个伊利产品的市场表现",
+          "category": "competitive_advantage",
+          "source_data": "product_dimension",
+          "supporting_agents": [
+            "B6"
+          ],
+          "conflict_resolved": true,
+          "priority_score": 1.0,
+          "quality_score": 0.55,
+          "business_impact": 0.65,
+          "overall_score": 0.76
+        },
+        {
+          "agent_id": "B4",
+          "insight_type": "thematic_pattern",
+          "content": "品牌忠诚度较高，习惯性购买行为明显",
+          "category": "market_trend",
+          "source_data": "text_clustering",
+          "supporting_agents": [
+            "B4"
+          ],
+          "conflict_resolved": true,
+          "priority_score": 1.0,
+          "quality_score": 0.5,
+          "business_impact": 0.5,
+          "overall_score": 0.7000000000000001
+        },
+        {
+          "agent_id": "B7",
+          "insight_type": "regional_pattern",
+          "content": "在0个主要区域有较好市场表现",
+          "category": "market_trend",
+          "source_data": "geographic_dimension",
+          "supporting_agents": [
+            "B7"
+          ],
+          "conflict_resolved": true,
+          "priority_score": 1.0,
+          "quality_score": 0.5,
+          "business_impact": 0.5,
+          "overall_score": 0.7000000000000001
+        },
+        {
+          "agent_id": "B8",
+          "insight_type": "channel_experience",
+          "content": "电商平台是主要使用渠道",
+          "category": "operational_insight",
+          "source_data": "channel_dimension",
+          "supporting_agents": [
+            "B8"
+          ],
+          "conflict_resolved": true,
+          "priority_score": 1.0,
+          "quality_score": 0.5,
+          "business_impact": 0.5,
+          "overall_score": 0.7000000000000001
+        }
+      ],
+      "priority_recommendations": [
+        {
+          "recommendation_id": "strategic_0",
+          "priority": "high",
+          "title": "战略重点：7个驱动因素表现优秀，需要保持优势",
+          "description": "7个驱动因素表现优秀，需要保持优势",
+          "category": "strategic_direction",
+          "source_agents": [
+            "B5"
+          ],
+          "business_impact": 0.8999999999999999,
+          "urgency": "medium_term",
+          "implementation_complexity": "high",
+          "expected_outcome": "长期价值创造，业务增长"
+        }
+      ],
+      "validation_results": {
+        "consistency_score": 0.0,
+        "validation_flags": [],
+        "cross_confirmations": [],
+        "data_gaps": [
+          {
+            "agent": "B3",
+            "missing_data": [
+              "incomplete_structure"
+            ]
+          },
+          {
+            "agent": "B4",
+            "missing_data": [
+              "incomplete_structure"
+            ]
+          },
+          {
+            "agent": "B6",
+            "missing_data": [
+              "incomplete_structure"
+            ]
+          },
+          {
+            "agent": "B7",
+            "missing_data": [
+              "incomplete_structure"
+            ]
+          },
+          {
+            "agent": "B8",
+            "missing_data": [
+              "incomplete_structure"
+            ]
+          }
+        ]
+      },
+      "synthesis_summary": {
+        "executive_overview": "综合分析识别出5项关键洞察，其中0项紧急议题需要立即关注，1项战略性发现指引长期发展方向。",
+        "key_findings": [
+          {
+            "finding": "7个驱动因素表现优秀，需要保持优势",
+            "category": "strategic_direction",
+            "confidence": 0.6,
+            "impact": 0.8999999999999999
+          },
+          {
+            "finding": "分析了1个伊利产品的市场表现",
+            "category": "competitive_advantage",
+            "confidence": 0.55,
+            "impact": 0.65
+          },
+          {
+            "finding": "品牌忠诚度较高，习惯性购买行为明显",
+            "category": "market_trend",
+            "confidence": 0.5,
+            "impact": 0.5
+          },
+          {
+            "finding": "在0个主要区域有较好市场表现",
+            "category": "market_trend",
+            "confidence": 0.5,
+            "impact": 0.5
+          },
+          {
+            "finding": "电商平台是主要使用渠道",
+            "category": "operational_insight",
+            "confidence": 0.5,
+            "impact": 0.5
+          }
+        ],
+        "strategic_priorities": [
+          {
+            "priority": "战略重点：7个驱动因素表现优秀，需要保持优势",
+            "description": "7个驱动因素表现优秀，需要保持优势",
+            "urgency": "medium_term",
+            "complexity": "high"
+          }
+        ],
+        "immediate_actions": [],
+        "performance_metrics": {
+          "total_insights_generated": 5,
+          "cross_validated_insights": 0,
+          "high_confidence_insights": 0,
+          "agent_coverage": 7,
+          "consistency_score": 0.0
+        },
+        "confidence_assessment": {
+          "overall_confidence": "medium",
+          "data_completeness": 0.2857142857142857,
+          "cross_validation_rate": 0.0,
+          "recommendation_confidence": 0.53
+        }
+      },
+      "meta_insights": [
+        "多角度分析覆盖7个维度，确保洞察全面性",
+        "部分洞察质量有待提升，需要更多数据验证",
+        "分析覆盖面广，从多个角度深入理解客户反馈"
+      ]
+    }
+  },
+  "executive_recommendations": [
+    {
+      "recommendation_id": "EXEC_001",
+      "title": "客户体验卓越计划",
+      "executive_summary": "基于NPS分析结果，系统性提升客户满意度和忠诚度",
+      "strategic_priority": "customer_centricity",
+      "business_impact": "预期NPS提升至50+，客户流失率降低15-20%",
+      "implementation_complexity": "medium",
+      "timeline": "6个月",
+      "resource_requirements": [
+        "客户体验团队",
+        "中等预算投入",
+        "跨部门协调"
+      ],
+      "success_metrics": [
+        "NPS提升至50+",
+        "客户投诉率下降30%",
+        "客户满意度90%+"
+      ],
+      "risk_mitigation": [
+        "分阶段实施",
+        "快速反馈机制",
+        "持续监控调整"
+      ],
+      "dependencies": [
+        "管理层支持",
+        "员工培训",
+        "系统升级"
+      ]
+    }
+  ],
+  "executive_assessment": {
+    "overall_health_score": 50,
+    "business_status": "稳定改进",
+    "key_strengths": [],
+    "critical_challenges": [],
+    "strategic_position": "市场竞争激烈，需要突破创新",
+    "competitive_outlook": "竞争地位相对稳固",
+    "investment_priorities": [
+      "优先投入客户体验改善"
+    ],
+    "performance_indicators": {
+      "customer_satisfaction": {
+        "current": 0.0,
+        "target": 50,
+        "status": "critical"
+      },
+      "risk_exposure": {
+        "current": 0,
+        "target": 0,
+        "status": "good"
+      },
+      "strategic_readiness": {
+        "current": 0,
+        "target": 3,
+        "status": "attention"
+      }
+    }
+  },
+  "executive_dashboard": {
+    "executive_summary": {
+      "overall_health_score": 50,
+      "business_status": "稳定改进",
+      "strategic_readiness": 1,
+      "critical_actions": 1
+    },
+    "key_performance_indicators": {
+      "customer_satisfaction": {
+        "current": 0.0,
+        "target": 50,
+        "status": "critical"
+      },
+      "risk_exposure": {
+        "current": 0,
+        "target": 0,
+        "status": "good"
+      },
+      "strategic_readiness": {
+        "current": 0,
+        "target": 3,
+        "status": "attention"
+      }
+    },
+    "strategic_initiatives": [
+      {
+        "title": "客户体验卓越计划",
+        "priority": "customer_centricity",
+        "timeline": "6个月",
+        "complexity": "medium",
+        "impact": "预期NPS提升至50+，客户流失率降低15-20%..."
+      }
+    ],
+    "immediate_actions": [
+      {
+        "action": "客户体验卓越计划",
+        "deadline": "30天内启动",
+        "owner": "高级管理层",
+        "success_metric": "NPS提升至50+"
+      }
+    ],
+    "resource_allocation": {
+      "high_investment": 0,
+      "medium_investment": 1,
+      "quick_wins": 0
+    },
+    "risk_alerts": []
+  },
+  "presentation_materials": {
+    "executive_slide": {
+      "title": "伊利集团NPS客户洞察战略建议",
+      "subtitle": "基于3个客户样本的综合分析",
+      "key_message": "整体健康得分50/100，稳定改进",
+      "call_to_action": "建议实施1项战略行动"
+    },
+    "situation_analysis": {
+      "current_state": {
+        "nps_score": 0.0,
+        "health_score": 50,
+        "business_status": "稳定改进"
+      },
+      "key_challenges": [],
+      "market_position": "市场竞争激烈，需要突破创新",
+      "competitive_outlook": "竞争地位相对稳固"
+    },
+    "strategic_recommendations": [
+      {
+        "priority_rank": 1,
+        "title": "客户体验卓越计划",
+        "summary": "基于NPS分析结果，系统性提升客户满意度和忠诚度",
+        "business_case": "预期NPS提升至50+，客户流失率降低15-20%",
+        "timeline": "6个月",
+        "investment": "medium"
+      }
+    ],
+    "implementation_roadmap": {
+      "phase_1": "0-3个月：启动关键客户体验项目",
+      "phase_2": "3-6个月：实施运营优化措施",
+      "phase_3": "6-12个月：推进增长战略项目",
+      "success_metrics": "NPS>50, 运营效率提升20%, 市场份额增长"
+    },
+    "resource_requirements": {
+      "total_initiatives": 1,
+      "high_priority": 1,
+      "estimated_investment": "低投资级别（运营预算范围）",
+      "management_attention": "高级管理层每月评审"
+    }
+  },
+  "implementation_roadmap": {
+    "immediate_phase": {
+      "timeframe": "0-3个月",
+      "initiatives": [
+        {
+          "title": "客户体验卓越计划",
+          "complexity": "medium",
+          "success_metric": "NPS提升至50+"
+        }
+      ],
+      "key_milestones": [
+        "客户满意度提升专项启动",
+        "关键风险缓解措施到位",
+        "管理层战略共识达成"
+      ],
+      "resource_focus": "客户体验和风险控制"
+    },
+    "acceleration_phase": {
+      "timeframe": "3-9个月",
+      "initiatives": [],
+      "key_milestones": [
+        "运营流程优化见效",
+        "市场竞争力提升显现",
+        "组织执行力增强"
+      ],
+      "resource_focus": "运营优化和市场响应"
+    },
+    "growth_phase": {
+      "timeframe": "9-18个月",
+      "initiatives": [],
+      "key_milestones": [
+        "可持续增长模式确立",
+        "创新能力显著增强",
+        "行业领导地位巩固"
+      ],
+      "resource_focus": "创新增长和可持续发展"
+    },
+    "success_metrics": {
+      "phase_1_targets": [
+        "NPS>35",
+        "关键风险控制"
+      ],
+      "phase_2_targets": [
+        "NPS>45",
+        "运营效率提升15%"
+      ],
+      "phase_3_targets": [
+        "NPS>50",
+        "新增长引擎建立"
+      ]
+    }
+  },
+  "consulting_synthesis": {
+    "strategic_themes": [],
+    "critical_priorities": [],
+    "business_opportunities": [],
+    "major_risks": [],
+    "resource_requirements": {},
+    "implementation_complexity": {
+      "immediate_bandwidth": 0,
+      "short_term_bandwidth": 0,
+      "complexity_assessment": "low"
+    },
+    "success_factors": [
+      "以客户满意度提升为核心的组织协调"
+    ]
+  },
+  "confidence": 0.22500000000000003,
+  "html_report": "<!DOCTYPE html>\n<html lang=\"zh-CN\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>伊利集团 NPS 分析报告</title>\n    <style>\n        body {\n            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n            line-height: 1.6;\n            margin: 0;\n            padding: 20px;\n            background-color: #f5f5f5;\n        }\n        .container {\n            max-width: 1200px;\n            margin: 0 auto;\n            background: white;\n            border-radius: 8px;\n            box-shadow: 0 2px 10px rgba(0,0,0,0.1);\n            overflow: hidden;\n        }\n        .header {\n            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n            color: white;\n            padding: 30px;\n            text-align: center;\n        }\n        .header h1 {\n            margin: 0;\n            font-size: 2.5em;\n            font-weight: 300;\n        }\n        .header .subtitle {\n            margin-top: 10px;\n            font-size: 1.2em;\n            opacity: 0.9;\n        }\n        .content {\n            padding: 30px;\n        }\n        .metrics-grid {\n            display: grid;\n            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));\n            gap: 20px;\n            margin-bottom: 30px;\n        }\n        .metric-card {\n            background: #f8f9fa;\n            padding: 20px;\n            border-radius: 8px;\n            text-align: center;\n            border-left: 4px solid #007bff;\n        }\n        .metric-value {\n            font-size: 2.5em;\n            font-weight: bold;\n            color: #007bff;\n            margin: 10px 0;\n        }\n        .metric-label {\n            color: #6c757d;\n            text-transform: uppercase;\n            font-size: 0.9em;\n            letter-spacing: 1px;\n        }\n        .section {\n            margin-bottom: 40px;\n        }\n        .section h2 {\n            color: #333;\n            border-bottom: 2px solid #e9ecef;\n            padding-bottom: 10px;\n            margin-bottom: 20px;\n        }\n        .recommendation {\n            background: #fff3cd;\n            border-left: 4px solid #ffc107;\n            padding: 15px;\n            margin-bottom: 15px;\n            border-radius: 4px;\n        }\n        .recommendation h3 {\n            margin: 0 0 10px 0;\n            color: #856404;\n        }\n        .recommendation p {\n            margin: 0;\n            color: #664d03;\n        }\n        .nps-gauge {\n            text-align: center;\n            margin: 20px 0;\n        }\n        .nps-score {\n            font-size: 4em;\n            font-weight: bold;\n            color: #ffc107;\n        }\n        .footer {\n            background: #f8f9fa;\n            padding: 20px;\n            text-align: center;\n            color: #6c757d;\n            border-top: 1px solid #e9ecef;\n        }\n        .status-badge {\n            display: inline-block;\n            padding: 4px 12px;\n            border-radius: 20px;\n            font-size: 0.8em;\n            font-weight: bold;\n            text-transform: uppercase;\n        }\n        .status-completed {\n            background: #d4edda;\n            color: #155724;\n        }\n        .dashboard-summary {\n            background: #e7f3ff;\n            border-radius: 8px;\n            padding: 20px;\n            margin-bottom: 30px;\n        }\n    </style>\n</head>\n<body>\n    <div class=\"container\">\n        <div class=\"header\">\n            <h1>伊利集团 NPS 分析报告</h1>\n            <div class=\"subtitle\">基于 3 个客户样本的综合分析</div>\n            <div class=\"subtitle\">\n                <span class=\"status-badge status-completed\">分析完成</span>\n            </div>\n        </div>\n\n        <div class=\"content\">\n            <!-- NPS Score Section -->\n            <div class=\"section\">\n                <h2>📊 NPS 核心指标</h2>\n                <div class=\"nps-gauge\">\n                    <div class=\"nps-score\">0.0</div>\n                    <div>净推荐值 (NPS)</div>\n                </div>\n\n                <div class=\"metrics-grid\">\n                    <div class=\"metric-card\">\n                        <div class=\"metric-value\">1</div>\n                        <div class=\"metric-label\">推荐者数量</div>\n                    </div>\n                    <div class=\"metric-card\">\n                        <div class=\"metric-value\">1</div>\n                        <div class=\"metric-label\">中性客户数量</div>\n                    </div>\n                    <div class=\"metric-card\">\n                        <div class=\"metric-value\">1</div>\n                        <div class=\"metric-label\">批评者数量</div>\n                    </div>\n                    <div class=\"metric-card\">\n                        <div class=\"metric-value\">3</div>\n                        <div class=\"metric-label\">样本总量</div>\n                    </div>\n                </div>\n            </div>\n\n            <!-- Executive Dashboard -->\n            \n            <div class=\"section\">\n                <h2>🎯 执行层仪表板</h2>\n                <div class=\"dashboard-summary\">\n                    <strong>整体健康得分:</strong> N/A/100<br>\n                    <strong>业务状态:</strong> 分析中<br>\n                    <strong>战略就绪度:</strong> 待评估\n                </div>\n            </div>\n            \n\n            <!-- Recommendations Section -->\n            \n            <div class=\"section\">\n                <h2>💡 执行建议</h2>\n                \n                <div class=\"recommendation\">\n                    <h3>客户体验卓越计划</h3>\n                    <p><strong>优先级:</strong> customer_centricity</p>\n                    <p><strong>实施复杂度:</strong> medium</p>\n                    <p><strong>时间线:</strong> 6个月</p>\n                    <p>基于NPS分析结果，系统性提升客户满意度和忠诚度</p>\n                </div>\n            \n            </div>\n        \n\n            <!-- Workflow Summary -->\n            <div class=\"section\">\n                <h2>⚙️ 分析流程概览</h2>\n                <div class=\"metrics-grid\">\n                    <div class=\"metric-card\">\n                        <div class=\"metric-value\">0</div>\n                        <div class=\"metric-label\">完成的分析模块</div>\n                    </div>\n                    <div class=\"metric-card\">\n                        <div class=\"metric-value\">0s</div>\n                        <div class=\"metric-label\">处理时间</div>\n                    </div>\n                    <div class=\"metric-card\">\n                        <div class=\"metric-value\">3</div>\n                        <div class=\"metric-label\">完成的分析阶段</div>\n                    </div>\n                    <div class=\"metric-card\">\n                        <div class=\"metric-value\">0.2</div>\n                        <div class=\"metric-label\">置信度评分</div>\n                    </div>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"footer\">\n            <p>报告生成时间: 2025-09-25 02:17:16</p>\n            <p>🤖 由伊利集团 NPS V3 智能分析系统生成</p>\n        </div>\n    </div>\n</body>\n</html>",
+  "html_reports": {
+    "executive_dashboard": "outputs/v3_reports/workflow_d181f0e8_executive_report.html"
+  },
+  "completion_time": "2025-09-24T18:17:16.005305",
+  "agent_log_summary": {
+    "metadata": {
+      "session_id": "20250925_021648",
+      "start_time": "2025-09-25T02:16:48.601301",
+      "agents_executed": [],
+      "total_execution_time_ms": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "agent_outputs": {}
+  },
+  "agent_log_dir": "outputs/agent_logs/20250925",
+  "comprehensive_logging": true,
+  "detailed_agent_logs": true,
+  "request_id": "v2_converted_1758737808",
+  "analysis_status": "completed",
+  "timestamp": "2025-09-25T02:17:16.008059",
+  "foundation_pass": {
+    "workflow_start_time": "2025-09-25 02:16:48.602127",
+    "workflow_version": "3.0.0",
+    "input_metadata": {},
+    "agent_outputs": {},
+    "agent_sequence": [],
+    "checkpoints": [],
+    "total_tokens_used": 0,
+    "total_llm_calls": 0,
+    "total_processing_time_ms": 0,
+    "memory_peak_mb": 0.0,
+    "errors": [],
+    "warnings": [],
+    "retry_count": 0,
+    "failed_agents": [],
+    "report_format_preferences": {},
+    "emphasis_areas": [],
+    "excluded_topics": [],
+    "cleaned_data": {
+      "total_responses": 3,
+      "valid_responses": 3,
+      "invalid_responses": 0,
+      "cleaned_responses": [
+        {
+          "response_id": "rich_test_001",
+          "timestamp": "2025-09-25 02:16:48.604001",
+          "nps_score": 9,
+          "comment": "不推荐原因: 包装设计确实需要改进，颜色搭配不够吸引人，而且材质感觉有点廉价。希望能设计得更[姓名]，符合伊利品牌的定位。. 推荐原因: 伊利安慕希的口感真的很棒，浓郁顺滑，而且蛋[姓名]高，营养价值好。[姓名]的形象也很不错，感觉很有品质保证。价格虽然不算便宜，但是物有所值。我已经喝了两年多了，品质一直很稳定，所以很愿意推荐给朋友们。. 不满意因素: 包装设计不好（如不够醒目、美观，材质不好，不便携、不[姓名]等）. 满意因素: 喜欢品牌或代言人、赞助综艺等宣传内容. 满意因素: 产品物有所值、性价比[姓名] 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应",
+          "product_line": null,
+          "customer_segment": null,
+          "channel": null,
+          "metadata": {
+            "survey_date": "2025-09-25 10:00:00",
+            "submit_time": "2025-09-25 10:05:00",
+            "channel": "链接二维码",
+            "response_type": "正式",
+            "duration": "5分钟",
+            "ai_tag_reason": "",
+            "manual_tag_status": "未标记",
+            "manual_tag_reason": ""
+          }
+        },
+        {
+          "response_id": "rich_test_002",
+          "timestamp": "2025-09-25 02:16:48.604145",
+          "nps_score": 3,
+          "comment": "不推荐原因: 价格确实太[姓名]，一盒12支要30多块钱，比普通酸奶贵了一倍。而且口味有点过甜，不够天然。广告说的那些功能我也没感觉到，感觉就是普通的酸奶。性价比不高，不值得这个价钱。. 推荐原因: 包装设计还是不错的，看起来比较[姓名]，送人也拿得出手。. 不满意因素: 产品价格太贵，性价比不[姓名] 不满意因素: 产品口味口感不好. 不满意因素: 没有感知到产品宣传的功能. 满意因素: 包装设计好（如醒目、美观，材质好，便携、[姓名]等）",
+          "product_line": null,
+          "customer_segment": null,
+          "channel": null,
+          "metadata": {
+            "survey_date": "2025-09-25 11:00:00",
+            "submit_time": "2025-09-25 11:03:00",
+            "channel": "链接二维码",
+            "response_type": "正式",
+            "duration": "3分钟",
+            "ai_tag_reason": "",
+            "manual_tag_status": "未标记",
+            "manual_tag_reason": ""
+          }
+        },
+        {
+          "response_id": "rich_test_003",
+          "timestamp": "2025-09-25 02:16:48.604292",
+          "nps_score": 7,
+          "comment": "不推荐原因: 促销活动太少了，而且折扣力度不大。另外网购的时候物流有点慢，有一次还收到了过期的产品，售后处理也不够及时。希望能改善服务质量。. 推荐原因: 口感确实很好，比其他品牌的酸奶更浓稠，蛋[姓名]也高。喝了之后确实感觉消化好了一些，可能是益生菌的作用。总体来说产品质量还是值得信赖的，就是服务需要提升。. 不满意因素: 促销活动不好（如对赠品、活动力度/规则等不满意）. 不满意因素: 物流配送、门店导购、售后等服务体验不好. 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应. 满意因素: 满意产品宣传的功能（如促进消化、增强免疫、助睡眠等）",
+          "product_line": null,
+          "customer_segment": null,
+          "channel": null,
+          "metadata": {
+            "survey_date": "2025-09-25 12:00:00",
+            "submit_time": "2025-09-25 12:04:00",
+            "channel": "链接二维码",
+            "response_type": "正式",
+            "duration": "4分钟",
+            "ai_tag_reason": "",
+            "manual_tag_status": "未标记",
+            "manual_tag_reason": ""
+          }
+        }
+      ],
+      "data_quality": "high",
+      "cleaning_notes": [],
+      "pii_scrubbed": true
+    },
+    "summary": {
+      "total_analyzed": 3,
+      "sentiment_distribution": {
+        "mixed": {
+          "count": 3,
+          "percentage": 100.0
+        }
+      },
+      "top_themes": [
+        {
+          "theme": "品质",
+          "count": 3
+        },
+        {
+          "theme": "口感",
+          "count": 3
+        },
+        {
+          "theme": "包装",
+          "count": 2
+        },
+        {
+          "theme": "价格",
+          "count": 2
+        },
+        {
+          "theme": "功效",
+          "count": 2
+        },
+        {
+          "theme": "产品_安慕希",
+          "count": 1
+        },
+        {
+          "theme": "服务",
+          "count": 1
+        }
+      ],
+      "key_phrases": [
+        "满意因素",
+        "满意",
+        "因素",
+        "姓名",
+        "推荐",
+        "推荐原因",
+        "活动",
+        "产品"
+      ],
+      "emotion_summary": {
+        "joy": 0.36,
+        "trust": 0.19,
+        "anticipation": 0.14,
+        "surprise": 0.0,
+        "sadness": 0.0,
+        "disgust": 0.0,
+        "anger": 0.31,
+        "fear": 0.0
+      }
+    },
+    "nps_metrics": {
+      "nps_score": 0.0,
+      "promoters_count": 1,
+      "passives_count": 1,
+      "detractors_count": 1,
+      "promoters_percentage": 33.33333333333333,
+      "passives_percentage": 33.33333333333333,
+      "detractors_percentage": 33.33333333333333,
+      "confidence_interval": [
+        -75.4404351741111,
+        75.4404351741111
+      ],
+      "sample_size": 3,
+      "statistical_significance": "False"
+    },
+    "segment_analysis": {
+      "score_distribution": {
+        "9": 1,
+        "3": 1,
+        "7": 1
+      },
+      "quartiles": {
+        "q1": 5.0,
+        "median": 7.0,
+        "q3": 8.0,
+        "mean": 6.333333333333333,
+        "std": 2.494438257849294
+      }
+    },
+    "temporal_analysis": {},
+    "statistical_analysis": {},
+    "quantitative_insights": [
+      "NPS得分为0.0，处于中等水平，有改进空间",
+      "95%置信区间为[-75.4, 75.4]，样本量3具有统计代表性"
+    ],
+    "tagged_responses": [
+      {
+        "response_id": "rich_test_001",
+        "original_text": "不推荐原因: 包装设计确实需要改进，颜色搭配不够吸引人，而且材质感觉有点廉价。希望能设计得更[姓名]，符合伊利品牌的定位。. 推荐原因: 伊利安慕希的口感真的很棒，浓郁顺滑，而且蛋[姓名]高，营养价值好。[姓名]的形象也很不错，感觉很有品质保证。价格虽然不算便宜，但是物有所值。我已经喝了两年多了，品质一直很稳定，所以很愿意推荐给朋友们。. 不满意因素: 包装设计不好（如不够醒目、美观，材质不好，不便携、不[姓名]等）. 满意因素: 喜欢品牌或代言人、赞助综艺等宣传内容. 满意因素: 产品物有所值、性价比[姓名] 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应",
+        "tags": [
+          "品质",
+          "包装",
+          "产品_安慕希",
+          "价格",
+          "功效",
+          "口感"
+        ],
+        "sentiment": "mixed",
+        "emotion_scores": {
+          "joy": 0.33,
+          "trust": 0.33,
+          "anticipation": 0.17,
+          "surprise": 0.0,
+          "sadness": 0.0,
+          "disgust": 0.0,
+          "anger": 0.17,
+          "fear": 0.0
+        },
+        "key_phrases": [
+          "满意因素",
+          "姓名",
+          "满意",
+          "因素",
+          "推荐"
+        ]
+      },
+      {
+        "response_id": "rich_test_002",
+        "original_text": "不推荐原因: 价格确实太[姓名]，一盒12支要30多块钱，比普通酸奶贵了一倍。而且口味有点过甜，不够天然。广告说的那些功能我也没感觉到，感觉就是普通的酸奶。性价比不高，不值得这个价钱。. 推荐原因: 包装设计还是不错的，看起来比较[姓名]，送人也拿得出手。. 不满意因素: 产品价格太贵，性价比不[姓名] 不满意因素: 产品口味口感不好. 不满意因素: 没有感知到产品宣传的功能. 满意因素: 包装设计好（如醒目、美观，材质好，便携、[姓名]等）",
+        "tags": [
+          "口感",
+          "品质",
+          "价格",
+          "包装"
+        ],
+        "sentiment": "mixed",
+        "emotion_scores": {
+          "joy": 0.5,
+          "trust": 0.0,
+          "anticipation": 0.0,
+          "surprise": 0.0,
+          "sadness": 0.0,
+          "disgust": 0.0,
+          "anger": 0.5,
+          "fear": 0.0
+        },
+        "key_phrases": [
+          "满意因素",
+          "姓名",
+          "满意",
+          "因素",
+          "推荐原因"
+        ]
+      },
+      {
+        "response_id": "rich_test_003",
+        "original_text": "不推荐原因: 促销活动太少了，而且折扣力度不大。另外网购的时候物流有点慢，有一次还收到了过期的产品，售后处理也不够及时。希望能改善服务质量。. 推荐原因: 口感确实很好，比其他品牌的酸奶更浓稠，蛋[姓名]也高。喝了之后确实感觉消化好了一些，可能是益生菌的作用。总体来说产品质量还是值得信赖的，就是服务需要提升。. 不满意因素: 促销活动不好（如对赠品、活动力度/规则等不满意）. 不满意因素: 物流配送、门店导购、售后等服务体验不好. 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应. 满意因素: 满意产品宣传的功能（如促进消化、增强免疫、助睡眠等）",
+        "tags": [
+          "服务",
+          "口感",
+          "品质",
+          "功效"
+        ],
+        "sentiment": "mixed",
+        "emotion_scores": {
+          "joy": 0.25,
+          "trust": 0.25,
+          "anticipation": 0.25,
+          "surprise": 0.0,
+          "sadness": 0.0,
+          "disgust": 0.0,
+          "anger": 0.25,
+          "fear": 0.0
+        },
+        "key_phrases": [
+          "满意",
+          "满意因素",
+          "因素",
+          "活动",
+          "产品"
+        ]
+      }
+    ],
+    "qualitative_insights": [
+      "客户情感呈现多样化，正负面评价并存",
+      "客户主要关注：品质, 口感, 包装",
+      "客户主要情绪为愉悦(36.0%)"
+    ],
+    "semantic_clusters": [
+      {
+        "cluster_id": "cluster_0",
+        "theme": "设计 / 包装 / 性价比",
+        "description": "包含 3 条相关反馈",
+        "response_ids": [
+          "rich_test_001",
+          "rich_test_002",
+          "rich_test_003"
+        ],
+        "size": 3,
+        "representative_quotes": [
+          "不推荐原因: 包装设计确实需要改进，颜色搭配不够吸引人，而且材质感觉有点廉价。希望能设计得更[姓名]，符合伊利品牌的定位。. 推荐原因: 伊利安慕希的口感真的很棒，浓郁顺滑，而且蛋[姓名]高，营...",
+          "不推荐原因: 价格确实太[姓名]，一盒12支要30多块钱，比普通酸奶贵了一倍。而且口味有点过甜，不够天然。广告说的那些功能我也没感觉到，感觉就是普通的酸奶。性价比不高，不值得这个价钱。. 推荐原...",
+          "不推荐原因: 促销活动太少了，而且折扣力度不大。另外网购的时候物流有点慢，有一次还收到了过期的产品，售后处理也不够及时。希望能改善服务质量。. 推荐原因: 口感确实很好，比其他品牌的酸奶更浓稠，..."
+        ],
+        "sentiment_distribution": {
+          "positive": 0.0,
+          "negative": 0.0,
+          "neutral": 0.0,
+          "mixed": 1.0
+        }
+      }
+    ],
+    "clustering_summary": {
+      "total_clusters": 1,
+      "clustered_responses": 3,
+      "unclustered_responses": 0,
+      "coverage_rate": 100.0,
+      "avg_cluster_size": 3.0,
+      "largest_cluster": "设计 / 包装 / 性价比",
+      "largest_cluster_size": 3,
+      "overall_sentiment": {
+        "positive": 0.0,
+        "negative": 0.0,
+        "neutral": 0.0,
+        "mixed": 1.0
+      }
+    },
+    "clustering_insights": [
+      "聚类覆盖率高达100.0%，反馈具有明显的主题集中性",
+      "主要反馈主题：设计 / 包装 / 性价比"
+    ],
+    "nps_calculation": {
+      "nps_score": 0.0,
+      "promoters_count": 1,
+      "passives_count": 1,
+      "detractors_count": 1,
+      "promoters_percentage": 33.33333333333333,
+      "passives_percentage": 33.33333333333333,
+      "detractors_percentage": 33.33333333333333,
+      "confidence_interval": [
+        -75.4404351741111,
+        75.4404351741111
+      ],
+      "sample_size": 3,
+      "statistical_significance": "False",
+      "total_responses": 3,
+      "valid_responses": 3
+    },
+    "confidence_assessment": {
+      "confidence": 0.22500000000000003,
+      "status": "low_confidence"
+    }
+  },
+  "processing_metadata": {
+    "version": "v3-multi-agent",
+    "workflow_type": "three_pass_analysis",
+    "processing_time_seconds": 27.4122305410001,
+    "model_version": "nps-report-v3-multi-agent",
+    "passes_completed": [
+      "foundation",
+      "analysis",
+      "consulting"
+    ],
+    "agents_executed": 17,
+    "timestamp": "2025-09-25T02:17:16.008070"
+  }
+}

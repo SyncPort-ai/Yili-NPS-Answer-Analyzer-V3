@@ -74,6 +74,15 @@ __version__ = "0.0.1"
 app = FastAPI(title="NPS Report Analyzer", version=__version__)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
+
+# Register experimental V3 API routes from isolated module
+try:  # pragma: no cover - optional dependency during initialization
+    from api_v3 import router as v3_router
+    app.include_router(v3_router)
+    logger.info("✅ V3 API router successfully registered")
+except Exception as exc:  # pragma: no cover
+    logger.warning("V3 router not registered: %s", exc)
+
 # 创建一个信号量来限制并发请求数为2
 request_semaphore = asyncio.Semaphore(2)
 

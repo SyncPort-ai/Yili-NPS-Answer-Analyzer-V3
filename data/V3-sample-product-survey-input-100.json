@@ -1,0 +1,5317 @@
+{
+  "survey_response_data": {
+    "survey_metadata": {
+      "survey_type": "product_nps",
+      "survey_title": "定量智能体-产品NPS调研模板",
+      "data_source": "定量智能体-产品NPS调研模板_答案文本数据列表_202509101906.xlsx",
+      "export_timestamp": "2025-09-10T19:06:00Z",
+      "version": "2.0.0"
+    },
+    "survey_config": {
+      "nps_question": {
+        "question_id": "Q1",
+        "question_text": "您向朋友或同事推荐我们的可能性多大？",
+        "scale": {
+          "min": 0,
+          "max": 10,
+          "format": "分值制"
+        }
+      },
+      "factor_questions": {
+        "negative_factors": {
+          "question_id": "Q2",
+          "question_text": "您不愿意推荐我们的主要因素有哪些？",
+          "factor_list": [
+            "不喜欢品牌或代言人、赞助综艺等宣传内容",
+            "包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）",
+            "产品价格太贵，性价比不高",
+            "促销活动不好（如对赠品、活动力度/规则等不满意）",
+            "产品口味口感不好",
+            "饮用后感觉不舒服（如身体有腹胀、腹泻等不良反应）",
+            "产品品质不稳定性（如发生变质、有异物等）",
+            "没有感知到产品宣传的功能",
+            "物流配送、门店导购、售后等服务体验不好",
+            "其他"
+          ]
+        },
+        "positive_factors": {
+          "question_id": "Q4",
+          "question_text": "您愿意推荐我们的主要因素有哪些？",
+          "factor_list": [
+            "喜欢品牌或代言人、赞助综艺等宣传内容",
+            "包装设计好（如醒目、美观，材质好，便携、方便打开等）",
+            "产品物有所值、性价比高",
+            "对促销活动满意（如赠品、活动力度/规则等）",
+            "产品口味口感好",
+            "饮用后体感舒适，无不良反应",
+            "满意产品宣传的功能（如促进消化、增强免疫、助睡眠等）",
+            "物流配送、门店导购、售后等服务体验好",
+            "其他"
+          ]
+        }
+      },
+      "open_ended_questions": [
+        {
+          "question_id": "Q3",
+          "question_text": "您不愿意推荐我们的具体原因是什么？",
+          "question_type": "specific_reason"
+        },
+        {
+          "question_id": "Q5",
+          "question_text": "您愿意推荐我们的具体原因是什么？",
+          "question_type": "specific_reason"
+        }
+      ]
+    },
+    "response_data": [
+      {
+        "response_metadata": {
+          "user_id": "1",
+          "response_id": "W34mnX3V",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:06:00",
+            "submit_time": "2025-09-10T19:06:55",
+            "duration": "55秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "乳糖不耐-健康关注",
+          "region": "华东",
+          "city": "北京",
+          "city_tier": "一线",
+          "channel": "电商",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "没有感知到产品宣传的功能",
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "饮用后体感舒适，无不良反应"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "舒化最近偏甜，偶尔还是不太舒服，功能感知也一般。，希望提升到货速度。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "2",
+          "response_id": "JHmelVRj",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:07:15",
+            "submit_time": "2025-09-10T19:09:02",
+            "duration": "1分钟47秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "宣传反感-务实型",
+          "region": "华东",
+          "city": "北京",
+          "city_tier": "一线",
+          "channel": "电商",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 3,
+          "raw_value": "3分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "不喜欢品牌或代言人、赞助综艺等宣传内容",
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "倍畅最近开口设计不友好，宣传浮夸，宣传过多不接地气，希望少些噱头。，希望提升到货速度。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "3",
+          "response_id": "g2wnm6Ux",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:08:30",
+            "submit_time": "2025-09-10T19:09:00",
+            "duration": "30秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "宣传反感-务实型",
+          "region": "东北",
+          "city": "佛山",
+          "city_tier": "三线",
+          "channel": "电商",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "没有感知到产品宣传的功能",
+              "包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "金典最近包装不结实，宣传过多不接地气，希望少些噱头。，希望增加无糖/低糖选项。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "4",
+          "response_id": "OfVF7Iir",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:09:45",
+            "submit_time": "2025-09-10T19:10:33",
+            "duration": "48秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "华东",
+          "city": "重庆",
+          "city_tier": "二线",
+          "channel": "电商",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 9,
+          "raw_value": "9分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "喜欢品牌或代言人、赞助综艺等宣传内容"
+            ],
+            "other_specified": "安慕希联名口味好评"
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "安慕希喝起来香浓，早餐来一盒刚好，包装盒盖结实。一直买这牌子，口味稳定，家人都喜欢。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "5",
+          "response_id": "WsaXrDr7",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:11:00",
+            "submit_time": "2025-09-10T19:11:27",
+            "duration": "27秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "华北",
+          "city": "北京",
+          "city_tier": "一线",
+          "channel": "小程序直购",
+          "age_group": "25-34"
+        },
+        "nps_score": {
+          "value": 8,
+          "raw_value": "8分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "喜欢品牌或代言人、赞助综艺等宣传内容"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "6",
+          "response_id": "kCIykD6H",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:12:15",
+            "submit_time": "2025-09-10T19:13:05",
+            "duration": "50秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "质量敏感-谨慎型",
+          "region": "华东",
+          "city": "泉州",
+          "city_tier": "三线",
+          "channel": "电商",
+          "age_group": "25-34"
+        },
+        "nps_score": {
+          "value": 4,
+          "raw_value": "4分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）"
+            ],
+            "other_specified": "口味希望更清爽"
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "褐色炭烧最近开口设计不友好，开封体验一般，包装不太好开。，希望改进开口设计。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "7",
+          "response_id": "oZTM2cLM",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:13:30",
+            "submit_time": "2025-09-10T19:16:19",
+            "duration": "2分钟49秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "宣传反感-务实型",
+          "region": "华南",
+          "city": "北京",
+          "city_tier": "一线",
+          "channel": "线下商超",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 3,
+          "raw_value": "3分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "没有感知到产品宣传的功能",
+              "不喜欢品牌或代言人、赞助综艺等宣传内容"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "安慕希最近开口设计不友好，宣传过多不接地气，希望少些噱头。，希望增加无糖/低糖选项。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "8",
+          "response_id": "7K89Zgvo",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:14:45",
+            "submit_time": "2025-09-10T19:15:22",
+            "duration": "37秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "华南",
+          "city": "杭州",
+          "city_tier": "二线",
+          "channel": "电商",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 10,
+          "raw_value": "10分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "喜欢品牌或代言人、赞助综艺等宣传内容",
+              "饮用后体感舒适，无不良反应"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "安慕希喝起来醇厚，加班来一盒刚好，包装盒盖结实。买了很多年，品质稳定放心。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "9",
+          "response_id": "B6bgXdp0",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:16:00",
+            "submit_time": "2025-09-10T19:17:16",
+            "duration": "1分钟16秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "质量敏感-谨慎型",
+          "region": "西南",
+          "city": "成都",
+          "city_tier": "二线",
+          "channel": "线下商超",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 4,
+          "raw_value": "4分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）",
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "金典最近有点贵，之前遇到过质量问题，仍有顾虑。，希望改进开口设计。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "10",
+          "response_id": "LEvZymrC",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:17:15",
+            "submit_time": "2025-09-10T19:17:50",
+            "duration": "35秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "华中",
+          "city": "成都",
+          "city_tier": "二线",
+          "channel": "线下商超",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 9,
+          "raw_value": "9分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品口味口感好",
+              "喜欢品牌或代言人、赞助综艺等宣传内容",
+              "产品物有所值、性价比高",
+              "饮用后体感舒适，无不良反应"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "金典喝起来细腻，周末郊游来一盒刚好，包装外观高级。一直买这牌子，口味稳定，家人都喜欢。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "11",
+          "response_id": "RVePAoTV",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:18:30",
+            "submit_time": "2025-09-10T19:20:42",
+            "duration": "2分钟12秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "西南",
+          "city": "武汉",
+          "city_tier": "二线",
+          "channel": "小程序直购",
+          "age_group": "25-34"
+        },
+        "nps_score": {
+          "value": 10,
+          "raw_value": "10分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "喜欢品牌或代言人、赞助综艺等宣传内容",
+              "产品口味口感好"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "安慕希喝起来醇厚，下午茶来一盒刚好，包装便携。买了很多年，品质稳定放心。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "12",
+          "response_id": "wqtxlL1J",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:19:45",
+            "submit_time": "2025-09-10T19:22:03",
+            "duration": "2分钟18秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "质量敏感-谨慎型",
+          "region": "华中",
+          "city": "武汉",
+          "city_tier": "二线",
+          "channel": "线下商超",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "安慕希最近容易漏，价位偏高，之前遇到过质量问题，仍有顾虑。，希望增加无糖/低糖选项。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "13",
+          "response_id": "H5blWPfi",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:21:00",
+            "submit_time": "2025-09-10T19:21:25",
+            "duration": "25秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "年轻白领-口味党",
+          "region": "华东",
+          "city": "广州",
+          "city_tier": "一线",
+          "channel": "社区团购",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 10,
+          "raw_value": "10分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "包装设计好（如醒目、美观，材质好，便携、方便打开等）",
+              "对促销活动满意（如赠品、活动力度/规则等）"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "安慕希喝起来香浓，加班来一盒刚好，包装便携。顺滑清爽，搭配麦片很适合。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "14",
+          "response_id": "YyCN7I47",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:22:15",
+            "submit_time": "2025-09-10T19:24:23",
+            "duration": "2分钟8秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "价格敏感-宝妈/宝爸",
+          "region": "华南",
+          "city": "长春",
+          "city_tier": "三线",
+          "channel": "电商",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 8,
+          "raw_value": "8分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品物有所值、性价比高"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "15",
+          "response_id": "uyeYpCRt",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:23:30",
+            "submit_time": "2025-09-10T19:24:53",
+            "duration": "1分钟23秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "年轻白领-口味党",
+          "region": "华南",
+          "city": "温州",
+          "city_tier": "三线",
+          "channel": "社区团购",
+          "age_group": "25-34"
+        },
+        "nps_score": {
+          "value": 10,
+          "raw_value": "10分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "对促销活动满意（如赠品、活动力度/规则等）",
+              "产品口味口感好"
+            ],
+            "other_specified": "金典联名口味好评"
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "金典喝起来细腻，通勤路上来一盒刚好，包装便携。口味丰富不腻，早餐/下午茶都合适。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "16",
+          "response_id": "GpL6vamd",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:24:45",
+            "submit_time": "2025-09-10T19:25:56",
+            "duration": "1分钟11秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "质量敏感-谨慎型",
+          "region": "东北",
+          "city": "温州",
+          "city_tier": "三线",
+          "channel": "电商",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 6,
+          "raw_value": "6分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "牧恩最近结块，促销少，开封体验一般，包装不太好开。，希望多做些满减。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "17",
+          "response_id": "b0SwIReR",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:26:00",
+            "submit_time": "2025-09-10T19:26:46",
+            "duration": "46秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "乳糖不耐-健康关注",
+          "region": "华北",
+          "city": "南京",
+          "city_tier": "二线",
+          "channel": "电商",
+          "age_group": "25-34"
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "没有感知到产品宣传的功能",
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "饮用后体感舒适，无不良反应"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "舒化最近携带不便，标注是低乳糖，但体感差异不明显。，希望改进开口设计。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "18",
+          "response_id": "jHrsB8AV",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:27:15",
+            "submit_time": "2025-09-10T19:27:50",
+            "duration": "35秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "华南",
+          "city": "重庆",
+          "city_tier": "二线",
+          "channel": "小程序直购",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 8,
+          "raw_value": "8分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品物有所值、性价比高"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "19",
+          "response_id": "eqmK8DLp",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:28:30",
+            "submit_time": "2025-09-10T19:29:47",
+            "duration": "1分钟17秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "年轻白领-口味党",
+          "region": "华北",
+          "city": "武汉",
+          "city_tier": "二线",
+          "channel": "社区团购",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 10,
+          "raw_value": "10分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "包装设计好（如醒目、美观，材质好，便携、方便打开等）",
+              "对促销活动满意（如赠品、活动力度/规则等）"
+            ],
+            "other_specified": "金典联名口味好评"
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "金典喝起来有奶香，孩子上学前来一盒刚好，包装不漏奶。口味丰富不腻，早餐/下午茶都合适。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "20",
+          "response_id": "8F1dGRYf",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:29:45",
+            "submit_time": "2025-09-10T19:32:36",
+            "duration": "2分钟51秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "华南",
+          "city": "武汉",
+          "city_tier": "二线",
+          "channel": "小程序直购",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 10,
+          "raw_value": "10分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "喜欢品牌或代言人、赞助综艺等宣传内容",
+              "产品物有所值、性价比高",
+              "产品口味口感好"
+            ],
+            "other_specified": "安慕希联名口味好评"
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "安慕希喝起来不腻，早餐来一盒刚好，包装盒盖结实。买了很多年，品质稳定放心。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "21",
+          "response_id": "r0uT279u",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:31:00",
+            "submit_time": "2025-09-10T19:32:46",
+            "duration": "1分钟46秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "质量敏感-谨慎型",
+          "region": "东北",
+          "city": "西安",
+          "city_tier": "二线",
+          "channel": "社区团购",
+          "age_group": "25-34"
+        },
+        "nps_score": {
+          "value": 6,
+          "raw_value": "6分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "味可滋最近分层，开封体验一般，包装不太好开。，希望提升到货速度。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "22",
+          "response_id": "osxF9kQh",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:32:15",
+            "submit_time": "2025-09-10T19:33:56",
+            "duration": "1分钟41秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "年轻白领-口味党",
+          "region": "华北",
+          "city": "武汉",
+          "city_tier": "二线",
+          "channel": "社区团购",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 10,
+          "raw_value": "10分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "对促销活动满意（如赠品、活动力度/规则等）",
+              "包装设计好（如醒目、美观，材质好，便携、方便打开等）",
+              "产品口味口感好"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "安慕希喝起来细腻，通勤路上来一盒刚好，包装环保材质。口味丰富不腻，早餐/下午茶都合适。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "23",
+          "response_id": "nR8UEHzS",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:33:30",
+            "submit_time": "2025-09-10T19:35:03",
+            "duration": "1分钟33秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "年轻白领-口味党",
+          "region": "华南",
+          "city": "南京",
+          "city_tier": "二线",
+          "channel": "社区团购",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 9,
+          "raw_value": "9分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "包装设计好（如醒目、美观，材质好，便携、方便打开等）"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "安慕希喝起来不甜腻，通勤路上来一盒刚好，包装便携。口味丰富不腻，早餐/下午茶都合适。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "24",
+          "response_id": "y4unYoHM",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:34:45",
+            "submit_time": "2025-09-10T19:35:27",
+            "duration": "42秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "价格敏感-宝妈/宝爸",
+          "region": "西南",
+          "city": "北京",
+          "city_tier": "一线",
+          "channel": "电商",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 7,
+          "raw_value": "7分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "物流配送、门店导购、售后等服务体验好",
+              "产品物有所值、性价比高"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "25",
+          "response_id": "z0bJXbQL",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:36:00",
+            "submit_time": "2025-09-10T19:38:44",
+            "duration": "2分钟44秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "年轻白领-口味党",
+          "region": "华东",
+          "city": "广州",
+          "city_tier": "一线",
+          "channel": "社区团购",
+          "age_group": "25-34"
+        },
+        "nps_score": {
+          "value": 9,
+          "raw_value": "9分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "包装设计好（如醒目、美观，材质好，便携、方便打开等）",
+              "产品口味口感好"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "安慕希喝起来醇厚，通勤路上来一盒刚好，包装外观高级。新款口味惊喜，包装好看易携带。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "26",
+          "response_id": "aW2UG06r",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:37:15",
+            "submit_time": "2025-09-10T19:39:22",
+            "duration": "2分钟7秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "西南",
+          "city": "北京",
+          "city_tier": "一线",
+          "channel": "社区团购",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 10,
+          "raw_value": "10分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品物有所值、性价比高",
+              "产品口味口感好",
+              "喜欢品牌或代言人、赞助综艺等宣传内容",
+              "饮用后体感舒适，无不良反应"
+            ],
+            "other_specified": "金典联名口味好评"
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "金典喝起来清爽，通勤路上来一盒刚好，包装盒盖结实。一直买这牌子，口味稳定，家人都喜欢。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "27",
+          "response_id": "B8n3mfnc",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:38:30",
+            "submit_time": "2025-09-10T19:38:54",
+            "duration": "24秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "年轻白领-口味党",
+          "region": "华南",
+          "city": "上海",
+          "city_tier": "一线",
+          "channel": "社区团购",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 10,
+          "raw_value": "10分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品口味口感好",
+              "对促销活动满意（如赠品、活动力度/规则等）",
+              "包装设计好（如醒目、美观，材质好，便携、方便打开等）",
+              "饮用后体感舒适，无不良反应"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "安慕希喝起来醇厚，通勤路上来一盒刚好，包装外观高级。口味丰富不腻，早餐/下午茶都合适。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "28",
+          "response_id": "bdaORi9O",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:39:45",
+            "submit_time": "2025-09-10T19:42:31",
+            "duration": "2分钟46秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "质量敏感-谨慎型",
+          "region": "西南",
+          "city": "成都",
+          "city_tier": "二线",
+          "channel": "线下商超",
+          "age_group": "25-34"
+        },
+        "nps_score": {
+          "value": 4,
+          "raw_value": "4分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "金典最近宣传过头，性价比一般，之前遇到过质量问题，仍有顾虑。，希望改进开口设计。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "29",
+          "response_id": "UuMPiZep",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:41:00",
+            "submit_time": "2025-09-10T19:43:18",
+            "duration": "2分钟18秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "华北",
+          "city": "深圳",
+          "city_tier": "一线",
+          "channel": "小程序直购",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 10,
+          "raw_value": "10分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品物有所值、性价比高",
+              "产品口味口感好"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "金典喝起来不甜腻，加班来一盒刚好，包装外观高级。一直买这牌子，口味稳定，家人都喜欢。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "30",
+          "response_id": "SLbuV6p7",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:42:15",
+            "submit_time": "2025-09-10T19:43:45",
+            "duration": "1分钟30秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "质量敏感-谨慎型",
+          "region": "华中",
+          "city": "北京",
+          "city_tier": "一线",
+          "channel": "小程序直购",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 4,
+          "raw_value": "4分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）",
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "QQ星榛高最近结块，有点贵，开封体验一般，包装不太好开。，希望改进开口设计。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "31",
+          "response_id": "UAwITM6S",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:43:30",
+            "submit_time": "2025-09-10T19:43:56",
+            "duration": "26秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "质量敏感-谨慎型",
+          "region": "华中",
+          "city": "上海",
+          "city_tier": "一线",
+          "channel": "线下商超",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）"
+            ],
+            "other_specified": "口味希望更清爽"
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "安慕希最近封口难，代言不合适，之前遇到过质量问题，仍有顾虑。，希望提升到货速度。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "32",
+          "response_id": "2hrAtC6y",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:44:45",
+            "submit_time": "2025-09-10T19:45:09",
+            "duration": "24秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "价格敏感-宝妈/宝爸",
+          "region": "华中",
+          "city": "石家庄",
+          "city_tier": "三线",
+          "channel": "线下商超",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 9,
+          "raw_value": "9分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品物有所值、性价比高",
+              "物流配送、门店导购、售后等服务体验好"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "金典喝起来有奶香，孩子上学前来一盒刚好，包装不漏奶。活动合适就会多囤一点，性价比高。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "33",
+          "response_id": "F3b6moN5",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:46:00",
+            "submit_time": "2025-09-10T19:48:50",
+            "duration": "2分钟50秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "乳糖不耐-健康关注",
+          "region": "华东",
+          "city": "合肥",
+          "city_tier": "三线",
+          "channel": "社区团购",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "没有感知到产品宣传的功能",
+              "包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）",
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "饮用后体感舒适，无不良反应"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "舒化最近有点贵，偶尔还是不太舒服，功能感知也一般。，希望少点花哨宣传。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "34",
+          "response_id": "nFbZCOw0",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:47:15",
+            "submit_time": "2025-09-10T19:47:50",
+            "duration": "35秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "宣传反感-务实型",
+          "region": "华北",
+          "city": "杭州",
+          "city_tier": "二线",
+          "channel": "线下商超",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 3,
+          "raw_value": "3分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "不喜欢品牌或代言人、赞助综艺等宣传内容",
+              "没有感知到产品宣传的功能",
+              "包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "MilkTalk最近容易漏，代言不合适，广告词太花哨，实际体验一般。，希望改进开口设计。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "35",
+          "response_id": "gRfcd8kQ",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:48:30",
+            "submit_time": "2025-09-10T19:49:53",
+            "duration": "1分钟23秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "年轻白领-口味党",
+          "region": "东北",
+          "city": "北京",
+          "city_tier": "一线",
+          "channel": "电商",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 8,
+          "raw_value": "8分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "对促销活动满意（如赠品、活动力度/规则等）"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "36",
+          "response_id": "ba0tSpT2",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:49:45",
+            "submit_time": "2025-09-10T19:51:00",
+            "duration": "1分钟15秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "年轻白领-口味党",
+          "region": "华北",
+          "city": "杭州",
+          "city_tier": "二线",
+          "channel": "社区团购",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 10,
+          "raw_value": "10分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "对促销活动满意（如赠品、活动力度/规则等）",
+              "包装设计好（如醒目、美观，材质好，便携、方便打开等）",
+              "产品口味口感好",
+              "饮用后体感舒适，无不良反应"
+            ],
+            "other_specified": "金典联名口味好评"
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "金典喝起来顺滑，健身后来一盒刚好，包装易撕口。顺滑清爽，搭配麦片很适合。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "37",
+          "response_id": "nvsRzTwQ",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:51:00",
+            "submit_time": "2025-09-10T19:52:56",
+            "duration": "1分钟56秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "年轻白领-口味党",
+          "region": "华东",
+          "city": "合肥",
+          "city_tier": "三线",
+          "channel": "小程序直购",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 10,
+          "raw_value": "10分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品口味口感好",
+              "饮用后体感舒适，无不良反应"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "安慕希喝起来不腻，早餐来一盒刚好，包装不漏奶。口味丰富不腻，早餐/下午茶都合适。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "38",
+          "response_id": "EjH0xbeU",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:52:15",
+            "submit_time": "2025-09-10T19:54:07",
+            "duration": "1分钟52秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "价格敏感-宝妈/宝爸",
+          "region": "华东",
+          "city": "上海",
+          "city_tier": "一线",
+          "channel": "电商",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 7,
+          "raw_value": "7分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "物流配送、门店导购、售后等服务体验好"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "39",
+          "response_id": "NWIUVECm",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:53:30",
+            "submit_time": "2025-09-10T19:54:16",
+            "duration": "46秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "质量敏感-谨慎型",
+          "region": "华南",
+          "city": "西安",
+          "city_tier": "二线",
+          "channel": "小程序直购",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "安慕希最近宣传过头，有点贵，之前遇到过质量问题，仍有顾虑。，希望改进开口设计。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "40",
+          "response_id": "S0AzYJHa",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:54:45",
+            "submit_time": "2025-09-10T19:56:50",
+            "duration": "2分钟5秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "西南",
+          "city": "北京",
+          "city_tier": "一线",
+          "channel": "小程序直购",
+          "age_group": "25-34"
+        },
+        "nps_score": {
+          "value": 10,
+          "raw_value": "10分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "喜欢品牌或代言人、赞助综艺等宣传内容"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "安慕希喝起来不腻，早餐来一盒刚好，包装不漏奶。买了很多年，品质稳定放心。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "41",
+          "response_id": "O2ae9f4x",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:56:00",
+            "submit_time": "2025-09-10T19:56:46",
+            "duration": "46秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "乳糖不耐-健康关注",
+          "region": "华北",
+          "city": "佛山",
+          "city_tier": "三线",
+          "channel": "社区团购",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 7,
+          "raw_value": "7分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "没有感知到产品宣传的功能"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "饮用后体感舒适，无不良反应"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "42",
+          "response_id": "LPq5A9J4",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:57:15",
+            "submit_time": "2025-09-10T19:58:57",
+            "duration": "1分钟42秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "价格敏感-宝妈/宝爸",
+          "region": "东北",
+          "city": "石家庄",
+          "city_tier": "三线",
+          "channel": "小程序直购",
+          "age_group": "25-34"
+        },
+        "nps_score": {
+          "value": 8,
+          "raw_value": "8分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "物流配送、门店导购、售后等服务体验好"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "43",
+          "response_id": "wCnkVuA2",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:58:30",
+            "submit_time": "2025-09-10T19:58:58",
+            "duration": "28秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "宣传反感-务实型",
+          "region": "华东",
+          "city": "南京",
+          "city_tier": "二线",
+          "channel": "线下商超",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 3,
+          "raw_value": "3分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "不喜欢品牌或代言人、赞助综艺等宣传内容",
+              "没有感知到产品宣传的功能",
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "安慕希最近偏甜，宣传过多不接地气，希望少些噱头。，希望提升到货速度。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "44",
+          "response_id": "lyoUg4P0",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T19:59:45",
+            "submit_time": "2025-09-10T20:02:14",
+            "duration": "2分钟29秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "乳糖不耐-健康关注",
+          "region": "华南",
+          "city": "西安",
+          "city_tier": "二线",
+          "channel": "电商",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "没有感知到产品宣传的功能",
+              "包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）",
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "饮用后体感舒适，无不良反应"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "舒化最近封口难，偶尔还是不太舒服，功能感知也一般。，希望提升到货速度。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "45",
+          "response_id": "dqCxmA4I",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:01:00",
+            "submit_time": "2025-09-10T20:03:38",
+            "duration": "2分钟38秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "年轻白领-口味党",
+          "region": "东北",
+          "city": "广州",
+          "city_tier": "一线",
+          "channel": "电商",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 8,
+          "raw_value": "8分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "包装设计好（如醒目、美观，材质好，便携、方便打开等）",
+              "对促销活动满意（如赠品、活动力度/规则等）"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "46",
+          "response_id": "1LUhTzlz",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:02:15",
+            "submit_time": "2025-09-10T20:03:39",
+            "duration": "1分钟24秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "华东",
+          "city": "武汉",
+          "city_tier": "二线",
+          "channel": "电商",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 8,
+          "raw_value": "8分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品物有所值、性价比高",
+              "喜欢品牌或代言人、赞助综艺等宣传内容"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "47",
+          "response_id": "41FyKjSg",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:03:30",
+            "submit_time": "2025-09-10T20:05:32",
+            "duration": "2分钟2秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "华北",
+          "city": "重庆",
+          "city_tier": "二线",
+          "channel": "电商",
+          "age_group": "25-34"
+        },
+        "nps_score": {
+          "value": 9,
+          "raw_value": "9分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品口味口感好",
+              "产品物有所值、性价比高",
+              "喜欢品牌或代言人、赞助综艺等宣传内容"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "NOC须尽欢喝起来有奶香，通勤路上来一盒刚好，包装盒盖结实。一直买这牌子，口味稳定，家人都喜欢。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "48",
+          "response_id": "WYasc4nM",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:04:45",
+            "submit_time": "2025-09-10T20:07:05",
+            "duration": "2分钟20秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "乳糖不耐-健康关注",
+          "region": "华东",
+          "city": "成都",
+          "city_tier": "二线",
+          "channel": "电商",
+          "age_group": "25-34"
+        },
+        "nps_score": {
+          "value": 6,
+          "raw_value": "6分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "没有感知到产品宣传的功能",
+              "包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）"
+            ],
+            "other_specified": "口味希望更清爽"
+          },
+          "positive_factors": {
+            "selected": [
+              "饮用后体感舒适，无不良反应"
+            ],
+            "other_specified": "舒化联名口味好评"
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "舒化最近携带不便，标注是低乳糖，但体感差异不明显。，希望增加无糖/低糖选项。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "49",
+          "response_id": "H7y2iD3Z",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:06:00",
+            "submit_time": "2025-09-10T20:07:27",
+            "duration": "1分钟27秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "宣传反感-务实型",
+          "region": "东北",
+          "city": "石家庄",
+          "city_tier": "三线",
+          "channel": "小程序直购",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "没有感知到产品宣传的功能"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "安慕希最近开口设计不友好，宣传过多不接地气，希望少些噱头。，希望改进开口设计。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "50",
+          "response_id": "Lu0TV8WI",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:07:15",
+            "submit_time": "2025-09-10T20:10:08",
+            "duration": "2分钟53秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "华中",
+          "city": "南京",
+          "city_tier": "二线",
+          "channel": "电商",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 9,
+          "raw_value": "9分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品口味口感好",
+              "产品物有所值、性价比高",
+              "饮用后体感舒适，无不良反应"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "金典喝起来有奶香，周末郊游来一盒刚好，包装盒盖结实。买了很多年，品质稳定放心。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "51",
+          "response_id": "jVZ3e9Ax",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:08:30",
+            "submit_time": "2025-09-10T20:10:33",
+            "duration": "2分钟3秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "乳糖不耐-健康关注",
+          "region": "华中",
+          "city": "南京",
+          "city_tier": "二线",
+          "channel": "社区团购",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "没有感知到产品宣传的功能"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "饮用后体感舒适，无不良反应"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "舒化最近偏甜，代言不合适，偶尔还是不太舒服，功能感知也一般。，希望多做些满减。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "52",
+          "response_id": "hVfMmumU",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:09:45",
+            "submit_time": "2025-09-10T20:10:19",
+            "duration": "34秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "价格敏感-宝妈/宝爸",
+          "region": "西南",
+          "city": "上海",
+          "city_tier": "一线",
+          "channel": "社区团购",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 7,
+          "raw_value": "7分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "物流配送、门店导购、售后等服务体验好",
+              "产品物有所值、性价比高"
+            ],
+            "other_specified": "金典联名口味好评"
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "53",
+          "response_id": "rVsKiNFv",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:11:00",
+            "submit_time": "2025-09-10T20:11:49",
+            "duration": "49秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "年轻白领-口味党",
+          "region": "东北",
+          "city": "广州",
+          "city_tier": "一线",
+          "channel": "社区团购",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 10,
+          "raw_value": "10分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "对促销活动满意（如赠品、活动力度/规则等）",
+              "产品口味口感好"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "金典喝起来有奶香，周末郊游来一盒刚好，包装盒盖结实。口味丰富不腻，早餐/下午茶都合适。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "54",
+          "response_id": "Ongpyh9t",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:12:15",
+            "submit_time": "2025-09-10T20:14:27",
+            "duration": "2分钟12秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "乳糖不耐-健康关注",
+          "region": "西南",
+          "city": "北京",
+          "city_tier": "一线",
+          "channel": "电商",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "没有感知到产品宣传的功能"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "饮用后体感舒适，无不良反应"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "舒化最近偏甜，标注是低乳糖，但体感差异不明显。，希望少点花哨宣传。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "55",
+          "response_id": "366ZSDUT",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:13:30",
+            "submit_time": "2025-09-10T20:14:18",
+            "duration": "48秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "年轻白领-口味党",
+          "region": "华北",
+          "city": "长春",
+          "city_tier": "三线",
+          "channel": "社区团购",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 10,
+          "raw_value": "10分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "对促销活动满意（如赠品、活动力度/规则等）"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "安慕希喝起来细腻，周末郊游来一盒刚好，包装盒盖结实。新款口味惊喜，包装好看易携带。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "56",
+          "response_id": "XezFvZTS",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:14:45",
+            "submit_time": "2025-09-10T20:17:35",
+            "duration": "2分钟50秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "价格敏感-宝妈/宝爸",
+          "region": "华东",
+          "city": "西安",
+          "city_tier": "二线",
+          "channel": "社区团购",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 8,
+          "raw_value": "8分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品物有所值、性价比高",
+              "物流配送、门店导购、售后等服务体验好"
+            ],
+            "other_specified": "金典联名口味好评"
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "57",
+          "response_id": "lNCVHpF7",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:16:00",
+            "submit_time": "2025-09-10T20:16:44",
+            "duration": "44秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "华东",
+          "city": "上海",
+          "city_tier": "一线",
+          "channel": "小程序直购",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 9,
+          "raw_value": "9分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "喜欢品牌或代言人、赞助综艺等宣传内容",
+              "饮用后体感舒适，无不良反应"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "高个子喝起来清爽，下午茶来一盒刚好，包装盒盖结实。买了很多年，品质稳定放心。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "58",
+          "response_id": "pifN4wHq",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:17:15",
+            "submit_time": "2025-09-10T20:18:23",
+            "duration": "1分钟8秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "东北",
+          "city": "杭州",
+          "city_tier": "二线",
+          "channel": "电商",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 8,
+          "raw_value": "8分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品口味口感好"
+            ],
+            "other_specified": "大果粒联名口味好评"
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "59",
+          "response_id": "nEssm1CX",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:18:30",
+            "submit_time": "2025-09-10T20:21:10",
+            "duration": "2分钟40秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "华南",
+          "city": "深圳",
+          "city_tier": "一线",
+          "channel": "社区团购",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 8,
+          "raw_value": "8分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品口味口感好",
+              "产品物有所值、性价比高"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "60",
+          "response_id": "dBN1XXLC",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:19:45",
+            "submit_time": "2025-09-10T20:22:29",
+            "duration": "2分钟44秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "年轻白领-口味党",
+          "region": "华中",
+          "city": "成都",
+          "city_tier": "二线",
+          "channel": "电商",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 10,
+          "raw_value": "10分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "包装设计好（如醒目、美观，材质好，便携、方便打开等）",
+              "对促销活动满意（如赠品、活动力度/规则等）",
+              "产品口味口感好"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "金典喝起来醇厚，孩子上学前来一盒刚好，包装便携。顺滑清爽，搭配麦片很适合。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "61",
+          "response_id": "X2tt01zA",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:21:00",
+            "submit_time": "2025-09-10T20:23:35",
+            "duration": "2分钟35秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "价格敏感-宝妈/宝爸",
+          "region": "华北",
+          "city": "佛山",
+          "city_tier": "三线",
+          "channel": "线下商超",
+          "age_group": "25-34"
+        },
+        "nps_score": {
+          "value": 9,
+          "raw_value": "9分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "物流配送、门店导购、售后等服务体验好",
+              "产品物有所值、性价比高"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "金典喝起来不腻，周末郊游来一盒刚好，包装不漏奶。活动合适就会多囤一点，性价比高。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "62",
+          "response_id": "1G0XBxLB",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:22:15",
+            "submit_time": "2025-09-10T20:23:17",
+            "duration": "1分钟2秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "价格敏感-宝妈/宝爸",
+          "region": "华中",
+          "city": "上海",
+          "city_tier": "一线",
+          "channel": "小程序直购",
+          "age_group": "25-34"
+        },
+        "nps_score": {
+          "value": 7,
+          "raw_value": "7分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品物有所值、性价比高",
+              "物流配送、门店导购、售后等服务体验好"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "63",
+          "response_id": "8OMgfAxR",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:23:30",
+            "submit_time": "2025-09-10T20:25:51",
+            "duration": "2分钟21秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "宣传反感-务实型",
+          "region": "华东",
+          "city": "上海",
+          "city_tier": "一线",
+          "channel": "电商",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 3,
+          "raw_value": "3分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "没有感知到产品宣传的功能"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "优酸乳最近宣传过头，有点贵，宣传过多不接地气，希望少些噱头。，希望多做些满减。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "64",
+          "response_id": "wwblET2V",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:24:45",
+            "submit_time": "2025-09-10T20:26:01",
+            "duration": "1分钟16秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "宣传反感-务实型",
+          "region": "华东",
+          "city": "南昌",
+          "city_tier": "三线",
+          "channel": "社区团购",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "没有感知到产品宣传的功能",
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "Joyday最近功能感一般，代言不合适，宣传过多不接地气，希望少些噱头。，希望提升到货速度。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "65",
+          "response_id": "0ZRlFPYT",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:26:00",
+            "submit_time": "2025-09-10T20:27:42",
+            "duration": "1分钟42秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "宣传反感-务实型",
+          "region": "西南",
+          "city": "北京",
+          "city_tier": "一线",
+          "channel": "小程序直购",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "不喜欢品牌或代言人、赞助综艺等宣传内容"
+            ],
+            "other_specified": "口味希望更清爽"
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "金典最近宣传过头，宣传过多不接地气，希望少些噱头。，希望增加无糖/低糖选项。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "66",
+          "response_id": "evS5QYnl",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:27:15",
+            "submit_time": "2025-09-10T20:29:14",
+            "duration": "1分钟59秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "西南",
+          "city": "广州",
+          "city_tier": "一线",
+          "channel": "线下商超",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 10,
+          "raw_value": "10分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品物有所值、性价比高",
+              "产品口味口感好",
+              "喜欢品牌或代言人、赞助综艺等宣传内容"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "巧乐兹喝起来醇厚，下午茶来一盒刚好，包装易撕口。一直买这牌子，口味稳定，家人都喜欢。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "67",
+          "response_id": "i1I2Xszz",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:28:30",
+            "submit_time": "2025-09-10T20:30:20",
+            "duration": "1分钟50秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "宣传反感-务实型",
+          "region": "华中",
+          "city": "长春",
+          "city_tier": "三线",
+          "channel": "电商",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 3,
+          "raw_value": "3分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "不喜欢品牌或代言人、赞助综艺等宣传内容",
+              "没有感知到产品宣传的功能",
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "MilkTalk最近配送慢，宣传过多不接地气，希望少些噱头。，希望增加无糖/低糖选项。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "68",
+          "response_id": "J2GR8EVG",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:29:45",
+            "submit_time": "2025-09-10T20:31:39",
+            "duration": "1分钟54秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "乳糖不耐-健康关注",
+          "region": "华南",
+          "city": "广州",
+          "city_tier": "一线",
+          "channel": "小程序直购",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "没有感知到产品宣传的功能"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "饮用后体感舒适，无不良反应"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "舒化最近偏甜，偶尔还是不太舒服，功能感知也一般。，希望多做些满减。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "69",
+          "response_id": "Xrsvhpql",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:31:00",
+            "submit_time": "2025-09-10T20:33:49",
+            "duration": "2分钟49秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "价格敏感-宝妈/宝爸",
+          "region": "华南",
+          "city": "广州",
+          "city_tier": "一线",
+          "channel": "社区团购",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 8,
+          "raw_value": "8分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "物流配送、门店导购、售后等服务体验好",
+              "产品物有所值、性价比高"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "70",
+          "response_id": "e6jyjBEU",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:32:15",
+            "submit_time": "2025-09-10T20:32:48",
+            "duration": "33秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "西南",
+          "city": "南京",
+          "city_tier": "二线",
+          "channel": "社区团购",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 9,
+          "raw_value": "9分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "喜欢品牌或代言人、赞助综艺等宣传内容",
+              "产品口味口感好",
+              "产品物有所值、性价比高"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "金典喝起来香浓，通勤路上来一盒刚好，包装便携。买了很多年，品质稳定放心。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "71",
+          "response_id": "UXfPM61H",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:33:30",
+            "submit_time": "2025-09-10T20:34:00",
+            "duration": "30秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "东北",
+          "city": "北京",
+          "city_tier": "一线",
+          "channel": "电商",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 9,
+          "raw_value": "9分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品口味口感好",
+              "产品物有所值、性价比高"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "安慕希喝起来顺滑，孩子上学前来一盒刚好，包装盒盖结实。买了很多年，品质稳定放心。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "72",
+          "response_id": "zG3G0gOe",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:34:45",
+            "submit_time": "2025-09-10T20:37:01",
+            "duration": "2分钟16秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "价格敏感-宝妈/宝爸",
+          "region": "东北",
+          "city": "重庆",
+          "city_tier": "二线",
+          "channel": "小程序直购",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 7,
+          "raw_value": "7分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "物流配送、门店导购、售后等服务体验好"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "73",
+          "response_id": "QAG0WN7P",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:36:00",
+            "submit_time": "2025-09-10T20:38:33",
+            "duration": "2分钟33秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "价格敏感-宝妈/宝爸",
+          "region": "华北",
+          "city": "北京",
+          "city_tier": "一线",
+          "channel": "小程序直购",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 8,
+          "raw_value": "8分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "物流配送、门店导购、售后等服务体验好",
+              "产品物有所值、性价比高"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "74",
+          "response_id": "UJ2Il4KB",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:37:15",
+            "submit_time": "2025-09-10T20:40:03",
+            "duration": "2分钟48秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "质量敏感-谨慎型",
+          "region": "华北",
+          "city": "武汉",
+          "city_tier": "二线",
+          "channel": "小程序直购",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "天然牧场最近偏甜，开封体验一般，包装不太好开。，希望增加无糖/低糖选项。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "75",
+          "response_id": "3s8a2x8l",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:38:30",
+            "submit_time": "2025-09-10T20:39:14",
+            "duration": "44秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "华北",
+          "city": "南京",
+          "city_tier": "二线",
+          "channel": "社区团购",
+          "age_group": "25-34"
+        },
+        "nps_score": {
+          "value": 8,
+          "raw_value": "8分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品物有所值、性价比高"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "76",
+          "response_id": "PAnMho20",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:39:45",
+            "submit_time": "2025-09-10T20:41:33",
+            "duration": "1分钟48秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "乳糖不耐-健康关注",
+          "region": "西南",
+          "city": "石家庄",
+          "city_tier": "三线",
+          "channel": "线下商超",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "没有感知到产品宣传的功能"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "饮用后体感舒适，无不良反应"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "舒化最近配送慢，标注是低乳糖，但体感差异不明显。，希望增加无糖/低糖选项。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "77",
+          "response_id": "p69WyEQL",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:41:00",
+            "submit_time": "2025-09-10T20:43:41",
+            "duration": "2分钟41秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "宣传反感-务实型",
+          "region": "华中",
+          "city": "广州",
+          "city_tier": "一线",
+          "channel": "线下商超",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 6,
+          "raw_value": "6分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "不喜欢品牌或代言人、赞助综艺等宣传内容"
+            ],
+            "other_specified": "口味希望更清爽"
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "安慕希最近配送慢，代言不合适，宣传过多不接地气，希望少些噱头。，希望提升到货速度。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "78",
+          "response_id": "geXL02AB",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:42:15",
+            "submit_time": "2025-09-10T20:44:23",
+            "duration": "2分钟8秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "宣传反感-务实型",
+          "region": "西南",
+          "city": "深圳",
+          "city_tier": "一线",
+          "channel": "线下商超",
+          "age_group": "25-34"
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "没有感知到产品宣传的功能",
+              "不喜欢品牌或代言人、赞助综艺等宣传内容"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "安慕希最近不太好开，宣传浮夸，广告词太花哨，实际体验一般。，希望提升到货速度。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "79",
+          "response_id": "6n3iI7Jl",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:43:30",
+            "submit_time": "2025-09-10T20:46:29",
+            "duration": "2分钟59秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "宣传反感-务实型",
+          "region": "华南",
+          "city": "深圳",
+          "city_tier": "一线",
+          "channel": "小程序直购",
+          "age_group": "25-34"
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "不喜欢品牌或代言人、赞助综艺等宣传内容",
+              "没有感知到产品宣传的功能"
+            ],
+            "other_specified": "口味希望更清爽"
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "金典最近分层，综艺植入过度，广告词太花哨，实际体验一般。，希望改进开口设计。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "80",
+          "response_id": "FSZwUfor",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:44:45",
+            "submit_time": "2025-09-10T20:45:29",
+            "duration": "44秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "质量敏感-谨慎型",
+          "region": "华中",
+          "city": "深圳",
+          "city_tier": "一线",
+          "channel": "小程序直购",
+          "age_group": "25-34"
+        },
+        "nps_score": {
+          "value": 4,
+          "raw_value": "4分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "火炬最近分层，性价比一般，之前遇到过质量问题，仍有顾虑。，希望提升到货速度。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "81",
+          "response_id": "erpYY005",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:46:00",
+            "submit_time": "2025-09-10T20:48:22",
+            "duration": "2分钟22秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "华北",
+          "city": "深圳",
+          "city_tier": "一线",
+          "channel": "小程序直购",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 9,
+          "raw_value": "9分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品物有所值、性价比高",
+              "喜欢品牌或代言人、赞助综艺等宣传内容",
+              "产品口味口感好"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "金典喝起来清爽，健身后来一盒刚好，包装外观高级。一直买这牌子，口味稳定，家人都喜欢。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "82",
+          "response_id": "XBn7ewlS",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:47:15",
+            "submit_time": "2025-09-10T20:48:16",
+            "duration": "1分钟1秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "宣传反感-务实型",
+          "region": "华中",
+          "city": "南京",
+          "city_tier": "二线",
+          "channel": "小程序直购",
+          "age_group": "25-34"
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "没有感知到产品宣传的功能",
+              "不喜欢品牌或代言人、赞助综艺等宣传内容"
+            ],
+            "other_specified": "口味希望更清爽"
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "安慕希最近偏甜，宣传过多不接地气，希望少些噱头。，希望改进开口设计。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "83",
+          "response_id": "hY879xkp",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:48:30",
+            "submit_time": "2025-09-10T20:49:43",
+            "duration": "1分钟13秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "华北",
+          "city": "温州",
+          "city_tier": "三线",
+          "channel": "小程序直购",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 9,
+          "raw_value": "9分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品口味口感好",
+              "饮用后体感舒适，无不良反应"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "安慕希喝起来顺滑，周末郊游来一盒刚好，包装盒盖结实。买了很多年，品质稳定放心。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "84",
+          "response_id": "O9oRYJDY",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:49:45",
+            "submit_time": "2025-09-10T20:52:43",
+            "duration": "2分钟58秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "宣传反感-务实型",
+          "region": "西南",
+          "city": "北京",
+          "city_tier": "一线",
+          "channel": "线下商超",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 3,
+          "raw_value": "3分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "没有感知到产品宣传的功能",
+              "不喜欢品牌或代言人、赞助综艺等宣传内容",
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "金典最近配送慢，宣传过多不接地气，希望少些噱头。，希望改进开口设计。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "85",
+          "response_id": "AP742v9Q",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:51:00",
+            "submit_time": "2025-09-10T20:53:55",
+            "duration": "2分钟55秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "乳糖不耐-健康关注",
+          "region": "华东",
+          "city": "西安",
+          "city_tier": "二线",
+          "channel": "社区团购",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "没有感知到产品宣传的功能"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "饮用后体感舒适，无不良反应"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "舒化最近分层，偶尔还是不太舒服，功能感知也一般。，希望多做些满减。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "86",
+          "response_id": "clbggdKX",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:52:15",
+            "submit_time": "2025-09-10T20:54:30",
+            "duration": "2分钟15秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "价格敏感-宝妈/宝爸",
+          "region": "华中",
+          "city": "深圳",
+          "city_tier": "一线",
+          "channel": "社区团购",
+          "age_group": "25-34"
+        },
+        "nps_score": {
+          "value": 8,
+          "raw_value": "8分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品物有所值、性价比高"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "87",
+          "response_id": "4Hkqg8e8",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:53:30",
+            "submit_time": "2025-09-10T20:56:15",
+            "duration": "2分钟45秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "价格敏感-宝妈/宝爸",
+          "region": "华东",
+          "city": "深圳",
+          "city_tier": "一线",
+          "channel": "社区团购",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 8,
+          "raw_value": "8分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品物有所值、性价比高"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "88",
+          "response_id": "JhkqAVuz",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:54:45",
+            "submit_time": "2025-09-10T20:56:28",
+            "duration": "1分钟43秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "华北",
+          "city": "上海",
+          "city_tier": "一线",
+          "channel": "社区团购",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 8,
+          "raw_value": "8分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品物有所值、性价比高",
+              "喜欢品牌或代言人、赞助综艺等宣传内容",
+              "产品口味口感好"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "89",
+          "response_id": "WSCet78h",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:56:00",
+            "submit_time": "2025-09-10T20:58:43",
+            "duration": "2分钟43秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "年轻白领-口味党",
+          "region": "华南",
+          "city": "北京",
+          "city_tier": "一线",
+          "channel": "电商",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 10,
+          "raw_value": "10分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "对促销活动满意（如赠品、活动力度/规则等）",
+              "产品口味口感好",
+              "饮用后体感舒适，无不良反应"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "金典喝起来不腻，通勤路上来一盒刚好，包装不漏奶。口味丰富不腻，早餐/下午茶都合适。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "90",
+          "response_id": "swBbGi2O",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:57:15",
+            "submit_time": "2025-09-10T20:58:08",
+            "duration": "53秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "品牌忠诚-资深用户",
+          "region": "华北",
+          "city": "北京",
+          "city_tier": "一线",
+          "channel": "电商",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 8,
+          "raw_value": "8分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品口味口感好",
+              "喜欢品牌或代言人、赞助综艺等宣传内容",
+              "产品物有所值、性价比高"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "91",
+          "response_id": "bt85sbsu",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:58:30",
+            "submit_time": "2025-09-10T20:59:37",
+            "duration": "1分钟7秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "价格敏感-宝妈/宝爸",
+          "region": "华南",
+          "city": "南昌",
+          "city_tier": "三线",
+          "channel": "电商",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 8,
+          "raw_value": "8分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "物流配送、门店导购、售后等服务体验好",
+              "产品物有所值、性价比高"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "92",
+          "response_id": "7Iwr8xV4",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T20:59:45",
+            "submit_time": "2025-09-10T21:00:39",
+            "duration": "54秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "年轻白领-口味党",
+          "region": "西南",
+          "city": "上海",
+          "city_tier": "一线",
+          "channel": "电商",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 10,
+          "raw_value": "10分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品口味口感好",
+              "包装设计好（如醒目、美观，材质好，便携、方便打开等）",
+              "对促销活动满意（如赠品、活动力度/规则等）"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "安慕希喝起来香浓，通勤路上来一盒刚好，包装环保材质。口味丰富不腻，早餐/下午茶都合适。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "93",
+          "response_id": "ccTtUY5p",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T21:01:00",
+            "submit_time": "2025-09-10T21:03:08",
+            "duration": "2分钟8秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "宣传反感-务实型",
+          "region": "西南",
+          "city": "温州",
+          "city_tier": "三线",
+          "channel": "社区团购",
+          "age_group": "35-44"
+        },
+        "nps_score": {
+          "value": 5,
+          "raw_value": "5分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "不喜欢品牌或代言人、赞助综艺等宣传内容",
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "金典最近偏甜，广告词太花哨，实际体验一般。，希望多做些满减。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "94",
+          "response_id": "OvSbtLUB",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T21:02:15",
+            "submit_time": "2025-09-10T21:05:02",
+            "duration": "2分钟47秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "年轻白领-口味党",
+          "region": "华东",
+          "city": "南京",
+          "city_tier": "二线",
+          "channel": "小程序直购",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 9,
+          "raw_value": "9分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "产品口味口感好"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "安慕希喝起来有奶香，早餐来一盒刚好，包装不漏奶。顺滑清爽，搭配麦片很适合。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "95",
+          "response_id": "theOycMz",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T21:03:30",
+            "submit_time": "2025-09-10T21:04:22",
+            "duration": "52秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "年轻白领-口味党",
+          "region": "东北",
+          "city": "杭州",
+          "city_tier": "二线",
+          "channel": "社区团购",
+          "age_group": "25-34"
+        },
+        "nps_score": {
+          "value": 10,
+          "raw_value": "10分",
+          "category": "promoter"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "包装设计好（如醒目、美观，材质好，便携、方便打开等）",
+              "对促销活动满意（如赠品、活动力度/规则等）",
+              "产品口味口感好"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": "安慕希喝起来有奶香，孩子上学前来一盒刚好，包装环保材质。口味丰富不腻，早餐/下午茶都合适。"
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "96",
+          "response_id": "hNhb689x",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T21:04:45",
+            "submit_time": "2025-09-10T21:05:05",
+            "duration": "20秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "质量敏感-谨慎型",
+          "region": "华南",
+          "city": "北京",
+          "city_tier": "一线",
+          "channel": "线下商超",
+          "age_group": "45-54"
+        },
+        "nps_score": {
+          "value": 6,
+          "raw_value": "6分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "冰工厂最近分层，宣传浮夸，之前遇到过质量问题，仍有顾虑。，希望多做些满减。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "97",
+          "response_id": "Pgli890o",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T21:06:00",
+            "submit_time": "2025-09-10T21:07:39",
+            "duration": "1分钟39秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "价格敏感-宝妈/宝爸",
+          "region": "华中",
+          "city": "武汉",
+          "city_tier": "二线",
+          "channel": "社区团购",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 8,
+          "raw_value": "8分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": "口味希望更清爽"
+          },
+          "positive_factors": {
+            "selected": [
+              "物流配送、门店导购、售后等服务体验好"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "98",
+          "response_id": "CGBA4Bzl",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T21:07:15",
+            "submit_time": "2025-09-10T21:07:50",
+            "duration": "35秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "宣传反感-务实型",
+          "region": "华南",
+          "city": "上海",
+          "city_tier": "一线",
+          "channel": "小程序直购",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 3,
+          "raw_value": "3分",
+          "category": "detractor"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "没有感知到产品宣传的功能",
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "轻慕最近不太好开，广告太多，广告词太花哨，实际体验一般。，希望改进开口设计。",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "99",
+          "response_id": "kwQawt5u",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T21:08:30",
+            "submit_time": "2025-09-10T21:09:23",
+            "duration": "53秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "价格敏感-宝妈/宝爸",
+          "region": "西南",
+          "city": "武汉",
+          "city_tier": "二线",
+          "channel": "小程序直购",
+          "age_group": "18-24"
+        },
+        "nps_score": {
+          "value": 7,
+          "raw_value": "7分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "产品价格太贵，性价比不高"
+            ],
+            "other_specified": "口味希望更清爽"
+          },
+          "positive_factors": {
+            "selected": [
+              "产品物有所值、性价比高",
+              "物流配送、门店导购、售后等服务体验好"
+            ],
+            "other_specified": null
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      },
+      {
+        "response_metadata": {
+          "user_id": "100",
+          "response_id": "BLU3JfwU",
+          "response_type": "正式",
+          "distribution_method": "链接二维码",
+          "status": "已完成",
+          "timing": {
+            "start_time": "2025-09-10T21:09:45",
+            "submit_time": "2025-09-10T21:10:40",
+            "duration": "55秒"
+          },
+          "annotation": {
+            "ai_status": "未标记",
+            "ai_reason": "",
+            "manual_status": "未标记",
+            "manual_reason": ""
+          },
+          "persona": "乳糖不耐-健康关注",
+          "region": "华南",
+          "city": "成都",
+          "city_tier": "二线",
+          "channel": "线下商超",
+          "age_group": "25-34"
+        },
+        "nps_score": {
+          "value": 7,
+          "raw_value": "7分",
+          "category": "passive"
+        },
+        "factor_responses": {
+          "negative_factors": {
+            "selected": [
+              "没有感知到产品宣传的功能"
+            ],
+            "other_specified": null
+          },
+          "positive_factors": {
+            "selected": [
+              "饮用后体感舒适，无不良反应"
+            ],
+            "other_specified": "金典联名口味好评"
+          }
+        },
+        "open_responses": {
+          "expectations": null,
+          "suggestions": null,
+          "specific_reasons": {
+            "negative": "",
+            "positive": ""
+          }
+        }
+      }
+    ]
+  },
+  "survey_analysis_data": {
+    "base_analysis_result": "1. 营销宣传问题是主要障碍：受访者不愿意推荐产品的首要原因是品牌或代言人、赞助综艺等宣传内容不受喜欢（100%），其次是包装设计不佳（66.67%）。营销宣传策略问题和产品信息获取障碍也是重要因素。 <br>2. 产品体验与功能感知不足：部分受访者因饮用后感觉不舒服（33.33%）或未感知到产品宣传的功能（33.33%）而不愿推荐，表明产品实际体验与宣传存在差距。 <br>3. 推荐动机多元化：愿意推荐产品的受访者动机分散，包括对品牌/宣传内容的喜爱（50%）、性价比高（50%）、促销活动满意（50%）、口味口感好（50%）以及体感舒适（50%）。 <br>4. 产品优势与包装吸引力促进推荐：产品本身的优势与多样性是推荐的主要驱动力（2人），包装外观的吸引力也起到一定作用（1人）。 <br>综上所述，营销宣传内容和产品包装设计是影响推荐意愿的关键负面因素，而产品性价比、口味、体感及宣传内容的吸引力则是促进推荐的主要动力。改进宣传策略、优化包装设计并强化产品实际体验，可能有效提升用户推荐意愿。",
+    "cross_analysis_result": null,
+    "kano_analysis_result": null,
+    "psm_analysis_result": null,
+    "maxdiff_analysis_result": null,
+    "nps_analysis_result": "1. NPS值为-25%，表明用户整体满意度较低，贬损者比例显著高于推荐者。 <br>2. 贬损者占比50%，远高于推荐者（25%）和中立者（25%），反映出产品或服务存在明显改进空间。 <br>3. 评分为5分（38%）和10分（25%）的用户占比较高，显示用户态度呈现两极分化趋势。 <br>4. 总体来看，当前用户负面情绪占主导，需优先解决贬损者的核心问题，同时关注中立者的潜在转化机会以提升NPS。"
+  },
+  "persist_outputs": true
+}

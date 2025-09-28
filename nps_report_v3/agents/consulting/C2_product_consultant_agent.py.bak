@@ -1,0 +1,633 @@
+"""
+C2 - Product Consultant Agent
+Consulting Pass Agent for generating product improvement recommendations.
+"""
+
+import logging
+from typing import Dict, Any, List, Optional
+from collections import Counter
+
+from ..base import ConsultingAgent, AgentResult, AgentStatus
+from ...state import ProductRecommendation
+from ...llm import LLMClient
+
+logger = logging.getLogger(__name__)
+
+
+class ProductConsultantAgent(ConsultingAgent):
+    """
+    C2 - Product Consultant Agent
+
+    Responsibilities:
+    - Analyze product-specific feedback and issues
+    - Generate product improvement recommendations
+    - Suggest new product development opportunities
+    - Prioritize product features and enhancements
+    - Consider competitive product landscape
+    """
+
+    def __init__(self, agent_id: str = "C2", agent_name: str = "Product Consultant Agent",
+                 llm_client: Optional[LLMClient] = None, **kwargs):
+        super().__init__(agent_id, agent_name, **kwargs)
+        self.llm_client = llm_client
+        self.min_confidence = 0.6  # Product recommendations can be made with moderate confidence
+
+        # Product improvement categories
+        self.product_categories = {
+            "taste": {
+                "title": "口味改进",
+                "keywords": ["口味", "味道", "甜度", "酸度", "香味", "口感"],
+                "metrics": ["口味满意度", "复购率", "推荐意愿"]
+            },
+            "nutrition": {
+                "title": "营养成分",
+                "keywords": ["营养", "蛋白质", "维生素", "钙", "添加剂", "健康"],
+                "metrics": ["营养价值认知", "健康益处评价"]
+            },
+            "packaging": {
+                "title": "包装设计",
+                "keywords": ["包装", "设计", "开启", "储存", "便携", "外观"],
+                "metrics": ["包装满意度", "便利性评分"]
+            },
+            "quality": {
+                "title": "质量控制",
+                "keywords": ["质量", "新鲜度", "保质期", "变质", "杂质", "异味"],
+                "metrics": ["质量投诉率", "退货率", "品质认知"]
+            },
+            "variety": {
+                "title": "产品多样性",
+                "keywords": ["种类", "选择", "新品", "规格", "口味选择"],
+                "metrics": ["产品满足度", "选择满意度"]
+            }
+        }
+
+        # Yili product portfolio
+        self.yili_products = {
+            "安慕希": {
+                "category": "premium_yogurt",
+                "strengths": ["口感", "品质", "品牌"],
+                "improvement_areas": ["价格", "包装", "多样性"]
+            },
+            "金典": {
+                "category": "organic_milk",
+                "strengths": ["有机", "营养", "品质"],
+                "improvement_areas": ["口味选择", "包装创新"]
+            },
+            "舒化": {
+                "category": "lactose_free",
+                "strengths": ["无乳糖", "易消化"],
+                "improvement_areas": ["口味", "营销"]
+            },
+            "优酸乳": {
+                "category": "drinking_yogurt",
+                "strengths": ["便携", "价格"],
+                "improvement_areas": ["营养", "包装"]
+            },
+            "QQ星": {
+                "category": "children_milk",
+                "strengths": ["儿童专用", "营养"],
+                "improvement_areas": ["口味", "包装互动"]
+            }
+        }
+
+        # Competitive products
+        self.competitor_products = {
+            "蒙牛纯甄": {"category": "premium_yogurt", "strength": "口感创新"},
+            "光明莫斯利安": {"category": "premium_yogurt", "strength": "健康概念"},
+            "君乐宝涨芝士": {"category": "cheese_yogurt", "strength": "质地创新"},
+            "三元极致": {"category": "premium_milk", "strength": "营养强化"}
+        }
+
+    async def process(self, state: Dict[str, Any]) -> AgentResult:
+        """
+        Execute product consultation analysis.
+
+        Args:
+            state: Current workflow state with all analysis results
+
+        Returns:
+            AgentResult with product recommendations
+        """
+        try:
+            # Check confidence in product-related data
+            confidence_check = self._assess_product_confidence(state)
+
+            if confidence_check["confidence"] < self.min_confidence:
+                logger.warning(f"Product confidence {confidence_check['confidence']:.2f} below threshold {self.min_confidence}")
+                return AgentResult(
+                    agent_id=self.agent_id,
+                    status=AgentStatus.FAILED,
+                    errors=[f"Insufficient confidence in product data: {confidence_check['issues']}"],
+                    confidence_score=0.0
+                )
+
+            # Extract product insights from analysis results
+            product_insights = await self._extract_product_insights(state)
+
+            # Analyze competitive positioning
+            competitive_analysis = self._analyze_competitive_position(product_insights, state)
+
+            # Generate product recommendations
+            recommendations = await self._generate_product_recommendations(product_insights, state)
+
+            # Prioritize recommendations
+            prioritized = self._prioritize_product_recommendations(recommendations)
+
+            # Create product development roadmap
+            roadmap = self._create_product_roadmap(prioritized)
+
+            # Generate innovation opportunities
+            innovations = self._identify_innovation_opportunities(product_insights, competitive_analysis)
+
+            logger.info(f"Generated {len(prioritized)} product recommendations")
+
+            return AgentResult(
+                agent_id=self.agent_id,
+                status=AgentStatus.COMPLETED,
+                data={
+                    "product_recommendations": prioritized,
+                    "product_roadmap": roadmap,
+                    "innovation_opportunities": innovations,
+                    "competitive_analysis": competitive_analysis,
+                    "product_insights": product_insights,
+                    "confidence": confidence_check["confidence"]
+                },
+                insights=[{"type": "product", "count": len(prioritized)}],
+                confidence_score=confidence_check["confidence"]
+            )
+
+        except Exception as e:
+            logger.error(f"Product consultation failed: {e}")
+            return AgentResult(
+                agent_id=self.agent_id,
+                status=AgentStatus.FAILED,
+                errors=[str(e)],
+                confidence_score=0.0
+            )
+
+    def _assess_product_confidence(self, state: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Assess confidence in product-related data.
+
+        Args:
+            state: Current workflow state
+
+        Returns:
+            Confidence assessment
+        """
+        confidence_factors = []
+        issues = []
+
+        # Check product mentions
+        tagged_responses = state.get("tagged_responses", [])
+        product_mentions = sum(1 for response in tagged_responses
+                              if any(product in str(response) for product in self.yili_products.keys()))
+
+        if product_mentions >= 10:
+            confidence_factors.append(0.9)
+        elif product_mentions >= 5:
+            confidence_factors.append(0.7)
+        else:
+            confidence_factors.append(0.4)
+            issues.append("Limited product-specific feedback")
+
+        # Check clustering results with product themes
+        clusters = state.get("semantic_clusters", [])
+        product_clusters = [c for c in clusters if any(keyword in c.get("theme", "")
+                           for category in self.product_categories.values()
+                           for keyword in category["keywords"])]
+
+        if len(product_clusters) >= 3:
+            confidence_factors.append(0.8)
+        elif len(product_clusters) >= 1:
+            confidence_factors.append(0.6)
+        else:
+            confidence_factors.append(0.3)
+            issues.append("Limited product theme clustering")
+
+        # Check technical requirements related to products
+        tech_reqs = state.get("technical_requirements", [])
+        product_reqs = [req for req in tech_reqs if req.get("category") == "product"]
+
+        if len(product_reqs) >= 5:
+            confidence_factors.append(0.8)
+        elif len(product_reqs) >= 2:
+            confidence_factors.append(0.6)
+        else:
+            confidence_factors.append(0.4)
+            issues.append("Few product-specific technical requirements identified")
+
+        overall_confidence = sum(confidence_factors) / len(confidence_factors) if confidence_factors else 0
+
+        return {
+            "confidence": overall_confidence,
+            "factors": confidence_factors,
+            "issues": issues
+        }
+
+    async def _extract_product_insights(self, state: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Extract product-specific insights from analysis results.
+
+        Args:
+            state: Current workflow state
+
+        Returns:
+            Product insights
+        """
+        insights = {
+            "category_feedback": {},
+            "product_issues": [],
+            "product_strengths": [],
+            "improvement_priorities": [],
+            "customer_needs": []
+        }
+
+        # Analyze feedback by product category
+        tagged_responses = state.get("tagged_responses", [])
+
+        for category, config in self.product_categories.items():
+            category_responses = []
+            for response in tagged_responses:
+                response_text = str(response.get("comment", ""))
+                if any(keyword in response_text for keyword in config["keywords"]):
+                    category_responses.append(response)
+
+            if category_responses:
+                # Sentiment analysis for category
+                positive_count = sum(1 for r in category_responses if r.get("sentiment") == "positive")
+                negative_count = sum(1 for r in category_responses if r.get("sentiment") == "negative")
+
+                insights["category_feedback"][category] = {
+                    "title": config["title"],
+                    "total_mentions": len(category_responses),
+                    "positive_ratio": positive_count / len(category_responses),
+                    "negative_ratio": negative_count / len(category_responses),
+                    "key_issues": self._extract_category_issues(category_responses),
+                    "improvement_suggestions": self._extract_improvement_suggestions(category_responses)
+                }
+
+        # Analyze clustering for product themes
+        clusters = state.get("semantic_clusters", [])
+        for cluster in clusters:
+            theme = cluster.get("theme", "")
+            sentiment_dist = cluster.get("sentiment_distribution", {})
+
+            # Check if cluster is product-related
+            for category, config in self.product_categories.items():
+                if any(keyword in theme for keyword in config["keywords"]):
+                    if sentiment_dist.get("negative", 0) > 0.6:
+                        insights["product_issues"].append({
+                            "category": category,
+                            "theme": theme,
+                            "severity": "high" if sentiment_dist["negative"] > 0.8 else "medium",
+                            "frequency": cluster.get("size", 0)
+                        })
+                    elif sentiment_dist.get("positive", 0) > 0.6:
+                        insights["product_strengths"].append({
+                            "category": category,
+                            "theme": theme,
+                            "strength_level": "high" if sentiment_dist["positive"] > 0.8 else "medium",
+                            "frequency": cluster.get("size", 0)
+                        })
+
+        # Extract technical requirements for products
+        tech_reqs = state.get("technical_requirements", [])
+        product_reqs = [req for req in tech_reqs if req.get("category") == "product"]
+
+        for req in product_reqs:
+            insights["improvement_priorities"].append({
+                "description": req["description"],
+                "priority": req["priority"],
+                "category": self._classify_requirement_category(req["description"]),
+                "customer_impact": len(req.get("related_responses", []))
+            })
+
+        return insights
+
+    def _extract_category_issues(self, responses: List[Dict[str, Any]]) -> List[str]:
+        """Extract key issues from category responses."""
+        issues = []
+        negative_responses = [r for r in responses if r.get("sentiment") == "negative"]
+
+        # Extract common themes from negative feedback
+        all_comments = " ".join([str(r.get("comment", "")) for r in negative_responses])
+
+        # Simple keyword-based issue extraction (could be enhanced with NLP)
+        issue_keywords = {
+            "太甜": "甜度过高",
+            "太酸": "酸度过高",
+            "变质": "保质期问题",
+            "包装": "包装设计问题",
+            "开启": "开启困难",
+            "价格": "价格偏高",
+            "选择": "选择不够丰富"
+        }
+
+        for keyword, issue in issue_keywords.items():
+            if keyword in all_comments:
+                issues.append(issue)
+
+        return issues[:3]  # Top 3 issues
+
+    def _extract_improvement_suggestions(self, responses: List[Dict[str, Any]]) -> List[str]:
+        """Extract improvement suggestions from responses."""
+        suggestions = []
+
+        # Look for constructive feedback and suggestions
+        for response in responses:
+            comment = str(response.get("comment", ""))
+            if any(word in comment for word in ["建议", "希望", "应该", "最好"]):
+                # Extract the suggestion (simplified approach)
+                suggestion = comment.strip()[:100] + "..." if len(comment) > 100 else comment.strip()
+                suggestions.append(suggestion)
+
+        return suggestions[:3]  # Top 3 suggestions
+
+    def _classify_requirement_category(self, description: str) -> str:
+        """Classify technical requirement into product category."""
+        for category, config in self.product_categories.items():
+            if any(keyword in description for keyword in config["keywords"]):
+                return category
+        return "general"
+
+    def _analyze_competitive_position(
+        self,
+        product_insights: Dict[str, Any],
+        state: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Analyze competitive positioning based on insights."""
+        analysis = {
+            "competitive_strengths": [],
+            "competitive_gaps": [],
+            "market_opportunities": [],
+            "competitive_threats": []
+        }
+
+        # Analyze strengths vs competitors
+        for strength in product_insights["product_strengths"]:
+            category = strength["category"]
+            if category == "taste":
+                analysis["competitive_strengths"].append("口味创新能力领先")
+            elif category == "quality":
+                analysis["competitive_strengths"].append("质量控制体系完善")
+            elif category == "nutrition":
+                analysis["competitive_strengths"].append("营养价值优势明显")
+
+        # Identify gaps compared to competitors
+        high_issues = [issue for issue in product_insights["product_issues"] if issue["severity"] == "high"]
+        for issue in high_issues:
+            category = issue["category"]
+            if category == "packaging":
+                analysis["competitive_gaps"].append("包装设计落后于竞品")
+            elif category == "variety":
+                analysis["competitive_gaps"].append("产品线多样性不足")
+
+        # Identify market opportunities
+        improvement_priorities = product_insights["improvement_priorities"]
+        high_priority_areas = [p["category"] for p in improvement_priorities if p["priority"] in ["critical", "high"]]
+        category_counts = Counter(high_priority_areas)
+
+        for category, count in category_counts.most_common(2):
+            if category == "taste":
+                analysis["market_opportunities"].append("口味创新市场空间大")
+            elif category == "packaging":
+                analysis["market_opportunities"].append("包装升级需求强烈")
+
+        return analysis
+
+    async def _generate_product_recommendations(
+        self,
+        product_insights: Dict[str, Any],
+        state: Dict[str, Any]
+    ) -> List[ProductRecommendation]:
+        """Generate product improvement recommendations."""
+        recommendations = []
+
+        # Generate recommendations based on product issues
+        for issue in product_insights["product_issues"]:
+            if issue["severity"] == "high":
+                rec = ProductRecommendation(
+                    recommendation_id=f"prod_issue_{len(recommendations)}",
+                    title=f"{issue['category']}改进：解决{issue['theme']}问题",
+                    description=f"基于{issue['frequency']}条客户反馈，优化{issue['theme']}相关问题",
+                    category=issue["category"],
+                    priority="immediate" if issue["severity"] == "high" else "short_term",
+                    impact_areas=[f"{issue['category']}质量", "客户满意度"],
+                    success_metrics=[f"{issue['category']}满意度提升", "相关投诉减少"],
+                    target_products=self._identify_target_products(issue["category"]),
+                    development_effort="medium",
+                    estimated_timeline="3-6个月"
+                )
+                recommendations.append(rec)
+
+        # Generate recommendations based on improvement priorities
+        for priority in product_insights["improvement_priorities"]:
+            if priority["priority"] in ["critical", "high"]:
+                rec = ProductRecommendation(
+                    recommendation_id=f"prod_priority_{len(recommendations)}",
+                    title=f"优先改进：{priority['description']}",
+                    description=f"基于{priority['customer_impact']}条客户反馈的改进建议",
+                    category=priority["category"],
+                    priority="immediate" if priority["priority"] == "critical" else "short_term",
+                    impact_areas=["产品功能", "用户体验"],
+                    success_metrics=["功能满意度", "使用便利性"],
+                    target_products=self._identify_target_products(priority["category"]),
+                    development_effort="medium",
+                    estimated_timeline="2-4个月"
+                )
+                recommendations.append(rec)
+
+        # LLM-enhanced recommendations if available
+        if self.llm_client:
+            llm_recs = await self._llm_generate_product_recommendations(product_insights, state)
+            recommendations.extend(llm_recs)
+
+        return recommendations
+
+    def _identify_target_products(self, category: str) -> List[str]:
+        """Identify target products for improvement based on category."""
+        if category == "taste":
+            return ["安慕希", "优酸乳"]
+        elif category == "packaging":
+            return ["金典", "舒化"]
+        elif category == "nutrition":
+            return ["QQ星", "金典"]
+        elif category == "quality":
+            return list(self.yili_products.keys())
+        else:
+            return ["安慕希"]  # Default to flagship product
+
+    async def _llm_generate_product_recommendations(
+        self,
+        product_insights: Dict[str, Any],
+        state: Dict[str, Any]
+    ) -> List[ProductRecommendation]:
+        """Use LLM to generate product recommendations."""
+        if not self.llm_client:
+            return []
+
+        try:
+            # Prepare context for LLM
+            top_issues = [issue["theme"] for issue in product_insights["product_issues"][:3]]
+            improvement_areas = [p["description"] for p in product_insights["improvement_priorities"][:3]]
+
+            prompt = f"""
+作为伊利集团的产品顾问，基于以下产品分析结果提供产品改进建议：
+
+主要产品问题：
+{chr(10).join([f"• {issue}" for issue in top_issues])}
+
+改进重点：
+{chr(10).join([f"• {area}" for area in improvement_areas])}
+
+伊利主要产品线：安慕希、金典、舒化、优酸乳、QQ星
+
+请提供3-4个具体的产品改进建议，每个建议包括：
+1. 建议标题
+2. 具体描述
+3. 目标产品线
+4. 优先级（immediate/short_term/medium_term）
+5. 预期影响
+6. 开发难度（low/medium/high）
+7. 预计时间（如"2-4个月"）
+
+以JSON格式返回：
+[
+    {{
+        "title": "改进建议标题",
+        "description": "详细描述",
+        "target_products": ["产品1", "产品2"],
+        "priority": "优先级",
+        "impact_areas": ["影响领域1", "影响领域2"],
+        "development_effort": "开发难度",
+        "estimated_timeline": "预计时间"
+    }}
+]
+"""
+
+            response = await self.llm_client.call(prompt, temperature=0.3)
+
+            # Parse JSON response
+            import json
+            recommendations_data = json.loads(response)
+
+            recommendations = []
+            for idx, rec_data in enumerate(recommendations_data):
+                rec = ProductRecommendation(
+                    recommendation_id=f"llm_prod_{idx}",
+                    title=rec_data.get("title", ""),
+                    description=rec_data.get("description", ""),
+                    category="general",
+                    priority=rec_data.get("priority", "medium_term"),
+                    impact_areas=rec_data.get("impact_areas", []),
+                    success_metrics=["产品满意度提升", "市场反馈改善"],
+                    target_products=rec_data.get("target_products", []),
+                    development_effort=rec_data.get("development_effort", "medium"),
+                    estimated_timeline=rec_data.get("estimated_timeline", "3-6个月")
+                )
+                recommendations.append(rec)
+
+            return recommendations
+
+        except Exception as e:
+            logger.debug(f"LLM product recommendation generation failed: {e}")
+            return []
+
+    def _prioritize_product_recommendations(
+        self,
+        recommendations: List[ProductRecommendation]
+    ) -> List[ProductRecommendation]:
+        """Prioritize product recommendations."""
+        # Priority weights
+        priority_order = {
+            "immediate": 0,
+            "short_term": 1,
+            "medium_term": 2,
+            "long_term": 3
+        }
+
+        # Development effort weights (easier implementations get slight priority)
+        effort_weights = {
+            "low": 0,
+            "medium": 1,
+            "high": 2
+        }
+
+        # Sort by priority first, then by development effort
+        def sort_key(rec):
+            priority_score = priority_order.get(rec.get("priority", "medium_term"), 2)
+            effort_score = effort_weights.get(rec.get("development_effort", "medium"), 1) * 0.1
+            return priority_score + effort_score
+
+        recommendations.sort(key=sort_key)
+        return recommendations
+
+    def _create_product_roadmap(
+        self,
+        recommendations: List[ProductRecommendation]
+    ) -> Dict[str, Any]:
+        """Create product development roadmap."""
+        roadmap = {
+            "immediate": [],
+            "short_term": [],
+            "medium_term": [],
+            "long_term": []
+        }
+
+        for rec in recommendations:
+            priority = rec.get("priority", "medium_term")
+            if priority in roadmap:
+                roadmap[priority].append({
+                    "title": rec["title"],
+                    "description": rec["description"],
+                    "target_products": rec.get("target_products", []),
+                    "estimated_timeline": rec.get("estimated_timeline", ""),
+                    "development_effort": rec.get("development_effort", "medium")
+                })
+
+        return roadmap
+
+    def _identify_innovation_opportunities(
+        self,
+        product_insights: Dict[str, Any],
+        competitive_analysis: Dict[str, Any]
+    ) -> List[Dict[str, Any]]:
+        """Identify product innovation opportunities."""
+        opportunities = []
+
+        # Market gap opportunities
+        for gap in competitive_analysis["competitive_gaps"]:
+            opportunities.append({
+                "type": "competitive_gap",
+                "title": f"填补市场空白：{gap}",
+                "description": f"针对{gap}推出差异化产品",
+                "innovation_level": "incremental",
+                "market_potential": "medium"
+            })
+
+        # Customer need opportunities
+        unmet_needs = []
+        for category, feedback in product_insights["category_feedback"].items():
+            if feedback["negative_ratio"] > 0.4:  # High negative feedback indicates opportunity
+                unmet_needs.append(f"{feedback['title']}客户需求未充分满足")
+
+        for need in unmet_needs[:2]:
+            opportunities.append({
+                "type": "unmet_need",
+                "title": f"满足客户需求：{need}",
+                "description": f"基于客户反馈开发针对性解决方案",
+                "innovation_level": "breakthrough",
+                "market_potential": "high"
+            })
+
+        # Technology-driven opportunities
+        opportunities.append({
+            "type": "technology",
+            "title": "智能化产品包装",
+            "description": "结合IoT技术提供智能保鲜和消费提醒功能",
+            "innovation_level": "breakthrough",
+            "market_potential": "high"
+        })
+
+        return opportunities

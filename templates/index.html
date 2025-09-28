@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% block title %}平台仪表盘 · 伊利智能 NPS 研究中心{% endblock %}
+{% block header_title %}伊利智能 NPS 调研洞察平台{% endblock %}
+{% block header_desc %}统一调研、分析、知识与报告的中央工作台，支撑多智能体协同与业务决策闭环。{% endblock %}
+{% block content %}
+  <section class="grid gap-6 lg:grid-cols-[2fr,1fr]">
+    <div class="gradient-hero text-white rounded-2xl p-8 shadow-sm">
+      <h2 class="text-2xl font-semibold mb-3">洞察驱动增长 · 构建乳业体验操作系统</h2>
+      <p class="text-sm text-white/80">对齐产品、渠道、客户体验三大视角，让多智能体工作流与知识中台协同演进。</p>
+      <div class="mt-6 grid gap-3 sm:grid-cols-3 text-xs text-white/90">
+        <div class="bg-white/10 rounded-lg px-3 py-3">
+          <p class="text-3xl font-bold">{{ kpis.overall_nps }}</p>
+          <p>最新 NPS 得分</p>
+        </div>
+        <div class="bg-white/10 rounded-lg px-3 py-3">
+          <p class="text-3xl font-bold">{{ (kpis.promoters)|round(1) }}%</p>
+          <p>推荐者占比</p>
+        </div>
+        <div class="bg-white/10 rounded-lg px-3 py-3">
+          <p class="text-3xl font-bold">{{ (kpis.detractors)|round(1) }}%</p>
+          <p>贬损者占比</p>
+        </div>
+      </div>
+    </div>
+    <div class="card p-5 space-y-3">
+      <h3 class="text-sm font-semibold text-slate-900">快速操作</h3>
+      <ul class="space-y-3 text-sm text-slate-600">
+        {% for action in quick_actions %}
+        <li>
+          <a href="{{ action.href }}" class="flex items-start justify-between rounded-lg border border-slate-100 px-3 py-3 hover:border-blue-200 hover:bg-blue-50/40">
+            <div>
+              <p class="font-medium text-slate-900">{{ action.label }}</p>
+              <p class="text-xs text-slate-500 mt-1">{{ action.description }}</p>
+            </div>
+            <span class="text-blue-500">→</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <div class="flex items-center justify-between">
+      <h3 class="text-lg font-semibold text-slate-900">核心指标看板</h3>
+      <a href="/analytics" class="text-sm text-blue-600">跳转数据分析实验室 →</a>
+    </div>
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      {% for card in kpi_cards %}
+      <div class="card p-4">
+        <p class="text-xs text-slate-500">{{ card.title }}</p>
+        <p class="mt-2 text-3xl font-semibold text-slate-900">{{ card.value }}</p>
+        <p class="mt-2 text-xs text-slate-500">{{ card.desc }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <div class="flex items-center justify-between">
+      <h3 class="text-lg font-semibold text-slate-900">多版本工作流概览</h3>
+      <p class="text-xs text-slate-500">确保 V2 稳定运行，支持 V3 快速试验与迁移规划。</p>
+    </div>
+    {% set tone_map = {
+      'emerald': 'bg-emerald-100 text-emerald-800',
+      'violet': 'bg-violet-100 text-violet-800',
+      'slate': 'bg-slate-100 text-slate-700'
+    } %}
+    <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      {% for flow in workflow_overview %}
+      <div class="card p-5 space-y-3">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-sm font-semibold text-slate-900">{{ flow.name }}</p>
+            <p class="text-xs text-slate-500 mt-1">{{ flow.description }}</p>
+          </div>
+          <span class="badge {{ tone_map.get(flow.status_tone, 'bg-slate-100 text-slate-700') }}">{{ flow.status }}</span>
+        </div>
+        <div class="flex flex-wrap gap-2 text-xs">
+          {% for action in flow.actions %}
+          <a href="{{ action.href }}" class="inline-flex items-center rounded-full border border-slate-200 px-3 py-1 text-slate-600 hover:border-blue-200 hover:text-blue-600">{{ action.label }}</a>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="grid gap-6 xl:grid-cols-[3fr,2fr]">
+    <div class="card p-6">
+      <h3 class="text-lg font-semibold text-slate-900 mb-1">分析模块矩阵</h3>
+      <p class="text-xs text-slate-500 mb-4">围绕“定量-定性-情报-策略”四个维度组织多智能体能力。</p>
+      <div class="space-y-4">
+        {% for module in analysis_modules %}
+        <div class="border border-slate-100 rounded-lg px-4 py-3">
+          <div class="flex items-center justify-between">
+            <p class="text-sm font-medium text-slate-900">{{ module.title }}</p>
+            <span class="badge bg-slate-100 text-slate-600">{{ module.status }}</span>
+          </div>
+          <p class="text-xs text-slate-500 mt-2">聚焦：{{ module.focus }}</p>
+          <p class="text-xs text-slate-400 mt-1">责任团队：{{ module.owner }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="space-y-6">
+      <div class="card p-6">
+        <h3 class="text-lg font-semibold text-slate-900 mb-1">知识库最新更新</h3>
+        <p class="text-xs text-slate-500 mb-4">通过 `PersistentKnowledgeManager` 与辅助数据管理实现实时迭代。</p>
+        <ul class="space-y-4 text-sm text-slate-600">
+          {% for item in knowledge_updates %}
+          <li class="border border-slate-100 rounded-lg px-4 py-3">
+            <div class="flex items-center justify-between">
+              <span class="font-medium text-slate-900">{{ item.title }}</span>
+              <span class="badge bg-slate-100 text-slate-600">{{ item.category }}</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-2">{{ item.summary }}</p>
+            <p class="text-[11px] text-slate-400 mt-1">更新日期：{{ item.updated_at }}</p>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="card p-6">
+        <h3 class="text-lg font-semibold text-slate-900 mb-1">阶段性路线图</h3>
+        <p class="text-xs text-slate-500 mb-4">结合业务节奏推进产品化能力。</p>
+        <ul class="space-y-3 text-sm">
+          {% for step in roadmap %}
+          <li class="flex items-center justify-between border border-slate-100 rounded-lg px-4 py-3">
+            <div>
+              <p class="text-sm font-medium text-slate-900">{{ step.phase }}</p>
+              <p class="text-xs text-slate-500 mt-1">{{ step.focus }}</p>
+            </div>
+            <div class="text-right">
+              <p class="text-xs text-slate-400">{{ step.timeline }}</p>
+              <p class="text-xs text-blue-600 mt-1">{{ step.status }}</p>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
+{% endblock %}

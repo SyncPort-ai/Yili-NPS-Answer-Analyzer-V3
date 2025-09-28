@@ -1,0 +1,222 @@
+"""
+Base agent classes for NPS V3 multi-agent architecture.
+Provides abstract base classes for Foundation, Analysis, and Consulting agents.
+"""
+
+from abc import ABC, abstractmethod
+from typing import Dict, Any, Optional, List
+from dataclasses import dataclass
+import asyncio
+import logging
+from datetime import datetime
+from enum import Enum
+
+logger = logging.getLogger(__name__)
+
+
+class AgentStatus(Enum):
+    """Agent execution status"""
+    PENDING = "pending"
+    IN_PROGRESS = "in_progress"
+    COMPLETED = "completed"
+    FAILED = "failed"
+    SKIPPED = "skipped"
+
+
+@dataclass
+class AgentResult:
+    """Standard result format for all agents"""
+    agent_id: str
+    status: AgentStatus
+    data: Optional[Dict[str, Any]] = None
+    insights: Optional[List[Dict[str, Any]]] = None
+    errors: Optional[List[str]] = None
+    warnings: Optional[List[str]] = None
+    execution_time_ms: Optional[int] = None
+    confidence_score: Optional[float] = None
+    metadata: Optional[Dict[str, Any]] = None
+
+
+class BaseAgent(ABC):
+    """Abstract base class for all NPS analysis agents"""
+
+    def __init__(self, agent_id: str, agent_name: str, max_retries: int = 3):
+        self.agent_id = agent_id
+        self.agent_name = agent_name
+        self.max_retries = max_retries
+        self.status = AgentStatus.PENDING
+        self.start_time = None
+        self.end_time = None
+
+    async def execute(self, state: Dict[str, Any]) -> AgentResult:
+        """Execute agent with retry logic and error handling"""
+        retry_count = 0
+        last_error = None
+
+        while retry_count < self.max_retries:
+            try:
+                logger.info(f"Executing agent {self.agent_id}: {self.agent_name} (attempt {retry_count + 1})")
+                self.status = AgentStatus.IN_PROGRESS
+                self.start_time = datetime.utcnow()
+
+                # Validate input
+                validation_errors = self._validate_input(state)
+                if validation_errors:
+                    raise ValueError(f"Input validation failed: {validation_errors}")
+
+                # Process with agent-specific logic
+                result = await self.process(state)
+
+                # Validate output
+                self._validate_output(result)
+
+                self.status = AgentStatus.COMPLETED
+                self.end_time = datetime.utcnow()
+
+                execution_time = int((self.end_time - self.start_time).total_seconds() * 1000)
+                result.execution_time_ms = execution_time
+
+                logger.info(f"Agent {self.agent_id} completed successfully in {execution_time}ms")
+                return result
+
+            except Exception as e:
+                retry_count += 1
+                last_error = str(e)
+                logger.warning(f"Agent {self.agent_id} failed (attempt {retry_count}): {e}")
+
+                if retry_count < self.max_retries:
+                    # Exponential backoff
+                    wait_time = 2 ** retry_count
+                    logger.info(f"Retrying agent {self.agent_id} after {wait_time} seconds...")
+                    await asyncio.sleep(wait_time)
+                else:
+                    self.status = AgentStatus.FAILED
+                    self.end_time = datetime.utcnow()
+
+                    return AgentResult(
+                        agent_id=self.agent_id,
+                        status=AgentStatus.FAILED,
+                        errors=[f"Agent failed after {retry_count} attempts: {last_error}"],
+                        execution_time_ms=int((self.end_time - self.start_time).total_seconds() * 1000) if self.start_time else None
+                    )
+
+    @abstractmethod
+    async def process(self, state: Dict[str, Any]) -> AgentResult:
+        """Agent-specific processing logic to be implemented by subclasses"""
+        pass
+
+    def _validate_input(self, state: Dict[str, Any]) -> Optional[List[str]]:
+        """Validate input state - can be overridden by subclasses"""
+        errors = []
+        if not state:
+            errors.append("State cannot be empty")
+        if "input_data" not in state:
+            errors.append("input_data is required in state")
+        return errors if errors else None
+
+    def _validate_output(self, result: AgentResult) -> None:
+        """Validate agent output - can be overridden by subclasses"""
+        if not result:
+            raise ValueError("Agent must return a result")
+        if result.status not in AgentStatus:
+            raise ValueError(f"Invalid status: {result.status}")
+
+
+class FoundationAgent(BaseAgent):
+    """Base class for Foundation layer agents (A0-A3)"""
+
+    def __init__(self, agent_id: str, agent_name: str):
+        super().__init__(agent_id, agent_name)
+        self.layer = "foundation"
+
+    def _validate_input(self, state: Dict[str, Any]) -> Optional[List[str]]:
+        """Foundation agents need raw input data"""
+        errors = super()._validate_input(state) or []
+
+        if "input_data" in state:
+            input_data = state["input_data"]
+            if "survey_responses" not in input_data and "responses" not in input_data:
+                errors.append("Foundation agents require survey_responses in input_data")
+
+        return errors if errors else None
+
+
+class AnalysisAgent(BaseAgent):
+    """Base class for Analysis layer agents (B1-B9)"""
+
+    def __init__(self, agent_id: str, agent_name: str):
+        super().__init__(agent_id, agent_name)
+        self.layer = "analysis"
+
+    def _validate_input(self, state: Dict[str, Any]) -> Optional[List[str]]:
+        """Analysis agents need foundation results"""
+        errors = super()._validate_input(state) or []
+
+        if "pass1_foundation" not in state:
+            errors.append("Analysis agents require pass1_foundation results in state")
+        elif state.get("pass1_foundation") and not state["pass1_foundation"].get("nps_metrics"):
+            errors.append("Analysis agents require NPS calculation results from foundation")
+
+        return errors if errors else None
+
+
+class ConsultingAgent(BaseAgent):
+    """Base class for Consulting layer agents (C1-C5)"""
+
+    def __init__(self, agent_id: str, agent_name: str):
+        super().__init__(agent_id, agent_name)
+        self.layer = "consulting"
+
+    def _validate_input(self, state: Dict[str, Any]) -> Optional[List[str]]:
+        """Consulting agents need both foundation and analysis results"""
+        errors = super()._validate_input(state) or []
+
+        if "pass1_foundation" not in state:
+            errors.append("Consulting agents require pass1_foundation results")
+        if "pass2_analysis" not in state:
+            errors.append("Consulting agents require pass2_analysis results")
+
+        # Check confidence level for constraints
+        confidence = state.get("pass1_foundation", {}).get("confidence_assessment", {}).get("level")
+        if confidence == "low":
+            logger.warning(f"Consulting agent {self.agent_id} operating under low confidence constraints")
+
+        return errors if errors else None
+
+    async def process_with_confidence_constraints(self, state: Dict[str, Any]) -> AgentResult:
+        """Process with confidence-based constraints for C-layer agents"""
+        confidence_level = state.get("pass1_foundation", {}).get("confidence_assessment", {}).get("level", "low")
+
+        if confidence_level == "low":
+            # Limited recommendations for low confidence
+            return AgentResult(
+                agent_id=self.agent_id,
+                status=AgentStatus.COMPLETED,
+                insights=[
+                    {
+                        "content": "建议扩大样本量以获得更可靠的分析结果",
+                        "priority": "high",
+                        "confidence": "low",
+                        "reasoning": "当前样本量不足，不建议基于此数据制定战略决策"
+                    }
+                ],
+                warnings=["Low confidence - strategic insights limited to data collection recommendations"],
+                confidence_score=0.3
+            )
+        else:
+            # Full processing for medium+ confidence
+            return await self.process(state)
+
+
+class ConfidenceConstrainedAgent(ConsultingAgent):
+    """Special base class for C1-C4 agents with confidence constraints"""
+
+    async def execute(self, state: Dict[str, Any]) -> AgentResult:
+        """Override execute to apply confidence constraints"""
+        confidence_level = state.get("pass1_foundation", {}).get("confidence_assessment", {}).get("level", "low")
+
+        if confidence_level == "low":
+            logger.info(f"Agent {self.agent_id} applying low confidence constraints")
+            return await self.process_with_confidence_constraints(state)
+        else:
+            return await super().execute(state)

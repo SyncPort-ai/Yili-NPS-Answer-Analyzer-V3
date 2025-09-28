@@ -1,0 +1,991 @@
+{
+  "status": "success",
+  "message": "七智能体NPS分析完成",
+  "analysis_type": "七智能体NPS分析系统",
+  "timestamp": "20250911_082906_451",
+  "data": {
+    "timestamp": "20250911_082906_451",
+    "analysis_type": "七智能体NPS分析系统",
+    "original_input": {
+      "data_source": "伊利NPS调研问卷",
+      "processed_responses": 8,
+      "valid_responses": 8,
+      "survey_metadata": {
+        "survey_type": "product_nps",
+        "survey_title": "Chinese NPS Survey",
+        "data_source": "survey_data_input",
+        "analysis_results": {
+          "base_analysis": "基于8个样本的分析结果：<br>1. NPS值为-25%，用户满意度一般，存在改进空间。<br>2. 推荐者占比25.0%，中立者占比25.0%，贬损者占比50.0%。<br>3. 建议重点分析贬损者反馈，优化产品体验，提升整体NPS表现。",
+          "nps_analysis": "1. NPS值为-25%，表明用户整体满意度较低，贬损者比例显著高于推荐者。 <br>2. 贬损者占比50.0%，高于推荐者（25.0%）和中立者（25.0%），反映出产品或服务存在明显改进空间。 <br>3. 评分为5分的用户占比最高（37.5%），显示用户态度呈现分化趋势。 <br>4. 总体来看，用户负面情绪占主导，需优先解决贬损者的核心问题，同时关注中立者的潜在转化机会以提升NPS。",
+          "cross_analysis": null,
+          "kano_analysis": null,
+          "psm_analysis": null,
+          "maxdiff_analysis": null
+        }
+      }
+    },
+    "agent_analysis_results": [
+      {
+        "agent_name": "NPS净值分析智能体",
+        "question_context": "Q1您向朋友或同事推荐我们的可能性多大？",
+        "input_data": {
+          "nps_net_score": -25,
+          "total_responses": 8,
+          "industry_benchmark": 30
+        },
+        "ai_analysis": {
+          "nps_level_assessment": {
+            "level": "需改进",
+            "industry_comparison": "低于行业标准",
+            "competitive_position": "落后"
+          },
+          "business_health_impact": {
+            "customer_loyalty": "低",
+            "brand_strength": "弱",
+            "growth_potential": "低"
+          },
+          "strategic_recommendations": [
+            {
+              "priority": "高",
+              "action": "开展深入的客户调研，识别NPS低分背后的具体原因，如产品质量、价格、服务或品牌形象等",
+              "expected_impact": "明确改进方向，提升客户满意度和忠诚度",
+              "timeline": "1-3个月"
+            },
+            {
+              "priority": "高",
+              "action": "针对主要竞争对手（如蒙牛、光明）的NPS表现进行对标分析，找出差距和机会点",
+              "expected_impact": "制定有针对性的竞争策略，缩小差距或实现差异化优势",
+              "timeline": "3-6个月"
+            },
+            {
+              "priority": "中",
+              "action": "优化产品线中表现较差的品牌（如植选、谷粒多等），提升产品质量或调整市场定位",
+              "expected_impact": "改善客户体验，提升整体NPS分数",
+              "timeline": "6-12个月"
+            },
+            {
+              "priority": "低",
+              "action": "加强品牌营销和客户互动，提升品牌形象和客户情感连接",
+              "expected_impact": "增强客户忠诚度和品牌黏性",
+              "timeline": "持续进行"
+            }
+          ],
+          "key_insights": [
+            "洞察1: 当前NPS分数远低于行业基准（30%），表明伊利在客户忠诚度和口碑方面存在显著劣势，可能影响市场份额和长期增长",
+            "洞察2: 低NPS可能与产品体验、品牌感知或竞争压力有关，需进一步分析具体驱动因素以制定精准改进措施"
+          ]
+        },
+        "business_questions": [
+          "当前NPS水平是否达到行业标准？",
+          "需要采取什么措施提升NPS分数？",
+          "与竞争对手相比我们的表现如何？"
+        ],
+        "insight_summary": [
+          "洞察1: 当前NPS分数远低于行业基准（30%），表明伊利在客户忠诚度和口碑方面存在显著劣势，可能影响市场份额和长期增长",
+          "洞察2: 低NPS可能与产品体验、品牌感知或竞争压力有关，需进一步分析具体驱动因素以制定精准改进措施"
+        ],
+        "summary_text": "AI分析显示当前NPS净值-25.0%处于需改进水平，在行业中低于行业标准，竞争地位落后。"
+      },
+      {
+        "agent_name": "NPS分布分析智能体",
+        "question_context": "Q1您向朋友或同事推荐我们的可能性多大？",
+        "input_data": {
+          "promoters": 2,
+          "passives": 2,
+          "detractors": 4,
+          "total": 8
+        },
+        "ai_analysis": {
+          "distribution_health": {
+            "structure_assessment": "有风险",
+            "dominant_group": "贬损者",
+            "balance_score": "3"
+          },
+          "customer_insights": {
+            "promoter_characteristics": [
+              "高度认可伊利产品的健康属性",
+              "对品牌忠诚度高，愿意主动推荐"
+            ],
+            "passive_conversion_potential": "中",
+            "detractor_risk_level": "高"
+          },
+          "optimization_strategies": [
+            {
+              "target_group": "贬损者",
+              "strategy": "深入调研不满原因，针对性改进产品和服务质量",
+              "conversion_goal": "将贬损者转化为中立者或推荐者",
+              "success_metrics": "贬损者比例下降，NPS提升"
+            },
+            {
+              "target_group": "中立者",
+              "strategy": "通过个性化营销和增值服务提升品牌粘性",
+              "conversion_goal": "将中立者转化为推荐者",
+              "success_metrics": "推荐者比例上升，复购率提高"
+            },
+            {
+              "target_group": "推荐者",
+              "strategy": "建立VIP会员体系，鼓励口碑传播",
+              "conversion_goal": "提升推荐者忠诚度和推荐频率",
+              "success_metrics": "推荐者留存率，转介绍率"
+            }
+          ],
+          "business_implications": [
+            "含义1: 高贬损者比例表明产品或服务存在明显短板，需优先解决",
+            "含义2: 中产阶级健康消费市场潜力巨大，需加强健康属性传播"
+          ]
+        },
+        "business_questions": [
+          "如何将中立者转化为推荐者？",
+          "贬损者的主要问题点是什么？",
+          "推荐者群体有什么共同特征？"
+        ],
+        "insight_summary": [
+          "含义1: 高贬损者比例表明产品或服务存在明显短板，需优先解决",
+          "含义2: 中产阶级健康消费市场潜力巨大，需加强健康属性传播"
+        ],
+        "summary_text": "AI分析显示客户分布结构有风险，贬损者占主导地位，整体平衡评分3。"
+      },
+      {
+        "agent_name": "正面多选题分析智能体",
+        "question_context": "Q4 您愿意推荐我们的主要因素有哪些？",
+        "input_data": {
+          "total_selections": 5,
+          "unique_factors": 5,
+          "flattened_text": "产品物有所值、性价比高 | 喜欢品牌或代言人、赞助综艺等宣传内容 | 对促销活动满意（如赠品、活动力度/规则等） | 产品口味口感好 | 饮用后体感舒适，无不良反应",
+          "factor_frequency": {
+            "产品物有所值、性价比高": 1,
+            "喜欢品牌或代言人、赞助综艺等宣传内容": 1,
+            "对促销活动满意（如赠品、活动力度/规则等）": 1,
+            "产品口味口感好": 1,
+            "饮用后体感舒适，无不良反应": 1
+          }
+        },
+        "ai_analysis": {
+          "core_advantages": {
+            "primary_strength": "产品品质",
+            "secondary_strengths": [
+              "品牌信任度",
+              "口味创新"
+            ],
+            "advantage_categories": {
+              "产品物有所值、性价比高": 0.2,
+              "喜欢品牌或代言人、赞助综艺等宣传内容": 0.2,
+              "对促销活动满意（如赠品、活动力度/规则等）": 0.2,
+              "产品口味口感好": 0.2,
+              "饮用后体感舒适，无不良反应": 0.2
+            }
+          },
+          "customer_value_drivers": {
+            "functional_benefits": [
+              "产品物有所值、性价比高",
+              "产品口味口感好",
+              "饮用后体感舒适，无不良反应"
+            ],
+            "emotional_benefits": [
+              "喜欢品牌或代言人、赞助综艺等宣传内容"
+            ],
+            "social_benefits": [
+              "对促销活动满意（如赠品、活动力度/规则等）"
+            ]
+          },
+          "marketing_opportunities": [
+            {
+              "advantage": "产品品质",
+              "communication_message": "伊利产品品质卓越，口感与健康并存",
+              "target_audience": "注重健康和生活品质的消费者",
+              "channels": [
+                "社交媒体",
+                "健康生活类KOL合作"
+              ]
+            },
+            {
+              "advantage": "品牌信任度",
+              "communication_message": "伊利，值得信赖的品牌选择",
+              "target_audience": "品牌忠诚度高、关注品牌故事的消费者",
+              "channels": [
+                "电视广告",
+                "品牌赞助活动"
+              ]
+            },
+            {
+              "advantage": "口味创新",
+              "communication_message": "伊利不断创新，带来多样化的口味体验",
+              "target_audience": "喜欢尝试新口味的年轻消费者",
+              "channels": [
+                "短视频平台",
+                "线下试饮活动"
+              ]
+            }
+          ],
+          "competitive_positioning": {
+            "unique_selling_points": [
+              "产品品质与口感的完美结合",
+              "强大的品牌信任度与市场认可"
+            ],
+            "differentiation_strategy": "通过强化产品品质和品牌信任度的双重优势，结合口味创新和健康理念，打造高端、可信赖的乳制品品牌形象。"
+          }
+        },
+        "business_questions": [
+          "哪些正面因素最能打动客户？",
+          "如何在营销中强化这些优势？",
+          "这些因素如何转化为竞争优势？"
+        ],
+        "insight_summary": [
+          "营销机会: 产品品质 - 伊利产品品质卓越，口感与健康并存",
+          "营销机会: 品牌信任度 - 伊利，值得信赖的品牌选择",
+          "营销机会: 口味创新 - 伊利不断创新，带来多样化的口味体验"
+        ],
+        "summary_text": "AI分析识别出核心优势'产品品质'，为营销传播和竞争定位提供了明确方向。"
+      },
+      {
+        "agent_name": "正面填空题分析智能体",
+        "question_context": "Q5 您愿意推荐我们的具体原因是什么？",
+        "input_data": {
+          "total_responses": 0,
+          "flattened_text": "",
+          "response_rate": 0
+        },
+        "statements": [
+          "推荐者未提供具体的推荐理由描述",
+          "缺乏深度的客户洞察和情感连接信息",
+          "建议增加开放式问题引导客户分享真实感受"
+        ],
+        "business_questions": [
+          "客户最真实的推荐理由是什么？",
+          "这些自发表达反映了什么深层需求？",
+          "如何将这些洞察转化为产品优化？"
+        ],
+        "summary_text": "推荐者未提供具体的推荐理由描述，缺乏深度的客户洞察。",
+        "insight_summary": [
+          "数据缺失：推荐者未提供开放回答"
+        ]
+      },
+      {
+        "agent_name": "负面多选题分析智能体",
+        "question_context": "Q2 您不愿意推荐我们的主要因素有哪些？",
+        "input_data": {
+          "total_selections": 9,
+          "unique_factors": 5,
+          "flattened_text": "不喜欢品牌或代言人、赞助综艺等宣传内容 | 不喜欢品牌或代言人、赞助综艺等宣传内容 | 包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等） | 没有感知到产品宣传的功能 | 不喜欢品牌或代言人、赞助综艺等宣传内容 | 包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等） | 饮用后感觉不舒服（如身体有腹胀、腹泻等不良反应） | 不喜欢品牌或代言人、赞助综艺等宣传内容 | 产品品质不稳定性（如发生变质、有异物等）",
+          "factor_frequency": {
+            "不喜欢品牌或代言人、赞助综艺等宣传内容": 4,
+            "包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）": 2,
+            "没有感知到产品宣传的功能": 1,
+            "饮用后感觉不舒服（如身体有腹胀、腹泻等不良反应）": 1,
+            "产品品质不稳定性（如发生变质、有异物等）": 1
+          }
+        },
+        "ai_analysis": {
+          "critical_issues": {
+            "primary_problem": "不喜欢品牌或代言人、赞助综艺等宣传内容",
+            "secondary_problems": [
+              "包装设计不好",
+              "产品品质不稳定性"
+            ],
+            "issue_categories": {
+              "营销宣传": 4,
+              "产品质量": 2,
+              "包装设计": 2,
+              "产品功效": 1,
+              "健康影响": 1
+            }
+          },
+          "root_cause_analysis": {
+            "system_failures": [
+              "营销宣传策略与目标受众偏好不匹配",
+              "品牌形象管理不足"
+            ],
+            "process_gaps": [
+              "市场调研不足或未及时调整宣传策略",
+              "包装设计流程中缺乏用户体验测试",
+              "质量控制流程存在漏洞"
+            ],
+            "resource_constraints": [
+              "市场调研资源不足",
+              "包装设计创新投入有限",
+              "质量控制人员或设备不足"
+            ]
+          },
+          "solution_roadmap": [
+            {
+              "problem": "营销宣传不受欢迎",
+              "solution": "开展深入市场调研，重新评估代言人和赞助综艺的选择标准，调整宣传策略以更好地匹配目标受众偏好",
+              "priority": "高",
+              "timeline": "1-3个月",
+              "resources_needed": "市场调研团队、品牌管理团队、预算",
+              "success_metrics": "负面评价减少50%，品牌好感度提升"
+            },
+            {
+              "problem": "包装设计不好",
+              "solution": "重新设计包装，注重醒目度、美观性和实用性，进行用户测试确保改进效果",
+              "priority": "中",
+              "timeline": "3-6个月",
+              "resources_needed": "设计团队、用户测试资源、生产调整成本",
+              "success_metrics": "包装相关负面评价减少80%，用户满意度提升"
+            },
+            {
+              "problem": "产品品质不稳定性",
+              "solution": "加强质量控制流程，增加质量检测点和频率，确保产品一致性和安全性",
+              "priority": "高",
+              "timeline": "立即执行",
+              "resources_needed": "质量控制人员、检测设备、培训资源",
+              "success_metrics": "品质问题发生率降低至0.1%以下"
+            },
+            {
+              "problem": "产品宣传功能未感知",
+              "solution": "重新评估产品功能宣传方式，确保信息清晰传达，增强用户体验反馈机制",
+              "priority": "低",
+              "timeline": "3-6个月",
+              "resources_needed": "市场团队、用户反馈系统",
+              "success_metrics": "功能认知度提升30%"
+            }
+          ],
+          "risk_assessment": {
+            "customer_churn_risk": "高",
+            "brand_reputation_impact": "高",
+            "revenue_impact": "中",
+            "competitive_vulnerability": "高"
+          }
+        },
+        "business_questions": [
+          "哪些问题是客户不推荐的主要原因？",
+          "这些问题的解决优先级如何排序？",
+          "需要投入多少资源来解决这些问题？"
+        ],
+        "insight_summary": [
+          "解决方案: 营销宣传不受欢迎 - 优先级: 高",
+          "解决方案: 包装设计不好 - 优先级: 中",
+          "解决方案: 产品品质不稳定性 - 优先级: 高",
+          "解决方案: 产品宣传功能未感知 - 优先级: 低"
+        ],
+        "summary_text": "AI分析识别出核心问题'不喜欢品牌或代言人、赞助综艺等宣传内容'，提供了系统性的解决路线图和风险评估。"
+      },
+      {
+        "agent_name": "负面填空题分析智能体",
+        "question_context": "Q3 您不愿意推荐我们的具体原因是什么？",
+        "input_data": {
+          "total_responses": 0,
+          "flattened_text": "",
+          "response_rate": 0
+        },
+        "statements": [
+          "非推荐者未详细说明不推荐的具体原因",
+          "缺乏深度的问题洞察，难以制定针对性改进措施",
+          "建议加强问题挖掘，了解客户真实痛点"
+        ],
+        "business_questions": [
+          "客户最不满意的具体是什么？",
+          "这些问题反映了哪些系统性缺陷？",
+          "如何制定有效的问题解决方案？"
+        ],
+        "summary_text": "非推荐者未详细说明不推荐的具体原因，缺乏深度洞察。",
+        "insight_summary": [
+          "数据缺失：非推荐者未提供开放回答"
+        ]
+      },
+      {
+        "agent_name": "综合总结分析智能体",
+        "question_context": "综合所有问题的分析结果",
+        "input_data": {
+          "total_insights": 13,
+          "agent_count": 6,
+          "agent_summaries": {
+            "agent1_summary": "['洞察1: 当前NPS分数远低于行业基准（30%），表明伊利在客户忠诚度和口碑方面存在显著劣势，可能影响市场份额和长期增长', '洞察2: 低NPS可能与产品体验、品牌感知或竞争压力有关，需进一步分析具体驱动因素以制定精准改进措施']",
+            "agent2_summary": "AI分析结果",
+            "agent3_summary": "AI分析结果",
+            "agent4_summary": "推荐者未提供具体的推荐理由描述，缺乏深度的客户洞察。",
+            "agent5_summary": "AI分析结果",
+            "agent6_summary": "非推荐者未详细说明不推荐的具体原因，缺乏深度洞察。"
+          }
+        },
+        "ai_analysis": {
+          "comprehensive_assessment": {
+            "overall_nps_health": "有风险",
+            "key_drivers": [
+              "产品体验不佳",
+              "品牌感知不足"
+            ],
+            "critical_success_factors": [
+              "提升产品质量",
+              "增强品牌情感连接"
+            ],
+            "main_challenges": [
+              "竞争对手的强大市场份额",
+              "客户反馈机制不完善"
+            ]
+          },
+          "strategic_roadmap": {
+            "immediate_actions": [
+              {
+                "action": "启动客户反馈快速响应机制",
+                "timeline": "1-3个月",
+                "owner": "客户服务部",
+                "success_metric": "客户反馈处理时间缩短50%"
+              }
+            ],
+            "medium_term_initiatives": [
+              {
+                "initiative": "产品体验优化项目",
+                "timeline": "3-12个月",
+                "investment_required": "中等",
+                "expected_outcome": "产品满意度提升20%"
+              }
+            ],
+            "long_term_vision": {
+              "target_nps": "40%",
+              "timeline": "12-24个月",
+              "transformation_areas": [
+                "品牌形象重塑",
+                "客户关系管理"
+              ]
+            }
+          },
+          "cross_functional_recommendations": {
+            "product_development": [
+              "加强产品创新",
+              "提升包装设计"
+            ],
+            "marketing_communications": [
+              "增强情感营销",
+              "扩大社交媒体影响力"
+            ],
+            "customer_service": [
+              "建立客户忠诚度计划",
+              "优化售后服务流程"
+            ],
+            "sales_channels": [
+              "拓展线上销售渠道",
+              "优化零售终端体验"
+            ],
+            "quality_management": [
+              "实施更严格的质量控制",
+              "加强供应链透明度"
+            ]
+          },
+          "monitoring_framework": {
+            "kpi_dashboard": [
+              "NPS分数变化",
+              "客户满意度指数"
+            ],
+            "feedback_mechanisms": [
+              "实时在线反馈系统",
+              "定期客户调查"
+            ],
+            "review_frequency": "季度",
+            "escalation_triggers": [
+              "NPS下降超过5%",
+              "客户投诉率增加10%"
+            ]
+          },
+          "executive_summary": {
+            "situation": "伊利集团当前NPS分数显著低于行业基准，客户忠诚度和口碑有待提升。",
+            "key_insights": "产品体验和品牌感知是影响NPS的主要因素，需立即行动以改善客户体验和品牌形象。",
+            "recommendations": "短期内优化客户反馈机制，中长期提升产品体验和品牌建设，长期目标为NPS达到40%。",
+            "expected_impact": "预计通过综合改进措施，伊利集团将显著提升客户忠诚度，增强市场竞争力。"
+          }
+        },
+        "business_questions": [
+          "如何制定综合性的NPS提升战略？",
+          "各部门应该如何协作改善客户体验？",
+          "如何平衡短期改进和长期品牌建设？",
+          "需要设立什么KPI来跟踪改进效果？"
+        ],
+        "additional_info": {
+          "product_context": "伊利集团乳制品全产品线",
+          "market_context": "中国乳制品市场竞争激烈，主要竞争对手包括蒙牛、光明、君乐宝",
+          "business_focus": "提升NPS分数，改善客户满意度，优化产品和服务体验",
+          "target_segments": "注重健康的消费者群体，追求品质生活的中产阶级",
+          "key_brands": [
+            "金典",
+            "安慕希",
+            "舒化",
+            "QQ星",
+            "优酸乳",
+            "谷粒多",
+            "味可滋",
+            "植选",
+            "金领冠珍护",
+            "金领冠珍护铂萃",
+            "畅轻",
+            "大果粒",
+            "每益添",
+            "巧乐兹",
+            "甄稀",
+            "须尽欢",
+            "欣活",
+            "倍畅",
+            "伊家好奶酪",
+            "伊知牛",
+            "依宝"
+          ],
+          "business_units": [
+            "液奶事业部",
+            "婴幼儿营养品事业部",
+            "酸奶事业部",
+            "成人营养品事业部",
+            "冷饮事业部",
+            "奶酪事业部",
+            "伊知牛公司",
+            "康益佳公司"
+          ],
+          "analysis_tags": {
+            "概念设计": [
+              "原料天然",
+              "奶源优质",
+              "目标群体",
+              "健康",
+              "营养价值感知",
+              "高端",
+              "高品质",
+              "时尚潮流",
+              "安全信赖",
+              "价格",
+              "包装美观",
+              "产品定位",
+              "价值主张",
+              "差异化优势",
+              "市场机会",
+              "产品特性",
+              "功能创新",
+              "使用场景",
+              "消费需求",
+              "产品理念",
+              "品牌形象",
+              "可持续发展",
+              "零碳足迹",
+              "循环经济",
+              "智能包装",
+              "个性化定制",
+              "AI推荐",
+              "区块链溯源",
+              "数字化体验"
+            ],
+            "口味设计": [
+              "口味",
+              "酸味",
+              "甜味",
+              "奶香味",
+              "口感",
+              "细腻度",
+              "顺滑度",
+              "层次感",
+              "醇厚度",
+              "营养价值感知",
+              "甜度调节",
+              "酸度平衡",
+              "香味层次",
+              "口感质地",
+              "风味组合",
+              "新口味开发",
+              "经典口味",
+              "季节性口味",
+              "地域口味",
+              "功能性口味",
+              "质地",
+              "浓度",
+              "层次",
+              "回味",
+              "温度感",
+              "清爽度"
+            ],
+            "包装设计": [
+              "字体美观度",
+              "图案美观度",
+              "色彩美观度",
+              "整体美观度",
+              "信息传达",
+              "品牌认知",
+              "产品印象",
+              "情感共鸣",
+              "视觉设计",
+              "包装材质",
+              "结构设计",
+              "便利性",
+              "环保性",
+              "货架展示",
+              "品牌识别",
+              "色彩搭配",
+              "图案设计",
+              "便携性",
+              "开启方便",
+              "保鲜性",
+              "防伪设计",
+              "用户体验"
+            ]
+          }
+        },
+        "insight_summary": [
+          "战略洞察: 产品体验和品牌感知是影响NPS的主要因素，需立即行动以改善客户体验和品牌形象。",
+          "核心建议: 短期内优化客户反馈机制，中长期提升产品体验和品牌建设，长期目标为NPS达到40%。",
+          "预期影响: 预计通过综合改进措施，伊利集团将显著提升客户忠诚度，增强市场竞争力。"
+        ],
+        "summary_text": "AI综合分析显示NPS整体健康度为有风险，核心驱动因素包括产品体验不佳, 品牌感知不足，提供了系统性的战略路线图和跨部门协作建议。"
+      }
+    ],
+    "supporting_data": {
+      "positive_set": {
+        "nps_array": [
+          {
+            "user_id": "3",
+            "nps_score": 10,
+            "nps_category": "promoter",
+            "raw_value": "10分"
+          },
+          {
+            "user_id": "7",
+            "nps_score": 10,
+            "nps_category": "promoter",
+            "raw_value": "10分"
+          }
+        ],
+        "multiple_choice_array": [
+          {
+            "user_id": "3",
+            "negative_factors": [],
+            "positive_factors": [
+              "产品物有所值、性价比高"
+            ],
+            "negative_factor_count": 0,
+            "positive_factor_count": 1
+          },
+          {
+            "user_id": "7",
+            "negative_factors": [],
+            "positive_factors": [
+              "喜欢品牌或代言人、赞助综艺等宣传内容",
+              "对促销活动满意（如赠品、活动力度/规则等）",
+              "产品口味口感好",
+              "饮用后体感舒适，无不良反应"
+            ],
+            "negative_factor_count": 0,
+            "positive_factor_count": 4
+          }
+        ],
+        "free_question_array": [
+          {
+            "user_id": "3",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "7",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          }
+        ]
+      },
+      "negative_set": {
+        "nps_array": [
+          {
+            "user_id": "1",
+            "nps_score": 5,
+            "nps_category": "detractor",
+            "raw_value": "5分"
+          },
+          {
+            "user_id": "2",
+            "nps_score": 5,
+            "nps_category": "detractor",
+            "raw_value": "5分"
+          },
+          {
+            "user_id": "4",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "5",
+            "nps_score": 4,
+            "nps_category": "detractor",
+            "raw_value": "4分"
+          },
+          {
+            "user_id": "6",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "8",
+            "nps_score": 5,
+            "nps_category": "detractor",
+            "raw_value": "5分"
+          }
+        ],
+        "multiple_choice_array": [
+          {
+            "user_id": "1",
+            "negative_factors": [
+              "不喜欢品牌或代言人、赞助综艺等宣传内容"
+            ],
+            "positive_factors": [],
+            "negative_factor_count": 1,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "2",
+            "negative_factors": [
+              "不喜欢品牌或代言人、赞助综艺等宣传内容",
+              "包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）",
+              "没有感知到产品宣传的功能"
+            ],
+            "positive_factors": [],
+            "negative_factor_count": 3,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "4",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "5",
+            "negative_factors": [
+              "不喜欢品牌或代言人、赞助综艺等宣传内容",
+              "包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）",
+              "饮用后感觉不舒服（如身体有腹胀、腹泻等不良反应）"
+            ],
+            "positive_factors": [],
+            "negative_factor_count": 3,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "6",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "8",
+            "negative_factors": [
+              "不喜欢品牌或代言人、赞助综艺等宣传内容",
+              "产品品质不稳定性（如发生变质、有异物等）"
+            ],
+            "positive_factors": [],
+            "negative_factor_count": 2,
+            "positive_factor_count": 0
+          }
+        ],
+        "free_question_array": [
+          {
+            "user_id": "1",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "2",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "4",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "5",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "6",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "8",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          }
+        ]
+      },
+      "question_texts": {
+        "nps_question": "Q1您向朋友或同事推荐我们的可能性多大？",
+        "negative_factors": "Q2 您不愿意推荐我们的主要因素有哪些？",
+        "negative_specific": "Q3 您不愿意推荐我们的具体原因是什么？",
+        "positive_factors": "Q4 您愿意推荐我们的主要因素有哪些？",
+        "positive_specific": "Q5 您愿意推荐我们的具体原因是什么？"
+      }
+    },
+    "summary_statistics": {
+      "total_agents": 7,
+      "total_statements": 6,
+      "total_business_questions": 22,
+      "total_ai_insights": 16,
+      "ai_powered_agents": 5,
+      "fallback_agents": 2,
+      "analysis_coverage": "NPS净值、分布、正面因素、负面因素、开放回答、综合洞察"
+    }
+  },
+  "metadata": {
+    "input_format": "chinese_flat",
+    "processing_successful": true,
+    "agents_count": 7,
+    "total_statements": 6,
+    "total_business_questions": 22,
+    "analysis_coverage": "NPS净值、分布、正面因素、负面因素、开放回答、综合洞察",
+    "model_version": "nps-report-v2-seven-agent",
+    "language": "zh-CN"
+  },
+  "summary_insights": {
+    "agent_name": "综合总结分析智能体",
+    "key_statements": [],
+    "critical_questions": [
+      "如何制定综合性的NPS提升战略？",
+      "各部门应该如何协作改善客户体验？",
+      "如何平衡短期改进和长期品牌建设？"
+    ],
+    "additional_info": {
+      "product_context": "伊利集团乳制品全产品线",
+      "market_context": "中国乳制品市场竞争激烈，主要竞争对手包括蒙牛、光明、君乐宝",
+      "business_focus": "提升NPS分数，改善客户满意度，优化产品和服务体验",
+      "target_segments": "注重健康的消费者群体，追求品质生活的中产阶级",
+      "key_brands": [
+        "金典",
+        "安慕希",
+        "舒化",
+        "QQ星",
+        "优酸乳",
+        "谷粒多",
+        "味可滋",
+        "植选",
+        "金领冠珍护",
+        "金领冠珍护铂萃",
+        "畅轻",
+        "大果粒",
+        "每益添",
+        "巧乐兹",
+        "甄稀",
+        "须尽欢",
+        "欣活",
+        "倍畅",
+        "伊家好奶酪",
+        "伊知牛",
+        "依宝"
+      ],
+      "business_units": [
+        "液奶事业部",
+        "婴幼儿营养品事业部",
+        "酸奶事业部",
+        "成人营养品事业部",
+        "冷饮事业部",
+        "奶酪事业部",
+        "伊知牛公司",
+        "康益佳公司"
+      ],
+      "analysis_tags": {
+        "概念设计": [
+          "原料天然",
+          "奶源优质",
+          "目标群体",
+          "健康",
+          "营养价值感知",
+          "高端",
+          "高品质",
+          "时尚潮流",
+          "安全信赖",
+          "价格",
+          "包装美观",
+          "产品定位",
+          "价值主张",
+          "差异化优势",
+          "市场机会",
+          "产品特性",
+          "功能创新",
+          "使用场景",
+          "消费需求",
+          "产品理念",
+          "品牌形象",
+          "可持续发展",
+          "零碳足迹",
+          "循环经济",
+          "智能包装",
+          "个性化定制",
+          "AI推荐",
+          "区块链溯源",
+          "数字化体验"
+        ],
+        "口味设计": [
+          "口味",
+          "酸味",
+          "甜味",
+          "奶香味",
+          "口感",
+          "细腻度",
+          "顺滑度",
+          "层次感",
+          "醇厚度",
+          "营养价值感知",
+          "甜度调节",
+          "酸度平衡",
+          "香味层次",
+          "口感质地",
+          "风味组合",
+          "新口味开发",
+          "经典口味",
+          "季节性口味",
+          "地域口味",
+          "功能性口味",
+          "质地",
+          "浓度",
+          "层次",
+          "回味",
+          "温度感",
+          "清爽度"
+        ],
+        "包装设计": [
+          "字体美观度",
+          "图案美观度",
+          "色彩美观度",
+          "整体美观度",
+          "信息传达",
+          "品牌认知",
+          "产品印象",
+          "情感共鸣",
+          "视觉设计",
+          "包装材质",
+          "结构设计",
+          "便利性",
+          "环保性",
+          "货架展示",
+          "品牌识别",
+          "色彩搭配",
+          "图案设计",
+          "便携性",
+          "开启方便",
+          "保鲜性",
+          "防伪设计",
+          "用户体验"
+        ]
+      }
+    }
+  }
+}

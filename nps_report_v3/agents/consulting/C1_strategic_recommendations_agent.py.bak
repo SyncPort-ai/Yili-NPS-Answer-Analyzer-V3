@@ -1,0 +1,548 @@
+"""
+C1 - Strategic Recommendations Agent
+Consulting Pass Agent for generating strategic recommendations.
+"""
+
+import logging
+from typing import Dict, Any, List, Optional
+
+from ..base import ConsultingAgent, AgentResult, AgentStatus
+from ...state import StrategicRecommendation
+from ...llm import LLMClient
+
+logger = logging.getLogger(__name__)
+
+
+class StrategicRecommendationsAgent(ConsultingAgent):
+    """
+    C1 - Strategic Recommendations Agent
+
+    Responsibilities:
+    - Synthesize insights from Foundation and Analysis passes
+    - Generate strategic recommendations for business improvement
+    - Prioritize recommendations by impact and feasibility
+    - Map recommendations to specific business outcomes
+    - Consider competitive positioning and market trends
+    """
+
+    def __init__(self, agent_id: str = "C1", agent_name: str = "Strategic Recommendations Agent",
+                 llm_client: Optional[LLMClient] = None, **kwargs):
+        super().__init__(agent_id, agent_name, **kwargs)
+        self.llm_client = llm_client
+        self.min_confidence = 0.7  # Higher confidence required for strategic advice
+
+        # Strategic framework categories
+        self.strategy_categories = {
+            "product": {
+                "title": "产品策略",
+                "focus": ["产品开发", "口味创新", "营养优化", "包装改进"],
+                "metrics": ["产品满意度", "复购率", "市场份额"]
+            },
+            "pricing": {
+                "title": "定价策略",
+                "focus": ["价格定位", "促销策略", "价值感知", "性价比"],
+                "metrics": ["价格接受度", "销售量", "利润率"]
+            },
+            "marketing": {
+                "title": "营销策略",
+                "focus": ["品牌建设", "渠道拓展", "数字营销", "客户体验"],
+                "metrics": ["品牌认知", "市场渗透", "客户获取成本"]
+            },
+            "service": {
+                "title": "服务策略",
+                "focus": ["配送优化", "客服改进", "售后保障", "会员体系"],
+                "metrics": ["服务满意度", "投诉率", "客户留存率"]
+            },
+            "innovation": {
+                "title": "创新策略",
+                "focus": ["技术创新", "模式创新", "数字化转型", "可持续发展"],
+                "metrics": ["创新指数", "技术领先度", "可持续性指标"]
+            }
+        }
+
+    async def process(self, state: Dict[str, Any]) -> AgentResult:
+        """
+        Execute strategic recommendations generation.
+
+        Args:
+            state: Current workflow state with all analysis results
+
+        Returns:
+            AgentResult with strategic recommendations
+        """
+        try:
+            # Check confidence in input data
+            confidence_check = self._assess_input_confidence(state)
+
+            if confidence_check["confidence"] < self.min_confidence:
+                logger.warning(f"Input confidence {confidence_check['confidence']:.2f} below threshold {self.min_confidence}")
+                return AgentResult(
+                    agent_id=self.agent_id,
+                    status=AgentStatus.FAILED,
+                    errors=[f"Insufficient confidence in input data: {confidence_check['issues']}"],
+                    confidence_score=0.0
+                )
+
+            # Synthesize insights from all previous passes
+            synthesis = await self._synthesize_insights(state)
+
+            # Generate strategic recommendations
+            recommendations = await self._generate_recommendations(synthesis, state)
+
+            # Prioritize recommendations
+            prioritized = self._prioritize_recommendations(recommendations)
+
+            # Generate implementation roadmap
+            roadmap = self._create_implementation_roadmap(prioritized)
+
+            # Generate strategic insights
+            insights = self._generate_strategic_insights(prioritized, synthesis)
+
+            logger.info(f"Generated {len(prioritized)} strategic recommendations")
+
+            return AgentResult(
+                agent_id=self.agent_id,
+                status=AgentStatus.COMPLETED,
+                data={
+                    "strategic_recommendations": prioritized,
+                    "implementation_roadmap": roadmap,
+                    "strategic_insights": insights,
+                    "synthesis_summary": synthesis,
+                    "confidence": confidence_check["confidence"]
+                },
+                insights=insights,
+                confidence_score=confidence_check["confidence"]
+            )
+
+        except Exception as e:
+            logger.error(f"Strategic recommendations generation failed: {e}")
+            return AgentResult(
+                agent_id=self.agent_id,
+                status=AgentStatus.FAILED,
+                errors=[str(e)],
+                confidence_score=0.0
+            )
+
+    def _assess_input_confidence(self, state: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Assess confidence in input data quality.
+
+        Args:
+            state: Current workflow state
+
+        Returns:
+            Confidence assessment
+        """
+        confidence_factors = []
+        issues = []
+
+        # Check NPS data quality
+        nps_metrics = state.get("nps_metrics")
+        if nps_metrics:
+            if nps_metrics.get("statistical_significance"):
+                confidence_factors.append(0.9)
+            elif nps_metrics.get("sample_size", 0) >= 30:
+                confidence_factors.append(0.7)
+            else:
+                confidence_factors.append(0.4)
+                issues.append("Small sample size affects NPS reliability")
+        else:
+            confidence_factors.append(0.1)
+            issues.append("No NPS metrics available")
+
+        # Check data quality
+        cleaned_data = state.get("cleaned_data")
+        if cleaned_data:
+            quality = cleaned_data.get("data_quality", "low")
+            if quality == "high":
+                confidence_factors.append(0.9)
+            elif quality == "medium":
+                confidence_factors.append(0.7)
+            else:
+                confidence_factors.append(0.4)
+                issues.append(f"Data quality is {quality}")
+        else:
+            confidence_factors.append(0.1)
+            issues.append("No cleaned data available")
+
+        # Check qualitative analysis
+        if state.get("tagged_responses") and len(state["tagged_responses"]) >= 5:
+            confidence_factors.append(0.8)
+        elif state.get("tagged_responses"):
+            confidence_factors.append(0.6)
+            issues.append("Limited qualitative data")
+        else:
+            confidence_factors.append(0.2)
+            issues.append("No qualitative analysis available")
+
+        # Calculate overall confidence
+        overall_confidence = sum(confidence_factors) / len(confidence_factors) if confidence_factors else 0
+
+        return {
+            "confidence": overall_confidence,
+            "factors": confidence_factors,
+            "issues": issues
+        }
+
+    async def _synthesize_insights(self, state: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Synthesize insights from all analysis passes.
+
+        Args:
+            state: Current workflow state
+
+        Returns:
+            Synthesized insights
+        """
+        synthesis = {
+            "key_strengths": [],
+            "critical_issues": [],
+            "opportunities": [],
+            "threats": [],
+            "customer_segments": {},
+            "product_performance": {},
+            "competitive_position": ""
+        }
+
+        # Analyze NPS performance
+        nps_metrics = state.get("nps_metrics")
+        if nps_metrics:
+            nps_score = nps_metrics.get("nps_score", 0)
+
+            if nps_score >= 50:
+                synthesis["key_strengths"].append(f"NPS得分{nps_score:.1f}处于卓越水平，客户忠诚度极高")
+            elif nps_score >= 30:
+                synthesis["key_strengths"].append(f"NPS得分{nps_score:.1f}处于良好水平")
+            elif nps_score >= 0:
+                synthesis["opportunities"].append(f"NPS得分{nps_score:.1f}有提升空间")
+            else:
+                synthesis["critical_issues"].append(f"NPS得分{nps_score:.1f}处于警戒水平，需要紧急改进")
+
+        # Analyze sentiment patterns
+        if state.get("qualitative_insights"):
+            for insight in state["qualitative_insights"]:
+                if "正面" in insight or "满意" in insight:
+                    synthesis["key_strengths"].append(insight)
+                elif "负面" in insight or "不满" in insight:
+                    synthesis["critical_issues"].append(insight)
+                else:
+                    synthesis["opportunities"].append(insight)
+
+        # Analyze clustering themes
+        clusters = state.get("semantic_clusters", [])
+        for cluster in clusters[:3]:  # Top 3 clusters
+            theme = cluster.get("theme", "")
+            size = cluster.get("size", 0)
+            sentiment = cluster.get("sentiment_distribution", {})
+
+            if sentiment.get("negative", 0) > 0.6:
+                synthesis["critical_issues"].append(f"'{theme}'主题反馈以负面为主（{size}条），需要重点关注")
+            elif sentiment.get("positive", 0) > 0.6:
+                synthesis["key_strengths"].append(f"'{theme}'主题反馈以正面为主（{size}条）")
+
+        # Analyze technical requirements
+        tech_requirements = state.get("technical_requirements", [])
+        high_priority_reqs = [req for req in tech_requirements if req.get("priority") in ["critical", "high"]]
+
+        if high_priority_reqs:
+            synthesis["opportunities"].append(f"识别出{len(high_priority_reqs)}项高优先级技术需求可快速改进客户体验")
+
+        return synthesis
+
+    async def _generate_recommendations(
+        self,
+        synthesis: Dict[str, Any],
+        state: Dict[str, Any]
+    ) -> List[StrategicRecommendation]:
+        """
+        Generate strategic recommendations.
+
+        Args:
+            synthesis: Synthesized insights
+            state: Current workflow state
+
+        Returns:
+            List of strategic recommendations
+        """
+        recommendations = []
+
+        # Generate recommendations for each category
+        for category, framework in self.strategy_categories.items():
+            category_recs = await self._generate_category_recommendations(
+                category, framework, synthesis, state
+            )
+            recommendations.extend(category_recs)
+
+        # LLM-enhanced recommendations if available
+        if self.llm_client:
+            llm_recs = await self._llm_generate_recommendations(synthesis, state)
+            recommendations.extend(llm_recs)
+
+        return recommendations
+
+    async def _generate_category_recommendations(
+        self,
+        category: str,
+        framework: Dict[str, Any],
+        synthesis: Dict[str, Any],
+        state: Dict[str, Any]
+    ) -> List[StrategicRecommendation]:
+        """
+        Generate recommendations for a specific category.
+
+        Args:
+            category: Strategy category
+            framework: Category framework
+            synthesis: Synthesized insights
+            state: Current workflow state
+
+        Returns:
+            Category-specific recommendations
+        """
+        recommendations = []
+
+        # Product strategy recommendations
+        if category == "product":
+            tech_reqs = state.get("technical_requirements", [])
+            product_reqs = [req for req in tech_reqs if req.get("category") == "product"]
+
+            if product_reqs:
+                for req in product_reqs[:3]:  # Top 3
+                    rec = StrategicRecommendation(
+                        recommendation_id=f"prod_{len(recommendations)}",
+                        title=f"产品改进：{req['description']}",
+                        description=f"基于客户反馈的产品优化建议",
+                        rationale=f"客户反馈中{len(req['related_responses'])}条提及此需求",
+                        priority="short_term" if req["priority"] == "critical" else "medium_term",
+                        impact_areas=["产品质量", "客户满意度"],
+                        success_metrics=["产品满意度提升", "相关投诉减少"],
+                        dependencies=["研发资源", "质量控制"]
+                    )
+                    recommendations.append(rec)
+
+        # Service strategy recommendations
+        elif category == "service":
+            service_issues = [issue for issue in synthesis["critical_issues"] if "服务" in issue or "配送" in issue]
+
+            if service_issues:
+                rec = StrategicRecommendation(
+                    recommendation_id=f"service_{len(recommendations)}",
+                    title="服务体验全面优化",
+                    description="基于客户反馈优化配送、客服和售后服务",
+                    rationale="多项客户反馈指出服务环节存在改进空间",
+                    priority="immediate",
+                    impact_areas=["服务质量", "客户体验"],
+                    success_metrics=["服务满意度", "投诉率降低"],
+                    dependencies=["运营团队", "系统升级"]
+                )
+                recommendations.append(rec)
+
+        # Pricing strategy recommendations
+        elif category == "pricing":
+            price_feedback = [cluster for cluster in state.get("semantic_clusters", [])
+                            if "价格" in cluster.get("theme", "")]
+
+            if price_feedback:
+                rec = StrategicRecommendation(
+                    recommendation_id=f"pricing_{len(recommendations)}",
+                    title="价值定位与定价策略优化",
+                    description="重新评估产品定价和价值传达策略",
+                    rationale="客户反馈显示价格敏感度较高",
+                    priority="medium_term",
+                    impact_areas=["价格竞争力", "价值感知"],
+                    success_metrics=["价格接受度", "销售转化率"],
+                    dependencies=["市场分析", "成本评估"]
+                )
+                recommendations.append(rec)
+
+        return recommendations
+
+    async def _llm_generate_recommendations(
+        self,
+        synthesis: Dict[str, Any],
+        state: Dict[str, Any]
+    ) -> List[StrategicRecommendation]:
+        """
+        Use LLM to generate strategic recommendations.
+
+        Args:
+            synthesis: Synthesized insights
+            state: Current workflow state
+
+        Returns:
+            LLM-generated recommendations
+        """
+        if not self.llm_client:
+            return []
+
+        try:
+            nps_score = state.get("nps_metrics", {}).get("nps_score", 0)
+
+            prompt = f"""
+作为伊利集团的战略顾问，基于以下NPS分析结果提供战略建议：
+
+NPS得分：{nps_score:.1f}
+
+核心优势：
+{chr(10).join([f"• {s}" for s in synthesis["key_strengths"][:3]])}
+
+关键问题：
+{chr(10).join([f"• {i}" for i in synthesis["critical_issues"][:3]])}
+
+机会点：
+{chr(10).join([f"• {o}" for o in synthesis["opportunities"][:3]])}
+
+请提供3-5个战略建议，每个建议包括：
+1. 建议标题
+2. 具体描述
+3. 实施优先级（immediate/short_term/medium_term/long_term）
+4. 预期影响领域
+5. 成功指标
+
+以JSON格式返回：
+[
+    {{
+        "title": "建议标题",
+        "description": "详细描述",
+        "priority": "优先级",
+        "impact_areas": ["影响领域1", "影响领域2"],
+        "success_metrics": ["指标1", "指标2"],
+        "rationale": "建议依据"
+    }}
+]
+"""
+
+            response = await self.llm_client.call(prompt, temperature=0.3)
+
+            # Parse JSON response
+            import json
+            recommendations_data = json.loads(response)
+
+            recommendations = []
+            for idx, rec_data in enumerate(recommendations_data):
+                rec = StrategicRecommendation(
+                    recommendation_id=f"llm_rec_{idx}",
+                    title=rec_data.get("title", ""),
+                    description=rec_data.get("description", ""),
+                    rationale=rec_data.get("rationale", ""),
+                    priority=rec_data.get("priority", "medium_term"),
+                    impact_areas=rec_data.get("impact_areas", []),
+                    success_metrics=rec_data.get("success_metrics", []),
+                    dependencies=[]
+                )
+                recommendations.append(rec)
+
+            return recommendations
+
+        except Exception as e:
+            logger.debug(f"LLM recommendation generation failed: {e}")
+            return []
+
+    def _prioritize_recommendations(
+        self,
+        recommendations: List[StrategicRecommendation]
+    ) -> List[StrategicRecommendation]:
+        """
+        Prioritize strategic recommendations.
+
+        Args:
+            recommendations: List of recommendations
+
+        Returns:
+            Prioritized recommendations
+        """
+        # Priority order
+        priority_order = {
+            "immediate": 0,
+            "short_term": 1,
+            "medium_term": 2,
+            "long_term": 3
+        }
+
+        # Sort by priority
+        recommendations.sort(key=lambda x: priority_order.get(x["priority"], 4))
+
+        return recommendations
+
+    def _create_implementation_roadmap(
+        self,
+        recommendations: List[StrategicRecommendation]
+    ) -> Dict[str, Any]:
+        """
+        Create implementation roadmap.
+
+        Args:
+            recommendations: Prioritized recommendations
+
+        Returns:
+            Implementation roadmap
+        """
+        roadmap = {
+            "immediate": [],
+            "short_term": [],
+            "medium_term": [],
+            "long_term": []
+        }
+
+        for rec in recommendations:
+            priority = rec.get("priority", "medium_term")
+            if priority in roadmap:
+                roadmap[priority].append({
+                    "title": rec["title"],
+                    "description": rec["description"],
+                    "success_metrics": rec["success_metrics"]
+                })
+
+        return roadmap
+
+    def _generate_strategic_insights(
+        self,
+        recommendations: List[StrategicRecommendation],
+        synthesis: Dict[str, Any]
+    ) -> List[str]:
+        """
+        Generate strategic insights.
+
+        Args:
+            recommendations: Strategic recommendations
+            synthesis: Synthesized insights
+
+        Returns:
+            List of strategic insights
+        """
+        insights = []
+
+        # Overall strategic direction
+        immediate_count = len([r for r in recommendations if r["priority"] == "immediate"])
+        if immediate_count > 0:
+            insights.append(f"需要立即行动的关键问题有{immediate_count}项，建议优先资源投入")
+
+        # Balance assessment
+        strengths = len(synthesis["key_strengths"])
+        issues = len(synthesis["critical_issues"])
+
+        if strengths > issues * 2:
+            insights.append("整体表现良好，建议巩固优势并探索增长机会")
+        elif issues > strengths:
+            insights.append("存在多项改进机会，建议制定系统性提升计划")
+        else:
+            insights.append("优势与问题并存，建议平衡发展策略")
+
+        # Implementation complexity
+        total_recs = len(recommendations)
+        if total_recs > 8:
+            insights.append("建议数量较多，需要分阶段实施并设定优先级")
+        elif total_recs < 3:
+            insights.append("改进重点明确，建议集中资源快速推进")
+
+        # Strategic focus areas
+        impact_areas = []
+        for rec in recommendations:
+            impact_areas.extend(rec.get("impact_areas", []))
+
+        if impact_areas:
+            from collections import Counter
+            top_area = Counter(impact_areas).most_common(1)[0][0]
+            insights.append(f"'{top_area}'是核心改进领域，多项建议指向此方向")
+
+        return insights

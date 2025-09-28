@@ -97,6 +97,94 @@ class AgentOutputLogger:
 
         return logger
 
+    def log_llm_call(self, agent_id: str, prompt: str, model: str = "unknown",
+                    temperature: float = 0.0, max_tokens: int = 0):
+        """Log an LLM API call before sending.
+
+        Args:
+            agent_id: Agent making the call
+            prompt: The prompt being sent to the model
+            model: Model name being used
+            temperature: Temperature setting
+            max_tokens: Max tokens setting
+        """
+        if agent_id not in self.agent_loggers:
+            self.agent_loggers[agent_id] = self._setup_logger("agent", agent_id)
+
+        logger = self.agent_loggers[agent_id]
+
+        logger.info(f"🤖 LLM API Call:")
+        logger.info(f"   Model: {model}")
+        logger.info(f"   Temperature: {temperature}")
+        logger.info(f"   Max Tokens: {max_tokens}")
+        logger.info(f"   Prompt Length: {len(prompt)} characters")
+        logger.debug(f"   Full Prompt:\n{'-'*60}\n{prompt}\n{'-'*60}")
+
+    def log_llm_response(self, agent_id: str, response: str, tokens_used: int = 0,
+                        response_time_ms: int = 0):
+        """Log an LLM API response after receiving.
+
+        Args:
+            agent_id: Agent that made the call
+            response: The response from the model
+            tokens_used: Number of tokens consumed
+            response_time_ms: Response time in milliseconds
+        """
+        if agent_id not in self.agent_loggers:
+            self.agent_loggers[agent_id] = self._setup_logger("agent", agent_id)
+
+        logger = self.agent_loggers[agent_id]
+
+        logger.info(f"📝 LLM Response Received:")
+        logger.info(f"   Tokens Used: {tokens_used}")
+        logger.info(f"   Response Time: {response_time_ms}ms")
+        logger.info(f"   Response Length: {len(response)} characters")
+        logger.debug(f"   Full Response:\n{'-'*60}\n{response}\n{'-'*60}")
+
+        # Store LLM call data
+        if agent_id in self.agent_outputs:
+            if "llm_calls" not in self.agent_outputs[agent_id]:
+                self.agent_outputs[agent_id]["llm_calls"] = []
+
+            self.agent_outputs[agent_id]["llm_calls"].append({
+                "tokens_used": tokens_used,
+                "response_time_ms": response_time_ms,
+                "response_length": len(response),
+                "timestamp": datetime.now().isoformat()
+            })
+
+    def log_agent_step(self, agent_id: str, step_name: str, step_data: Any = None):
+        """Log a specific step within an agent's execution.
+
+        Args:
+            agent_id: Agent identifier
+            step_name: Name/description of the step
+            step_data: Any data related to this step
+        """
+        if agent_id not in self.agent_loggers:
+            self.agent_loggers[agent_id] = self._setup_logger("agent", agent_id)
+
+        logger = self.agent_loggers[agent_id]
+        logger.info(f"🔧 Step: {step_name}")
+
+        if step_data:
+            try:
+                step_summary = self._create_data_summary(step_data)
+                logger.debug(f"   Step Data: {json.dumps(step_summary, ensure_ascii=False, indent=2)}")
+            except Exception as e:
+                logger.debug(f"   Step Data (raw): {str(step_data)[:500]}")
+
+        # Store step data
+        if agent_id in self.agent_outputs:
+            if "steps" not in self.agent_outputs[agent_id]:
+                self.agent_outputs[agent_id]["steps"] = []
+
+            self.agent_outputs[agent_id]["steps"].append({
+                "step_name": step_name,
+                "timestamp": datetime.now().isoformat(),
+                "data_summary": self._create_data_summary(step_data) if step_data else None
+            })
+
     def log_agent_start(self, agent_id: str, agent_name: str,
                        input_data: Optional[Dict[str, Any]] = None):
         """Log the start of an agent execution.

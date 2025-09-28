@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ company_name }} NPS 详细分析报告</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .analysis-section { border-left: 4px solid #3b82f6; }
+        .agent-card { transition: all 0.3s ease; }
+        .agent-card:hover { box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .insight-tag { transition: all 0.2s ease; }
+        .insight-tag:hover { transform: scale(1.05); }
+        .confidence-high { color: #10b981; }
+        .confidence-medium { color: #f59e0b; }
+        .confidence-low { color: #ef4444; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .tabs-nav { border-bottom: 2px solid #e5e7eb; }
+        .tab-active { border-bottom-color: #3b82f6; color: #3b82f6; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-6 py-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold">{{ company_name }} NPS 详细分析报告</h1>
+                    <p class="text-blue-100 mt-1">多维度客户洞察与战略分析</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm text-blue-100">报告ID: {{ report_id }}</p>
+                    <p class="text-sm text-blue-100">生成时间: {{ report_date }}</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-6">
+            <div class="flex space-x-8 tabs-nav">
+                <button class="py-4 px-1 font-medium text-sm tab-active" onclick="showTab('foundation')">基础分析</button>
+                <button class="py-4 px-1 font-medium text-sm text-gray-500 hover:text-gray-700" onclick="showTab('analysis')">深度分析</button>
+                <button class="py-4 px-1 font-medium text-sm text-gray-500 hover:text-gray-700" onclick="showTab('consulting')">战略咨询</button>
+                <button class="py-4 px-1 font-medium text-sm text-gray-500 hover:text-gray-700" onclick="showTab('insights')">核心洞察</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-6 py-8">
+        <!-- Foundation Pass Results -->
+        <div id="foundation-tab" class="tab-content">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">基础分析层 (Foundation Pass)</h2>
+
+                <!-- Data Cleaning Results -->
+                <div class="bg-white rounded-lg shadow p-6 mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">数据清洗结果</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <p class="text-blue-600 font-medium">原始响应数</p>
+                            <p class="text-2xl font-bold text-blue-800">{{ raw_responses_count }}</p>
+                        </div>
+                        <div class="bg-green-50 rounded-lg p-4">
+                            <p class="text-green-600 font-medium">有效响应数</p>
+                            <p class="text-2xl font-bold text-green-800">{{ valid_responses_count }}</p>
+                        </div>
+                        <div class="bg-amber-50 rounded-lg p-4">
+                            <p class="text-amber-600 font-medium">数据质量</p>
+                            <p class="text-2xl font-bold text-amber-800">{{ data_quality }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NPS Metrics -->
+                <div class="bg-white rounded-lg shadow p-6 mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">NPS基础指标</h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <canvas id="npsBreakdownChart" height="200"></canvas>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                                <span class="font-medium">整体NPS得分</span>
+                                <span class="text-xl font-bold {{ nps_color_class }}">{{ nps_score }}</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                                <span class="font-medium">推荐者比例</span>
+                                <span class="text-green-600 font-semibold">{{ promoter_percentage }}%</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                                <span class="font-medium">中性者比例</span>
+                                <span class="text-amber-600 font-semibold">{{ passive_percentage }}%</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                                <span class="font-medium">贬损者比例</span>
+                                <span class="text-red-600 font-semibold">{{ detractor_percentage }}%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Semantic Clusters -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">语义聚类结果</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {% for cluster in semantic_clusters %}
+                        <div class="border rounded-lg p-4 hover:border-blue-300 transition-colors">
+                            <div class="flex items-center space-x-2 mb-3">
+                                <h4 class="font-semibold text-gray-800">{{ cluster.name }}</h4>
+                                <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">{{ cluster.size }}条</span>
+                            </div>
+                            <div class="flex flex-wrap gap-1 mb-3">
+                                {% for keyword in cluster.keywords %}
+                                <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">{{ keyword }}</span>
+                                {% endfor %}
+                            </div>
+                            <p class="text-sm text-gray-600">{{ cluster.description }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analysis Pass Results -->
+        <div id="analysis-tab" class="tab-content hidden">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">深度分析层 (Analysis Pass)</h2>
+
+                <!-- Agent Results Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    {% for agent_result in analysis_agents %}
+                    <div class="agent-card bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold text-gray-800">{{ agent_result.agent_name }}</h3>
+                            <div class="flex items-center space-x-2">
+                                <span class="confidence-{{ agent_result.confidence_level }} font-medium text-sm">
+                                    置信度: {{ agent_result.confidence_score }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <p class="text-gray-600 text-sm mb-3">{{ agent_result.summary }}</p>
+
+                            <!-- Key Findings -->
+                            <div class="space-y-2">
+                                {% for finding in agent_result.key_findings %}
+                                <div class="flex items-start space-x-2">
+                                    <div class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                                    <p class="text-sm text-gray-700">{{ finding }}</p>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- Insights Tags -->
+                        <div class="flex flex-wrap gap-2">
+                            {% for insight in agent_result.insights %}
+                            <span class="insight-tag px-3 py-1 bg-{{ insight.priority_color }}-100 text-{{ insight.priority_color }}-800 text-xs rounded-full cursor-pointer">
+                                {{ insight.title }}
+                            </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Dimensional Analysis -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-6">多维度分析</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Product Dimension -->
+                        <div class="analysis-section bg-blue-50 p-4 rounded-r-lg">
+                            <h4 class="font-semibold text-blue-800 mb-3">产品维度分析</h4>
+                            <div class="space-y-2">
+                                {% for product_insight in product_insights %}
+                                <div class="text-sm">
+                                    <span class="font-medium text-blue-700">{{ product_insight.product }}</span>
+                                    <p class="text-blue-600">NPS: {{ product_insight.nps_score }}</p>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- Geographic Dimension -->
+                        <div class="analysis-section bg-green-50 p-4 rounded-r-lg">
+                            <h4 class="font-semibold text-green-800 mb-3">地域维度分析</h4>
+                            <div class="space-y-2">
+                                {% for geo_insight in geographic_insights %}
+                                <div class="text-sm">
+                                    <span class="font-medium text-green-700">{{ geo_insight.region }}</span>
+                                    <p class="text-green-600">NPS: {{ geo_insight.nps_score }}</p>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- Channel Dimension -->
+                        <div class="analysis-section bg-purple-50 p-4 rounded-r-lg">
+                            <h4 class="font-semibold text-purple-800 mb-3">渠道维度分析</h4>
+                            <div class="space-y-2">
+                                {% for channel_insight in channel_insights %}
+                                <div class="text-sm">
+                                    <span class="font-medium text-purple-700">{{ channel_insight.channel }}</span>
+                                    <p class="text-purple-600">NPS: {{ channel_insight.nps_score }}</p>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Consulting Pass Results -->
+        <div id="consulting-tab" class="tab-content hidden">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">战略咨询层 (Consulting Pass)</h2>
+
+                <!-- Strategic Recommendations -->
+                <div class="space-y-6">
+                    {% for consultant in consulting_agents %}
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-semibold text-gray-800">{{ consultant.agent_name }}</h3>
+                            <div class="flex items-center space-x-2">
+                                <span class="px-3 py-1 bg-{{ consultant.confidence_color }}-100 text-{{ consultant.confidence_color }}-800 text-sm rounded-full">
+                                    {{ consultant.confidence_level }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <p class="text-gray-600 mb-4">{{ consultant.executive_summary }}</p>
+                        </div>
+
+                        <!-- Recommendations -->
+                        <div class="space-y-4">
+                            <h4 class="font-semibold text-gray-800">核心建议</h4>
+                            {% for recommendation in consultant.recommendations %}
+                            <div class="border-l-4 border-{{ recommendation.priority_color }}-500 bg-{{ recommendation.priority_color }}-50 p-4 rounded-r-lg">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <h5 class="font-semibold text-{{ recommendation.priority_color }}-800">{{ recommendation.title }}</h5>
+                                        <p class="text-{{ recommendation.priority_color }}-700 mt-2">{{ recommendation.description }}</p>
+
+                                        <!-- Implementation Details -->
+                                        <div class="mt-3">
+                                            <p class="text-sm font-medium text-{{ recommendation.priority_color }}-800">实施建议:</p>
+                                            <ul class="text-sm text-{{ recommendation.priority_color }}-700 mt-1 space-y-1">
+                                                {% for step in recommendation.implementation_steps %}
+                                                <li class="flex items-start space-x-2">
+                                                    <span class="w-1 h-1 bg-{{ recommendation.priority_color }}-500 rounded-full mt-2 flex-shrink-0"></span>
+                                                    <span>{{ step }}</span>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="ml-4 text-right">
+                                        <span class="text-xs text-{{ recommendation.priority_color }}-600 bg-{{ recommendation.priority_color }}-200 px-2 py-1 rounded-full">
+                                            {{ recommendation.priority }}
+                                        </span>
+                                        <p class="text-xs text-{{ recommendation.priority_color }}-600 mt-1">
+                                            预计影响: {{ recommendation.expected_impact }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Insights Tab -->
+        <div id="insights-tab" class="tab-content hidden">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">核心洞察汇总</h2>
+
+                <!-- Insights Overview -->
+                <div class="bg-white rounded-lg shadow p-6 mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">洞察概览</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="text-center p-4 bg-blue-50 rounded-lg">
+                            <p class="text-2xl font-bold text-blue-600">{{ total_insights }}</p>
+                            <p class="text-blue-800 font-medium">总洞察数</p>
+                        </div>
+                        <div class="text-center p-4 bg-red-50 rounded-lg">
+                            <p class="text-2xl font-bold text-red-600">{{ high_priority_insights }}</p>
+                            <p class="text-red-800 font-medium">高优先级</p>
+                        </div>
+                        <div class="text-center p-4 bg-amber-50 rounded-lg">
+                            <p class="text-2xl font-bold text-amber-600">{{ medium_priority_insights }}</p>
+                            <p class="text-amber-800 font-medium">中优先级</p>
+                        </div>
+                        <div class="text-center p-4 bg-green-50 rounded-lg">
+                            <p class="text-2xl font-bold text-green-600">{{ actionable_insights }}</p>
+                            <p class="text-green-800 font-medium">可行动洞察</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Insights -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-6">优先洞察排序</h3>
+                    <div class="space-y-4">
+                        {% for insight in prioritized_insights %}
+                        <div class="flex items-start space-x-4 p-4 border border-gray-200 rounded-lg hover:border-{{ insight.priority_color }}-300 transition-colors">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-{{ insight.priority_color }}-100 rounded-full flex items-center justify-center">
+                                    <span class="text-{{ insight.priority_color }}-600 font-semibold text-sm">{{ loop.index }}</span>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <h4 class="font-semibold text-gray-800">{{ insight.title }}</h4>
+                                    <span class="px-2 py-1 bg-{{ insight.priority_color }}-100 text-{{ insight.priority_color }}-800 text-xs rounded-full">
+                                        {{ insight.category }}
+                                    </span>
+                                </div>
+                                <p class="text-gray-600 mb-3">{{ insight.description }}</p>
+                                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                    <span>置信度: <span class="confidence-{{ insight.confidence_level }}">{{ insight.confidence_score }}</span></span>
+                                    <span>来源: {{ insight.source_agent }}</span>
+                                    <span>影响程度: {{ insight.impact_level }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <p class="text-gray-400">{{ company_name }} NPS智能分析系统 | 报告生成时间: {{ report_date }}</p>
+                <p class="text-gray-500 text-sm mt-2">基于多智能体架构的客户洞察分析平台</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Tab Management
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+
+            // Remove active class from all nav buttons
+            document.querySelectorAll('.tabs-nav button').forEach(btn => {
+                btn.classList.remove('tab-active');
+                btn.classList.add('text-gray-500', 'hover:text-gray-700');
+                btn.classList.remove('text-blue-600');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName + '-tab').classList.remove('hidden');
+
+            // Add active class to selected nav button
+            event.target.classList.add('tab-active');
+            event.target.classList.remove('text-gray-500', 'hover:text-gray-700');
+            event.target.classList.add('text-blue-600');
+        }
+
+        // Charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // NPS Breakdown Chart
+            const ctx2 = document.getElementById('npsBreakdownChart').getContext('2d');
+            const npsBreakdownChart = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: ['推荐者', '中性者', '贬损者'],
+                    datasets: [{
+                        label: '客户数量',
+                        data: [{{ promoter_count }}, {{ passive_count }}, {{ detractor_count }}],
+                        backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
+                        borderColor: ['#059669', '#d97706', '#dc2626'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

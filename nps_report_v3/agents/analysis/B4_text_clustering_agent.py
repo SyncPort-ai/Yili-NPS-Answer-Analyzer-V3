@@ -1,0 +1,963 @@
+"""
+B4 - Text Clustering Agent
+Analysis Pass Agent for Chinese NLP topic modeling and text clustering.
+"""
+
+import logging
+from typing import Dict, Any, List, Optional, Tuple
+import re
+import json
+from collections import Counter, defaultdict
+import math
+
+from ..base import AnalysisAgent, AgentResult, AgentStatus
+from ...llm import LLMClient
+
+logger = logging.getLogger(__name__)
+
+
+class TextClusteringAgent(AnalysisAgent):
+    """
+    B4 - Text Clustering Agent
+
+    Responsibilities:
+    - Implement Chinese NLP topic modeling and text clustering
+    - Add sentiment analysis with cultural context for dairy industry
+    - Create word cloud data and theme hierarchical clustering
+    - Add dairy-specific vocabulary recognition and processing
+    """
+
+    def __init__(self, agent_id: str = "B4", agent_name: str = "Text Clustering Agent",
+                 llm_client: Optional[LLMClient] = None, **kwargs):
+        super().__init__(agent_id, agent_name, **kwargs)
+        self.llm_client = llm_client
+
+        # Dairy industry specific vocabulary
+        self.dairy_vocabulary = {
+            "products": {
+                "安慕希": {"category": "yogurt", "brand": "伊利", "sentiment_boost": 0.1},
+                "金典": {"category": "milk", "brand": "伊利", "sentiment_boost": 0.1},
+                "舒化": {"category": "milk", "brand": "伊利", "sentiment_boost": 0.1},
+                "优酸乳": {"category": "yogurt", "brand": "伊利", "sentiment_boost": 0.1},
+                "味可滋": {"category": "milk", "brand": "伊利", "sentiment_boost": 0.1},
+                "QQ星": {"category": "kids_milk", "brand": "伊利", "sentiment_boost": 0.1},
+                "蒙牛": {"category": "competitor", "brand": "蒙牛", "sentiment_boost": -0.05},
+                "光明": {"category": "competitor", "brand": "光明", "sentiment_boost": -0.05}
+            },
+            "attributes": {
+                "口感": {"category": "taste", "weight": 1.2},
+                "口味": {"category": "taste", "weight": 1.2},
+                "味道": {"category": "taste", "weight": 1.2},
+                "质地": {"category": "texture", "weight": 1.1},
+                "浓度": {"category": "texture", "weight": 1.1},
+                "甜度": {"category": "sweetness", "weight": 1.0},
+                "酸度": {"category": "sourness", "weight": 1.0},
+                "包装": {"category": "packaging", "weight": 0.9},
+                "价格": {"category": "price", "weight": 1.3},
+                "营养": {"category": "nutrition", "weight": 1.1}
+            },
+            "sentiments": {
+                "positive": ["好喝", "香浓", "新鲜", "美味", "满意", "推荐", "喜欢", "不错", "赞"],
+                "negative": ["难喝", "变质", "过期", "太甜", "太淡", "失望", "不满", "差", "糟糕"],
+                "neutral": ["一般", "还行", "凑合", "普通", "平常", "还可以"]
+            }
+        }
+
+        # Chinese text processing patterns
+        self.chinese_patterns = {
+            "stopwords": {"的", "了", "是", "我", "你", "他", "她", "它", "这", "那", "在", "有", "和", "就",
+                         "都", "被", "从", "把", "向", "往", "给", "为", "以", "用", "比", "跟", "同",
+                         "对", "按", "照", "关于", "由于", "因为", "所以", "但是", "然而", "而且",
+                         "或者", "如果", "虽然", "虽说", "尽管", "无论", "不管", "除了", "除非"},
+            "punctuation": {"。", "，", "！", "？", "；", "：", "、", """, """, "'", "'", "（", "）",
+                           "【", "】", "《", "》", "…", "—", "～", "·"},
+            "intensifiers": {"非常", "特别", "很", "十分", "极其", "相当", "超级", "真的", "实在"},
+            "negations": {"不", "没", "无", "非", "未", "别", "莫", "勿", "毫无", "绝不"}
+        }
+
+    async def process(self, state: Dict[str, Any]) -> AgentResult:
+        """
+        Process text clustering analysis.
+
+        Args:
+            state: Current workflow state
+
+        Returns:
+            AgentResult with clustering and NLP analysis results
+        """
+        try:
+            # Get tagged responses
+            tagged_responses = state.get("tagged_responses", [])
+
+            if not tagged_responses:
+                logger.warning("No responses available for text clustering")
+                return AgentResult(
+                    agent_id=self.agent_id,
+                    status=AgentStatus.COMPLETED,
+                    data={
+                        "text_clustering": {
+                            "total_texts": 0,
+                            "clusters": [],
+                            "topics": [],
+                            "sentiment_analysis": {},
+                            "word_cloud_data": []
+                        }
+                    },
+                    insights=["No text data available for clustering analysis"],
+                    confidence_score=1.0
+                )
+
+            # Extract and preprocess texts
+            texts = self._extract_texts(tagged_responses)
+            processed_texts = [self._preprocess_chinese_text(text) for text in texts]
+
+            # Generate word cloud data
+            word_cloud_data = self._generate_word_cloud_data(processed_texts)
+
+            # Perform sentiment analysis
+            sentiment_analysis = await self._analyze_sentiments(tagged_responses)
+
+            # Perform topic modeling
+            topics = await self._perform_topic_modeling(processed_texts, tagged_responses)
+
+            # Perform hierarchical clustering
+            clusters = await self._perform_hierarchical_clustering(processed_texts, tagged_responses, topics)
+
+            # Generate theme insights
+            theme_insights = self._generate_theme_insights(topics, clusters, sentiment_analysis)
+
+            # Create cluster summaries
+            cluster_summaries = self._create_cluster_summaries(clusters, topics)
+
+            logger.info(f"Clustered {len(texts)} texts into {len(clusters)} clusters with {len(topics)} topics")
+
+            return AgentResult(
+                agent_id=self.agent_id,
+                status=AgentStatus.COMPLETED,
+                data={
+                    "text_clustering": {
+                        "total_texts": len(texts),
+                        "clusters": clusters,
+                        "topics": topics,
+                        "sentiment_analysis": sentiment_analysis,
+                        "word_cloud_data": word_cloud_data,
+                        "theme_insights": theme_insights,
+                        "cluster_summaries": cluster_summaries
+                    }
+                },
+                insights=theme_insights,
+                confidence_score=0.8
+            )
+
+        except Exception as e:
+            logger.error(f"Text clustering failed: {e}")
+            return AgentResult(
+                agent_id=self.agent_id,
+                status=AgentStatus.FAILED,
+                data={},
+                errors=[str(e)],
+                confidence_score=0.0
+            )
+
+    def _extract_texts(self, tagged_responses: List[Dict[str, Any]]) -> List[str]:
+        """
+        Extract text content from responses.
+
+        Args:
+            tagged_responses: Tagged responses
+
+        Returns:
+            List of text strings
+        """
+        texts = []
+        for response in tagged_responses:
+            text = response.get("original_text", "").strip()
+            if text and len(text) > 5:  # Filter very short texts
+                texts.append(text)
+        return texts
+
+    def _preprocess_chinese_text(self, text: str) -> Dict[str, Any]:
+        """
+        Preprocess Chinese text for analysis.
+
+        Args:
+            text: Raw text
+
+        Returns:
+            Processed text with metadata
+        """
+        # Remove punctuation
+        cleaned_text = text
+        for punct in self.chinese_patterns["punctuation"]:
+            cleaned_text = cleaned_text.replace(punct, " ")
+
+        # Simple Chinese word segmentation (basic approach)
+        words = self._simple_chinese_segmentation(cleaned_text)
+
+        # Filter stopwords
+        filtered_words = [word for word in words if word not in self.chinese_patterns["stopwords"]]
+
+        # Identify dairy-specific terms
+        dairy_terms = []
+        for word in filtered_words:
+            if word in self.dairy_vocabulary["products"] or word in self.dairy_vocabulary["attributes"]:
+                dairy_terms.append(word)
+
+        # Identify sentiment indicators
+        sentiment_words = []
+        for word in filtered_words:
+            for sentiment_type, words_list in self.dairy_vocabulary["sentiments"].items():
+                if word in words_list:
+                    sentiment_words.append({"word": word, "sentiment": sentiment_type})
+
+        return {
+            "original": text,
+            "cleaned": cleaned_text,
+            "words": filtered_words,
+            "dairy_terms": dairy_terms,
+            "sentiment_words": sentiment_words,
+            "length": len(filtered_words)
+        }
+
+    def _simple_chinese_segmentation(self, text: str) -> List[str]:
+        """
+        Simple Chinese word segmentation.
+        In production, would use jieba or other Chinese NLP libraries.
+
+        Args:
+            text: Text to segment
+
+        Returns:
+            List of words
+        """
+        # Basic approach: split by spaces and extract known terms
+        words = []
+
+        # Split by spaces first
+        initial_words = text.split()
+
+        # Look for known dairy terms
+        for word in initial_words:
+            if len(word) >= 2:  # Minimum Chinese word length
+                words.append(word)
+
+        # Extract known vocabulary terms from full text
+        for term in list(self.dairy_vocabulary["products"].keys()) + list(self.dairy_vocabulary["attributes"].keys()):
+            if term in text:
+                words.append(term)
+
+        # Extract sentiment words
+        for sentiment_list in self.dairy_vocabulary["sentiments"].values():
+            for word in sentiment_list:
+                if word in text:
+                    words.append(word)
+
+        # Remove duplicates and very short words
+        words = list(set([word for word in words if len(word) >= 2]))
+
+        return words
+
+    def _generate_word_cloud_data(self, processed_texts: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Generate word cloud data with frequencies and weights.
+
+        Args:
+            processed_texts: Processed text data
+
+        Returns:
+            Word cloud data with frequencies
+        """
+        word_counts = Counter()
+        dairy_word_counts = Counter()
+
+        # Count all words
+        for text_data in processed_texts:
+            for word in text_data["words"]:
+                word_counts[word] += 1
+
+            # Count dairy-specific terms with higher weight
+            for term in text_data["dairy_terms"]:
+                dairy_word_counts[term] += 1
+
+        # Create word cloud data
+        word_cloud_data = []
+
+        # Add general words
+        for word, count in word_counts.most_common(100):  # Top 100 words
+            if len(word) >= 2:  # Filter single characters
+                weight = count
+
+                # Boost dairy-specific terms
+                if word in self.dairy_vocabulary["attributes"]:
+                    weight *= self.dairy_vocabulary["attributes"][word]["weight"]
+                elif word in self.dairy_vocabulary["products"]:
+                    weight *= 1.5  # Boost product names
+
+                word_cloud_data.append({
+                    "word": word,
+                    "frequency": count,
+                    "weight": round(weight, 2),
+                    "category": self._classify_word_category(word)
+                })
+
+        # Sort by weight
+        word_cloud_data.sort(key=lambda x: x["weight"], reverse=True)
+
+        return word_cloud_data[:50]  # Top 50 for word cloud
+
+    async def _analyze_sentiments(self, tagged_responses: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """
+        Analyze sentiments with cultural context.
+
+        Args:
+            tagged_responses: Tagged responses
+
+        Returns:
+            Sentiment analysis results
+        """
+        sentiment_results = {
+            "overall_sentiment": {"positive": 0, "negative": 0, "neutral": 0},
+            "sentiment_by_nps": {},
+            "dairy_specific_sentiment": {},
+            "cultural_insights": []
+        }
+
+        # Rule-based sentiment analysis with cultural context
+        for response in tagged_responses:
+            text = response.get("original_text", "")
+            nps_score = response.get("nps_score")
+
+            sentiment_score = self._calculate_sentiment_score(text)
+            sentiment_label = self._sentiment_score_to_label(sentiment_score)
+
+            # Update overall sentiment
+            sentiment_results["overall_sentiment"][sentiment_label] += 1
+
+            # Sentiment by NPS score
+            if nps_score is not None:
+                nps_range = self._nps_to_range(nps_score)
+                if nps_range not in sentiment_results["sentiment_by_nps"]:
+                    sentiment_results["sentiment_by_nps"][nps_range] = {"positive": 0, "negative": 0, "neutral": 0}
+                sentiment_results["sentiment_by_nps"][nps_range][sentiment_label] += 1
+
+        # Enhanced sentiment analysis with LLM
+        if self.llm_client and tagged_responses:
+            llm_sentiment = await self._llm_sentiment_analysis(tagged_responses[:20])  # Sample for LLM
+            sentiment_results["llm_insights"] = llm_sentiment
+
+        # Cultural insights
+        sentiment_results["cultural_insights"] = self._generate_cultural_insights(tagged_responses)
+
+        return sentiment_results
+
+    def _calculate_sentiment_score(self, text: str) -> float:
+        """
+        Calculate sentiment score for Chinese text.
+
+        Args:
+            text: Text to analyze
+
+        Returns:
+            Sentiment score (-1 to 1)
+        """
+        score = 0.0
+        intensity_multiplier = 1.0
+        negation_multiplier = 1.0
+
+        # Check for intensifiers
+        for intensifier in self.chinese_patterns["intensifiers"]:
+            if intensifier in text:
+                intensity_multiplier = 1.3
+                break
+
+        # Check for negations
+        for negation in self.chinese_patterns["negations"]:
+            if negation in text:
+                negation_multiplier = -1.0
+                break
+
+        # Score based on sentiment words
+        for sentiment_type, words in self.dairy_vocabulary["sentiments"].items():
+            for word in words:
+                if word in text:
+                    if sentiment_type == "positive":
+                        score += 1.0
+                    elif sentiment_type == "negative":
+                        score -= 1.0
+                    # neutral adds 0
+
+        # Apply dairy-specific adjustments
+        for product, info in self.dairy_vocabulary["products"].items():
+            if product in text:
+                score += info["sentiment_boost"]
+
+        # Apply multipliers
+        final_score = score * intensity_multiplier * negation_multiplier
+
+        # Normalize to [-1, 1]
+        return max(-1.0, min(1.0, final_score / 3.0))
+
+    def _sentiment_score_to_label(self, score: float) -> str:
+        """Convert sentiment score to label."""
+        if score > 0.2: return "positive"
+        elif score < -0.2: return "negative"
+        else: return "neutral"
+
+    def _nps_to_range(self, nps_score: int) -> str:
+        """Convert NPS score to range."""
+        if nps_score >= 9: return "promoters"
+        elif nps_score >= 7: return "passives"
+        else: return "detractors"
+
+    async def _perform_topic_modeling(
+        self,
+        processed_texts: List[Dict[str, Any]],
+        tagged_responses: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
+        """
+        Perform topic modeling on processed texts.
+
+        Args:
+            processed_texts: Processed text data
+            tagged_responses: Original responses
+
+        Returns:
+            List of discovered topics
+        """
+        # Simple topic modeling based on keyword co-occurrence
+        topics = []
+
+        # Create term co-occurrence matrix
+        cooccurrence = self._build_cooccurrence_matrix(processed_texts)
+
+        # Identify topic clusters based on co-occurrence
+        topic_clusters = self._identify_topic_clusters(cooccurrence)
+
+        for i, cluster in enumerate(topic_clusters):
+            # Get representative terms for topic
+            topic_terms = list(cluster.keys())[:10]  # Top 10 terms
+
+            # Calculate topic strength
+            topic_strength = sum(cluster.values()) / len(cluster) if cluster else 0
+
+            # Find representative responses
+            representative_responses = self._find_representative_responses(
+                topic_terms, tagged_responses
+            )
+
+            topic = {
+                "topic_id": f"topic_{i}",
+                "title": self._generate_topic_title(topic_terms),
+                "keywords": topic_terms,
+                "strength": round(topic_strength, 3),
+                "document_count": len(representative_responses),
+                "representative_responses": representative_responses[:3],  # Top 3
+                "dairy_relevance": self._assess_dairy_relevance(topic_terms)
+            }
+            topics.append(topic)
+
+        # Enhanced topic modeling with LLM
+        if self.llm_client and processed_texts:
+            llm_topics = await self._llm_topic_modeling(processed_texts[:15])  # Sample for LLM
+            if llm_topics:
+                topics.extend(llm_topics)
+
+        # Sort by strength
+        topics.sort(key=lambda x: x["strength"], reverse=True)
+
+        return topics[:10]  # Top 10 topics
+
+    def _build_cooccurrence_matrix(self, processed_texts: List[Dict[str, Any]]) -> Dict[Tuple[str, str], int]:
+        """Build word co-occurrence matrix."""
+        cooccurrence = defaultdict(int)
+
+        for text_data in processed_texts:
+            words = text_data["words"]
+            # Create pairs of words that appear together
+            for i, word1 in enumerate(words):
+                for j, word2 in enumerate(words[i+1:], i+1):
+                    if word1 != word2:
+                        pair = tuple(sorted([word1, word2]))
+                        cooccurrence[pair] += 1
+
+        return dict(cooccurrence)
+
+    def _identify_topic_clusters(self, cooccurrence: Dict[Tuple[str, str], int]) -> List[Dict[str, int]]:
+        """Identify topic clusters from co-occurrence data."""
+        # Simple clustering based on high co-occurrence
+        clusters = []
+        used_words = set()
+
+        # Sort by co-occurrence frequency
+        sorted_pairs = sorted(cooccurrence.items(), key=lambda x: x[1], reverse=True)
+
+        for (word1, word2), freq in sorted_pairs[:20]:  # Top 20 pairs
+            if word1 not in used_words and word2 not in used_words:
+                # Start new cluster
+                cluster = {word1: freq, word2: freq}
+
+                # Add related words
+                for (w1, w2), f in sorted_pairs:
+                    if (w1 in cluster or w2 in cluster) and (w1 not in used_words or w2 not in used_words):
+                        if w1 not in cluster: cluster[w1] = f
+                        if w2 not in cluster: cluster[w2] = f
+
+                clusters.append(cluster)
+                used_words.update(cluster.keys())
+
+                if len(clusters) >= 5:  # Limit clusters
+                    break
+
+        return clusters
+
+    def _find_representative_responses(
+        self,
+        topic_terms: List[str],
+        tagged_responses: List[Dict[str, Any]]
+    ) -> List[str]:
+        """Find responses most representative of a topic."""
+        scored_responses = []
+
+        for response in tagged_responses:
+            text = response.get("original_text", "")
+            score = sum(1 for term in topic_terms if term in text)
+
+            if score > 0:
+                scored_responses.append((score, response.get("response_id", ""), text))
+
+        # Sort by score and return IDs
+        scored_responses.sort(key=lambda x: x[0], reverse=True)
+        return [resp[1] for resp in scored_responses]
+
+    def _generate_topic_title(self, topic_terms: List[str]) -> str:
+        """Generate a descriptive title for a topic."""
+        # Look for dairy-specific terms to create meaningful titles
+        dairy_products = [term for term in topic_terms if term in self.dairy_vocabulary["products"]]
+        dairy_attributes = [term for term in topic_terms if term in self.dairy_vocabulary["attributes"]]
+
+        if dairy_products and dairy_attributes:
+            return f"{dairy_products[0]}的{dairy_attributes[0]}体验"
+        elif dairy_products:
+            return f"{dairy_products[0]}相关反馈"
+        elif dairy_attributes:
+            return f"{dairy_attributes[0]}相关讨论"
+        elif topic_terms:
+            return f"{topic_terms[0]}主题"
+        else:
+            return "综合主题"
+
+    def _assess_dairy_relevance(self, terms: List[str]) -> float:
+        """Assess how relevant topic is to dairy industry."""
+        dairy_term_count = sum(1 for term in terms
+                              if term in self.dairy_vocabulary["products"]
+                              or term in self.dairy_vocabulary["attributes"])
+
+        return dairy_term_count / len(terms) if terms else 0.0
+
+    async def _perform_hierarchical_clustering(
+        self,
+        processed_texts: List[Dict[str, Any]],
+        tagged_responses: List[Dict[str, Any]],
+        topics: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
+        """
+        Perform hierarchical clustering of texts.
+
+        Args:
+            processed_texts: Processed texts
+            tagged_responses: Original responses
+            topics: Discovered topics
+
+        Returns:
+            Hierarchical clusters
+        """
+        clusters = []
+
+        # Simple clustering based on shared keywords and NPS scores
+        nps_clusters = self._cluster_by_nps(tagged_responses)
+        keyword_clusters = self._cluster_by_keywords(processed_texts, tagged_responses)
+
+        # Combine clustering approaches
+        for i, nps_cluster in enumerate(nps_clusters):
+            cluster = {
+                "cluster_id": f"cluster_{i}",
+                "name": f"NPS {nps_cluster['nps_range']} 客户群",
+                "type": "nps_based",
+                "size": len(nps_cluster["responses"]),
+                "responses": nps_cluster["responses"],
+                "characteristics": nps_cluster["characteristics"],
+                "dominant_topics": self._get_dominant_topics(nps_cluster["responses"], topics),
+                "cluster_coherence": self._calculate_cluster_coherence(nps_cluster["responses"], processed_texts)
+            }
+            clusters.append(cluster)
+
+        # Add keyword-based clusters
+        for j, kw_cluster in enumerate(keyword_clusters[:3]):  # Top 3
+            cluster = {
+                "cluster_id": f"keyword_cluster_{j}",
+                "name": f"关键词聚类: {', '.join(kw_cluster['keywords'][:3])}",
+                "type": "keyword_based",
+                "size": len(kw_cluster["responses"]),
+                "responses": kw_cluster["responses"],
+                "keywords": kw_cluster["keywords"],
+                "dominant_topics": self._get_dominant_topics(kw_cluster["responses"], topics),
+                "cluster_coherence": self._calculate_cluster_coherence(kw_cluster["responses"], processed_texts)
+            }
+            clusters.append(cluster)
+
+        return clusters
+
+    def _cluster_by_nps(self, tagged_responses: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Cluster responses by NPS score ranges."""
+        nps_groups = {"promoters": [], "passives": [], "detractors": []}
+
+        for response in tagged_responses:
+            nps_score = response.get("nps_score")
+            if nps_score is not None:
+                nps_range = self._nps_to_range(nps_score)
+                nps_groups[nps_range].append(response.get("response_id", ""))
+
+        clusters = []
+        for nps_range, response_ids in nps_groups.items():
+            if response_ids:
+                characteristics = self._analyze_nps_group_characteristics(nps_range, response_ids, tagged_responses)
+                clusters.append({
+                    "nps_range": nps_range,
+                    "responses": response_ids,
+                    "characteristics": characteristics
+                })
+
+        return clusters
+
+    def _cluster_by_keywords(
+        self,
+        processed_texts: List[Dict[str, Any]],
+        tagged_responses: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
+        """Cluster responses by shared keywords."""
+        # Find most common keywords
+        all_keywords = []
+        for text_data in processed_texts:
+            all_keywords.extend(text_data["dairy_terms"])
+
+        keyword_counts = Counter(all_keywords)
+        top_keywords = [kw for kw, count in keyword_counts.most_common(10) if count >= 2]
+
+        clusters = []
+        for keyword in top_keywords:
+            # Find responses containing this keyword
+            matching_responses = []
+            for i, text_data in enumerate(processed_texts):
+                if keyword in text_data["dairy_terms"]:
+                    matching_responses.append(tagged_responses[i].get("response_id", ""))
+
+            if len(matching_responses) >= 2:  # Minimum cluster size
+                clusters.append({
+                    "keywords": [keyword],
+                    "responses": matching_responses
+                })
+
+        return clusters
+
+    def _get_dominant_topics(self, response_ids: List[str], topics: List[Dict[str, Any]]) -> List[str]:
+        """Get dominant topics for a cluster."""
+        dominant_topics = []
+
+        for topic in topics:
+            topic_responses = set(topic.get("representative_responses", []))
+            cluster_responses = set(response_ids)
+
+            # Calculate overlap
+            overlap = len(topic_responses.intersection(cluster_responses))
+            if overlap > 0:
+                dominant_topics.append(topic["topic_id"])
+
+        return dominant_topics[:3]  # Top 3
+
+    def _calculate_cluster_coherence(
+        self,
+        response_ids: List[str],
+        processed_texts: List[Dict[str, Any]]
+    ) -> float:
+        """Calculate coherence score for a cluster."""
+        if not response_ids or len(response_ids) < 2:
+            return 0.0
+
+        # Simple coherence based on keyword overlap
+        all_keywords = []
+        for i, text_data in enumerate(processed_texts):
+            # Find corresponding text data for response
+            all_keywords.append(set(text_data["words"]))
+
+        # Calculate average pairwise similarity
+        similarities = []
+        for i in range(len(all_keywords)):
+            for j in range(i+1, len(all_keywords)):
+                if all_keywords[i] and all_keywords[j]:
+                    jaccard = len(all_keywords[i].intersection(all_keywords[j])) / len(all_keywords[i].union(all_keywords[j]))
+                    similarities.append(jaccard)
+
+        return sum(similarities) / len(similarities) if similarities else 0.0
+
+    def _analyze_nps_group_characteristics(
+        self,
+        nps_range: str,
+        response_ids: List[str],
+        tagged_responses: List[Dict[str, Any]]
+    ) -> List[str]:
+        """Analyze characteristics of NPS group."""
+        characteristics = []
+
+        # Get responses for this group
+        group_responses = [r for r in tagged_responses if r.get("response_id") in response_ids]
+
+        if nps_range == "promoters":
+            characteristics = ["积极推荐", "高满意度", "忠诚客户", "品牌倡导者"]
+        elif nps_range == "passives":
+            characteristics = ["中性态度", "需要转化", "潜在流失风险", "改进机会"]
+        elif nps_range == "detractors":
+            characteristics = ["负面体验", "流失风险高", "需要挽回", "问题改进"]
+
+        return characteristics
+
+    def _generate_theme_insights(
+        self,
+        topics: List[Dict[str, Any]],
+        clusters: List[Dict[str, Any]],
+        sentiment_analysis: Dict[str, Any]
+    ) -> List[str]:
+        """Generate insights from theme analysis."""
+        insights = []
+
+        # Topic insights
+        if topics:
+            top_topic = topics[0]
+            insights.append(f"主要讨论主题：{top_topic['title']}（涉及{top_topic['document_count']}条反馈）")
+
+            dairy_relevant_topics = [t for t in topics if t["dairy_relevance"] > 0.5]
+            if dairy_relevant_topics:
+                insights.append(f"{len(dairy_relevant_topics)}个主题与乳制品高度相关")
+
+        # Cluster insights
+        if clusters:
+            largest_cluster = max(clusters, key=lambda x: x["size"])
+            insights.append(f"最大客户群体：{largest_cluster['name']}（{largest_cluster['size']}人）")
+
+        # Sentiment insights
+        sentiment_dist = sentiment_analysis.get("overall_sentiment", {})
+        if sentiment_dist:
+            total = sum(sentiment_dist.values())
+            if total > 0:
+                pos_ratio = sentiment_dist.get("positive", 0) / total
+                neg_ratio = sentiment_dist.get("negative", 0) / total
+
+                if pos_ratio > 0.5:
+                    insights.append(f"整体情感倾向积极（正面{pos_ratio:.1%}）")
+                elif neg_ratio > 0.3:
+                    insights.append(f"存在较多负面情绪（负面{neg_ratio:.1%}），需要关注")
+
+        # Cultural insights
+        cultural_insights = sentiment_analysis.get("cultural_insights", [])
+        if cultural_insights:
+            insights.extend(cultural_insights[:2])  # Top 2 cultural insights
+
+        return insights
+
+    def _create_cluster_summaries(
+        self,
+        clusters: List[Dict[str, Any]],
+        topics: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
+        """Create summaries for each cluster."""
+        summaries = []
+
+        for cluster in clusters:
+            summary = {
+                "cluster_id": cluster["cluster_id"],
+                "name": cluster["name"],
+                "size": cluster["size"],
+                "key_characteristics": cluster.get("characteristics", []),
+                "main_topics": [],
+                "actionable_insights": []
+            }
+
+            # Get topics for this cluster
+            dominant_topic_ids = cluster.get("dominant_topics", [])
+            for topic_id in dominant_topic_ids[:2]:  # Top 2
+                topic = next((t for t in topics if t["topic_id"] == topic_id), None)
+                if topic:
+                    summary["main_topics"].append({
+                        "title": topic["title"],
+                        "keywords": topic["keywords"][:5]
+                    })
+
+            # Generate actionable insights
+            if cluster["type"] == "nps_based":
+                if "promoters" in cluster["name"]:
+                    summary["actionable_insights"] = ["增强倡导者营销", "口碑传播激励", "忠诚度维护"]
+                elif "passives" in cluster["name"]:
+                    summary["actionable_insights"] = ["转化策略制定", "体验改善重点", "满意度提升"]
+                elif "detractors" in cluster["name"]:
+                    summary["actionable_insights"] = ["问题根因分析", "挽回策略执行", "服务补救"]
+
+            summaries.append(summary)
+
+        return summaries
+
+    def _classify_word_category(self, word: str) -> str:
+        """Classify word into category."""
+        if word in self.dairy_vocabulary["products"]:
+            return "product"
+        elif word in self.dairy_vocabulary["attributes"]:
+            return "attribute"
+        elif any(word in words for words in self.dairy_vocabulary["sentiments"].values()):
+            return "sentiment"
+        else:
+            return "general"
+
+    def _generate_cultural_insights(self, tagged_responses: List[Dict[str, Any]]) -> List[str]:
+        """Generate cultural insights for Chinese market."""
+        insights = []
+
+        # Analyze cultural patterns in text
+        cultural_patterns = {
+            "family_oriented": ["家人", "孩子", "老人", "全家", "家庭"],
+            "health_conscious": ["健康", "营养", "养生", "补钙", "蛋白质"],
+            "brand_loyalty": ["一直喝", "习惯", "信赖", "认准", "只买"],
+            "price_sensitive": ["便宜", "实惠", "划算", "优惠", "打折"],
+            "quality_focused": ["质量", "品质", "新鲜", "安全", "放心"]
+        }
+
+        pattern_counts = {pattern: 0 for pattern in cultural_patterns}
+
+        for response in tagged_responses:
+            text = response.get("original_text", "")
+            for pattern, keywords in cultural_patterns.items():
+                if any(keyword in text for keyword in keywords):
+                    pattern_counts[pattern] += 1
+
+        total_responses = len(tagged_responses)
+        for pattern, count in pattern_counts.items():
+            if count / total_responses > 0.1:  # If >10% mention this pattern
+                if pattern == "family_oriented":
+                    insights.append("家庭导向明显，产品适合全家消费的特点受欢迎")
+                elif pattern == "health_conscious":
+                    insights.append("健康意识强烈，营养价值是重要考虑因素")
+                elif pattern == "brand_loyalty":
+                    insights.append("品牌忠诚度较高，习惯性购买行为明显")
+                elif pattern == "price_sensitive":
+                    insights.append("价格敏感度较高，性价比是关键决策因素")
+                elif pattern == "quality_focused":
+                    insights.append("质量要求严格，产品安全性是基础要求")
+
+        return insights
+
+    async def _llm_sentiment_analysis(self, tagged_responses: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Use LLM for enhanced sentiment analysis."""
+        if not self.llm_client:
+            return {}
+
+        try:
+            # Sample responses for LLM analysis
+            sample_texts = [resp.get("original_text", "") for resp in tagged_responses[:10]]
+            combined_text = "\n".join(f"反馈{i+1}: {text}" for i, text in enumerate(sample_texts) if text)
+
+            prompt = f"""
+对以下乳制品客户反馈进行情感分析，考虑中国文化背景：
+
+{combined_text}
+
+请分析：
+1. 整体情感倾向和强度
+2. 对不同产品特征的情感态度（口感、价格、包装等）
+3. 文化特色的表达方式（含蓄、直接、比较等）
+4. 购买动机和决策因素的情感色彩
+
+以JSON格式返回：
+{{
+    "overall_sentiment": {{
+        "polarity": "positive/negative/neutral",
+        "intensity": 0.0-1.0,
+        "confidence": 0.0-1.0
+    }},
+    "aspect_sentiment": {{
+        "taste": {{"polarity": "...", "intensity": 0.0-1.0}},
+        "price": {{"polarity": "...", "intensity": 0.0-1.0}},
+        "packaging": {{"polarity": "...", "intensity": 0.0-1.0}}
+    }},
+    "cultural_patterns": ["pattern1", "pattern2"],
+    "emotional_drivers": ["driver1", "driver2"]
+}}
+"""
+
+            response = await self.llm_client.generate(prompt, temperature=0.3)
+
+            import json
+            return json.loads(response)
+
+        except Exception as e:
+            logger.debug(f"LLM sentiment analysis failed: {e}")
+            return {}
+
+    async def _llm_topic_modeling(self, processed_texts: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Use LLM for enhanced topic modeling."""
+        if not self.llm_client:
+            return []
+
+        try:
+            # Combine text samples for LLM analysis
+            text_samples = []
+            for text_data in processed_texts[:10]:  # Sample for LLM
+                if text_data["words"]:
+                    text_samples.append(text_data["original"])
+
+            combined_samples = "\n".join(f"文本{i+1}: {text}" for i, text in enumerate(text_samples))
+
+            prompt = f"""
+分析以下乳制品客户反馈的主题分布：
+
+{combined_samples}
+
+请识别：
+1. 主要讨论主题（3-5个）
+2. 每个主题的关键词
+3. 主题之间的关系
+4. 乳制品行业特定的话题特征
+
+以JSON格式返回：
+[
+    {{
+        "title": "主题标题",
+        "keywords": ["关键词1", "关键词2", "关键词3"],
+        "description": "主题描述",
+        "prevalence": 0.0-1.0,
+        "dairy_specific": true/false,
+        "related_aspects": ["aspect1", "aspect2"]
+    }}
+]
+"""
+
+            response = await self.llm_client.generate(prompt, temperature=0.4)
+
+            import json
+            llm_topics_data = json.loads(response)
+
+            # Convert to standard topic format
+            llm_topics = []
+            for i, topic_data in enumerate(llm_topics_data):
+                topic = {
+                    "topic_id": f"llm_topic_{i}",
+                    "title": topic_data.get("title", f"LLM主题{i}"),
+                    "keywords": topic_data.get("keywords", []),
+                    "strength": topic_data.get("prevalence", 0.5),
+                    "document_count": int(topic_data.get("prevalence", 0.5) * len(processed_texts)),
+                    "representative_responses": [],
+                    "dairy_relevance": 1.0 if topic_data.get("dairy_specific", False) else 0.3
+                }
+                llm_topics.append(topic)
+
+            return llm_topics
+
+        except Exception as e:
+            logger.debug(f"LLM topic modeling failed: {e}")
+            return []

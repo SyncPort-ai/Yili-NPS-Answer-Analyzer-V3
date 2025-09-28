@@ -1,0 +1,2774 @@
+{
+  "status": "success",
+  "message": "七智能体NPS分析完成",
+  "analysis_type": "七智能体NPS分析系统",
+  "timestamp": "20250911_083038_076",
+  "data": {
+    "timestamp": "20250911_083038_076",
+    "analysis_type": "七智能体NPS分析系统",
+    "original_input": {
+      "data_source": "伊利NPS调研问卷",
+      "processed_responses": 100,
+      "valid_responses": 100,
+      "survey_metadata": {
+        "survey_type": "product_nps",
+        "survey_title": "Chinese NPS Survey",
+        "data_source": "survey_data_input",
+        "analysis_results": {
+          "base_analysis": "基于100个样本的分析结果：<br>1. NPS值为13%，用户满意度良好，推荐者比例适中。<br>2. 推荐者占比31.0%，中立者占比51.0%，贬损者占比18.0%。<br>3. 建议重点分析贬损者反馈，优化产品体验，提升整体NPS表现。",
+          "nps_analysis": "1. NPS值为13%，表明用户整体满意度良好，推荐者比例高于贬损者。 <br>2. 贬损者占比18.0%，低于推荐者（31.0%），整体表现良好。 <br>3. 评分为7分的用户占比最高（26.0%），显示用户态度呈现分化趋势。 <br>4. 总体来看，用户正面情绪占主导，可继续优化以提升NPS表现。",
+          "cross_analysis": null,
+          "kano_analysis": null,
+          "psm_analysis": null,
+          "maxdiff_analysis": null
+        }
+      }
+    },
+    "agent_analysis_results": [
+      {
+        "agent_name": "NPS净值分析智能体",
+        "question_context": "Q1您向朋友或同事推荐我们的可能性多大？",
+        "input_data": {
+          "nps_net_score": 13,
+          "total_responses": 100,
+          "industry_benchmark": 30
+        },
+        "ai_analysis": {
+          "nps_level_assessment": {
+            "level": "需改进",
+            "industry_comparison": "低于行业标准",
+            "competitive_position": "落后"
+          },
+          "business_health_impact": {
+            "customer_loyalty": "中",
+            "brand_strength": "中",
+            "growth_potential": "中"
+          },
+          "strategic_recommendations": [
+            {
+              "priority": "高",
+              "action": "开展深入的客户调研，识别NPS低分背后的具体原因（如产品质量、价格、服务等）",
+              "expected_impact": "明确改进方向，提升客户满意度",
+              "timeline": "1-3个月"
+            },
+            {
+              "priority": "高",
+              "action": "针对核心产品线（如金典、安慕希）推出客户忠诚度计划，如积分奖励、专属优惠等",
+              "expected_impact": "增强客户粘性，提升复购率",
+              "timeline": "3-6个月"
+            },
+            {
+              "priority": "中",
+              "action": "优化售后服务流程，缩短响应时间，提升问题解决效率",
+              "expected_impact": "减少负面口碑，提升NPS",
+              "timeline": "6-12个月"
+            },
+            {
+              "priority": "低",
+              "action": "与行业领先企业（如蒙牛、光明）进行对标分析，学习其NPS提升策略",
+              "expected_impact": "借鉴成功经验，制定更有效的改进措施",
+              "timeline": "12个月以上"
+            }
+          ],
+          "key_insights": [
+            "洞察1: 当前NPS分数（13.0）显著低于行业基准（30%），表明伊利在客户满意度和推荐意愿方面与竞争对手存在较大差距，需立即采取行动提升客户体验。",
+            "洞察2: NPS分数反映的客户忠诚度为中等水平，说明部分客户对伊利的产品和服务持中立态度，存在较大的提升空间，尤其是通过增强品牌互动和个性化服务。"
+          ]
+        },
+        "business_questions": [
+          "当前NPS水平是否达到行业标准？",
+          "需要采取什么措施提升NPS分数？",
+          "与竞争对手相比我们的表现如何？"
+        ],
+        "insight_summary": [
+          "洞察1: 当前NPS分数（13.0）显著低于行业基准（30%），表明伊利在客户满意度和推荐意愿方面与竞争对手存在较大差距，需立即采取行动提升客户体验。",
+          "洞察2: NPS分数反映的客户忠诚度为中等水平，说明部分客户对伊利的产品和服务持中立态度，存在较大的提升空间，尤其是通过增强品牌互动和个性化服务。"
+        ],
+        "summary_text": "AI分析显示当前NPS净值13.0%处于需改进水平，在行业中低于行业标准，竞争地位落后。"
+      },
+      {
+        "agent_name": "NPS分布分析智能体",
+        "question_context": "Q1您向朋友或同事推荐我们的可能性多大？",
+        "input_data": {
+          "promoters": 31,
+          "passives": 51,
+          "detractors": 18,
+          "total": 100
+        },
+        "ai_analysis": {
+          "distribution_health": {
+            "structure_assessment": "中等",
+            "dominant_group": "中立者",
+            "balance_score": "6"
+          },
+          "customer_insights": {
+            "promoter_characteristics": [
+              "对伊利产品高度满意，可能频繁购买高端健康产品",
+              "品牌忠诚度高，愿意主动推荐给亲友"
+            ],
+            "passive_conversion_potential": "高",
+            "detractor_risk_level": "中"
+          },
+          "optimization_strategies": [
+            {
+              "target_group": "中立者",
+              "strategy": "通过个性化健康饮食建议和会员专属优惠提升满意度",
+              "conversion_goal": "转化为推荐者",
+              "success_metrics": "NPS提升5-10分"
+            },
+            {
+              "target_group": "贬损者",
+              "strategy": "开展客户回访，了解不满原因并提供问题解决方案",
+              "conversion_goal": "减少贬损者比例",
+              "success_metrics": "贬损者比例降至10%以下"
+            },
+            {
+              "target_group": "推荐者",
+              "strategy": "推出推荐奖励计划，鼓励口碑传播",
+              "conversion_goal": "提升客户终身价值",
+              "success_metrics": "推荐转化率提升15%"
+            }
+          ],
+          "business_implications": [
+            "中立者群体庞大且转化潜力高，是未来业绩增长的关键",
+            "需要警惕贬损者可能带来的负面口碑影响"
+          ]
+        },
+        "business_questions": [
+          "如何将中立者转化为推荐者？",
+          "贬损者的主要问题点是什么？",
+          "推荐者群体有什么共同特征？"
+        ],
+        "insight_summary": [
+          "中立者群体庞大且转化潜力高，是未来业绩增长的关键",
+          "需要警惕贬损者可能带来的负面口碑影响"
+        ],
+        "summary_text": "AI分析显示客户分布结构中等，中立者占主导地位，整体平衡评分6。"
+      },
+      {
+        "agent_name": "正面多选题分析智能体",
+        "question_context": "Q4 您愿意推荐我们的主要因素有哪些？",
+        "input_data": {
+          "total_selections": 0,
+          "unique_factors": 0,
+          "flattened_text": "",
+          "factor_frequency": {},
+          "factor_categories": {}
+        },
+        "statements": [
+          "推荐者群体未提供具体的正面因素选择",
+          "需要通过深度访谈了解推荐的真实原因",
+          "建议优化问卷设计，增加更贴近客户体验的选项"
+        ],
+        "business_questions": [
+          "哪些正面因素最能打动客户？",
+          "如何在营销中强化这些优势？",
+          "这些因素如何转化为竞争优势？"
+        ],
+        "summary_text": "推荐者群体在多选题中缺乏具体的正面因素反馈，表明问卷设计可能不够贴近实际客户体验，或推荐动机较为复杂难以通过标准选项表达。建议通过定性研究方法深入了解客户真实的推荐驱动因素。",
+        "insight_summary": [
+          "1. 数据缺失：推荐者未选择具体正面因素",
+          "2. 设计问题：问卷选项可能不够贴切",
+          "3. 研究建议：需要深度访谈补充"
+        ]
+      },
+      {
+        "agent_name": "正面填空题分析智能体",
+        "question_context": "Q5 您愿意推荐我们的具体原因是什么？",
+        "input_data": {
+          "total_responses": 0,
+          "flattened_text": "",
+          "response_rate": 0
+        },
+        "statements": [
+          "推荐者未提供具体的推荐理由描述",
+          "缺乏深度的客户洞察和情感连接信息",
+          "建议增加开放式问题引导客户分享真实感受"
+        ],
+        "business_questions": [
+          "客户最真实的推荐理由是什么？",
+          "这些自发表达反映了什么深层需求？",
+          "如何将这些洞察转化为产品优化？"
+        ],
+        "summary_text": "推荐者未提供具体的推荐理由描述，缺乏深度的客户洞察。",
+        "insight_summary": [
+          "数据缺失：推荐者未提供开放回答"
+        ]
+      },
+      {
+        "agent_name": "负面多选题分析智能体",
+        "question_context": "Q2 您不愿意推荐我们的主要因素有哪些？",
+        "input_data": {
+          "total_selections": 0,
+          "unique_factors": 0,
+          "flattened_text": "",
+          "factor_frequency": {}
+        },
+        "statements": [
+          "非推荐者群体未明确指出具体的负面因素",
+          "可能存在问题识别不充分或问卷选项不够贴切的情况",
+          "建议通过定性研究深入了解客户不满的根本原因"
+        ],
+        "business_questions": [
+          "哪些问题是客户不推荐的主要原因？",
+          "这些问题的解决优先级如何排序？",
+          "需要投入多少资源来解决这些问题？"
+        ],
+        "summary_text": "非推荐者群体未明确指出具体的负面因素，需要深入研究。",
+        "insight_summary": [
+          "数据缺失：非推荐者未选择具体负面因素"
+        ]
+      },
+      {
+        "agent_name": "负面填空题分析智能体",
+        "question_context": "Q3 您不愿意推荐我们的具体原因是什么？",
+        "input_data": {
+          "total_responses": 0,
+          "flattened_text": "",
+          "response_rate": 0
+        },
+        "statements": [
+          "非推荐者未详细说明不推荐的具体原因",
+          "缺乏深度的问题洞察，难以制定针对性改进措施",
+          "建议加强问题挖掘，了解客户真实痛点"
+        ],
+        "business_questions": [
+          "客户最不满意的具体是什么？",
+          "这些问题反映了哪些系统性缺陷？",
+          "如何制定有效的问题解决方案？"
+        ],
+        "summary_text": "非推荐者未详细说明不推荐的具体原因，缺乏深度洞察。",
+        "insight_summary": [
+          "数据缺失：非推荐者未提供开放回答"
+        ]
+      },
+      {
+        "agent_name": "综合总结分析智能体",
+        "question_context": "综合所有问题的分析结果",
+        "input_data": {
+          "total_insights": 10,
+          "agent_count": 6,
+          "agent_summaries": {
+            "agent1_summary": "['洞察1: 当前NPS分数（13.0）显著低于行业基准（30%），表明伊利在客户满意度和推荐意愿方面与竞争对手存在较大差距，需立即采取行动提升客户体验。', '洞察2: NPS分数反映的客户忠诚度为中等水平，说明部分客户对伊利的产品和服务持中立态度，存在较大的提升空间，尤其是通过增强品牌互动和个性化服务。']",
+            "agent2_summary": "AI分析结果",
+            "agent3_summary": "推荐者群体在多选题中缺乏具体的正面因素反馈，表明问卷设计可能不够贴近实际客户体验，或推荐动机较为复杂难以通过标准选项表达。建议通过定性研究方法深入了解客户真实的推荐驱动因素。",
+            "agent4_summary": "推荐者未提供具体的推荐理由描述，缺乏深度的客户洞察。",
+            "agent5_summary": "非推荐者群体未明确指出具体的负面因素，需要深入研究。",
+            "agent6_summary": "非推荐者未详细说明不推荐的具体原因，缺乏深度洞察。"
+          }
+        },
+        "ai_analysis": {
+          "comprehensive_assessment": {
+            "overall_nps_health": "有风险",
+            "key_drivers": [
+              "客户体验与满意度",
+              "品牌互动与个性化服务"
+            ],
+            "critical_success_factors": [
+              "提升客户体验",
+              "增强品牌互动"
+            ],
+            "main_challenges": [
+              "NPS分数显著低于行业基准",
+              "缺乏深入的客户洞察"
+            ]
+          },
+          "strategic_roadmap": {
+            "immediate_actions": [
+              {
+                "action": "优化NPS问卷设计，增加开放性问题",
+                "timeline": "1-3个月",
+                "owner": "市场研究部",
+                "success_metric": "问卷反馈质量提升，客户洞察深度增加"
+              },
+              {
+                "action": "启动客户体验提升计划，针对推荐者和非推荐者进行深度访谈",
+                "timeline": "1-3个月",
+                "owner": "客户服务部",
+                "success_metric": "明确客户满意和不满意因素"
+              }
+            ],
+            "medium_term_initiatives": [
+              {
+                "initiative": "开发个性化服务和品牌互动项目",
+                "timeline": "3-12个月",
+                "investment_required": "中高",
+                "expected_outcome": "客户忠诚度和推荐意愿提升"
+              },
+              {
+                "initiative": "实施跨部门客户体验优化计划",
+                "timeline": "3-12个月",
+                "investment_required": "中",
+                "expected_outcome": "客户满意度提升，NPS分数提高"
+              }
+            ],
+            "long_term_vision": {
+              "target_nps": "30%",
+              "timeline": "12-24个月",
+              "transformation_areas": [
+                "客户体验管理",
+                "品牌忠诚度建设"
+              ]
+            }
+          },
+          "cross_functional_recommendations": {
+            "product_development": [
+              "根据客户反馈优化产品线",
+              "开发符合客户需求的新产品"
+            ],
+            "marketing_communications": [
+              "加强品牌故事的传播",
+              "实施个性化营销策略"
+            ],
+            "customer_service": [
+              "提升服务响应速度和质量",
+              "建立客户反馈快速响应机制"
+            ],
+            "sales_channels": [
+              "优化线上线下渠道体验",
+              "提升渠道服务人员培训"
+            ],
+            "quality_management": [
+              "加强产品质量监控",
+              "实施客户满意度驱动的质量改进计划"
+            ]
+          },
+          "monitoring_framework": {
+            "kpi_dashboard": [
+              "NPS分数",
+              "客户满意度"
+            ],
+            "feedback_mechanisms": [
+              "定期客户调查",
+              "实时反馈系统"
+            ],
+            "review_frequency": "季度",
+            "escalation_triggers": [
+              "NPS分数下降超过5%",
+              "客户投诉率上升"
+            ]
+          },
+          "executive_summary": {
+            "situation": "伊利集团当前NPS分数（13.0）显著低于行业基准（30%），客户忠诚度为中等水平，缺乏深入的客户洞察，面临提升客户体验和品牌互动的挑战。",
+            "key_insights": "NPS表现不佳的主要原因是客户体验不足和品牌互动不够，需通过优化问卷设计、提升服务质量和加强品牌建设来改善。",
+            "recommendations": "立即优化NPS问卷和启动客户体验提升计划，中期开发个性化服务和品牌互动项目，长期目标是NPS分数达到行业基准。",
+            "expected_impact": "通过实施上述措施，预计客户满意度和NPS分数将显著提升，增强伊利在乳制品市场的竞争力。"
+          }
+        },
+        "business_questions": [
+          "如何制定综合性的NPS提升战略？",
+          "各部门应该如何协作改善客户体验？",
+          "如何平衡短期改进和长期品牌建设？",
+          "需要设立什么KPI来跟踪改进效果？"
+        ],
+        "additional_info": {
+          "product_context": "伊利集团乳制品全产品线",
+          "market_context": "中国乳制品市场竞争激烈，主要竞争对手包括蒙牛、光明、君乐宝",
+          "business_focus": "提升NPS分数，改善客户满意度，优化产品和服务体验",
+          "target_segments": "注重健康的消费者群体，追求品质生活的中产阶级",
+          "key_brands": [
+            "金典",
+            "安慕希",
+            "舒化",
+            "QQ星",
+            "优酸乳",
+            "谷粒多",
+            "味可滋",
+            "植选",
+            "金领冠珍护",
+            "金领冠珍护铂萃",
+            "畅轻",
+            "大果粒",
+            "每益添",
+            "巧乐兹",
+            "甄稀",
+            "须尽欢",
+            "欣活",
+            "倍畅",
+            "伊家好奶酪",
+            "伊知牛",
+            "依宝"
+          ],
+          "business_units": [
+            "液奶事业部",
+            "婴幼儿营养品事业部",
+            "酸奶事业部",
+            "成人营养品事业部",
+            "冷饮事业部",
+            "奶酪事业部",
+            "伊知牛公司",
+            "康益佳公司"
+          ],
+          "analysis_tags": {
+            "概念设计": [
+              "原料天然",
+              "奶源优质",
+              "目标群体",
+              "健康",
+              "营养价值感知",
+              "高端",
+              "高品质",
+              "时尚潮流",
+              "安全信赖",
+              "价格",
+              "包装美观",
+              "产品定位",
+              "价值主张",
+              "差异化优势",
+              "市场机会",
+              "产品特性",
+              "功能创新",
+              "使用场景",
+              "消费需求",
+              "产品理念",
+              "品牌形象",
+              "可持续发展",
+              "零碳足迹",
+              "循环经济",
+              "智能包装",
+              "个性化定制",
+              "AI推荐",
+              "区块链溯源",
+              "数字化体验"
+            ],
+            "口味设计": [
+              "口味",
+              "酸味",
+              "甜味",
+              "奶香味",
+              "口感",
+              "细腻度",
+              "顺滑度",
+              "层次感",
+              "醇厚度",
+              "营养价值感知",
+              "甜度调节",
+              "酸度平衡",
+              "香味层次",
+              "口感质地",
+              "风味组合",
+              "新口味开发",
+              "经典口味",
+              "季节性口味",
+              "地域口味",
+              "功能性口味",
+              "质地",
+              "浓度",
+              "层次",
+              "回味",
+              "温度感",
+              "清爽度"
+            ],
+            "包装设计": [
+              "字体美观度",
+              "图案美观度",
+              "色彩美观度",
+              "整体美观度",
+              "信息传达",
+              "品牌认知",
+              "产品印象",
+              "情感共鸣",
+              "视觉设计",
+              "包装材质",
+              "结构设计",
+              "便利性",
+              "环保性",
+              "货架展示",
+              "品牌识别",
+              "色彩搭配",
+              "图案设计",
+              "便携性",
+              "开启方便",
+              "保鲜性",
+              "防伪设计",
+              "用户体验"
+            ]
+          }
+        },
+        "insight_summary": [
+          "战略洞察: NPS表现不佳的主要原因是客户体验不足和品牌互动不够，需通过优化问卷设计、提升服务质量和加强品牌建设来改善。",
+          "核心建议: 立即优化NPS问卷和启动客户体验提升计划，中期开发个性化服务和品牌互动项目，长期目标是NPS分数达到行业基准。",
+          "预期影响: 通过实施上述措施，预计客户满意度和NPS分数将显著提升，增强伊利在乳制品市场的竞争力。"
+        ],
+        "summary_text": "AI综合分析显示NPS整体健康度为有风险，核心驱动因素包括客户体验与满意度, 品牌互动与个性化服务，提供了系统性的战略路线图和跨部门协作建议。"
+      }
+    ],
+    "supporting_data": {
+      "positive_set": {
+        "nps_array": [
+          {
+            "user_id": "3",
+            "nps_score": 10,
+            "nps_category": "promoter",
+            "raw_value": "10分"
+          },
+          {
+            "user_id": "5",
+            "nps_score": 10,
+            "nps_category": "promoter",
+            "raw_value": "10分"
+          },
+          {
+            "user_id": "11",
+            "nps_score": 9,
+            "nps_category": "promoter",
+            "raw_value": "9分"
+          },
+          {
+            "user_id": "15",
+            "nps_score": 9,
+            "nps_category": "promoter",
+            "raw_value": "9分"
+          },
+          {
+            "user_id": "16",
+            "nps_score": 9,
+            "nps_category": "promoter",
+            "raw_value": "9分"
+          },
+          {
+            "user_id": "22",
+            "nps_score": 9,
+            "nps_category": "promoter",
+            "raw_value": "9分"
+          },
+          {
+            "user_id": "24",
+            "nps_score": 10,
+            "nps_category": "promoter",
+            "raw_value": "10分"
+          },
+          {
+            "user_id": "27",
+            "nps_score": 9,
+            "nps_category": "promoter",
+            "raw_value": "9分"
+          },
+          {
+            "user_id": "29",
+            "nps_score": 9,
+            "nps_category": "promoter",
+            "raw_value": "9分"
+          },
+          {
+            "user_id": "31",
+            "nps_score": 9,
+            "nps_category": "promoter",
+            "raw_value": "9分"
+          },
+          {
+            "user_id": "40",
+            "nps_score": 9,
+            "nps_category": "promoter",
+            "raw_value": "9分"
+          },
+          {
+            "user_id": "44",
+            "nps_score": 9,
+            "nps_category": "promoter",
+            "raw_value": "9分"
+          },
+          {
+            "user_id": "47",
+            "nps_score": 9,
+            "nps_category": "promoter",
+            "raw_value": "9分"
+          },
+          {
+            "user_id": "51",
+            "nps_score": 9,
+            "nps_category": "promoter",
+            "raw_value": "9分"
+          },
+          {
+            "user_id": "52",
+            "nps_score": 9,
+            "nps_category": "promoter",
+            "raw_value": "9分"
+          },
+          {
+            "user_id": "58",
+            "nps_score": 9,
+            "nps_category": "promoter",
+            "raw_value": "9分"
+          },
+          {
+            "user_id": "59",
+            "nps_score": 10,
+            "nps_category": "promoter",
+            "raw_value": "10分"
+          },
+          {
+            "user_id": "63",
+            "nps_score": 10,
+            "nps_category": "promoter",
+            "raw_value": "10分"
+          },
+          {
+            "user_id": "65",
+            "nps_score": 10,
+            "nps_category": "promoter",
+            "raw_value": "10分"
+          },
+          {
+            "user_id": "69",
+            "nps_score": 9,
+            "nps_category": "promoter",
+            "raw_value": "9分"
+          },
+          {
+            "user_id": "74",
+            "nps_score": 9,
+            "nps_category": "promoter",
+            "raw_value": "9分"
+          },
+          {
+            "user_id": "76",
+            "nps_score": 9,
+            "nps_category": "promoter",
+            "raw_value": "9分"
+          },
+          {
+            "user_id": "77",
+            "nps_score": 10,
+            "nps_category": "promoter",
+            "raw_value": "10分"
+          },
+          {
+            "user_id": "78",
+            "nps_score": 9,
+            "nps_category": "promoter",
+            "raw_value": "9分"
+          },
+          {
+            "user_id": "80",
+            "nps_score": 10,
+            "nps_category": "promoter",
+            "raw_value": "10分"
+          },
+          {
+            "user_id": "81",
+            "nps_score": 9,
+            "nps_category": "promoter",
+            "raw_value": "9分"
+          },
+          {
+            "user_id": "83",
+            "nps_score": 10,
+            "nps_category": "promoter",
+            "raw_value": "10分"
+          },
+          {
+            "user_id": "89",
+            "nps_score": 9,
+            "nps_category": "promoter",
+            "raw_value": "9分"
+          },
+          {
+            "user_id": "91",
+            "nps_score": 9,
+            "nps_category": "promoter",
+            "raw_value": "9分"
+          },
+          {
+            "user_id": "92",
+            "nps_score": 9,
+            "nps_category": "promoter",
+            "raw_value": "9分"
+          },
+          {
+            "user_id": "98",
+            "nps_score": 9,
+            "nps_category": "promoter",
+            "raw_value": "9分"
+          }
+        ],
+        "multiple_choice_array": [
+          {
+            "user_id": "3",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "5",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "11",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "15",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "16",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "22",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "24",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "27",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "29",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "31",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "40",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "44",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "47",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "51",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "52",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "58",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "59",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "63",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "65",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "69",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "74",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "76",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "77",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "78",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "80",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "81",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "83",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "89",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "91",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "92",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "98",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          }
+        ],
+        "free_question_array": [
+          {
+            "user_id": "3",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "5",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "11",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "15",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "16",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "22",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "24",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "27",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "29",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "31",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "40",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "44",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "47",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "51",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "52",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "58",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "59",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "63",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "65",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "69",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "74",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "76",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "77",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "78",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "80",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "81",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "83",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "89",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "91",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "92",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "98",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          }
+        ]
+      },
+      "negative_set": {
+        "nps_array": [
+          {
+            "user_id": "1",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "2",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "4",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "6",
+            "nps_score": 6,
+            "nps_category": "detractor",
+            "raw_value": "6分"
+          },
+          {
+            "user_id": "7",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "8",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "9",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "10",
+            "nps_score": 6,
+            "nps_category": "detractor",
+            "raw_value": "6分"
+          },
+          {
+            "user_id": "12",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "13",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "14",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "17",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "18",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "19",
+            "nps_score": 6,
+            "nps_category": "detractor",
+            "raw_value": "6分"
+          },
+          {
+            "user_id": "20",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "21",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "23",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "25",
+            "nps_score": 5,
+            "nps_category": "detractor",
+            "raw_value": "5分"
+          },
+          {
+            "user_id": "26",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "28",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "30",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "32",
+            "nps_score": 5,
+            "nps_category": "detractor",
+            "raw_value": "5分"
+          },
+          {
+            "user_id": "33",
+            "nps_score": 6,
+            "nps_category": "detractor",
+            "raw_value": "6分"
+          },
+          {
+            "user_id": "34",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "35",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "36",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "37",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "38",
+            "nps_score": 6,
+            "nps_category": "detractor",
+            "raw_value": "6分"
+          },
+          {
+            "user_id": "39",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "41",
+            "nps_score": 6,
+            "nps_category": "detractor",
+            "raw_value": "6分"
+          },
+          {
+            "user_id": "42",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "43",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "45",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "46",
+            "nps_score": 6,
+            "nps_category": "detractor",
+            "raw_value": "6分"
+          },
+          {
+            "user_id": "48",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "49",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "50",
+            "nps_score": 6,
+            "nps_category": "detractor",
+            "raw_value": "6分"
+          },
+          {
+            "user_id": "53",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "54",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "55",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "56",
+            "nps_score": 5,
+            "nps_category": "detractor",
+            "raw_value": "5分"
+          },
+          {
+            "user_id": "57",
+            "nps_score": 5,
+            "nps_category": "detractor",
+            "raw_value": "5分"
+          },
+          {
+            "user_id": "60",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "61",
+            "nps_score": 5,
+            "nps_category": "detractor",
+            "raw_value": "5分"
+          },
+          {
+            "user_id": "62",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "64",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "66",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "67",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "68",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "70",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "71",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "72",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "73",
+            "nps_score": 6,
+            "nps_category": "detractor",
+            "raw_value": "6分"
+          },
+          {
+            "user_id": "75",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "79",
+            "nps_score": 6,
+            "nps_category": "detractor",
+            "raw_value": "6分"
+          },
+          {
+            "user_id": "82",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "84",
+            "nps_score": 6,
+            "nps_category": "detractor",
+            "raw_value": "6分"
+          },
+          {
+            "user_id": "85",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "86",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "87",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "88",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "90",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "93",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "94",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "95",
+            "nps_score": 5,
+            "nps_category": "detractor",
+            "raw_value": "5分"
+          },
+          {
+            "user_id": "96",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          },
+          {
+            "user_id": "97",
+            "nps_score": 5,
+            "nps_category": "detractor",
+            "raw_value": "5分"
+          },
+          {
+            "user_id": "99",
+            "nps_score": 8,
+            "nps_category": "passive",
+            "raw_value": "8分"
+          },
+          {
+            "user_id": "100",
+            "nps_score": 7,
+            "nps_category": "passive",
+            "raw_value": "7分"
+          }
+        ],
+        "multiple_choice_array": [
+          {
+            "user_id": "1",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "2",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "4",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "6",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "7",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "8",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "9",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "10",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "12",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "13",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "14",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "17",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "18",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "19",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "20",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "21",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "23",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "25",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "26",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "28",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "30",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "32",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "33",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "34",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "35",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "36",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "37",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "38",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "39",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "41",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "42",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "43",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "45",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "46",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "48",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "49",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "50",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "53",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "54",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "55",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "56",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "57",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "60",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "61",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "62",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "64",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "66",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "67",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "68",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "70",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "71",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "72",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "73",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "75",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "79",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "82",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "84",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "85",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "86",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "87",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "88",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "90",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "93",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "94",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "95",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "96",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "97",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "99",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          },
+          {
+            "user_id": "100",
+            "negative_factors": [],
+            "positive_factors": [],
+            "negative_factor_count": 0,
+            "positive_factor_count": 0
+          }
+        ],
+        "free_question_array": [
+          {
+            "user_id": "1",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "2",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "4",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "6",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "7",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "8",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "9",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "10",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "12",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "13",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "14",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "17",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "18",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "19",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "20",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "21",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "23",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "25",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "26",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "28",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "30",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "32",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "33",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "34",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "35",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "36",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "37",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "38",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "39",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "41",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "42",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "43",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "45",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "46",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "48",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "49",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "50",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "53",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "54",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "55",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "56",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "57",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "60",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "61",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "62",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "64",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "66",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "67",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "68",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "70",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "71",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "72",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "73",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "75",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "79",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "82",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "84",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "85",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "86",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "87",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "88",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "90",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "93",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "94",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "95",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "96",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "97",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "99",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          },
+          {
+            "user_id": "100",
+            "negative_reason": "",
+            "positive_reason": "",
+            "has_negative_text": false,
+            "has_positive_text": false,
+            "total_text_length": 0
+          }
+        ]
+      },
+      "question_texts": {
+        "nps_question": "Q1您向朋友或同事推荐我们的可能性多大？",
+        "negative_factors": "Q2 您不愿意推荐我们的主要因素有哪些？",
+        "negative_specific": "Q3 您不愿意推荐我们的具体原因是什么？",
+        "positive_factors": "Q4 您愿意推荐我们的主要因素有哪些？",
+        "positive_specific": "Q5 您愿意推荐我们的具体原因是什么？"
+      }
+    },
+    "summary_statistics": {
+      "total_agents": 7,
+      "total_statements": 12,
+      "total_business_questions": 22,
+      "total_ai_insights": 13,
+      "ai_powered_agents": 3,
+      "fallback_agents": 4,
+      "analysis_coverage": "NPS净值、分布、正面因素、负面因素、开放回答、综合洞察"
+    }
+  },
+  "metadata": {
+    "input_format": "chinese_flat",
+    "processing_successful": true,
+    "agents_count": 7,
+    "total_statements": 12,
+    "total_business_questions": 22,
+    "analysis_coverage": "NPS净值、分布、正面因素、负面因素、开放回答、综合洞察",
+    "model_version": "nps-report-v2-seven-agent",
+    "language": "zh-CN"
+  },
+  "summary_insights": {
+    "agent_name": "综合总结分析智能体",
+    "key_statements": [],
+    "critical_questions": [
+      "如何制定综合性的NPS提升战略？",
+      "各部门应该如何协作改善客户体验？",
+      "如何平衡短期改进和长期品牌建设？"
+    ],
+    "additional_info": {
+      "product_context": "伊利集团乳制品全产品线",
+      "market_context": "中国乳制品市场竞争激烈，主要竞争对手包括蒙牛、光明、君乐宝",
+      "business_focus": "提升NPS分数，改善客户满意度，优化产品和服务体验",
+      "target_segments": "注重健康的消费者群体，追求品质生活的中产阶级",
+      "key_brands": [
+        "金典",
+        "安慕希",
+        "舒化",
+        "QQ星",
+        "优酸乳",
+        "谷粒多",
+        "味可滋",
+        "植选",
+        "金领冠珍护",
+        "金领冠珍护铂萃",
+        "畅轻",
+        "大果粒",
+        "每益添",
+        "巧乐兹",
+        "甄稀",
+        "须尽欢",
+        "欣活",
+        "倍畅",
+        "伊家好奶酪",
+        "伊知牛",
+        "依宝"
+      ],
+      "business_units": [
+        "液奶事业部",
+        "婴幼儿营养品事业部",
+        "酸奶事业部",
+        "成人营养品事业部",
+        "冷饮事业部",
+        "奶酪事业部",
+        "伊知牛公司",
+        "康益佳公司"
+      ],
+      "analysis_tags": {
+        "概念设计": [
+          "原料天然",
+          "奶源优质",
+          "目标群体",
+          "健康",
+          "营养价值感知",
+          "高端",
+          "高品质",
+          "时尚潮流",
+          "安全信赖",
+          "价格",
+          "包装美观",
+          "产品定位",
+          "价值主张",
+          "差异化优势",
+          "市场机会",
+          "产品特性",
+          "功能创新",
+          "使用场景",
+          "消费需求",
+          "产品理念",
+          "品牌形象",
+          "可持续发展",
+          "零碳足迹",
+          "循环经济",
+          "智能包装",
+          "个性化定制",
+          "AI推荐",
+          "区块链溯源",
+          "数字化体验"
+        ],
+        "口味设计": [
+          "口味",
+          "酸味",
+          "甜味",
+          "奶香味",
+          "口感",
+          "细腻度",
+          "顺滑度",
+          "层次感",
+          "醇厚度",
+          "营养价值感知",
+          "甜度调节",
+          "酸度平衡",
+          "香味层次",
+          "口感质地",
+          "风味组合",
+          "新口味开发",
+          "经典口味",
+          "季节性口味",
+          "地域口味",
+          "功能性口味",
+          "质地",
+          "浓度",
+          "层次",
+          "回味",
+          "温度感",
+          "清爽度"
+        ],
+        "包装设计": [
+          "字体美观度",
+          "图案美观度",
+          "色彩美观度",
+          "整体美观度",
+          "信息传达",
+          "品牌认知",
+          "产品印象",
+          "情感共鸣",
+          "视觉设计",
+          "包装材质",
+          "结构设计",
+          "便利性",
+          "环保性",
+          "货架展示",
+          "品牌识别",
+          "色彩搭配",
+          "图案设计",
+          "便携性",
+          "开启方便",
+          "保鲜性",
+          "防伪设计",
+          "用户体验"
+        ]
+      }
+    }
+  }
+}

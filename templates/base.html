@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-CN" class="h-full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}伊利智能 NPS 研究中心{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+    <style>
+      .gradient-hero { background: linear-gradient(135deg, #2563eb 0%, #9333ea 100%); }
+      .card {
+        background-color: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.75rem;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.125rem 0.5rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-slate-50 text-slate-900">
+    {% set active = active_page | default('') %}
+    <div class="min-h-screen flex">
+      <aside class="hidden lg:flex lg:flex-col lg:w-72 bg-white border-r border-slate-200">
+        <div class="px-6 pt-8 pb-6 border-b border-slate-200 space-y-4">
+          <div class="flex items-center space-x-3">
+            <div class="h-10 w-10 rounded-xl flex items-center justify-center text-white text-lg font-semibold gradient-hero">
+              伊
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-slate-900">伊利智能 NPS 平台</p>
+              <p class="text-xs text-slate-500">市场洞察 · AI 中枢</p>
+            </div>
+          </div>
+          <div class="text-xs text-slate-500">
+            <p>平台版本：<span class="font-medium text-slate-700">{{ __version__ | default('0.0.1') }}</span></p>
+          </div>
+        </div>
+        <nav class="flex-1 overflow-y-auto px-6 py-6 space-y-8 text-sm">
+          <div>
+            <p class="text-xs uppercase tracking-wide text-slate-400 mb-2">平台总览</p>
+            <ul class="space-y-1">
+              <li>
+                <a href="/" class="flex items-center justify-between rounded-lg px-3 py-2 hover:bg-slate-100 {{ 'bg-slate-100 text-blue-600 hover:text-blue-600' if active=='overview' else 'text-slate-700' }}">
+                  <span>仪表盘</span>
+                  <span class="badge bg-blue-100 text-blue-700">核心</span>
+                </a>
+              </li>
+              <li>
+                <a href="/analytics" class="block rounded-lg px-3 py-2 hover:bg-slate-100 {{ 'bg-slate-100 text-blue-600 hover:text-blue-600' if active=='analytics' else 'text-slate-700' }}">数据分析实验室</a>
+              </li>
+              <li>
+                <a href="/insights" class="block rounded-lg px-3 py-2 hover:bg-slate-100 {{ 'bg-slate-100 text-blue-600 hover:text-blue-600' if active=='insights' else 'text-slate-700' }}">智能洞察</a>
+              </li>
+              <li>
+                <a href="/reports" class="block rounded-lg px-3 py-2 hover:bg-slate-100 {{ 'bg-slate-100 text-blue-600 hover:text-blue-600' if active=='reports' else 'text-slate-700' }}">报告中心</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-wide text-slate-400 mb-2">运营协作</p>
+            <ul class="space-y-1">
+              <li><a href="/projects" class="block rounded-lg px-3 py-2 hover:bg-slate-100 {{ 'bg-slate-100 text-blue-600 hover:text-blue-600' if active=='projects' else 'text-slate-700' }}">项目管理</a></li>
+              <li><a href="/surveys" class="block rounded-lg px-3 py-2 hover:bg-slate-100 {{ 'bg-slate-100 text-blue-600 hover:text-blue-600' if active=='surveys' else 'text-slate-700' }}">问卷与样本</a></li>
+              <li><a href="/consumers" class="block rounded-lg px-3 py-2 hover:bg-slate-100 {{ 'bg-slate-100 text-blue-600 hover:text-blue-600' if active=='consumers' else 'text-slate-700' }}">消费者分层</a></li>
+              <li><a href="/calendar" class="block rounded-lg px-3 py-2 hover:bg-slate-100 {{ 'bg-slate-100 text-blue-600 hover:text-blue-600' if active=='calendar' else 'text-slate-700' }}">日程与里程碑</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-wide text-slate-400 mb-2">多智能体套件</p>
+            <ul class="space-y-1">
+              <li><a href="/docs#/default/nps_report_v2" class="block rounded-lg px-3 py-2 hover:bg-slate-100 text-slate-700">V2 七智能体 · 稳定版</a></li>
+              <li><a href="/docs#/default/nps_report_v3" class="block rounded-lg px-3 py-2 hover:bg-slate-100 text-slate-700">V3 实验室 · 增强版</a></li>
+              <li><a href="/docs#/default/nps_report_v1" class="block rounded-lg px-3 py-2 hover:bg-slate-100 text-slate-700">V1 经典流程</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-wide text-slate-400 mb-2">知识资产</p>
+            <ul class="space-y-1">
+              <li><a href="/documents" class="block rounded-lg px-3 py-2 hover:bg-slate-100 {{ 'bg-slate-100 text-blue-600 hover:text-blue-600' if active=='documents' else 'text-slate-700' }}">文档与方法论</a></li>
+              <li><a href="/examples" class="block rounded-lg px-3 py-2 hover:bg-slate-100 {{ 'bg-slate-100 text-blue-600 hover:text-blue-600' if active=='examples' else 'text-slate-700' }}">示例与脚本</a></li>
+              <li><a href="/settings" class="block rounded-lg px-3 py-2 hover:bg-slate-100 {{ 'bg-slate-100 text-blue-600 hover:text-blue-600' if active=='settings' else 'text-slate-700' }}">平台设置</a></li>
+            </ul>
+          </div>
+        </nav>
+        <div class="px-6 py-6 border-t border-slate-200 text-xs text-slate-500 space-y-2">
+          <p>Powered by FastAPI · Tailwind · HTMX</p>
+          <p>联系：洞察中台 / AI 创新联合项目组</p>
+        </div>
+      </aside>
+      <div class="flex-1 flex flex-col">
+        <header class="bg-white border-b border-slate-200">
+          <div class="px-4 sm:px-6 lg:px-10 py-4 flex items-center justify-between">
+            <div>
+              <h1 class="text-lg font-semibold text-slate-900">{% block header_title %}{% endblock %}</h1>
+              <p class="text-xs text-slate-500 mt-1">{% block header_desc %}{% endblock %}</p>
+            </div>
+            <div class="flex items-center space-x-3 text-xs">
+              <span class="badge bg-emerald-100 text-emerald-700">V2 稳定运行</span>
+              <span class="badge bg-violet-100 text-violet-700">V3 实验中</span>
+              <a href="/docs" class="inline-flex items-center px-3 py-2 text-xs font-medium text-blue-600 border border-blue-100 rounded-lg hover:bg-blue-50">API 控制台</a>
+            </div>
+          </div>
+        </header>
+        <main class="flex-1 overflow-y-auto">
+          <div class="px-4 sm:px-6 lg:px-10 py-8 space-y-8">
+            {% block content %}{% endblock %}
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

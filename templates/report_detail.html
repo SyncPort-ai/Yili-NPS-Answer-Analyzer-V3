@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block title %}{{ report.title }} · 报告详情{% endblock %}
+{% block header_title %}{{ report.title }}{% endblock %}
+{% block header_desc %}{{ report.subtitle if report.subtitle else 'NPS 调研报告详情' }}{% endblock %}
+{% block content %}
+  <section class="card p-6 mb-6">
+    <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+      <div>
+        <div class="flex flex-wrap items-center gap-2 mb-3">
+          <span class="badge bg-blue-100 text-blue-700">{{ report.category }}</span>
+          <span class="badge bg-slate-100 text-slate-600">{{ report.reportMetadata.version }}</span>
+          <span class="badge bg-slate-100 text-slate-600">{{ report.reportMetadata.confidentiality }}</span>
+        </div>
+        <p class="text-sm text-slate-500">作者：{{ report.reportMetadata.author }} · {{ report.reportMetadata.department }} ｜ 创建：{{ report.reportMetadata.createdDate }} ｜ 审批：{{ report.reportMetadata.approvedBy }}</p>
+        <p class="text-xs text-slate-500 mt-2">本报告遵循 <a href="/documents" class="text-blue-600 underline decoration-dotted">NPS 分析方法论</a> 的指标口径、样本规范与行动闭环要求。</p>
+      </div>
+      <a class="inline-flex items-center rounded-lg border border-slate-200 px-4 py-2 text-xs font-medium text-slate-600 hover:border-blue-200 hover:text-blue-600" href="/reports">返回列表</a>
+    </div>
+  </section>
+
+  <section class="grid gap-6 lg:grid-cols-3">
+    <div class="lg:col-span-2 space-y-6">
+      <div class="card p-6">
+        <h3 class="text-lg font-semibold text-slate-900 mb-3">执行摘要</h3>
+        <p class="text-sm leading-relaxed text-slate-700">{{ report.executiveSummary }}</p>
+      </div>
+
+      <div class="card p-6">
+        <h3 class="text-lg font-semibold text-slate-900 mb-3">关键发现</h3>
+        <div class="space-y-3">
+          {% for finding in report.keyFindings %}
+          <div class="rounded-lg border border-slate-100 bg-slate-50 px-4 py-3 text-sm text-slate-700">{{ loop.index }}. {{ finding }}</div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="card p-6">
+        <h3 class="text-lg font-semibold text-slate-900 mb-3">核心数据洞察</h3>
+        <div class="grid gap-4 md:grid-cols-2">
+          {% for d in report.dataInsights %}
+          <div class="rounded-lg border border-slate-100 px-4 py-4">
+            <div class="flex items-center justify-between text-sm text-slate-600">
+              <span class="font-medium text-slate-900">{{ d.metric }}</span>
+              <span>{{ d.trend }}</span>
+            </div>
+            <p class="mt-2 text-3xl font-semibold text-blue-700">{{ d.value }}</p>
+            <p class="text-xs text-slate-500">vs {{ d.previousValue }} · {{ d.significance }}</p>
+            <p class="mt-3 text-sm text-slate-600">{{ d.context }}</p>
+            <p class="mt-3 text-sm text-slate-600"><span class="font-medium">业务影响：</span>{{ d.implication }}</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="card p-6">
+        <h3 class="text-lg font-semibold text-slate-900 mb-3">商业建议</h3>
+        <div class="space-y-4">
+          {% for rec in report.businessRecommendations %}
+          <div class="rounded-lg border border-slate-100 px-4 py-4 text-sm text-slate-600">
+            <div class="flex flex-wrap items-center gap-2 mb-3">
+              <span class="badge bg-amber-100 text-amber-700">{{ rec.priority }}</span>
+              <span class="badge bg-slate-100 text-slate-600">{{ rec.category }}</span>
+            </div>
+            <p class="font-medium text-slate-900 mb-1">{{ rec.recommendation }}</p>
+            <p class="mb-3">{{ rec.rationale }}</p>
+            <div class="grid gap-3 md:grid-cols-2">
+              <p>预期影响：{{ rec.expectedImpact }}</p>
+              <p>实施周期：{{ rec.timeline }}</p>
+              <p>投资需求：{{ rec.investmentRequired }}</p>
+              <div>
+                <p>成功指标：</p>
+                <ul class="list-disc pl-5">
+                  {% for m in rec.successMetrics %}<li>{{ m }}</li>{% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-6">
+      <div class="card p-6">
+        <h3 class="text-lg font-semibold text-slate-900 mb-3">行业基准对比</h3>
+        <div class="space-y-3 text-sm text-slate-600">
+          {% for b in report.industryBenchmarks %}
+          <div class="rounded-lg border border-slate-100 px-4 py-3">
+            <p class="font-medium text-slate-900">{{ b.metric }}</p>
+            <p>伊利：{{ b.yiliValue }} · 行业均值：{{ b.industryAverage }} · 领先四分位：{{ b.topQuartile }}</p>
+            <p class="text-xs text-slate-500 mt-1">{{ b.position }} · {{ b.analysis }}</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="card p-6">
+        <h3 class="text-lg font-semibold text-slate-900 mb-3">风险评估</h3>
+        <div class="space-y-3 text-sm text-slate-600">
+          {% for r in report.riskAssessment %}
+          <div class="rounded-lg border border-slate-100 px-4 py-3">
+            <p class="font-medium text-slate-900">{{ r.risk }}</p>
+            <p>概率：{{ r.probability }}，影响：{{ r.impact }}</p>
+            <p class="text-xs text-slate-500 mt-1">缓释：{{ r.mitigation }} · 责任：{{ r.owner }}</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

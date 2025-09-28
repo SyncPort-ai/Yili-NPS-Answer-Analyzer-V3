@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}平台设置 · 伊利智能 NPS 研究中心{% endblock %}
+{% block header_title %}平台设置与集成状态{% endblock %}
+{% block header_desc %}查看平台配置、外部依赖、功能开关与变更记录，保障稳定运行。{% endblock %}
+{% block content %}
+  <section class="grid gap-6 lg:grid-cols-[2fr,3fr]">
+    <div class="card p-6">
+      <h2 class="text-lg font-semibold text-slate-900 mb-2">基础配置</h2>
+      <ul class="space-y-3 text-sm text-slate-600">
+        {% for item in platform_info %}
+        <li class="flex items-center justify-between rounded-lg border border-slate-100 px-4 py-3">
+          <span class="text-xs text-slate-500">{{ item.label }}</span>
+          <span class="text-sm font-medium text-slate-900">{{ item.value }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="card p-6">
+      <h2 class="text-lg font-semibold text-slate-900 mb-2">集成状态</h2>
+      <div class="space-y-3 text-sm text-slate-600">
+        {% for integration in integration_status %}
+        <div class="rounded-lg border border-slate-100 px-4 py-3">
+          <div class="flex items-center justify-between">
+            <p class="text-sm font-medium text-slate-900">{{ integration.name }}</p>
+            <span class="badge {{ 'bg-emerald-100 text-emerald-700' if integration.status == 'online' else 'bg-amber-100 text-amber-700' }}">{{ integration.status }}</span>
+          </div>
+          <p class="text-xs text-slate-500 mt-1">响应时间：{{ integration.latency }}</p>
+          <p class="text-[11px] text-slate-400 mt-1">最新检查：{{ integration.updated_at }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="grid gap-6 lg:grid-cols-2">
+    <div class="card p-6">
+      <h3 class="text-lg font-semibold text-slate-900 mb-2">功能开关</h3>
+      <ul class="space-y-3 text-sm text-slate-600">
+        {% for flag in feature_flags %}
+        <li class="rounded-lg border border-slate-100 px-4 py-3">
+          <div class="flex items-center justify-between">
+            <p class="text-sm font-medium text-slate-900">{{ flag.name }}</p>
+            <span class="badge {{ 'bg-blue-100 text-blue-700' if flag.enabled else 'bg-slate-100 text-slate-600' }}">{{ '已启用' if flag.enabled else '未启用' }}</span>
+          </div>
+          <p class="text-xs text-slate-500 mt-1">{{ flag.description }}</p>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="card p-6">
+      <h3 class="text-lg font-semibold text-slate-900 mb-2">变更记录</h3>
+      <ul class="space-y-3 text-sm text-slate-600">
+        {% for record in audit_log %}
+        <li class="rounded-lg border border-slate-100 px-4 py-3">
+          <p class="text-sm font-medium text-slate-900">{{ record.event }}</p>
+          <p class="text-xs text-slate-500 mt-1">{{ record.detail }}</p>
+          <p class="text-[11px] text-slate-400 mt-1">{{ record.timestamp }} · {{ record.actor }}</p>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+{% endblock %}

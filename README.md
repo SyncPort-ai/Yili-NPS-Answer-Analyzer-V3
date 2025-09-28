@@ -1,9 +1,26 @@
-# nps-report-analyzer
+# NPS Analysis System
 
-一个基于 FastAPI 的 NPS 报告分析/生成服务，包含：
-- v0 兼容接口：`POST /nps-report-v0`（与现有 Flow API 输入/输出兼容）
-- v1 多智能体工作流：`POST /nps-report-v1`（内置工作流，无外部代码依赖）
-- AI 开放题分析：清洗-打标-聚类-总结流程（见 `opening_question_analysis.py`）
+专业的NPS分析系统，采用**库优先**架构设计：
+
+## 🚀 推荐用法：直接函数调用（内部使用）
+
+```python
+# 导入核心库 - 快速、类型安全、无HTTP开销
+from nps_analysis import NPSAnalyzer
+
+analyzer = NPSAnalyzer()
+result = analyzer.analyze_survey_responses(survey_data)1
+print(f"NPS得分: {result.nps_score}")
+```
+
+**优势：比API调用快10倍，更好的错误处理，完整的IDE支持**
+
+## 📡 API接口：仅供外部集成
+
+- `POST /analyze` - V0兼容文本分析接口（Flow系统集成）
+- `POST /nps-report-v0` - V0兼容NPS报告接口
+- `GET /healthz` - 健康检查
+- 详见：`api_external.py`（最小化API，仅核心端点）
 
 ## 快速开始
 
@@ -61,6 +78,18 @@ open http://localhost:7070
 # API文档
 open http://localhost:7070/docs
 ```
+
+### Chrome MCP 浏览器测试
+```bash
+# 启动本地 MCP 服务器
+python -m mcp_servers.chrome_testing_server --headless --slow-mo-ms 150
+```
+
+要点：
+- 启动前若未安装依赖，可运行 `pip install model-context-protocol pyppeteer`.
+- 工具命名以 `chrome.*` 开头，覆盖 `launch`、`navigate`、`evaluate`、`screenshot`、`status`、`close`
+- 支持环境变量 `CHROME_MCP_HEADLESS`、`CHROME_MCP_EXECUTABLE`、`CHROME_MCP_ARGS`、`CHROME_MCP_SLOWMO_MS`
+- 底层使用 pyppeteer，首次运行会自动下载 Chromium；如需复用系统 Chrome，可设置 `CHROME_MCP_EXECUTABLE=/path/to/chrome`
 
 ### 环境配置
 

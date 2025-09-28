@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}项目管理 · 伊利智能 NPS 研究中心{% endblock %}
+{% block header_title %}项目管理中心{% endblock %}
+{% block header_desc %}追踪多业务线调研项目进度，统筹输出节奏与资源分配。{% endblock %}
+{% block content %}
+  <section class="grid gap-6 lg:grid-cols-[3fr,2fr]">
+    <div class="card p-6">
+      <h2 class="text-lg font-semibold text-slate-900 mb-1">项目运行概览</h2>
+      <p class="text-xs text-slate-500 mb-4">覆盖不同事业部的调研与洞察项目，关注里程碑、进度与风险。</p>
+      <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4 text-sm text-slate-700">
+        <div class="rounded-lg border border-slate-100 px-4 py-3">
+          <p class="text-xs text-slate-500">进行中项目</p>
+          <p class="mt-1 text-2xl font-semibold text-blue-600">{{ project_stats.active }}</p>
+        </div>
+        <div class="rounded-lg border border-slate-100 px-4 py-3">
+          <p class="text-xs text-slate-500">规划中</p>
+          <p class="mt-1 text-2xl font-semibold text-violet-600">{{ project_stats.in_planning }}</p>
+        </div>
+        <div class="rounded-lg border border-slate-100 px-4 py-3">
+          <p class="text-xs text-slate-500">平均完成度</p>
+          <p class="mt-1 text-2xl font-semibold text-emerald-600">{{ project_stats.avg_completion }}%</p>
+        </div>
+        <div class="rounded-lg border border-slate-100 px-4 py-3">
+          <p class="text-xs text-slate-500">样本回收率</p>
+          <p class="mt-1 text-2xl font-semibold text-amber-600">{{ project_stats.response_rate }}%</p>
+        </div>
+      </div>
+    </div>
+    <div class="card p-6">
+      <h3 class="text-lg font-semibold text-slate-900 mb-1">即将到来的里程碑</h3>
+      <p class="text-xs text-slate-500 mb-4">协同品牌、渠道、AI 团队同步节奏。</p>
+      <ul class="space-y-3 text-sm text-slate-600">
+        {% for item in upcoming %}
+        <li class="rounded-lg border border-slate-100 px-4 py-3">
+          <div class="flex items-center justify-between">
+            <p class="text-sm font-medium text-slate-900">{{ item.title }}</p>
+            <span class="badge bg-slate-100 text-slate-600">{{ item.status }}</span>
+          </div>
+          <p class="text-xs text-slate-500 mt-1">{{ item.date }} · 责任团队：{{ item.owner }}</p>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+
+  <section class="grid gap-6 xl:grid-cols-[3fr,2fr]">
+    <div class="card p-6">
+      <h3 class="text-lg font-semibold text-slate-900 mb-3">重点项目进度</h3>
+      <div class="space-y-4 text-sm text-slate-600">
+        {% for project in projects %}
+        <div class="rounded-lg border border-slate-100 px-5 py-4">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="text-sm font-semibold text-slate-900">{{ project.title }}</p>
+              <p class="text-xs text-slate-500 mt-1">牵头团队：{{ project.owner }} · 阶段：{{ project.stage }}</p>
+            </div>
+            <span class="badge bg-slate-100 text-slate-600">截止 {{ project.due_date }}</span>
+          </div>
+          <div class="mt-4 space-y-2">
+            <div class="h-2 w-full rounded-full bg-slate-100">
+              <div class="h-2 rounded-full bg-blue-500" style="width: {{ project.progress }}%"></div>
+            </div>
+            <div class="flex justify-between text-xs text-slate-500">
+              <span>完成度 {{ project.progress }}%</span>
+              <span>NPS 变化 {{ project.nps_delta }}</span>
+            </div>
+            <ul class="flex flex-wrap gap-2 text-xs text-slate-500">
+              {% for highlight in project.highlights %}
+              <li class="badge bg-slate-100 text-slate-600">{{ highlight }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="space-y-6">
+      <div class="card p-6">
+        <h3 class="text-lg font-semibold text-slate-900 mb-2">最新动态</h3>
+        <p class="text-xs text-slate-500 mb-4">同步跨团队最新进展与风险提示。</p>
+        <ul class="space-y-3 text-sm text-slate-600">
+          {% for update in recent_updates %}
+          <li class="rounded-lg border border-slate-100 px-4 py-3">
+            <p class="text-sm font-medium text-slate-900">{{ update.title }}</p>
+            <p class="text-xs text-slate-500 mt-1">{{ update.detail }}</p>
+            <p class="text-[11px] text-slate-400 mt-1">{{ update.timestamp }} · {{ update.owner }}</p>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
+{% endblock %}

@@ -22,8 +22,97 @@ from pydantic import BaseModel
 
 # Import agent logger
 from agent_logger import get_agent_logger
+from comprehensive_agent_logger import get_comprehensive_logger
 
 router = APIRouter()
+
+# === RESPONSE MODELS ===
+
+class NPSMetricsModel(BaseModel):
+    """NPS calculation metrics."""
+    nps_score: float
+    promoters_count: int
+    passives_count: int
+    detractors_count: int
+    promoters_percentage: float
+    passives_percentage: float
+    detractors_percentage: float
+    sample_size: int
+    confidence_interval: Optional[str] = None
+    statistical_significance: bool
+
+class ProcessingMetadataModel(BaseModel):
+    """Processing metadata."""
+    version: str
+    workflow_type: str
+    processing_time_seconds: float
+    model_version: str
+    passes_completed: List[str]
+    agents_executed: int
+    timestamp: str
+
+class AgentLogSummaryModel(BaseModel):
+    """Agent log summary."""
+    metadata: Dict[str, Any]
+    agent_outputs: Dict[str, Any]
+
+class V3AnalysisResponse(BaseModel):
+    """Complete V3 analysis response model."""
+    # Core workflow info
+    workflow_id: str
+    workflow_phase: str
+    workflow_start_time: str
+    workflow_version: str
+    request_id: str
+    analysis_status: str
+    timestamp: str
+
+    # Analysis results
+    nps_metrics: NPSMetricsModel
+    confidence: float
+
+    # Pass results
+    pass1_foundation: Dict[str, Any]
+    pass2_analysis: Dict[str, Any]
+    consulting_synthesis: Dict[str, Any]
+
+    # Compatibility aliases
+    foundation_pass: Dict[str, Any]
+
+    # Reports
+    html_report: str
+    html_reports: Dict[str, Any]
+
+    # Performance data
+    total_tokens_used: int
+    total_llm_calls: int
+    total_processing_time_ms: int
+    memory_peak_mb: float
+    processing_metadata: ProcessingMetadataModel
+
+    # Optional fields
+    agent_log_summary: Optional[AgentLogSummaryModel] = None
+    agent_log_dir: Optional[str] = None
+    errors: List[str] = []
+    warnings: List[str] = []
+
+    class Config:
+        # Allow extra fields for flexibility
+        extra = "allow"
+
+class V3HealthResponse(BaseModel):
+    """V3 health check response."""
+    status: str
+    v3_available: bool
+    v3_import_error: Optional[str]
+    timestamp: str
+    system: str
+
+class AgentLogsResponse(BaseModel):
+    """Agent logs response."""
+    date: str
+    sessions_count: int
+    sessions: List[Dict[str, Any]]
 
 logger = logging.getLogger("nps_report_v3.api")
 request_semaphore = asyncio.Semaphore(2)
@@ -32,7 +121,7 @@ request_semaphore = asyncio.Semaphore(2)
 async def execute_workflow_with_logging(workflow, raw_data: List[Dict],
                                         config: Optional[Dict] = None,
                                         request_id: Optional[str] = None) -> Dict[str, Any]:
-    """Execute workflow with comprehensive agent logging.
+    """Execute workflow with comprehensive agent logging including LLM calls.
 
     Args:
         workflow: The workflow instance to execute
@@ -41,74 +130,124 @@ async def execute_workflow_with_logging(workflow, raw_data: List[Dict],
         request_id: Request identifier for logging
 
     Returns:
-        Workflow execution result with agent logs
+        Workflow execution result with comprehensive agent logs
     """
-    # Initialize agent logger for this request
+    # Initialize comprehensive logger for this request
+    comprehensive_logger = get_comprehensive_logger(reset=True)
+
+    # Initialize standard agent logger as well
     agent_log = get_agent_logger(
         log_dir=f"outputs/agent_logs/{datetime.now().strftime('%Y%m%d')}",
         log_level="DEBUG",
-        reset=True  # Create new logger for each request
+        reset=True
     )
 
     # Log workflow start
-    agent_log.logger.info(f"Starting workflow for request: {request_id or 'unknown'}")
-    agent_log.logger.info(f"Input data: {len(raw_data)} survey responses")
+    agent_log.logger.info(f"🚀 Starting COMPREHENSIVE workflow logging for request: {request_id or 'unknown'}")
+    agent_log.logger.info(f"📊 Input data: {len(raw_data)} survey responses")
+    agent_log.logger.info(f"⚙️  Configuration: {config is not None}")
 
     try:
-        # Execute the workflow
+        # Execute the workflow with enhanced monitoring
+        agent_log.logger.info("🔄 Executing workflow with comprehensive logging...")
         result = await workflow.execute(raw_data, config)
 
-        # Extract and log agent outputs from the result
+        # Post-process to extract and log detailed agent information
         if isinstance(result, dict):
-            # Log Foundation Pass agents (A0-A3)
-            if "agent_outputs" in result:
-                agent_outputs = result.get("agent_outputs", {})
+            # Extract agent execution details
+            agent_outputs = result.get("agent_outputs", {})
+            agent_sequence = result.get("agent_sequence", [])
 
-                # Foundation Pass
-                for agent_id in ["A0", "A1", "A2", "A3"]:
-                    if agent_id in agent_outputs:
-                        agent_name = _get_agent_name(agent_id)
-                        agent_log.log_agent_start(agent_id, agent_name,
-                                                 {"input_size": len(raw_data)})
-                        agent_log.log_agent_output(agent_id, agent_outputs[agent_id],
-                                                  success=True)
+            agent_log.logger.info(f"🤖 Detected {len(agent_sequence)} agents in execution sequence: {agent_sequence}")
 
-                # Analysis Pass
-                for agent_id in ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9"]:
-                    if agent_id in agent_outputs:
-                        agent_name = _get_agent_name(agent_id)
-                        agent_log.log_agent_start(agent_id, agent_name,
-                                                 result.get("pass1_foundation"))
-                        agent_log.log_agent_output(agent_id, agent_outputs[agent_id],
-                                                  success=True)
+            # Log each agent that was executed
+            for agent_id in agent_sequence:
+                agent_name = _get_agent_name(agent_id)
 
-                # Consulting Pass
-                for agent_id in ["C1", "C2", "C3", "C4", "C5"]:
-                    if agent_id in agent_outputs:
-                        agent_name = _get_agent_name(agent_id)
-                        agent_log.log_agent_start(agent_id, agent_name,
-                                                 result.get("pass2_analysis"))
-                        agent_log.log_agent_output(agent_id, agent_outputs[agent_id],
-                                                  success=True)
+                # Set current agent in comprehensive logger
+                comprehensive_logger.set_current_agent(agent_id, agent_name)
 
-            # Check for any failed agents
-            if "failed_agents" in result and result["failed_agents"]:
-                for failed_agent in result["failed_agents"]:
-                    agent_log.log_agent_output(failed_agent, None,
-                                              success=False,
-                                              error=f"Agent {failed_agent} failed")
+                # Determine input data based on agent pass
+                if agent_id in ["A0", "A1", "A2", "A3"]:  # Foundation Pass
+                    input_data = {"raw_data_size": len(raw_data), "config": config}
+                    comprehensive_logger.log_step("Foundation Pass - Input Processing", input_data)
+                elif agent_id in ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9"]:  # Analysis Pass
+                    foundation_data = result.get("pass1_foundation", {})
+                    input_data = {
+                        "foundation_keys": list(foundation_data.keys()) if isinstance(foundation_data, dict) else None,
+                        "foundation_size": len(str(foundation_data))
+                    }
+                    comprehensive_logger.log_step("Analysis Pass - Foundation Processing", input_data)
+                else:  # Consulting Pass C1-C5
+                    analysis_data = result.get("pass2_analysis", {})
+                    input_data = {
+                        "analysis_keys": list(analysis_data.keys()) if isinstance(analysis_data, dict) else None,
+                        "analysis_size": len(str(analysis_data))
+                    }
+                    comprehensive_logger.log_step("Consulting Pass - Analysis Processing", input_data)
+
+                # Log agent output details
+                if agent_id in agent_outputs:
+                    agent_output = agent_outputs[agent_id]
+                    comprehensive_logger.log_step("Agent Processing Completed", {
+                        "output_keys": list(agent_output.keys()) if isinstance(agent_output, dict) else None,
+                        "output_type": type(agent_output).__name__,
+                        "output_size": len(str(agent_output)),
+                        "has_content": bool(agent_output)
+                    })
+                    comprehensive_logger.log_agent_complete(agent_output)
+                else:
+                    comprehensive_logger.log_step("Agent Failed", {"reason": "No output found in agent_outputs"})
+                    comprehensive_logger.log_error(Exception(f"Agent {agent_id} produced no output"), "Missing agent output")
+
+            # Check for errors or warnings
+            errors = result.get("errors", [])
+            warnings = result.get("warnings", [])
+            failed_agents = result.get("failed_agents", [])
+
+            for error in errors:
+                agent_log.logger.error(f"❌ Workflow Error: {error}")
+
+            for warning in warnings:
+                agent_log.logger.warning(f"⚠️  Workflow Warning: {warning}")
+
+            for failed_agent in failed_agents:
+                agent_log.logger.error(f"💥 Failed Agent: {failed_agent}")
+                comprehensive_logger.set_current_agent(failed_agent, _get_agent_name(failed_agent))
+                comprehensive_logger.log_error(Exception(f"Agent {failed_agent} failed"), "Agent execution failure")
+
+            # Log performance metrics
+            performance_data = {
+                "total_tokens_used": result.get("total_tokens_used", 0),
+                "total_llm_calls": result.get("total_llm_calls", 0),
+                "processing_time_ms": result.get("total_processing_time_ms", 0),
+                "memory_peak_mb": result.get("memory_peak_mb", 0),
+                "agents_executed": len(agent_sequence),
+                "successful_agents": len(agent_sequence) - len(failed_agents),
+                "failed_agents": len(failed_agents)
+            }
+
+            agent_log.logger.info(f"📈 Workflow Performance Metrics:")
+            for key, value in performance_data.items():
+                agent_log.logger.info(f"   {key}: {value}")
 
             # Log workflow summary
             agent_log.log_workflow_summary(result)
 
-            # Add agent log summary to result
+            # Add comprehensive logging summary to result
             result["agent_log_summary"] = agent_log.get_session_summary()
             result["agent_log_dir"] = str(agent_log.log_dir)
+            result["comprehensive_logging"] = True
+            result["detailed_agent_logs"] = True
 
     except Exception as e:
-        agent_log.logger.error(f"Workflow execution failed: {e}")
-        agent_log.logger.error(traceback.format_exc())
-        agent_log.log_workflow_summary({"error": str(e)})
+        agent_log.logger.error(f"💥 Comprehensive workflow execution failed: {e}")
+        agent_log.logger.error(f"📋 Full traceback:\n{traceback.format_exc()}")
+
+        if comprehensive_logger.current_agent_id:
+            comprehensive_logger.log_error(e, "Workflow execution failure")
+
+        agent_log.log_workflow_summary({"error": str(e), "traceback": traceback.format_exc()})
         raise
 
     return result
@@ -322,7 +461,7 @@ def _load_v3_sample_payload() -> Dict[str, Any]:
 
 # === HEALTH AND INFO ENDPOINTS ===
 
-@router.get("/nps-report-v3/agent-logs")
+@router.get("/nps-report-v3/agent-logs", response_model=Dict[str, Any])
 async def get_agent_logs(
     date: str = Query(default=None, description="Date in YYYYMMDD format"),
     session_id: str = Query(default=None, description="Session ID to retrieve logs for")
@@ -412,7 +551,7 @@ async def get_agent_logs(
             }
         )
 
-@router.get("/nps-report-v3/health")
+@router.get("/nps-report-v3/health", response_model=V3HealthResponse)
 async def v3_health():
     """V3 system health check."""
     return {
@@ -547,7 +686,7 @@ def _convert_v2_to_v3_format(payload: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
-@router.post("/nps-report-v3")
+@router.post("/nps-report-v3", response_model=V3AnalysisResponse)
 async def nps_report_v3(payload: Dict[str, Any] = Body(..., example=_load_v3_sample_payload())):
     """
     Complete NPS V3 Multi-Agent Analysis Workflow

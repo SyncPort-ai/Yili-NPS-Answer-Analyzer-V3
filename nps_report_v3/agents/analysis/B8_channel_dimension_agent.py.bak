@@ -1,0 +1,1061 @@
+"""
+B8 - Channel Dimension Agent
+Analysis Pass Agent for touchpoint and channel experience analysis.
+"""
+
+import logging
+from typing import Dict, Any, List, Optional
+from collections import defaultdict, Counter
+
+from ..base import AnalysisAgent, AgentResult, AgentStatus
+from ...llm import LLMClient
+
+logger = logging.getLogger(__name__)
+
+
+class ChannelDimensionAgent(AnalysisAgent):
+    """
+    B8 - Channel Dimension Agent
+
+    Responsibilities:
+    - Analyze touchpoint and channel experience across different sales channels
+    - Implement omnichannel customer journey analysis
+    - Create channel performance comparisons and optimization opportunities
+    - Generate channel-specific recommendations and investment priorities
+    """
+
+    def __init__(self, agent_id: str = "B8", agent_name: str = "Channel Dimension Agent",
+                 llm_client: Optional[LLMClient] = None, **kwargs):
+        super().__init__(agent_id, agent_name, **kwargs)
+        self.llm_client = llm_client
+
+        # Channel classification and characteristics
+        self.sales_channels = {
+            "supermarket": {
+                "name": "大型超市",
+                "characteristics": ["商品齐全", "价格透明", "自主选择", "品牌展示"],
+                "touchpoints": ["货架陈列", "促销活动", "导购推荐", "收银结账"],
+                "typical_mentions": ["超市", "大润发", "家乐福", "华润万家", "沃尔玛", "永辉"]
+            },
+            "convenience_store": {
+                "name": "便利店",
+                "characteristics": ["便捷购买", "就近消费", "快速结账", "即时需求"],
+                "touchpoints": ["货架选择", "自助结账", "店员服务", "储值卡"],
+                "typical_mentions": ["便利店", "7-11", "全家", "罗森", "喜士多", "美宜佳"]
+            },
+            "ecommerce": {
+                "name": "电商平台",
+                "characteristics": ["线上购买", "送货上门", "价格比较", "评价参考"],
+                "touchpoints": ["商品页面", "客服咨询", "支付流程", "物流配送", "售后服务"],
+                "typical_mentions": ["天猫", "京东", "淘宝", "拼多多", "苏宁", "网购", "线上", "APP"]
+            },
+            "fresh_market": {
+                "name": "生鲜市场",
+                "characteristics": ["新鲜保证", "价格实惠", "现场挑选", "人情味"],
+                "touchpoints": ["商品挑选", "价格谈判", "现金支付", "打包服务"],
+                "typical_mentions": ["菜市场", "农贸市场", "生鲜店", "社区店", "早市"]
+            },
+            "specialty_store": {
+                "name": "专业店",
+                "characteristics": ["专业服务", "品质保证", "品牌形象", "体验感强"],
+                "touchpoints": ["专业咨询", "产品体验", "会员服务", "售后跟进"],
+                "typical_mentions": ["专卖店", "品牌店", "旗舰店", "体验店", "直营店"]
+            },
+            "vending_machine": {
+                "name": "自动售货机",
+                "characteristics": ["24小时", "无人服务", "即买即走", "场景便利"],
+                "touchpoints": ["商品选择", "支付操作", "商品出货", "找零/退款"],
+                "typical_mentions": ["售货机", "自动机", "无人机", "自助机"]
+            },
+            "institutional": {
+                "name": "机构渠道",
+                "characteristics": ["批量采购", "定制服务", "合作关系", "稳定需求"],
+                "touchpoints": ["商务洽谈", "合同签订", "批量配送", "账期结算"],
+                "typical_mentions": ["学校", "医院", "企业", "机关", "食堂", "餐厅", "酒店"]
+            }
+        }
+
+        # Customer journey stages
+        self.journey_stages = {
+            "awareness": {
+                "name": "认知阶段",
+                "touchpoints": ["广告展示", "口碑推荐", "社交媒体", "促销活动"],
+                "experience_factors": ["品牌知名度", "产品认知", "渠道可见性"]
+            },
+            "consideration": {
+                "name": "考虑阶段",
+                "touchpoints": ["产品比较", "价格查询", "评价阅读", "朋友咨询"],
+                "experience_factors": ["产品信息", "价格竞争力", "用户评价", "购买便利性"]
+            },
+            "purchase": {
+                "name": "购买阶段",
+                "touchpoints": ["商品选择", "支付结账", "服务咨询", "会员登记"],
+                "experience_factors": ["购买体验", "服务质量", "支付便利", "等待时间"]
+            },
+            "usage": {
+                "name": "使用阶段",
+                "touchpoints": ["产品消费", "口感体验", "包装处理", "保存储藏"],
+                "experience_factors": ["产品质量", "使用体验", "包装设计", "实用性"]
+            },
+            "advocacy": {
+                "name": "推荐阶段",
+                "touchpoints": ["口碑分享", "评价发布", "社交推荐", "复购行为"],
+                "experience_factors": ["满意度", "推荐意愿", "复购率", "忠诚度"]
+            }
+        }
+
+        # Channel-specific KPIs
+        self.channel_kpis = {
+            "accessibility": "渠道可达性",
+            "convenience": "购买便利性",
+            "service_quality": "服务质量",
+            "price_competitiveness": "价格竞争力",
+            "product_availability": "商品可得性",
+            "checkout_efficiency": "结账效率",
+            "customer_support": "客户支持",
+            "brand_experience": "品牌体验"
+        }
+
+    async def process(self, state: Dict[str, Any]) -> AgentResult:
+        """
+        Process channel dimension analysis.
+
+        Args:
+            state: Current workflow state
+
+        Returns:
+            AgentResult with channel and touchpoint analysis
+        """
+        try:
+            # Get data from state
+            tagged_responses = state.get("tagged_responses", [])
+            nps_results = state.get("nps_results", {})
+
+            if not tagged_responses:
+                logger.warning("No responses available for channel dimension analysis")
+                return AgentResult(
+                    agent_id=self.agent_id,
+                    status=AgentStatus.COMPLETED,
+                    data={
+                        "channel_dimension": {
+                            "total_responses": 0,
+                            "channel_analysis": {},
+                            "touchpoint_analysis": {},
+                            "journey_analysis": {},
+                            "omnichannel_insights": [],
+                            "channel_recommendations": []
+                        }
+                    },
+                    insights=["No responses available for channel dimension analysis"],
+                    confidence_score=1.0
+                )
+
+            # Analyze channel performance
+            channel_analysis = self._analyze_channel_performance(tagged_responses, nps_results)
+
+            # Analyze touchpoint experiences
+            touchpoint_analysis = self._analyze_touchpoint_experiences(tagged_responses, channel_analysis)
+
+            # Analyze customer journey
+            journey_analysis = await self._analyze_customer_journey(tagged_responses, channel_analysis)
+
+            # Identify omnichannel patterns
+            omnichannel_insights = self._identify_omnichannel_patterns(channel_analysis, touchpoint_analysis)
+
+            # Generate channel optimization opportunities
+            optimization_opportunities = self._identify_optimization_opportunities(
+                channel_analysis, touchpoint_analysis
+            )
+
+            # Generate recommendations
+            recommendations = await self._generate_channel_recommendations(
+                channel_analysis, touchpoint_analysis, optimization_opportunities
+            )
+
+            # Generate channel insights
+            insights = self._generate_channel_insights(
+                channel_analysis, touchpoint_analysis, omnichannel_insights
+            )
+
+            logger.info(f"Analyzed {len(tagged_responses)} responses across {len(channel_analysis)} channels")
+
+            return AgentResult(
+                agent_id=self.agent_id,
+                status=AgentStatus.COMPLETED,
+                data={
+                    "channel_dimension": {
+                        "total_responses": len(tagged_responses),
+                        "channel_analysis": channel_analysis,
+                        "touchpoint_analysis": touchpoint_analysis,
+                        "journey_analysis": journey_analysis,
+                        "omnichannel_insights": omnichannel_insights,
+                        "optimization_opportunities": optimization_opportunities,
+                        "channel_recommendations": recommendations,
+                        "channel_insights": insights
+                    }
+                },
+                insights=insights,
+                confidence_score=0.8
+            )
+
+        except Exception as e:
+            logger.error(f"Channel dimension analysis failed: {e}")
+            return AgentResult(
+                agent_id=self.agent_id,
+                status=AgentStatus.FAILED,
+                data={},
+                errors=[str(e)],
+                confidence_score=0.0
+            )
+
+    def _analyze_channel_performance(
+        self,
+        tagged_responses: List[Dict[str, Any]],
+        nps_results: Dict[str, Any]
+    ) -> Dict[str, Dict[str, Any]]:
+        """
+        Analyze performance across different sales channels.
+
+        Args:
+            tagged_responses: Tagged responses
+            nps_results: NPS results
+
+        Returns:
+            Channel performance analysis
+        """
+        channel_analysis = {}
+
+        # Initialize channel data
+        for channel_id, channel_info in self.sales_channels.items():
+            channel_analysis[channel_id] = {
+                "channel_info": channel_info,
+                "responses": [],
+                "nps_scores": [],
+                "experience_ratings": {},
+                "touchpoint_mentions": {},
+                "performance_metrics": {}
+            }
+
+        # Classify responses by channel
+        for response in tagged_responses:
+            text = response.get("original_text", "")
+            nps_score = response.get("nps_score")
+            response_id = response.get("response_id", "")
+
+            # Identify channels mentioned
+            identified_channels = self._identify_channels_from_text(text)
+
+            for channel_id in identified_channels:
+                if channel_id in channel_analysis:
+                    channel_analysis[channel_id]["responses"].append(response_id)
+
+                    if nps_score is not None:
+                        channel_analysis[channel_id]["nps_scores"].append(nps_score)
+
+                    # Analyze channel-specific experiences
+                    experiences = self._analyze_channel_experiences(text, channel_id)
+                    for exp_type, rating in experiences.items():
+                        if exp_type not in channel_analysis[channel_id]["experience_ratings"]:
+                            channel_analysis[channel_id]["experience_ratings"][exp_type] = []
+                        channel_analysis[channel_id]["experience_ratings"][exp_type].append(rating)
+
+                    # Track touchpoint mentions
+                    touchpoints = self._extract_touchpoint_mentions(text, channel_id)
+                    for touchpoint in touchpoints:
+                        if touchpoint not in channel_analysis[channel_id]["touchpoint_mentions"]:
+                            channel_analysis[channel_id]["touchpoint_mentions"][touchpoint] = 0
+                        channel_analysis[channel_id]["touchpoint_mentions"][touchpoint] += 1
+
+        # Calculate channel performance metrics
+        for channel_id, data in channel_analysis.items():
+            if data["responses"]:  # Only analyze channels with data
+                metrics = self._calculate_channel_metrics(data)
+                channel_analysis[channel_id]["performance_metrics"] = metrics
+            else:
+                channel_analysis[channel_id] = None
+
+        # Filter out channels with no data
+        channel_analysis = {k: v for k, v in channel_analysis.items() if v is not None}
+
+        return channel_analysis
+
+    def _identify_channels_from_text(self, text: str) -> List[str]:
+        """Identify sales channels mentioned in text."""
+        identified_channels = []
+
+        for channel_id, channel_info in self.sales_channels.items():
+            # Check for direct channel mentions
+            mentions = channel_info["typical_mentions"]
+            if any(mention in text for mention in mentions):
+                identified_channels.append(channel_id)
+
+        # If no specific channel identified, try to infer
+        if not identified_channels:
+            inferred_channel = self._infer_channel_from_context(text)
+            if inferred_channel:
+                identified_channels.append(inferred_channel)
+
+        return identified_channels
+
+    def _infer_channel_from_context(self, text: str) -> Optional[str]:
+        """Infer channel from context clues."""
+        # Online indicators
+        if any(word in text for word in ["网购", "线上", "快递", "配送", "APP", "网站"]):
+            return "ecommerce"
+
+        # Convenience indicators
+        if any(word in text for word in ["便利", "快速", "就近", "楼下"]):
+            return "convenience_store"
+
+        # Supermarket indicators
+        if any(word in text for word in ["购物", "逛", "推车", "排队", "收银"]):
+            return "supermarket"
+
+        # Fresh market indicators
+        if any(word in text for word in ["菜场", "市场", "新鲜", "便宜", "现金"]):
+            return "fresh_market"
+
+        # Institutional indicators
+        if any(word in text for word in ["学校", "公司", "食堂", "批发", "团购"]):
+            return "institutional"
+
+        return None
+
+    def _analyze_channel_experiences(self, text: str, channel_id: str) -> Dict[str, float]:
+        """Analyze channel-specific experience ratings."""
+        experiences = {}
+        channel_info = self.sales_channels.get(channel_id, {})
+
+        # Analyze each KPI
+        for kpi_id, kpi_name in self.channel_kpis.items():
+            rating = self._rate_channel_kpi(text, kpi_id, channel_id)
+            if rating > 0:  # Only include if mentioned
+                experiences[kpi_id] = rating
+
+        return experiences
+
+    def _rate_channel_kpi(self, text: str, kpi_id: str, channel_id: str) -> float:
+        """Rate a specific KPI based on text content."""
+        # KPI-specific keywords and scoring
+        kpi_keywords = {
+            "accessibility": {
+                "positive": ["方便", "就近", "容易找到", "到处都有"],
+                "negative": ["远", "不方便", "找不到", "偏僻"]
+            },
+            "convenience": {
+                "positive": ["便利", "快捷", "省时", "简单"],
+                "negative": ["麻烦", "复杂", "耗时", "不便"]
+            },
+            "service_quality": {
+                "positive": ["服务好", "态度好", "专业", "热情"],
+                "negative": ["服务差", "态度差", "不专业", "冷淡"]
+            },
+            "price_competitiveness": {
+                "positive": ["便宜", "实惠", "划算", "优惠"],
+                "negative": ["贵", "昂贵", "不值", "高价"]
+            },
+            "product_availability": {
+                "positive": ["有货", "齐全", "充足", "丰富"],
+                "negative": ["缺货", "断货", "没有", "少"]
+            },
+            "checkout_efficiency": {
+                "positive": ["快速结账", "不排队", "效率高"],
+                "negative": ["排队久", "慢", "等待时间长"]
+            },
+            "customer_support": {
+                "positive": ["有帮助", "解决问题", "响应快"],
+                "negative": ["没帮助", "不解决", "响应慢"]
+            },
+            "brand_experience": {
+                "positive": ["品牌好", "形象佳", "体验棒"],
+                "negative": ["品牌差", "形象不好", "体验差"]
+            }
+        }
+
+        keywords = kpi_keywords.get(kpi_id, {"positive": [], "negative": []})
+
+        positive_count = sum(1 for word in keywords["positive"] if word in text)
+        negative_count = sum(1 for word in keywords["negative"] if word in text)
+
+        if positive_count == 0 and negative_count == 0:
+            return 0  # Not mentioned
+
+        # Score from 1-5 scale
+        if positive_count > negative_count:
+            return min(3 + positive_count, 5)
+        elif negative_count > positive_count:
+            return max(3 - negative_count, 1)
+        else:
+            return 3  # Neutral
+
+    def _extract_touchpoint_mentions(self, text: str, channel_id: str) -> List[str]:
+        """Extract touchpoint mentions for specific channel."""
+        touchpoints = []
+        channel_info = self.sales_channels.get(channel_id, {})
+        channel_touchpoints = channel_info.get("touchpoints", [])
+
+        for touchpoint in channel_touchpoints:
+            # Check for touchpoint keywords
+            touchpoint_keywords = touchpoint.split()
+            if any(keyword in text for keyword in touchpoint_keywords):
+                touchpoints.append(touchpoint)
+
+        return touchpoints
+
+    def _calculate_channel_metrics(self, channel_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Calculate performance metrics for a channel."""
+        responses = channel_data["responses"]
+        nps_scores = channel_data["nps_scores"]
+        experience_ratings = channel_data["experience_ratings"]
+        touchpoint_mentions = channel_data["touchpoint_mentions"]
+
+        metrics = {
+            "response_count": len(responses),
+            "avg_nps": sum(nps_scores) / len(nps_scores) if nps_scores else 0,
+            "nps_distribution": self._calculate_nps_distribution(nps_scores),
+            "experience_scores": {},
+            "touchpoint_engagement": len(touchpoint_mentions),
+            "channel_satisfaction": 0
+        }
+
+        # Calculate average experience scores
+        overall_scores = []
+        for exp_type, ratings in experience_ratings.items():
+            avg_rating = sum(ratings) / len(ratings) if ratings else 0
+            metrics["experience_scores"][exp_type] = round(avg_rating, 2)
+            overall_scores.append(avg_rating)
+
+        # Overall channel satisfaction
+        if overall_scores:
+            metrics["channel_satisfaction"] = round(sum(overall_scores) / len(overall_scores), 2)
+
+        return metrics
+
+    def _calculate_nps_distribution(self, nps_scores: List[int]) -> Dict[str, float]:
+        """Calculate NPS distribution for channel."""
+        if not nps_scores:
+            return {"promoters": 0, "passives": 0, "detractors": 0}
+
+        total = len(nps_scores)
+        promoters = len([s for s in nps_scores if s >= 9])
+        passives = len([s for s in nps_scores if 7 <= s <= 8])
+        detractors = len([s for s in nps_scores if s <= 6])
+
+        return {
+            "promoters": round(promoters / total, 3),
+            "passives": round(passives / total, 3),
+            "detractors": round(detractors / total, 3)
+        }
+
+    def _analyze_touchpoint_experiences(
+        self,
+        tagged_responses: List[Dict[str, Any]],
+        channel_analysis: Dict[str, Dict[str, Any]]
+    ) -> Dict[str, Dict[str, Any]]:
+        """Analyze experiences at specific touchpoints."""
+        touchpoint_analysis = {}
+
+        # Collect all touchpoints across channels
+        all_touchpoints = set()
+        for channel_data in channel_analysis.values():
+            all_touchpoints.update(channel_data["touchpoint_mentions"].keys())
+
+        # Initialize touchpoint analysis
+        for touchpoint in all_touchpoints:
+            touchpoint_analysis[touchpoint] = {
+                "total_mentions": 0,
+                "channel_distribution": {},
+                "experience_sentiment": {"positive": 0, "negative": 0, "neutral": 0},
+                "pain_points": [],
+                "success_factors": []
+            }
+
+        # Analyze touchpoint experiences
+        for response in tagged_responses:
+            text = response.get("original_text", "")
+
+            for touchpoint in all_touchpoints:
+                if self._is_touchpoint_mentioned(text, touchpoint):
+                    touchpoint_analysis[touchpoint]["total_mentions"] += 1
+
+                    # Analyze sentiment for this touchpoint
+                    sentiment = self._analyze_touchpoint_sentiment(text, touchpoint)
+                    touchpoint_analysis[touchpoint]["experience_sentiment"][sentiment] += 1
+
+                    # Extract pain points and success factors
+                    if sentiment == "negative":
+                        pain_point = self._extract_touchpoint_issue(text, touchpoint)
+                        if pain_point:
+                            touchpoint_analysis[touchpoint]["pain_points"].append(pain_point)
+                    elif sentiment == "positive":
+                        success_factor = self._extract_touchpoint_success(text, touchpoint)
+                        if success_factor:
+                            touchpoint_analysis[touchpoint]["success_factors"].append(success_factor)
+
+        # Calculate touchpoint performance scores
+        for touchpoint, data in touchpoint_analysis.items():
+            total_sentiment = sum(data["experience_sentiment"].values())
+            if total_sentiment > 0:
+                data["satisfaction_score"] = (
+                    data["experience_sentiment"]["positive"] -
+                    data["experience_sentiment"]["negative"]
+                ) / total_sentiment
+            else:
+                data["satisfaction_score"] = 0
+
+        return touchpoint_analysis
+
+    def _is_touchpoint_mentioned(self, text: str, touchpoint: str) -> bool:
+        """Check if touchpoint is mentioned in text."""
+        touchpoint_keywords = touchpoint.split()
+        return any(keyword in text for keyword in touchpoint_keywords)
+
+    def _analyze_touchpoint_sentiment(self, text: str, touchpoint: str) -> str:
+        """Analyze sentiment for specific touchpoint."""
+        # Find touchpoint context
+        touchpoint_keywords = touchpoint.split()
+        context_window = 20  # Characters around touchpoint
+
+        for keyword in touchpoint_keywords:
+            if keyword in text:
+                pos = text.find(keyword)
+                start = max(0, pos - context_window)
+                end = min(len(text), pos + len(keyword) + context_window)
+                context = text[start:end]
+
+                # Analyze sentiment in context
+                positive_words = ["好", "不错", "满意", "快", "方便", "简单"]
+                negative_words = ["差", "慢", "麻烦", "复杂", "不好", "失望"]
+
+                positive_count = sum(1 for word in positive_words if word in context)
+                negative_count = sum(1 for word in negative_words if word in context)
+
+                if positive_count > negative_count:
+                    return "positive"
+                elif negative_count > positive_count:
+                    return "negative"
+
+        return "neutral"
+
+    def _extract_touchpoint_issue(self, text: str, touchpoint: str) -> Optional[str]:
+        """Extract specific issue with touchpoint."""
+        issue_patterns = {
+            "货架陈列": "商品摆放混乱",
+            "促销活动": "促销信息不清楚",
+            "收银结账": "排队时间长",
+            "物流配送": "配送延迟",
+            "客服咨询": "响应速度慢",
+            "商品选择": "选择困难",
+            "支付操作": "支付不便"
+        }
+
+        return issue_patterns.get(touchpoint)
+
+    def _extract_touchpoint_success(self, text: str, touchpoint: str) -> Optional[str]:
+        """Extract success factor for touchpoint."""
+        success_patterns = {
+            "货架陈列": "商品摆放整齐",
+            "促销活动": "优惠信息明确",
+            "收银结账": "结账效率高",
+            "物流配送": "配送及时",
+            "客服咨询": "服务专业",
+            "商品选择": "选择丰富",
+            "支付操作": "支付便捷"
+        }
+
+        return success_patterns.get(touchpoint)
+
+    async def _analyze_customer_journey(
+        self,
+        tagged_responses: List[Dict[str, Any]],
+        channel_analysis: Dict[str, Dict[str, Any]]
+    ) -> Dict[str, Any]:
+        """Analyze customer journey across touchpoints."""
+        journey_analysis = {
+            "stage_analysis": {},
+            "journey_patterns": [],
+            "cross_channel_behavior": {},
+            "friction_points": []
+        }
+
+        # Analyze each journey stage
+        for stage_id, stage_info in self.journey_stages.items():
+            journey_analysis["stage_analysis"][stage_id] = {
+                "stage_info": stage_info,
+                "mentions": 0,
+                "experience_quality": [],
+                "channel_performance": {}
+            }
+
+        # Analyze responses for journey indicators
+        for response in tagged_responses:
+            text = response.get("original_text", "")
+
+            # Identify journey stages mentioned
+            for stage_id, stage_info in self.journey_stages.items():
+                if self._is_journey_stage_mentioned(text, stage_info):
+                    journey_analysis["stage_analysis"][stage_id]["mentions"] += 1
+
+                    # Assess experience quality at this stage
+                    quality = self._assess_stage_experience(text, stage_id)
+                    journey_analysis["stage_analysis"][stage_id]["experience_quality"].append(quality)
+
+        # Enhanced journey analysis with LLM
+        if self.llm_client:
+            llm_insights = await self._llm_journey_analysis(tagged_responses[:15])
+            journey_analysis["llm_insights"] = llm_insights
+
+        return journey_analysis
+
+    def _is_journey_stage_mentioned(self, text: str, stage_info: Dict[str, Any]) -> bool:
+        """Check if journey stage is mentioned in text."""
+        touchpoints = stage_info.get("touchpoints", [])
+
+        # Check for touchpoint mentions
+        for touchpoint in touchpoints:
+            touchpoint_keywords = touchpoint.split()
+            if any(keyword in text for keyword in touchpoint_keywords):
+                return True
+
+        # Check for stage-specific patterns
+        stage_patterns = {
+            "awareness": ["知道", "听说", "看到", "了解"],
+            "consideration": ["比较", "考虑", "选择", "犹豫"],
+            "purchase": ["买", "购买", "结账", "付款"],
+            "usage": ["喝", "用", "吃", "消费"],
+            "advocacy": ["推荐", "分享", "介绍", "再买"]
+        }
+
+        for stage, patterns in stage_patterns.items():
+            if stage in stage_info.get("name", ""):
+                if any(pattern in text for pattern in patterns):
+                    return True
+
+        return False
+
+    def _assess_stage_experience(self, text: str, stage_id: str) -> float:
+        """Assess experience quality at journey stage."""
+        # Simple sentiment-based assessment
+        positive_words = ["好", "满意", "顺利", "方便", "快速"]
+        negative_words = ["差", "不满", "困难", "麻烦", "慢"]
+
+        positive_count = sum(1 for word in positive_words if word in text)
+        negative_count = sum(1 for word in negative_words if word in text)
+
+        # Score from 1-5
+        if positive_count > negative_count:
+            return min(3 + positive_count, 5)
+        elif negative_count > positive_count:
+            return max(3 - negative_count, 1)
+        else:
+            return 3
+
+    def _identify_omnichannel_patterns(
+        self,
+        channel_analysis: Dict[str, Dict[str, Any]],
+        touchpoint_analysis: Dict[str, Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
+        """Identify omnichannel behavior patterns."""
+        omnichannel_insights = []
+
+        # Channel performance comparison
+        if len(channel_analysis) >= 2:
+            channel_performance = {
+                channel: data["performance_metrics"].get("avg_nps", 0)
+                for channel, data in channel_analysis.items()
+            }
+
+            best_channel = max(channel_performance.items(), key=lambda x: x[1])
+            worst_channel = min(channel_performance.items(), key=lambda x: x[1])
+
+            insight = {
+                "type": "channel_performance_gap",
+                "description": f"{best_channel[0]}表现最佳（NPS {best_channel[1]:.1f}），{worst_channel[0]}有改进空间（NPS {worst_channel[1]:.1f}）",
+                "best_channel": best_channel[0],
+                "worst_channel": worst_channel[0],
+                "performance_gap": round(best_channel[1] - worst_channel[1], 2)
+            }
+            omnichannel_insights.append(insight)
+
+        # Cross-channel touchpoint analysis
+        high_performing_touchpoints = [
+            tp for tp, data in touchpoint_analysis.items()
+            if data.get("satisfaction_score", 0) > 0.3
+        ]
+
+        if high_performing_touchpoints:
+            insight = {
+                "type": "high_performing_touchpoints",
+                "description": f"表现优秀的触点：{', '.join(high_performing_touchpoints[:3])}",
+                "touchpoints": high_performing_touchpoints,
+                "optimization_potential": "可以在其他渠道复制成功经验"
+            }
+            omnichannel_insights.append(insight)
+
+        return omnichannel_insights
+
+    def _identify_optimization_opportunities(
+        self,
+        channel_analysis: Dict[str, Dict[str, Any]],
+        touchpoint_analysis: Dict[str, Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
+        """Identify channel optimization opportunities."""
+        opportunities = []
+
+        # Channel improvement opportunities
+        for channel_id, data in channel_analysis.items():
+            metrics = data.get("performance_metrics", {})
+            avg_nps = metrics.get("avg_nps", 0)
+            experience_scores = metrics.get("experience_scores", {})
+
+            if avg_nps < 6.5:  # Underperforming channel
+                # Find specific improvement areas
+                low_scoring_areas = [
+                    area for area, score in experience_scores.items()
+                    if score < 3.0
+                ]
+
+                opportunity = {
+                    "type": "channel_improvement",
+                    "channel": channel_id,
+                    "priority": "high",
+                    "current_nps": avg_nps,
+                    "improvement_areas": low_scoring_areas,
+                    "potential_impact": "medium" if avg_nps > 5 else "high"
+                }
+                opportunities.append(opportunity)
+
+        # Touchpoint optimization opportunities
+        underperforming_touchpoints = [
+            (tp, data) for tp, data in touchpoint_analysis.items()
+            if data.get("satisfaction_score", 0) < -0.2
+        ]
+
+        for touchpoint, data in underperforming_touchpoints:
+            opportunity = {
+                "type": "touchpoint_optimization",
+                "touchpoint": touchpoint,
+                "priority": "medium",
+                "satisfaction_score": data.get("satisfaction_score", 0),
+                "pain_points": data.get("pain_points", [])[:3],  # Top 3 pain points
+                "improvement_focus": "体验优化"
+            }
+            opportunities.append(opportunity)
+
+        # Sort by priority and impact
+        priority_order = {"high": 3, "medium": 2, "low": 1}
+        opportunities.sort(key=lambda x: priority_order.get(x["priority"], 1), reverse=True)
+
+        return opportunities[:8]  # Top 8 opportunities
+
+    async def _generate_channel_recommendations(
+        self,
+        channel_analysis: Dict[str, Dict[str, Any]],
+        touchpoint_analysis: Dict[str, Dict[str, Any]],
+        optimization_opportunities: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
+        """Generate channel-specific recommendations."""
+        recommendations = []
+
+        # Recommendations for optimization opportunities
+        for opportunity in optimization_opportunities:
+            if opportunity["type"] == "channel_improvement":
+                rec = {
+                    "recommendation_id": f"channel_{opportunity['channel']}",
+                    "type": "channel_improvement",
+                    "channel": opportunity["channel"],
+                    "priority": opportunity["priority"],
+                    "title": f"改善{self.sales_channels[opportunity['channel']]['name']}渠道体验",
+                    "description": f"该渠道NPS为{opportunity['current_nps']:.1f}，需要重点改进",
+                    "improvement_areas": opportunity["improvement_areas"],
+                    "suggested_actions": self._suggest_channel_actions(opportunity["channel"], opportunity["improvement_areas"]),
+                    "expected_impact": opportunity["potential_impact"]
+                }
+                recommendations.append(rec)
+
+            elif opportunity["type"] == "touchpoint_optimization":
+                rec = {
+                    "recommendation_id": f"touchpoint_{len(recommendations)}",
+                    "type": "touchpoint_optimization",
+                    "touchpoint": opportunity["touchpoint"],
+                    "priority": opportunity["priority"],
+                    "title": f"优化{opportunity['touchpoint']}体验",
+                    "description": f"该触点满意度为{opportunity['satisfaction_score']:.2f}，存在改进空间",
+                    "pain_points": opportunity["pain_points"],
+                    "suggested_actions": self._suggest_touchpoint_actions(opportunity["touchpoint"], opportunity["pain_points"]),
+                    "expected_impact": "medium"
+                }
+                recommendations.append(rec)
+
+        # Best practice replication recommendations
+        if channel_analysis:
+            best_channel = max(
+                channel_analysis.items(),
+                key=lambda x: x[1]["performance_metrics"].get("avg_nps", 0)
+            )
+
+            rec = {
+                "recommendation_id": "best_practice_replication",
+                "type": "best_practice",
+                "priority": "medium",
+                "title": f"复制{best_channel[1]['channel_info']['name']}成功经验",
+                "description": f"该渠道NPS达{best_channel[1]['performance_metrics'].get('avg_nps', 0):.1f}，成功经验可推广",
+                "best_practices": self._identify_best_practices(best_channel[0], best_channel[1]),
+                "target_channels": self._identify_replication_targets(channel_analysis, best_channel[0]),
+                "expected_impact": "high"
+            }
+            recommendations.append(rec)
+
+        # Enhanced recommendations with LLM
+        if self.llm_client and recommendations:
+            enhanced_recs = await self._enhance_channel_recommendations(recommendations, channel_analysis)
+            if enhanced_recs:
+                recommendations.extend(enhanced_recs)
+
+        return recommendations[:10]  # Top 10 recommendations
+
+    def _suggest_channel_actions(self, channel_id: str, improvement_areas: List[str]) -> List[str]:
+        """Suggest specific actions for channel improvement."""
+        channel_actions = {
+            "supermarket": {
+                "accessibility": ["增加门店数量", "优化门店位置", "改善停车便利性"],
+                "service_quality": ["加强员工培训", "优化服务流程", "提升专业水平"],
+                "product_availability": ["改善库存管理", "增加补货频次", "扩大商品陈列"]
+            },
+            "convenience_store": {
+                "convenience": ["延长营业时间", "优化商品布局", "提升结账效率"],
+                "accessibility": ["增加网点密度", "选择核心位置", "改善可见性"]
+            },
+            "ecommerce": {
+                "customer_support": ["优化在线客服", "提升响应速度", "改善问题解决率"],
+                "checkout_efficiency": ["简化支付流程", "优化页面加载", "提供多种支付方式"]
+            }
+        }
+
+        actions = []
+        channel_specific_actions = channel_actions.get(channel_id, {})
+
+        for area in improvement_areas:
+            if area in channel_specific_actions:
+                actions.extend(channel_specific_actions[area])
+
+        return actions or ["提升服务质量", "优化客户体验", "加强员工培训"]
+
+    def _suggest_touchpoint_actions(self, touchpoint: str, pain_points: List[str]) -> List[str]:
+        """Suggest actions to improve touchpoint experience."""
+        touchpoint_actions = {
+            "货架陈列": ["优化商品摆放", "改善标识指引", "保持货架整洁"],
+            "收银结账": ["增加收银台", "优化排队系统", "提升结账效率"],
+            "物流配送": ["优化配送路线", "提升配送时效", "改善包装保护"],
+            "客服咨询": ["加强客服培训", "优化响应流程", "提供多渠道支持"],
+            "商品选择": ["增加商品种类", "改善分类展示", "提供选择建议"]
+        }
+
+        return touchpoint_actions.get(touchpoint, ["分析具体问题", "制定改进方案", "实施优化措施"])
+
+    def _identify_best_practices(self, channel_id: str, channel_data: Dict[str, Any]) -> List[str]:
+        """Identify best practices from top-performing channel."""
+        practices = []
+        experience_scores = channel_data["performance_metrics"].get("experience_scores", {})
+
+        # Find high-scoring areas
+        for exp_type, score in experience_scores.items():
+            if score >= 4.0:  # High performance
+                kpi_name = self.channel_kpis.get(exp_type, exp_type)
+                practices.append(f"{kpi_name}表现优秀（{score:.1f}分）")
+
+        # Channel-specific practices
+        channel_name = channel_data["channel_info"]["name"]
+        if channel_id == "ecommerce":
+            practices.append("线上购物体验优化")
+        elif channel_id == "supermarket":
+            practices.append("大型零售环境管理")
+        elif channel_id == "convenience_store":
+            practices.append("便利性服务模式")
+
+        return practices[:5]  # Top 5 practices
+
+    def _identify_replication_targets(
+        self,
+        channel_analysis: Dict[str, Dict[str, Any]],
+        best_channel_id: str
+    ) -> List[str]:
+        """Identify channels that could benefit from best practice replication."""
+        targets = []
+        best_nps = channel_analysis[best_channel_id]["performance_metrics"].get("avg_nps", 0)
+
+        for channel_id, data in channel_analysis.items():
+            if channel_id != best_channel_id:
+                channel_nps = data["performance_metrics"].get("avg_nps", 0)
+                if best_nps - channel_nps > 1.0:  # Significant gap
+                    targets.append(channel_id)
+
+        return targets
+
+    def _generate_channel_insights(
+        self,
+        channel_analysis: Dict[str, Dict[str, Any]],
+        touchpoint_analysis: Dict[str, Dict[str, Any]],
+        omnichannel_insights: List[Dict[str, Any]]
+    ) -> List[str]:
+        """Generate actionable channel insights."""
+        insights = []
+
+        # Overall channel landscape
+        total_channels = len(channel_analysis)
+        insights.append(f"分析了{total_channels}个销售渠道的客户体验表现")
+
+        if channel_analysis:
+            # Best performing channel
+            best_channel = max(
+                channel_analysis.items(),
+                key=lambda x: x[1]["performance_metrics"].get("avg_nps", 0)
+            )
+            channel_name = best_channel[1]["channel_info"]["name"]
+            nps_score = best_channel[1]["performance_metrics"].get("avg_nps", 0)
+            insights.append(f"表现最佳渠道：{channel_name}（NPS {nps_score:.1f}）")
+
+            # Channel diversity
+            response_counts = [data["performance_metrics"].get("response_count", 0) for data in channel_analysis.values()]
+            total_responses = sum(response_counts)
+            if total_responses > 0:
+                channel_distribution = [count/total_responses for count in response_counts]
+                if max(channel_distribution) < 0.5:
+                    insights.append("客户渠道使用相对均衡，呈现多元化特征")
+                else:
+                    dominant_channel = max(channel_analysis.items(), key=lambda x: x[1]["performance_metrics"].get("response_count", 0))
+                    insights.append(f"{dominant_channel[1]['channel_info']['name']}是主要使用渠道")
+
+        # Touchpoint insights
+        if touchpoint_analysis:
+            problematic_touchpoints = [
+                tp for tp, data in touchpoint_analysis.items()
+                if data.get("satisfaction_score", 0) < -0.1
+            ]
+            if problematic_touchpoints:
+                insights.append(f"{len(problematic_touchpoints)}个触点存在体验问题，需要重点改进")
+
+        # Omnichannel insights
+        for insight in omnichannel_insights[:2]:  # Top 2 omnichannel insights
+            insights.append(insight["description"])
+
+        # Strategic insights
+        if len(channel_analysis) >= 3:
+            insights.append("多渠道覆盖为消费者提供了灵活选择，需要协调发展")
+
+        return insights
+
+    async def _llm_journey_analysis(self, tagged_responses: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Use LLM for enhanced customer journey analysis."""
+        if not self.llm_client:
+            return {}
+
+        try:
+            sample_texts = [resp.get("original_text", "") for resp in tagged_responses]
+            combined_text = "\n".join(f"反馈{i+1}: {text}" for i, text in enumerate(sample_texts) if text)
+
+            prompt = f"""
+分析以下消费者反馈中的购买旅程和渠道体验：
+
+{combined_text}
+
+请识别：
+1. 客户旅程各阶段的体验质量
+2. 不同渠道的优缺点对比
+3. 跨渠道行为模式
+4. 旅程中的关键痛点和机会点
+
+以JSON格式返回：
+{{
+    "journey_stages": [
+        {{"stage": "阶段名", "experience_quality": "high/medium/low", "key_insights": ["洞察1", "洞察2"]}}
+    ],
+    "channel_comparison": [
+        {{"aspect": "对比维度", "channel_performance": {{"channel1": "表现描述", "channel2": "表现描述"}}}}
+    ],
+    "cross_channel_patterns": ["模式1", "模式2"],
+    "optimization_opportunities": ["机会1", "机会2"]
+}}
+"""
+
+            response = await self.llm_client.call(prompt, temperature=0.3)
+
+            import json
+            return json.loads(response)
+
+        except Exception as e:
+            logger.debug(f"LLM journey analysis failed: {e}")
+            return {}
+
+    async def _enhance_channel_recommendations(
+        self,
+        recommendations: List[Dict[str, Any]],
+        channel_analysis: Dict[str, Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
+        """Use LLM to enhance channel recommendations."""
+        if not self.llm_client:
+            return []
+
+        try:
+            rec_summary = "\n".join([
+                f"推荐{i+1}: {rec['title']} - {rec['type']}"
+                for i, rec in enumerate(recommendations[:5])
+            ])
+
+            channel_summary = "\n".join([
+                f"{data['channel_info']['name']}: NPS {data['performance_metrics'].get('avg_nps', 0):.1f}"
+                for data in channel_analysis.values()
+                if data.get('performance_metrics')
+            ])
+
+            prompt = f"""
+基于渠道分析结果，提供创新的全渠道优化建议：
+
+现有推荐：
+{rec_summary}
+
+渠道表现：
+{channel_summary}
+
+请提供3个创新性全渠道策略：
+1. 数字化渠道融合策略
+2. 客户旅程无缝化改进
+3. 渠道协同增效方案
+
+以JSON格式返回：
+[
+    {{
+        "title": "策略标题",
+        "type": "digital_integration/journey_optimization/channel_synergy",
+        "description": "详细描述",
+        "target_channels": ["目标渠道"],
+        "implementation_steps": ["步骤1", "步骤2"],
+        "expected_benefits": ["收益1", "收益2"]
+    }}
+]
+"""
+
+            response = await self.llm_client.call(prompt, temperature=0.4)
+
+            import json
+            enhanced_data = json.loads(response)
+
+            enhanced_recommendations = []
+            for i, rec_data in enumerate(enhanced_data):
+                enhanced_rec = {
+                    "recommendation_id": f"channel_strategy_{i}",
+                    "type": rec_data.get("type", "channel_strategy"),
+                    "priority": "strategic",
+                    "title": rec_data.get("title", ""),
+                    "description": rec_data.get("description", ""),
+                    "target_channels": rec_data.get("target_channels", []),
+                    "implementation_steps": rec_data.get("implementation_steps", []),
+                    "expected_benefits": rec_data.get("expected_benefits", [])
+                }
+                enhanced_recommendations.append(enhanced_rec)
+
+            return enhanced_recommendations
+
+        except Exception as e:
+            logger.debug(f"LLM channel recommendation enhancement failed: {e}")
+            return []

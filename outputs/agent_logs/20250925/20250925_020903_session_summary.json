@@ -1,0 +1,15 @@
+{
+  "metadata": {
+    "session_id": "20250925_020903",
+    "start_time": "2025-09-25T02:09:03.154945",
+    "agents_executed": [],
+    "total_execution_time_ms": 0,
+    "errors": [],
+    "warnings": []
+  },
+  "agent_outputs": {},
+  "workflow_result_summary": {
+    "error": "Executive Synthesizer (C5) failed: [\"Insufficient confidence for executive synthesis: ['仅有0个咨询模块输出，综合分析受限', '缺乏足够的战略建议', '风险评估不充分', '样本量较小影响战略建议可信度']\"]",
+    "traceback": "Traceback (most recent call last):\n  File \"/Users/vincentyang/nextcloud/Shared/SyncPortWorkSpace/WorkingSpace/team-folder/001 伊利阿里智能体项目/001 伊利-阿里项目/洞察智能体/代码仓库/nps-answer-analyzer/api_v3.py\", line 153, in execute_workflow_with_logging\n    result = await workflow.execute(raw_data, config)\n  File \"/Users/vincentyang/nextcloud/Shared/SyncPortWorkSpace/WorkingSpace/team-folder/001 伊利阿里智能体项目/001 伊利-阿里项目/洞察智能体/代码仓库/nps-answer-analyzer/nps_report_v3/workflow/orchestrator.py\", line 87, in execute\n    sta... (truncated, 971 chars total)"
+  }
+}

@@ -1,0 +1,1308 @@
+{
+  "workflow_id": "workflow_0805bc2d",
+  "workflow_phase": "completed",
+  "workflow_start_time": "2025-09-25 02:12:00.939227",
+  "workflow_version": "3.0.0",
+  "raw_data": [
+    {
+      "response_id": "rich_test_001",
+      "customer_data": {
+        "customer_id": "test_001",
+        "demographics": {
+          "survey_method": "链接二维码",
+          "completion_time": "5分钟",
+          "status": "已完成",
+          "ai_tag_status": "未标记",
+          "response_type": "正式"
+        }
+      },
+      "nps_score": 9,
+      "feedback_text": "不推荐原因: 包装设计确实需要改进，颜色搭配不够吸引人，而且材质感觉有点廉价。希望能设计得更高档一些，符合伊利品牌的定位。. 推荐原因: 伊利安慕希的口感真的很棒，浓郁顺滑，而且蛋白质含量高，营养价值好。杨幂代言的形象也很不错，感觉很有品质保证。价格虽然不算便宜，但是物有所值。我已经喝了两年多了，品质一直很稳定，所以很愿意推荐给朋友们。. 不满意因素: 包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）. 满意因素: 喜欢品牌或代言人、赞助综艺等宣传内容. 满意因素: 产品物有所值、性价比高. 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应",
+      "metadata": {
+        "survey_date": "2025-09-25 10:00:00",
+        "submit_time": "2025-09-25 10:05:00",
+        "channel": "链接二维码",
+        "response_type": "正式",
+        "duration": "5分钟",
+        "ai_tag_reason": "",
+        "manual_tag_status": "未标记",
+        "manual_tag_reason": ""
+      }
+    },
+    {
+      "response_id": "rich_test_002",
+      "customer_data": {
+        "customer_id": "test_002",
+        "demographics": {
+          "survey_method": "链接二维码",
+          "completion_time": "3分钟",
+          "status": "已完成",
+          "ai_tag_status": "未标记",
+          "response_type": "正式"
+        }
+      },
+      "nps_score": 3,
+      "feedback_text": "不推荐原因: 价格确实太高了，一盒12支要30多块钱，比普通酸奶贵了一倍。而且口味有点过甜，不够天然。广告说的那些功能我也没感觉到，感觉就是普通的酸奶。性价比不高，不值得这个价钱。. 推荐原因: 包装设计还是不错的，看起来比较高档，送人也拿得出手。. 不满意因素: 产品价格太贵，性价比不高. 不满意因素: 产品口味口感不好. 不满意因素: 没有感知到产品宣传的功能. 满意因素: 包装设计好（如醒目、美观，材质好，便携、方便打开等）",
+      "metadata": {
+        "survey_date": "2025-09-25 11:00:00",
+        "submit_time": "2025-09-25 11:03:00",
+        "channel": "链接二维码",
+        "response_type": "正式",
+        "duration": "3分钟",
+        "ai_tag_reason": "",
+        "manual_tag_status": "未标记",
+        "manual_tag_reason": ""
+      }
+    },
+    {
+      "response_id": "rich_test_003",
+      "customer_data": {
+        "customer_id": "test_003",
+        "demographics": {
+          "survey_method": "链接二维码",
+          "completion_time": "4分钟",
+          "status": "已完成",
+          "ai_tag_status": "未标记",
+          "response_type": "正式"
+        }
+      },
+      "nps_score": 7,
+      "feedback_text": "不推荐原因: 促销活动太少了，而且折扣力度不大。另外网购的时候物流有点慢，有一次还收到了过期的产品，售后处理也不够及时。希望能改善服务质量。. 推荐原因: 口感确实很好，比其他品牌的酸奶更浓稠，蛋白质含量也高。喝了之后确实感觉消化好了一些，可能是益生菌的作用。总体来说产品质量还是值得信赖的，就是服务需要提升。. 不满意因素: 促销活动不好（如对赠品、活动力度/规则等不满意）. 不满意因素: 物流配送、门店导购、售后等服务体验不好. 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应. 满意因素: 满意产品宣传的功能（如促进消化、增强免疫、助睡眠等）",
+      "metadata": {
+        "survey_date": "2025-09-25 12:00:00",
+        "submit_time": "2025-09-25 12:04:00",
+        "channel": "链接二维码",
+        "response_type": "正式",
+        "duration": "4分钟",
+        "ai_tag_reason": "",
+        "manual_tag_status": "未标记",
+        "manual_tag_reason": ""
+      }
+    }
+  ],
+  "input_metadata": {},
+  "agent_outputs": {},
+  "agent_sequence": [],
+  "checkpoints": [],
+  "total_tokens_used": 0,
+  "total_llm_calls": 0,
+  "total_processing_time_ms": 0,
+  "memory_peak_mb": 0.0,
+  "errors": [],
+  "warnings": [],
+  "retry_count": 0,
+  "failed_agents": [],
+  "language": "zh-CN",
+  "report_format_preferences": {},
+  "emphasis_areas": [],
+  "excluded_topics": [],
+  "input_data": {
+    "survey_responses": [
+      {
+        "response_id": "rich_test_001",
+        "customer_data": {
+          "customer_id": "test_001",
+          "demographics": {
+            "survey_method": "链接二维码",
+            "completion_time": "5分钟",
+            "status": "已完成",
+            "ai_tag_status": "未标记",
+            "response_type": "正式"
+          }
+        },
+        "nps_score": 9,
+        "feedback_text": "不推荐原因: 包装设计确实需要改进，颜色搭配不够吸引人，而且材质感觉有点廉价。希望能设计得更高档一些，符合伊利品牌的定位。. 推荐原因: 伊利安慕希的口感真的很棒，浓郁顺滑，而且蛋白质含量高，营养价值好。杨幂代言的形象也很不错，感觉很有品质保证。价格虽然不算便宜，但是物有所值。我已经喝了两年多了，品质一直很稳定，所以很愿意推荐给朋友们。. 不满意因素: 包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）. 满意因素: 喜欢品牌或代言人、赞助综艺等宣传内容. 满意因素: 产品物有所值、性价比高. 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应",
+        "metadata": {
+          "survey_date": "2025-09-25 10:00:00",
+          "submit_time": "2025-09-25 10:05:00",
+          "channel": "链接二维码",
+          "response_type": "正式",
+          "duration": "5分钟",
+          "ai_tag_reason": "",
+          "manual_tag_status": "未标记",
+          "manual_tag_reason": ""
+        }
+      },
+      {
+        "response_id": "rich_test_002",
+        "customer_data": {
+          "customer_id": "test_002",
+          "demographics": {
+            "survey_method": "链接二维码",
+            "completion_time": "3分钟",
+            "status": "已完成",
+            "ai_tag_status": "未标记",
+            "response_type": "正式"
+          }
+        },
+        "nps_score": 3,
+        "feedback_text": "不推荐原因: 价格确实太高了，一盒12支要30多块钱，比普通酸奶贵了一倍。而且口味有点过甜，不够天然。广告说的那些功能我也没感觉到，感觉就是普通的酸奶。性价比不高，不值得这个价钱。. 推荐原因: 包装设计还是不错的，看起来比较高档，送人也拿得出手。. 不满意因素: 产品价格太贵，性价比不高. 不满意因素: 产品口味口感不好. 不满意因素: 没有感知到产品宣传的功能. 满意因素: 包装设计好（如醒目、美观，材质好，便携、方便打开等）",
+        "metadata": {
+          "survey_date": "2025-09-25 11:00:00",
+          "submit_time": "2025-09-25 11:03:00",
+          "channel": "链接二维码",
+          "response_type": "正式",
+          "duration": "3分钟",
+          "ai_tag_reason": "",
+          "manual_tag_status": "未标记",
+          "manual_tag_reason": ""
+        }
+      },
+      {
+        "response_id": "rich_test_003",
+        "customer_data": {
+          "customer_id": "test_003",
+          "demographics": {
+            "survey_method": "链接二维码",
+            "completion_time": "4分钟",
+            "status": "已完成",
+            "ai_tag_status": "未标记",
+            "response_type": "正式"
+          }
+        },
+        "nps_score": 7,
+        "feedback_text": "不推荐原因: 促销活动太少了，而且折扣力度不大。另外网购的时候物流有点慢，有一次还收到了过期的产品，售后处理也不够及时。希望能改善服务质量。. 推荐原因: 口感确实很好，比其他品牌的酸奶更浓稠，蛋白质含量也高。喝了之后确实感觉消化好了一些，可能是益生菌的作用。总体来说产品质量还是值得信赖的，就是服务需要提升。. 不满意因素: 促销活动不好（如对赠品、活动力度/规则等不满意）. 不满意因素: 物流配送、门店导购、售后等服务体验不好. 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应. 满意因素: 满意产品宣传的功能（如促进消化、增强免疫、助睡眠等）",
+        "metadata": {
+          "survey_date": "2025-09-25 12:00:00",
+          "submit_time": "2025-09-25 12:04:00",
+          "channel": "链接二维码",
+          "response_type": "正式",
+          "duration": "4分钟",
+          "ai_tag_reason": "",
+          "manual_tag_status": "未标记",
+          "manual_tag_reason": ""
+        }
+      }
+    ],
+    "responses": [
+      {
+        "response_id": "rich_test_001",
+        "customer_data": {
+          "customer_id": "test_001",
+          "demographics": {
+            "survey_method": "链接二维码",
+            "completion_time": "5分钟",
+            "status": "已完成",
+            "ai_tag_status": "未标记",
+            "response_type": "正式"
+          }
+        },
+        "nps_score": 9,
+        "feedback_text": "不推荐原因: 包装设计确实需要改进，颜色搭配不够吸引人，而且材质感觉有点廉价。希望能设计得更高档一些，符合伊利品牌的定位。. 推荐原因: 伊利安慕希的口感真的很棒，浓郁顺滑，而且蛋白质含量高，营养价值好。杨幂代言的形象也很不错，感觉很有品质保证。价格虽然不算便宜，但是物有所值。我已经喝了两年多了，品质一直很稳定，所以很愿意推荐给朋友们。. 不满意因素: 包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）. 满意因素: 喜欢品牌或代言人、赞助综艺等宣传内容. 满意因素: 产品物有所值、性价比高. 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应",
+        "metadata": {
+          "survey_date": "2025-09-25 10:00:00",
+          "submit_time": "2025-09-25 10:05:00",
+          "channel": "链接二维码",
+          "response_type": "正式",
+          "duration": "5分钟",
+          "ai_tag_reason": "",
+          "manual_tag_status": "未标记",
+          "manual_tag_reason": ""
+        }
+      },
+      {
+        "response_id": "rich_test_002",
+        "customer_data": {
+          "customer_id": "test_002",
+          "demographics": {
+            "survey_method": "链接二维码",
+            "completion_time": "3分钟",
+            "status": "已完成",
+            "ai_tag_status": "未标记",
+            "response_type": "正式"
+          }
+        },
+        "nps_score": 3,
+        "feedback_text": "不推荐原因: 价格确实太高了，一盒12支要30多块钱，比普通酸奶贵了一倍。而且口味有点过甜，不够天然。广告说的那些功能我也没感觉到，感觉就是普通的酸奶。性价比不高，不值得这个价钱。. 推荐原因: 包装设计还是不错的，看起来比较高档，送人也拿得出手。. 不满意因素: 产品价格太贵，性价比不高. 不满意因素: 产品口味口感不好. 不满意因素: 没有感知到产品宣传的功能. 满意因素: 包装设计好（如醒目、美观，材质好，便携、方便打开等）",
+        "metadata": {
+          "survey_date": "2025-09-25 11:00:00",
+          "submit_time": "2025-09-25 11:03:00",
+          "channel": "链接二维码",
+          "response_type": "正式",
+          "duration": "3分钟",
+          "ai_tag_reason": "",
+          "manual_tag_status": "未标记",
+          "manual_tag_reason": ""
+        }
+      },
+      {
+        "response_id": "rich_test_003",
+        "customer_data": {
+          "customer_id": "test_003",
+          "demographics": {
+            "survey_method": "链接二维码",
+            "completion_time": "4分钟",
+            "status": "已完成",
+            "ai_tag_status": "未标记",
+            "response_type": "正式"
+          }
+        },
+        "nps_score": 7,
+        "feedback_text": "不推荐原因: 促销活动太少了，而且折扣力度不大。另外网购的时候物流有点慢，有一次还收到了过期的产品，售后处理也不够及时。希望能改善服务质量。. 推荐原因: 口感确实很好，比其他品牌的酸奶更浓稠，蛋白质含量也高。喝了之后确实感觉消化好了一些，可能是益生菌的作用。总体来说产品质量还是值得信赖的，就是服务需要提升。. 不满意因素: 促销活动不好（如对赠品、活动力度/规则等不满意）. 不满意因素: 物流配送、门店导购、售后等服务体验不好. 满意因素: 产品口味口感好. 满意因素: 饮用后体感舒适，无不良反应. 满意因素: 满意产品宣传的功能（如促进消化、增强免疫、助睡眠等）",
+        "metadata": {
+          "survey_date": "2025-09-25 12:00:00",
+          "submit_time": "2025-09-25 12:04:00",
+          "channel": "链接二维码",
+          "response_type": "正式",
+          "duration": "4分钟",
+          "ai_tag_reason": "",
+          "manual_tag_status": "未标记",
+          "manual_tag_reason": ""
+        }
+      }
+    ]
+  },
+  "cleaned_data": {
+    "total_responses": 3,
+    "valid_responses": 3,
+    "invalid_responses": 0,
+    "cleaned_responses": [
+      {
+        "response_id": "rich_test_001",
+        "timestamp": "2025-09-25 02:12:00.941435",
+        "nps_score": 9,
+        "comment": null,
+        "product_line": null,
+        "customer_segment": null,
+        "channel": null,
+        "metadata": {
+          "survey_date": "2025-09-25 10:00:00",
+          "submit_time": "2025-09-25 10:05:00",
+          "channel": "链接二维码",
+          "response_type": "正式",
+          "duration": "5分钟",
+          "ai_tag_reason": "",
+          "manual_tag_status": "未标记",
+          "manual_tag_reason": ""
+        }
+      },
+      {
+        "response_id": "rich_test_002",
+        "timestamp": "2025-09-25 02:12:00.941878",
+        "nps_score": 3,
+        "comment": null,
+        "product_line": null,
+        "customer_segment": null,
+        "channel": null,
+        "metadata": {
+          "survey_date": "2025-09-25 11:00:00",
+          "submit_time": "2025-09-25 11:03:00",
+          "channel": "链接二维码",
+          "response_type": "正式",
+          "duration": "3分钟",
+          "ai_tag_reason": "",
+          "manual_tag_status": "未标记",
+          "manual_tag_reason": ""
+        }
+      },
+      {
+        "response_id": "rich_test_003",
+        "timestamp": "2025-09-25 02:12:00.941937",
+        "nps_score": 7,
+        "comment": null,
+        "product_line": null,
+        "customer_segment": null,
+        "channel": null,
+        "metadata": {
+          "survey_date": "2025-09-25 12:00:00",
+          "submit_time": "2025-09-25 12:04:00",
+          "channel": "链接二维码",
+          "response_type": "正式",
+          "duration": "4分钟",
+          "ai_tag_reason": "",
+          "manual_tag_status": "未标记",
+          "manual_tag_reason": ""
+        }
+      }
+    ],
+    "data_quality": "high",
+    "cleaning_notes": [],
+    "pii_scrubbed": true
+  },
+  "summary": {
+    "total_analyzed": 0,
+    "sentiment_distribution": {},
+    "top_themes": [],
+    "key_phrases": []
+  },
+  "nps_metrics": {
+    "nps_score": 0.0,
+    "promoters_count": 1,
+    "passives_count": 1,
+    "detractors_count": 1,
+    "promoters_percentage": 33.33333333333333,
+    "passives_percentage": 33.33333333333333,
+    "detractors_percentage": 33.33333333333333,
+    "confidence_interval": [
+      -75.4404351741111,
+      75.4404351741111
+    ],
+    "sample_size": 3,
+    "statistical_significance": "False"
+  },
+  "segment_analysis": {
+    "score_distribution": {
+      "9": 1,
+      "3": 1,
+      "7": 1
+    },
+    "quartiles": {
+      "q1": 5.0,
+      "median": 7.0,
+      "q3": 8.0,
+      "mean": 6.333333333333333,
+      "std": 2.494438257849294
+    }
+  },
+  "temporal_analysis": {},
+  "statistical_analysis": {},
+  "quantitative_insights": [
+    "NPS得分为0.0，处于中等水平，有改进空间",
+    "95%置信区间为[-75.4, 75.4]，样本量3具有统计代表性"
+  ],
+  "tagged_responses": [],
+  "semantic_clusters": [],
+  "clustering_summary": {
+    "total_clusters": 0,
+    "clustered_responses": 0,
+    "unclustered_responses": 0
+  },
+  "pass1_foundation": {
+    "workflow_start_time": "2025-09-25 02:12:00.939227",
+    "workflow_version": "3.0.0",
+    "input_metadata": {},
+    "agent_outputs": {},
+    "agent_sequence": [],
+    "checkpoints": [],
+    "total_tokens_used": 0,
+    "total_llm_calls": 0,
+    "total_processing_time_ms": 0,
+    "memory_peak_mb": 0.0,
+    "errors": [],
+    "warnings": [],
+    "retry_count": 0,
+    "failed_agents": [],
+    "report_format_preferences": {},
+    "emphasis_areas": [],
+    "excluded_topics": [],
+    "cleaned_data": {
+      "total_responses": 3,
+      "valid_responses": 3,
+      "invalid_responses": 0,
+      "cleaned_responses": [
+        {
+          "response_id": "rich_test_001",
+          "timestamp": "2025-09-25 02:12:00.941435",
+          "nps_score": 9,
+          "comment": null,
+          "product_line": null,
+          "customer_segment": null,
+          "channel": null,
+          "metadata": {
+            "survey_date": "2025-09-25 10:00:00",
+            "submit_time": "2025-09-25 10:05:00",
+            "channel": "链接二维码",
+            "response_type": "正式",
+            "duration": "5分钟",
+            "ai_tag_reason": "",
+            "manual_tag_status": "未标记",
+            "manual_tag_reason": ""
+          }
+        },
+        {
+          "response_id": "rich_test_002",
+          "timestamp": "2025-09-25 02:12:00.941878",
+          "nps_score": 3,
+          "comment": null,
+          "product_line": null,
+          "customer_segment": null,
+          "channel": null,
+          "metadata": {
+            "survey_date": "2025-09-25 11:00:00",
+            "submit_time": "2025-09-25 11:03:00",
+            "channel": "链接二维码",
+            "response_type": "正式",
+            "duration": "3分钟",
+            "ai_tag_reason": "",
+            "manual_tag_status": "未标记",
+            "manual_tag_reason": ""
+          }
+        },
+        {
+          "response_id": "rich_test_003",
+          "timestamp": "2025-09-25 02:12:00.941937",
+          "nps_score": 7,
+          "comment": null,
+          "product_line": null,
+          "customer_segment": null,
+          "channel": null,
+          "metadata": {
+            "survey_date": "2025-09-25 12:00:00",
+            "submit_time": "2025-09-25 12:04:00",
+            "channel": "链接二维码",
+            "response_type": "正式",
+            "duration": "4分钟",
+            "ai_tag_reason": "",
+            "manual_tag_status": "未标记",
+            "manual_tag_reason": ""
+          }
+        }
+      ],
+      "data_quality": "high",
+      "cleaning_notes": [],
+      "pii_scrubbed": true
+    },
+    "summary": {
+      "total_analyzed": 0,
+      "sentiment_distribution": {},
+      "top_themes": [],
+      "key_phrases": []
+    },
+    "nps_metrics": {
+      "nps_score": 0.0,
+      "promoters_count": 1,
+      "passives_count": 1,
+      "detractors_count": 1,
+      "promoters_percentage": 33.33333333333333,
+      "passives_percentage": 33.33333333333333,
+      "detractors_percentage": 33.33333333333333,
+      "confidence_interval": [
+        -75.4404351741111,
+        75.4404351741111
+      ],
+      "sample_size": 3,
+      "statistical_significance": "False"
+    },
+    "segment_analysis": {
+      "score_distribution": {
+        "9": 1,
+        "3": 1,
+        "7": 1
+      },
+      "quartiles": {
+        "q1": 5.0,
+        "median": 7.0,
+        "q3": 8.0,
+        "mean": 6.333333333333333,
+        "std": 2.494438257849294
+      }
+    },
+    "temporal_analysis": {},
+    "statistical_analysis": {},
+    "quantitative_insights": [
+      "NPS得分为0.0，处于中等水平，有改进空间",
+      "95%置信区间为[-75.4, 75.4]，样本量3具有统计代表性"
+    ],
+    "tagged_responses": [],
+    "semantic_clusters": [],
+    "clustering_summary": {
+      "total_clusters": 0,
+      "clustered_responses": 0,
+      "unclustered_responses": 0
+    },
+    "nps_calculation": {
+      "nps_score": 0.0,
+      "promoters_count": 1,
+      "passives_count": 1,
+      "detractors_count": 1,
+      "promoters_percentage": 33.33333333333333,
+      "passives_percentage": 33.33333333333333,
+      "detractors_percentage": 33.33333333333333,
+      "confidence_interval": [
+        -75.4404351741111,
+        75.4404351741111
+      ],
+      "sample_size": 3,
+      "statistical_significance": "False",
+      "total_responses": 3,
+      "valid_responses": 3
+    },
+    "confidence_assessment": {
+      "confidence": 0.22500000000000003,
+      "status": "low_confidence"
+    }
+  },
+  "technical_requirements": [],
+  "requirements_summary": {
+    "total": 0,
+    "by_category": {},
+    "by_priority": {}
+  },
+  "passive_analysis": {
+    "total_passive": 0,
+    "conversion_opportunities": [],
+    "barriers": [],
+    "recommendations": []
+  },
+  "detractor_analysis": {
+    "total_detractors": 0,
+    "pain_points": [],
+    "churn_risks": [],
+    "recovery_strategies": []
+  },
+  "text_clustering": {
+    "total_texts": 0,
+    "clusters": [],
+    "topics": [],
+    "sentiment_analysis": {},
+    "word_cloud_data": []
+  },
+  "driver_analysis": {
+    "total_responses": 0,
+    "driver_scores": {},
+    "importance_satisfaction_matrix": [],
+    "quadrant_analysis": {},
+    "correlations": {},
+    "recommendations": []
+  },
+  "product_dimension": {
+    "total_responses": 0,
+    "product_performance": {},
+    "competitive_analysis": {},
+    "cross_selling_opportunities": [],
+    "product_recommendations": []
+  },
+  "geographic_dimension": {
+    "total_responses": 0,
+    "regional_analysis": {},
+    "city_tier_analysis": {},
+    "demographic_analysis": {},
+    "geographic_recommendations": []
+  },
+  "channel_dimension": {
+    "total_responses": 0,
+    "channel_analysis": {},
+    "touchpoint_analysis": {},
+    "journey_analysis": {},
+    "omnichannel_insights": [],
+    "channel_recommendations": []
+  },
+  "analysis_coordination": {
+    "total_raw_insights": 0,
+    "total_coordinated_insights": 0,
+    "coordinated_insights": [],
+    "priority_recommendations": [],
+    "validation_results": {
+      "consistency_score": 0,
+      "validation_flags": [],
+      "cross_confirmations": [],
+      "data_gaps": [
+        {
+          "agent": "B3",
+          "missing_data": [
+            "incomplete_structure"
+          ]
+        },
+        {
+          "agent": "B4",
+          "missing_data": [
+            "incomplete_structure"
+          ]
+        },
+        {
+          "agent": "B6",
+          "missing_data": [
+            "incomplete_structure"
+          ]
+        },
+        {
+          "agent": "B7",
+          "missing_data": [
+            "incomplete_structure"
+          ]
+        },
+        {
+          "agent": "B8",
+          "missing_data": [
+            "incomplete_structure"
+          ]
+        }
+      ]
+    },
+    "synthesis_summary": {
+      "executive_overview": "综合分析识别出0项关键洞察，其中0项紧急议题需要立即关注，0项战略性发现指引长期发展方向。",
+      "key_findings": [],
+      "strategic_priorities": [],
+      "immediate_actions": [],
+      "performance_metrics": {
+        "total_insights_generated": 0,
+        "cross_validated_insights": 0,
+        "high_confidence_insights": 0,
+        "agent_coverage": 7,
+        "consistency_score": 0
+      },
+      "confidence_assessment": {
+        "overall_confidence": "low",
+        "data_completeness": 0.2857142857142857,
+        "cross_validation_rate": 0,
+        "recommendation_confidence": 0
+      }
+    },
+    "meta_insights": [
+      "多角度分析覆盖7个维度，确保洞察全面性",
+      "部分洞察质量有待提升，需要更多数据验证",
+      "分析覆盖面广，从多个角度深入理解客户反馈"
+    ]
+  },
+  "pass2_analysis": {
+    "workflow_start_time": "2025-09-25 02:12:00.939227",
+    "workflow_version": "3.0.0",
+    "input_metadata": {},
+    "agent_outputs": {},
+    "agent_sequence": [],
+    "checkpoints": [],
+    "total_tokens_used": 0,
+    "total_llm_calls": 0,
+    "total_processing_time_ms": 0,
+    "memory_peak_mb": 0.0,
+    "errors": [],
+    "warnings": [],
+    "retry_count": 0,
+    "failed_agents": [],
+    "report_format_preferences": {},
+    "emphasis_areas": [],
+    "excluded_topics": [],
+    "cleaned_data": {
+      "total_responses": 3,
+      "valid_responses": 3,
+      "invalid_responses": 0,
+      "cleaned_responses": [
+        {
+          "response_id": "rich_test_001",
+          "timestamp": "2025-09-25 02:12:00.941435",
+          "nps_score": 9,
+          "comment": null,
+          "product_line": null,
+          "customer_segment": null,
+          "channel": null,
+          "metadata": {
+            "survey_date": "2025-09-25 10:00:00",
+            "submit_time": "2025-09-25 10:05:00",
+            "channel": "链接二维码",
+            "response_type": "正式",
+            "duration": "5分钟",
+            "ai_tag_reason": "",
+            "manual_tag_status": "未标记",
+            "manual_tag_reason": ""
+          }
+        },
+        {
+          "response_id": "rich_test_002",
+          "timestamp": "2025-09-25 02:12:00.941878",
+          "nps_score": 3,
+          "comment": null,
+          "product_line": null,
+          "customer_segment": null,
+          "channel": null,
+          "metadata": {
+            "survey_date": "2025-09-25 11:00:00",
+            "submit_time": "2025-09-25 11:03:00",
+            "channel": "链接二维码",
+            "response_type": "正式",
+            "duration": "3分钟",
+            "ai_tag_reason": "",
+            "manual_tag_status": "未标记",
+            "manual_tag_reason": ""
+          }
+        },
+        {
+          "response_id": "rich_test_003",
+          "timestamp": "2025-09-25 02:12:00.941937",
+          "nps_score": 7,
+          "comment": null,
+          "product_line": null,
+          "customer_segment": null,
+          "channel": null,
+          "metadata": {
+            "survey_date": "2025-09-25 12:00:00",
+            "submit_time": "2025-09-25 12:04:00",
+            "channel": "链接二维码",
+            "response_type": "正式",
+            "duration": "4分钟",
+            "ai_tag_reason": "",
+            "manual_tag_status": "未标记",
+            "manual_tag_reason": ""
+          }
+        }
+      ],
+      "data_quality": "high",
+      "cleaning_notes": [],
+      "pii_scrubbed": true
+    },
+    "summary": {
+      "total_analyzed": 0,
+      "sentiment_distribution": {},
+      "top_themes": [],
+      "key_phrases": []
+    },
+    "nps_metrics": {
+      "nps_score": 0.0,
+      "promoters_count": 1,
+      "passives_count": 1,
+      "detractors_count": 1,
+      "promoters_percentage": 33.33333333333333,
+      "passives_percentage": 33.33333333333333,
+      "detractors_percentage": 33.33333333333333,
+      "confidence_interval": [
+        -75.4404351741111,
+        75.4404351741111
+      ],
+      "sample_size": 3,
+      "statistical_significance": "False"
+    },
+    "segment_analysis": {
+      "score_distribution": {
+        "9": 1,
+        "3": 1,
+        "7": 1
+      },
+      "quartiles": {
+        "q1": 5.0,
+        "median": 7.0,
+        "q3": 8.0,
+        "mean": 6.333333333333333,
+        "std": 2.494438257849294
+      }
+    },
+    "temporal_analysis": {},
+    "statistical_analysis": {},
+    "quantitative_insights": [
+      "NPS得分为0.0，处于中等水平，有改进空间",
+      "95%置信区间为[-75.4, 75.4]，样本量3具有统计代表性"
+    ],
+    "tagged_responses": [],
+    "semantic_clusters": [],
+    "clustering_summary": {
+      "total_clusters": 0,
+      "clustered_responses": 0,
+      "unclustered_responses": 0
+    },
+    "technical_requirements": [],
+    "requirements_summary": {
+      "total": 0,
+      "by_category": {},
+      "by_priority": {}
+    },
+    "passive_analysis": {
+      "total_passive": 0,
+      "conversion_opportunities": [],
+      "barriers": [],
+      "recommendations": []
+    },
+    "detractor_analysis": {
+      "total_detractors": 0,
+      "pain_points": [],
+      "churn_risks": [],
+      "recovery_strategies": []
+    },
+    "text_clustering": {
+      "total_texts": 0,
+      "clusters": [],
+      "topics": [],
+      "sentiment_analysis": {},
+      "word_cloud_data": []
+    },
+    "driver_analysis": {
+      "total_responses": 0,
+      "driver_scores": {},
+      "importance_satisfaction_matrix": [],
+      "quadrant_analysis": {},
+      "correlations": {},
+      "recommendations": []
+    },
+    "product_dimension": {
+      "total_responses": 0,
+      "product_performance": {},
+      "competitive_analysis": {},
+      "cross_selling_opportunities": [],
+      "product_recommendations": []
+    },
+    "geographic_dimension": {
+      "total_responses": 0,
+      "regional_analysis": {},
+      "city_tier_analysis": {},
+      "demographic_analysis": {},
+      "geographic_recommendations": []
+    },
+    "channel_dimension": {
+      "total_responses": 0,
+      "channel_analysis": {},
+      "touchpoint_analysis": {},
+      "journey_analysis": {},
+      "omnichannel_insights": [],
+      "channel_recommendations": []
+    },
+    "analysis_coordination": {
+      "total_raw_insights": 0,
+      "total_coordinated_insights": 0,
+      "coordinated_insights": [],
+      "priority_recommendations": [],
+      "validation_results": {
+        "consistency_score": 0,
+        "validation_flags": [],
+        "cross_confirmations": [],
+        "data_gaps": [
+          {
+            "agent": "B3",
+            "missing_data": [
+              "incomplete_structure"
+            ]
+          },
+          {
+            "agent": "B4",
+            "missing_data": [
+              "incomplete_structure"
+            ]
+          },
+          {
+            "agent": "B6",
+            "missing_data": [
+              "incomplete_structure"
+            ]
+          },
+          {
+            "agent": "B7",
+            "missing_data": [
+              "incomplete_structure"
+            ]
+          },
+          {
+            "agent": "B8",
+            "missing_data": [
+              "incomplete_structure"
+            ]
+          }
+        ]
+      },
+      "synthesis_summary": {
+        "executive_overview": "综合分析识别出0项关键洞察，其中0项紧急议题需要立即关注，0项战略性发现指引长期发展方向。",
+        "key_findings": [],
+        "strategic_priorities": [],
+        "immediate_actions": [],
+        "performance_metrics": {
+          "total_insights_generated": 0,
+          "cross_validated_insights": 0,
+          "high_confidence_insights": 0,
+          "agent_coverage": 7,
+          "consistency_score": 0
+        },
+        "confidence_assessment": {
+          "overall_confidence": "low",
+          "data_completeness": 0.2857142857142857,
+          "cross_validation_rate": 0,
+          "recommendation_confidence": 0
+        }
+      },
+      "meta_insights": [
+        "多角度分析覆盖7个维度，确保洞察全面性",
+        "部分洞察质量有待提升，需要更多数据验证",
+        "分析覆盖面广，从多个角度深入理解客户反馈"
+      ]
+    }
+  },
+  "executive_recommendations": [
+    {
+      "recommendation_id": "EXEC_001",
+      "title": "客户体验卓越计划",
+      "executive_summary": "基于NPS分析结果，系统性提升客户满意度和忠诚度",
+      "strategic_priority": "customer_centricity",
+      "business_impact": "预期NPS提升至50+，客户流失率降低15-20%",
+      "implementation_complexity": "medium",
+      "timeline": "6个月",
+      "resource_requirements": [
+        "客户体验团队",
+        "中等预算投入",
+        "跨部门协调"
+      ],
+      "success_metrics": [
+        "NPS提升至50+",
+        "客户投诉率下降30%",
+        "客户满意度90%+"
+      ],
+      "risk_mitigation": [
+        "分阶段实施",
+        "快速反馈机制",
+        "持续监控调整"
+      ],
+      "dependencies": [
+        "管理层支持",
+        "员工培训",
+        "系统升级"
+      ]
+    }
+  ],
+  "executive_assessment": {
+    "overall_health_score": 50,
+    "business_status": "稳定改进",
+    "key_strengths": [],
+    "critical_challenges": [],
+    "strategic_position": "市场竞争激烈，需要突破创新",
+    "competitive_outlook": "竞争地位相对稳固",
+    "investment_priorities": [
+      "优先投入客户体验改善"
+    ],
+    "performance_indicators": {
+      "customer_satisfaction": {
+        "current": 0.0,
+        "target": 50,
+        "status": "critical"
+      },
+      "risk_exposure": {
+        "current": 0,
+        "target": 0,
+        "status": "good"
+      },
+      "strategic_readiness": {
+        "current": 0,
+        "target": 3,
+        "status": "attention"
+      }
+    }
+  },
+  "executive_dashboard": {
+    "executive_summary": {
+      "overall_health_score": 50,
+      "business_status": "稳定改进",
+      "strategic_readiness": 1,
+      "critical_actions": 1
+    },
+    "key_performance_indicators": {
+      "customer_satisfaction": {
+        "current": 0.0,
+        "target": 50,
+        "status": "critical"
+      },
+      "risk_exposure": {
+        "current": 0,
+        "target": 0,
+        "status": "good"
+      },
+      "strategic_readiness": {
+        "current": 0,
+        "target": 3,
+        "status": "attention"
+      }
+    },
+    "strategic_initiatives": [
+      {
+        "title": "客户体验卓越计划",
+        "priority": "customer_centricity",
+        "timeline": "6个月",
+        "complexity": "medium",
+        "impact": "预期NPS提升至50+，客户流失率降低15-20%..."
+      }
+    ],
+    "immediate_actions": [
+      {
+        "action": "客户体验卓越计划",
+        "deadline": "30天内启动",
+        "owner": "高级管理层",
+        "success_metric": "NPS提升至50+"
+      }
+    ],
+    "resource_allocation": {
+      "high_investment": 0,
+      "medium_investment": 1,
+      "quick_wins": 0
+    },
+    "risk_alerts": []
+  },
+  "presentation_materials": {
+    "executive_slide": {
+      "title": "伊利集团NPS客户洞察战略建议",
+      "subtitle": "基于3个客户样本的综合分析",
+      "key_message": "整体健康得分50/100，稳定改进",
+      "call_to_action": "建议实施1项战略行动"
+    },
+    "situation_analysis": {
+      "current_state": {
+        "nps_score": 0.0,
+        "health_score": 50,
+        "business_status": "稳定改进"
+      },
+      "key_challenges": [],
+      "market_position": "市场竞争激烈，需要突破创新",
+      "competitive_outlook": "竞争地位相对稳固"
+    },
+    "strategic_recommendations": [
+      {
+        "priority_rank": 1,
+        "title": "客户体验卓越计划",
+        "summary": "基于NPS分析结果，系统性提升客户满意度和忠诚度",
+        "business_case": "预期NPS提升至50+，客户流失率降低15-20%",
+        "timeline": "6个月",
+        "investment": "medium"
+      }
+    ],
+    "implementation_roadmap": {
+      "phase_1": "0-3个月：启动关键客户体验项目",
+      "phase_2": "3-6个月：实施运营优化措施",
+      "phase_3": "6-12个月：推进增长战略项目",
+      "success_metrics": "NPS>50, 运营效率提升20%, 市场份额增长"
+    },
+    "resource_requirements": {
+      "total_initiatives": 1,
+      "high_priority": 1,
+      "estimated_investment": "低投资级别（运营预算范围）",
+      "management_attention": "高级管理层每月评审"
+    }
+  },
+  "implementation_roadmap": {
+    "immediate_phase": {
+      "timeframe": "0-3个月",
+      "initiatives": [
+        {
+          "title": "客户体验卓越计划",
+          "complexity": "medium",
+          "success_metric": "NPS提升至50+"
+        }
+      ],
+      "key_milestones": [
+        "客户满意度提升专项启动",
+        "关键风险缓解措施到位",
+        "管理层战略共识达成"
+      ],
+      "resource_focus": "客户体验和风险控制"
+    },
+    "acceleration_phase": {
+      "timeframe": "3-9个月",
+      "initiatives": [],
+      "key_milestones": [
+        "运营流程优化见效",
+        "市场竞争力提升显现",
+        "组织执行力增强"
+      ],
+      "resource_focus": "运营优化和市场响应"
+    },
+    "growth_phase": {
+      "timeframe": "9-18个月",
+      "initiatives": [],
+      "key_milestones": [
+        "可持续增长模式确立",
+        "创新能力显著增强",
+        "行业领导地位巩固"
+      ],
+      "resource_focus": "创新增长和可持续发展"
+    },
+    "success_metrics": {
+      "phase_1_targets": [
+        "NPS>35",
+        "关键风险控制"
+      ],
+      "phase_2_targets": [
+        "NPS>45",
+        "运营效率提升15%"
+      ],
+      "phase_3_targets": [
+        "NPS>50",
+        "新增长引擎建立"
+      ]
+    }
+  },
+  "consulting_synthesis": {
+    "strategic_themes": [],
+    "critical_priorities": [],
+    "business_opportunities": [],
+    "major_risks": [],
+    "resource_requirements": {},
+    "implementation_complexity": {
+      "immediate_bandwidth": 0,
+      "short_term_bandwidth": 0,
+      "complexity_assessment": "low"
+    },
+    "success_factors": [
+      "以客户满意度提升为核心的组织协调"
+    ]
+  },
+  "confidence": 0.22500000000000003,
+  "html_report": "<!DOCTYPE html>\n<html lang=\"zh-CN\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>伊利集团 NPS 分析报告</title>\n    <style>\n        body {\n            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n            line-height: 1.6;\n            margin: 0;\n            padding: 20px;\n            background-color: #f5f5f5;\n        }\n        .container {\n            max-width: 1200px;\n            margin: 0 auto;\n            background: white;\n            border-radius: 8px;\n            box-shadow: 0 2px 10px rgba(0,0,0,0.1);\n            overflow: hidden;\n        }\n        .header {\n            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n            color: white;\n            padding: 30px;\n            text-align: center;\n        }\n        .header h1 {\n            margin: 0;\n            font-size: 2.5em;\n            font-weight: 300;\n        }\n        .header .subtitle {\n            margin-top: 10px;\n            font-size: 1.2em;\n            opacity: 0.9;\n        }\n        .content {\n            padding: 30px;\n        }\n        .metrics-grid {\n            display: grid;\n            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));\n            gap: 20px;\n            margin-bottom: 30px;\n        }\n        .metric-card {\n            background: #f8f9fa;\n            padding: 20px;\n            border-radius: 8px;\n            text-align: center;\n            border-left: 4px solid #007bff;\n        }\n        .metric-value {\n            font-size: 2.5em;\n            font-weight: bold;\n            color: #007bff;\n            margin: 10px 0;\n        }\n        .metric-label {\n            color: #6c757d;\n            text-transform: uppercase;\n            font-size: 0.9em;\n            letter-spacing: 1px;\n        }\n        .section {\n            margin-bottom: 40px;\n        }\n        .section h2 {\n            color: #333;\n            border-bottom: 2px solid #e9ecef;\n            padding-bottom: 10px;\n            margin-bottom: 20px;\n        }\n        .recommendation {\n            background: #fff3cd;\n            border-left: 4px solid #ffc107;\n            padding: 15px;\n            margin-bottom: 15px;\n            border-radius: 4px;\n        }\n        .recommendation h3 {\n            margin: 0 0 10px 0;\n            color: #856404;\n        }\n        .recommendation p {\n            margin: 0;\n            color: #664d03;\n        }\n        .nps-gauge {\n            text-align: center;\n            margin: 20px 0;\n        }\n        .nps-score {\n            font-size: 4em;\n            font-weight: bold;\n            color: #ffc107;\n        }\n        .footer {\n            background: #f8f9fa;\n            padding: 20px;\n            text-align: center;\n            color: #6c757d;\n            border-top: 1px solid #e9ecef;\n        }\n        .status-badge {\n            display: inline-block;\n            padding: 4px 12px;\n            border-radius: 20px;\n            font-size: 0.8em;\n            font-weight: bold;\n            text-transform: uppercase;\n        }\n        .status-completed {\n            background: #d4edda;\n            color: #155724;\n        }\n        .dashboard-summary {\n            background: #e7f3ff;\n            border-radius: 8px;\n            padding: 20px;\n            margin-bottom: 30px;\n        }\n    </style>\n</head>\n<body>\n    <div class=\"container\">\n        <div class=\"header\">\n            <h1>伊利集团 NPS 分析报告</h1>\n            <div class=\"subtitle\">基于 3 个客户样本的综合分析</div>\n            <div class=\"subtitle\">\n                <span class=\"status-badge status-completed\">分析完成</span>\n            </div>\n        </div>\n\n        <div class=\"content\">\n            <!-- NPS Score Section -->\n            <div class=\"section\">\n                <h2>📊 NPS 核心指标</h2>\n                <div class=\"nps-gauge\">\n                    <div class=\"nps-score\">0.0</div>\n                    <div>净推荐值 (NPS)</div>\n                </div>\n\n                <div class=\"metrics-grid\">\n                    <div class=\"metric-card\">\n                        <div class=\"metric-value\">1</div>\n                        <div class=\"metric-label\">推荐者数量</div>\n                    </div>\n                    <div class=\"metric-card\">\n                        <div class=\"metric-value\">1</div>\n                        <div class=\"metric-label\">中性客户数量</div>\n                    </div>\n                    <div class=\"metric-card\">\n                        <div class=\"metric-value\">1</div>\n                        <div class=\"metric-label\">批评者数量</div>\n                    </div>\n                    <div class=\"metric-card\">\n                        <div class=\"metric-value\">3</div>\n                        <div class=\"metric-label\">样本总量</div>\n                    </div>\n                </div>\n            </div>\n\n            <!-- Executive Dashboard -->\n            \n            <div class=\"section\">\n                <h2>🎯 执行层仪表板</h2>\n                <div class=\"dashboard-summary\">\n                    <strong>整体健康得分:</strong> N/A/100<br>\n                    <strong>业务状态:</strong> 分析中<br>\n                    <strong>战略就绪度:</strong> 待评估\n                </div>\n            </div>\n            \n\n            <!-- Recommendations Section -->\n            \n            <div class=\"section\">\n                <h2>💡 执行建议</h2>\n                \n                <div class=\"recommendation\">\n                    <h3>客户体验卓越计划</h3>\n                    <p><strong>优先级:</strong> customer_centricity</p>\n                    <p><strong>实施复杂度:</strong> medium</p>\n                    <p><strong>时间线:</strong> 6个月</p>\n                    <p>基于NPS分析结果，系统性提升客户满意度和忠诚度</p>\n                </div>\n            \n            </div>\n        \n\n            <!-- Workflow Summary -->\n            <div class=\"section\">\n                <h2>⚙️ 分析流程概览</h2>\n                <div class=\"metrics-grid\">\n                    <div class=\"metric-card\">\n                        <div class=\"metric-value\">0</div>\n                        <div class=\"metric-label\">完成的分析模块</div>\n                    </div>\n                    <div class=\"metric-card\">\n                        <div class=\"metric-value\">0s</div>\n                        <div class=\"metric-label\">处理时间</div>\n                    </div>\n                    <div class=\"metric-card\">\n                        <div class=\"metric-value\">3</div>\n                        <div class=\"metric-label\">完成的分析阶段</div>\n                    </div>\n                    <div class=\"metric-card\">\n                        <div class=\"metric-value\">0.2</div>\n                        <div class=\"metric-label\">置信度评分</div>\n                    </div>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"footer\">\n            <p>报告生成时间: 2025-09-25 02:12:02</p>\n            <p>🤖 由伊利集团 NPS V3 智能分析系统生成</p>\n        </div>\n    </div>\n</body>\n</html>",
+  "html_reports": {
+    "executive_dashboard": "outputs/v3_reports/workflow_0805bc2d_executive_report.html"
+  },
+  "completion_time": "2025-09-24T18:12:02.023290",
+  "agent_log_summary": {
+    "metadata": {
+      "session_id": "20250925_021200",
+      "start_time": "2025-09-25T02:12:00.938371",
+      "agents_executed": [],
+      "total_execution_time_ms": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "agent_outputs": {}
+  },
+  "agent_log_dir": "outputs/agent_logs/20250925",
+  "comprehensive_logging": true,
+  "detailed_agent_logs": true,
+  "request_id": "v2_converted_1758737520",
+  "analysis_status": "completed",
+  "timestamp": "2025-09-25T02:12:02.026584",
+  "foundation_pass": {
+    "workflow_start_time": "2025-09-25 02:12:00.939227",
+    "workflow_version": "3.0.0",
+    "input_metadata": {},
+    "agent_outputs": {},
+    "agent_sequence": [],
+    "checkpoints": [],
+    "total_tokens_used": 0,
+    "total_llm_calls": 0,
+    "total_processing_time_ms": 0,
+    "memory_peak_mb": 0.0,
+    "errors": [],
+    "warnings": [],
+    "retry_count": 0,
+    "failed_agents": [],
+    "report_format_preferences": {},
+    "emphasis_areas": [],
+    "excluded_topics": [],
+    "cleaned_data": {
+      "total_responses": 3,
+      "valid_responses": 3,
+      "invalid_responses": 0,
+      "cleaned_responses": [
+        {
+          "response_id": "rich_test_001",
+          "timestamp": "2025-09-25 02:12:00.941435",
+          "nps_score": 9,
+          "comment": null,
+          "product_line": null,
+          "customer_segment": null,
+          "channel": null,
+          "metadata": {
+            "survey_date": "2025-09-25 10:00:00",
+            "submit_time": "2025-09-25 10:05:00",
+            "channel": "链接二维码",
+            "response_type": "正式",
+            "duration": "5分钟",
+            "ai_tag_reason": "",
+            "manual_tag_status": "未标记",
+            "manual_tag_reason": ""
+          }
+        },
+        {
+          "response_id": "rich_test_002",
+          "timestamp": "2025-09-25 02:12:00.941878",
+          "nps_score": 3,
+          "comment": null,
+          "product_line": null,
+          "customer_segment": null,
+          "channel": null,
+          "metadata": {
+            "survey_date": "2025-09-25 11:00:00",
+            "submit_time": "2025-09-25 11:03:00",
+            "channel": "链接二维码",
+            "response_type": "正式",
+            "duration": "3分钟",
+            "ai_tag_reason": "",
+            "manual_tag_status": "未标记",
+            "manual_tag_reason": ""
+          }
+        },
+        {
+          "response_id": "rich_test_003",
+          "timestamp": "2025-09-25 02:12:00.941937",
+          "nps_score": 7,
+          "comment": null,
+          "product_line": null,
+          "customer_segment": null,
+          "channel": null,
+          "metadata": {
+            "survey_date": "2025-09-25 12:00:00",
+            "submit_time": "2025-09-25 12:04:00",
+            "channel": "链接二维码",
+            "response_type": "正式",
+            "duration": "4分钟",
+            "ai_tag_reason": "",
+            "manual_tag_status": "未标记",
+            "manual_tag_reason": ""
+          }
+        }
+      ],
+      "data_quality": "high",
+      "cleaning_notes": [],
+      "pii_scrubbed": true
+    },
+    "summary": {
+      "total_analyzed": 0,
+      "sentiment_distribution": {},
+      "top_themes": [],
+      "key_phrases": []
+    },
+    "nps_metrics": {
+      "nps_score": 0.0,
+      "promoters_count": 1,
+      "passives_count": 1,
+      "detractors_count": 1,
+      "promoters_percentage": 33.33333333333333,
+      "passives_percentage": 33.33333333333333,
+      "detractors_percentage": 33.33333333333333,
+      "confidence_interval": [
+        -75.4404351741111,
+        75.4404351741111
+      ],
+      "sample_size": 3,
+      "statistical_significance": "False"
+    },
+    "segment_analysis": {
+      "score_distribution": {
+        "9": 1,
+        "3": 1,
+        "7": 1
+      },
+      "quartiles": {
+        "q1": 5.0,
+        "median": 7.0,
+        "q3": 8.0,
+        "mean": 6.333333333333333,
+        "std": 2.494438257849294
+      }
+    },
+    "temporal_analysis": {},
+    "statistical_analysis": {},
+    "quantitative_insights": [
+      "NPS得分为0.0，处于中等水平，有改进空间",
+      "95%置信区间为[-75.4, 75.4]，样本量3具有统计代表性"
+    ],
+    "tagged_responses": [],
+    "semantic_clusters": [],
+    "clustering_summary": {
+      "total_clusters": 0,
+      "clustered_responses": 0,
+      "unclustered_responses": 0
+    },
+    "nps_calculation": {
+      "nps_score": 0.0,
+      "promoters_count": 1,
+      "passives_count": 1,
+      "detractors_count": 1,
+      "promoters_percentage": 33.33333333333333,
+      "passives_percentage": 33.33333333333333,
+      "detractors_percentage": 33.33333333333333,
+      "confidence_interval": [
+        -75.4404351741111,
+        75.4404351741111
+      ],
+      "sample_size": 3,
+      "statistical_significance": "False",
+      "total_responses": 3,
+      "valid_responses": 3
+    },
+    "confidence_assessment": {
+      "confidence": 0.22500000000000003,
+      "status": "low_confidence"
+    }
+  },
+  "processing_metadata": {
+    "version": "v3-multi-agent",
+    "workflow_type": "three_pass_analysis",
+    "processing_time_seconds": 1.0945439580009406,
+    "model_version": "nps-report-v3-multi-agent",
+    "passes_completed": [
+      "foundation",
+      "analysis",
+      "consulting"
+    ],
+    "agents_executed": 17,
+    "timestamp": "2025-09-25T02:12:02.026593"
+  }
+}

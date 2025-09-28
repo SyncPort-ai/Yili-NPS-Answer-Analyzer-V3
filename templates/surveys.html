@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}问卷与样本 · 伊利智能 NPS 研究中心{% endblock %}
+{% block header_title %}问卷与样本管理{% endblock %}
+{% block header_desc %}追踪调研执行进度、样本质量与渠道表现，确保数据基础可靠。{% endblock %}
+{% block content %}
+  <section class="grid gap-6 lg:grid-cols-[3fr,2fr]">
+    <div class="card p-6">
+      <h2 class="text-lg font-semibold text-slate-900 mb-2">执行概览</h2>
+      <p class="text-xs text-slate-500 mb-4">覆盖进行中、草稿与已完成问卷，实时掌握样本状态。</p>
+      <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4 text-center">
+        <div class="rounded-lg border border-slate-100 px-4 py-4">
+          <p class="text-xs text-slate-500">进行中</p>
+          <p class="mt-1 text-2xl font-semibold text-blue-600">{{ survey_summary.running }}</p>
+        </div>
+        <div class="rounded-lg border border-slate-100 px-4 py-4">
+          <p class="text-xs text-slate-500">草稿</p>
+          <p class="mt-1 text-2xl font-semibold text-amber-600">{{ survey_summary.drafts }}</p>
+        </div>
+        <div class="rounded-lg border border-slate-100 px-4 py-4">
+          <p class="text-xs text-slate-500">已完成</p>
+          <p class="mt-1 text-2xl font-semibold text-emerald-600">{{ survey_summary.completed }}</p>
+        </div>
+        <div class="rounded-lg border border-slate-100 px-4 py-4">
+          <p class="text-xs text-slate-500">平均完成率</p>
+          <p class="mt-1 text-2xl font-semibold text-violet-600">{{ survey_summary.avg_completion }}%</p>
+        </div>
+      </div>
+    </div>
+    <div class="card p-6">
+      <h3 class="text-lg font-semibold text-slate-900 mb-2">近期动态</h3>
+      <ul class="space-y-3 text-sm text-slate-600">
+        {% for item in recent_activity %}
+        <li class="rounded-lg border border-slate-100 px-4 py-3">
+          <p class="text-sm font-medium text-slate-900">{{ item.title }}</p>
+          <p class="text-xs text-slate-500 mt-1">{{ item.detail }}</p>
+          <p class="text-[11px] text-slate-400 mt-1">{{ item.time }}</p>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+
+  <section class="card p-6">
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+      <div>
+        <h3 class="text-lg font-semibold text-slate-900">问卷列表</h3>
+        <p class="text-xs text-slate-500">监控样本量、渠道与更新频率，支持数据质量复核。</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-2 text-xs">
+        <a href="/analytics" class="inline-flex items-center rounded-lg border border-slate-200 px-3 py-1.5 text-blue-600 hover:border-blue-200">查看分析 →</a>
+        <a href="/nps-report-v2/demo" class="inline-flex items-center rounded-lg border border-slate-200 px-3 py-1.5 text-slate-600 hover:border-blue-200">运行 Demo</a>
+      </div>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-slate-200 text-sm">
+        <thead class="bg-slate-50">
+          <tr class="text-left text-xs text-slate-500">
+            <th class="px-4 py-2">问卷主题</th>
+            <th class="px-4 py-2">状态</th>
+            <th class="px-4 py-2">样本量</th>
+            <th class="px-4 py-2">渠道</th>
+            <th class="px-4 py-2">负责人</th>
+            <th class="px-4 py-2">更新时间</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          {% for survey in surveys %}
+          <tr class="hover:bg-slate-50">
+            <td class="px-4 py-3 font-medium text-slate-900">{{ survey.title }}</td>
+            <td class="px-4 py-3 text-xs">
+              <span class="badge bg-slate-100 text-slate-600">{{ survey.status }}</span>
+            </td>
+            <td class="px-4 py-3 text-slate-600">{{ survey.responses }}/{{ survey.target }}</td>
+            <td class="px-4 py-3 text-slate-600">{{ survey.channel }}</td>
+            <td class="px-4 py-3 text-slate-600">{{ survey.owner }}</td>
+            <td class="px-4 py-3 text-slate-500 text-xs">{{ survey.updated_at }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+{% endblock %}

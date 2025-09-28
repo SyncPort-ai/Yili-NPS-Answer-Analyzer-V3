@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}消费者分层 · 伊利智能 NPS 研究中心{% endblock %}
+{% block header_title %}消费者分层洞察{% endblock %}
+{% block header_desc %}掌握核心人群画像、需求与渠道表现，指导产品与营销策略。{% endblock %}
+{% block content %}
+  <section class="grid gap-6 lg:grid-cols-3">
+    {% for seg in segment_cards %}
+    <div class="card p-6 space-y-3 text-sm text-slate-600">
+      <div class="flex items-start justify-between">
+        <p class="text-sm font-semibold text-slate-900">{{ seg.name }}</p>
+        <span class="badge bg-slate-100 text-slate-600">样本 {{ seg.sample }}</span>
+      </div>
+      <div class="grid grid-cols-3 gap-2 text-center">
+        <div class="rounded-lg border border-slate-100 px-3 py-3">
+          <p class="text-xs text-slate-500">NPS</p>
+          <p class="text-xl font-semibold text-blue-600">{{ seg.nps }}</p>
+        </div>
+        <div class="rounded-lg border border-slate-100 px-3 py-3">
+          <p class="text-xs text-slate-500">满意度</p>
+          <p class="text-xl font-semibold text-emerald-600">{{ seg.satisfaction }}</p>
+        </div>
+        <div class="rounded-lg border border-slate-100 px-3 py-3">
+          <p class="text-xs text-slate-500">忠诚度</p>
+          <p class="text-xl font-semibold text-violet-600">{{ seg.loyalty }}</p>
+        </div>
+      </div>
+      <p class="text-xs text-slate-500">关注点：{{ seg.focus }}</p>
+    </div>
+    {% endfor %}
+  </section>
+
+  <section class="grid gap-6 xl:grid-cols-[3fr,2fr]">
+    <div class="card p-6">
+      <h2 class="text-lg font-semibold text-slate-900 mb-2">核心人群画像</h2>
+      <p class="text-xs text-slate-500 mb-4">从需求痛点、场景与触点角度解析典型客群。</p>
+      <div class="space-y-4 text-sm text-slate-600">
+        {% for persona in personas %}
+        <div class="rounded-lg border border-slate-100 px-4 py-4">
+          <p class="text-sm font-medium text-slate-900">{{ persona.title }}</p>
+          <p class="text-xs text-slate-500 mt-1">{{ persona.profile }}</p>
+          <div class="mt-3 grid gap-3 md:grid-cols-2">
+            <div>
+              <p class="text-xs text-slate-500">关键需求</p>
+              <ul class="mt-1 space-y-1">
+                {% for need in persona.needs %}
+                <li class="badge bg-slate-100 text-slate-600">{{ need }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+            <div>
+              <p class="text-xs text-slate-500">主要渠道</p>
+              <ul class="mt-1 space-y-1">
+                {% for channel in persona.channels %}
+                <li class="badge bg-slate-100 text-slate-600">{{ channel }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="space-y-6">
+      <div class="card p-6">
+        <h3 class="text-lg font-semibold text-slate-900 mb-2">渠道表现</h3>
+        <p class="text-xs text-slate-500 mb-4">评估关键触点的满意度与增长趋势。</p>
+        <ul class="space-y-3 text-sm text-slate-600">
+          {% for channel in channel_performance %}
+          <li class="rounded-lg border border-slate-100 px-4 py-3">
+            <div class="flex items-center justify-between">
+              <p class="text-sm font-medium text-slate-900">{{ channel.channel }}</p>
+              <span class="text-xs font-medium {{ 'text-emerald-600' if '+' in channel.growth else 'text-rose-500' }}">{{ channel.growth }}</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-1">NPS {{ channel.nps }}</p>
+            <p class="text-xs text-slate-500 mt-1">{{ channel.note }}</p>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="card p-6">
+        <h3 class="text-lg font-semibold text-slate-900 mb-2">提升忠诚度建议</h3>
+        <ul class="space-y-2 text-sm text-slate-600">
+          {% for item in loyalty_triggers %}
+          <li class="rounded-lg border border-slate-100 px-4 py-3">{{ item }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
+{% endblock %}

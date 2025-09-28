@@ -1,0 +1,361 @@
+{
+  "survey_responses": [
+    {
+      "score": 9,
+      "comment": "安慕希的口感很棒，浓稠香甜，包装也很精美。品质一如既往的好，会一直支持伊利！",
+      "customer_id": "YL20240901001",
+      "timestamp": "2024-09-01T10:30:00Z",
+      "region": "华东",
+      "age_group": "25-34"
+    },
+    {
+      "score": 10,
+      "comment": "金典牛奶是我们全家的选择，孩子特别爱喝。有机奶源，营养丰富，价格合理。强烈推荐给朋友们！",
+      "customer_id": "YL20240901002", 
+      "timestamp": "2024-09-01T11:15:00Z",
+      "region": "华北",
+      "age_group": "35-44"
+    },
+    {
+      "score": 8,
+      "comment": "舒化奶的无乳糖配方很适合我，喝了不会肚子不舒服。味道也不错，就是价格稍微贵了一点。",
+      "customer_id": "YL20240901003",
+      "timestamp": "2024-09-01T14:20:00Z",
+      "region": "华南",
+      "age_group": "45-54"
+    },
+    {
+      "score": 7,
+      "comment": "优酸乳的味道还可以，但是感觉没有以前那么浓稠了。包装设计挺好看的，小孩子喜欢。",
+      "customer_id": "YL20240901004",
+      "timestamp": "2024-09-01T16:45:00Z",
+      "region": "西南",
+      "age_group": "25-34"
+    },
+    {
+      "score": 6,
+      "comment": "味可滋的口感一般，感觉有点偏甜。价格倒是不贵，但是营养价值感觉不太高。",
+      "customer_id": "YL20240901005",
+      "timestamp": "2024-09-01T09:30:00Z",
+      "region": "华中",
+      "age_group": "18-24"
+    },
+    {
+      "score": 4,
+      "comment": "最近买的几次金典牛奶都有股怪味，不知道是不是保存问题。客服态度倒是很好，但是产品质量堪忧。",
+      "customer_id": "YL20240901006",
+      "timestamp": "2024-09-01T13:10:00Z",
+      "region": "东北",
+      "age_group": "35-44"
+    },
+    {
+      "score": 3,
+      "comment": "安慕希涨价太厉害了，性价比越来越低。而且有时候买到接近保质期的，很影响体验。",
+      "customer_id": "YL20240901007",
+      "timestamp": "2024-09-01T17:25:00Z",
+      "region": "西北",
+      "age_group": "25-34"
+    },
+    {
+      "score": 9,
+      "comment": "QQ星儿童奶粉很不错，孩子爱喝，添加的DHA和益生菌对发育有帮助。包装安全性也做得很好。",
+      "customer_id": "YL20240901008",
+      "timestamp": "2024-09-01T12:40:00Z",
+      "region": "华东",
+      "age_group": "35-44"
+    },
+    {
+      "score": 8,
+      "comment": "伊小欢的创新口味很有趣，年轻人很喜欢。就是有些口味偏甜，希望能推出低糖版本。",
+      "customer_id": "YL20240901009",
+      "timestamp": "2024-09-01T15:55:00Z",
+      "region": "华南",
+      "age_group": "18-24"
+    },
+    {
+      "score": 10,
+      "comment": "巧乐兹冰淇淋是夏天的最爱！奶香浓郁，口感顺滑，价格也很亲民。全家都爱吃。",
+      "customer_id": "YL20240901010",
+      "timestamp": "2024-09-01T19:20:00Z",
+      "region": "华北",
+      "age_group": "25-34"
+    },
+    {
+      "score": 7,
+      "comment": "整体来说伊利的产品还是不错的，但是感觉创新不够，希望能推出更多健康功能性产品。",
+      "customer_id": "YL20240901011",
+      "timestamp": "2024-09-01T20:10:00Z",
+      "region": "华中",
+      "age_group": "45-54"
+    },
+    {
+      "score": 5,
+      "comment": "线下门店的产品经常缺货，特别是热销的安慕希和金典。供应链管理需要改善。",
+      "customer_id": "YL20240901012",
+      "timestamp": "2024-09-01T08:45:00Z",
+      "region": "西南",
+      "age_group": "35-44"
+    },
+    {
+      "score": 9,
+      "comment": "伊利的客服很专业，遇到问题都能及时解决。产品质量也很稳定，是值得信赖的品牌。",
+      "customer_id": "YL20240901013",
+      "timestamp": "2024-09-01T11:55:00Z",
+      "region": "华东",
+      "age_group": "55-64"
+    },
+    {
+      "score": 8,
+      "comment": "金典有机奶的营养价值很高，孩子喝了身体好。就是包装有时候会漏，希望改进包装技术。",
+      "customer_id": "YL20240901014",
+      "timestamp": "2024-09-01T14:30:00Z",
+      "region": "华北",
+      "age_group": "35-44"
+    },
+    {
+      "score": 6,
+      "comment": "舒化奶的概念很好，但是口感和普通牛奶还是有差别。价格偏高，性价比一般。",
+      "customer_id": "YL20240901015",
+      "timestamp": "2024-09-01T16:15:00Z",
+      "region": "华南",
+      "age_group": "45-54"
+    },
+    {
+      "score": 4,
+      "comment": "最近伊利的广告太多了，感觉把成本都转嫁到消费者身上。产品价格涨得比工资还快。",
+      "customer_id": "YL20240901016",
+      "timestamp": "2024-09-01T18:40:00Z",
+      "region": "西北",
+      "age_group": "25-34"
+    },
+    {
+      "score": 10,
+      "comment": "安慕希希腊酸奶系列真的很棒！口感浓郁，蛋白质含量高，是健身后的完美选择。",
+      "customer_id": "YL20240901017",
+      "timestamp": "2024-09-01T07:30:00Z",
+      "region": "华东",
+      "age_group": "18-24"
+    },
+    {
+      "score": 7,
+      "comment": "优酸乳的包装很可爱，小朋友很喜欢。但是感觉糖分有点高，希望能推出低糖版本。",
+      "customer_id": "YL20240901018",
+      "timestamp": "2024-09-01T21:25:00Z",
+      "region": "华中",
+      "age_group": "35-44"
+    },
+    {
+      "score": 3,
+      "comment": "和蒙牛比起来，伊利的创新速度太慢了。市场上总是蒙牛先推新品，伊利跟在后面。",
+      "customer_id": "YL20240901019",
+      "timestamp": "2024-09-01T22:15:00Z",
+      "region": "东北",
+      "age_group": "25-34"
+    },
+    {
+      "score": 8,
+      "comment": "金典娟姗牛奶的口感确实比普通牛奶要好，奶香更浓。虽然贵一点，但是值得。",
+      "customer_id": "YL20240901020",
+      "timestamp": "2024-09-01T06:50:00Z",
+      "region": "华南",
+      "age_group": "45-54"
+    },
+    {
+      "score": 9,
+      "comment": "QQ星的营养配方很科学，专门为儿童设计。孩子喝了消化好，个子也长得快。",
+      "customer_id": "YL20240901021",
+      "timestamp": "2024-09-01T12:20:00Z",
+      "region": "华北",
+      "age_group": "35-44"
+    },
+    {
+      "score": 5,
+      "comment": "伊利的环保包装做得不够好，很多产品还在用塑料包装。希望能更加注重环保。",
+      "customer_id": "YL20240901022",
+      "timestamp": "2024-09-01T15:40:00Z",
+      "region": "西南",
+      "age_group": "18-24"
+    },
+    {
+      "score": 10,
+      "comment": "巧乐兹的新口味层出不穷，每次都有惊喜。价格也很实惠，是夏日解暑的好选择。",
+      "customer_id": "YL20240901023",
+      "timestamp": "2024-09-01T19:55:00Z",
+      "region": "华东",
+      "age_group": "25-34"
+    },
+    {
+      "score": 6,
+      "comment": "伊小欢的营销做得很好，但是产品本身创新不够。希望能在功能性方面多下功夫。",
+      "customer_id": "YL20240901024",
+      "timestamp": "2024-09-01T13:35:00Z",
+      "region": "华中",
+      "age_group": "18-24"
+    },
+    {
+      "score": 7,
+      "comment": "整体而言伊利还是国产乳业的领导者，但是面对进口品牌的竞争，还需要更多创新。",
+      "customer_id": "YL20240901025",
+      "timestamp": "2024-09-01T17:45:00Z",
+      "region": "华南",
+      "age_group": "35-44"
+    },
+    {
+      "score": 8,
+      "comment": "味可滋虽然定位年轻化，但是口感有些甜腻。如果能推出天然口味会更好。",
+      "customer_id": "YL20240901026",
+      "timestamp": "2024-09-01T10:15:00Z",
+      "region": "西北",
+      "age_group": "18-24"
+    },
+    {
+      "score": 4,
+      "comment": "安慕希的促销活动太少了，价格一直居高不下。希望能有更多优惠让普通消费者也能享受。",
+      "customer_id": "YL20240901027",
+      "timestamp": "2024-09-01T14:50:00Z",
+      "region": "东北",
+      "age_group": "45-54"
+    },
+    {
+      "score": 9,
+      "comment": "金典的品质一直很稳定，从小就在喝。现在给孩子也选择金典，信得过的品牌。",
+      "customer_id": "YL20240901028",
+      "timestamp": "2024-09-01T11:40:00Z",
+      "region": "华北",
+      "age_group": "55-64"
+    },
+    {
+      "score": 7,
+      "comment": "舒化奶对乳糖不耐受的人确实很有帮助，但是价格比普通牛奶贵太多了。",
+      "customer_id": "YL20240901029",
+      "timestamp": "2024-09-01T16:25:00Z",
+      "region": "华东",
+      "age_group": "35-44"
+    },
+    {
+      "score": 5,
+      "comment": "优酸乳的包装虽然可爱，但是感觉糖分和添加剂比较多，不太适合经常给孩子喝。",
+      "customer_id": "YL20240901030",
+      "timestamp": "2024-09-01T18:15:00Z",
+      "region": "华中",
+      "age_group": "35-44"
+    },
+    {
+      "score": 9,
+      "comment": "我非常喜欢伊利的安慕希酸奶，口感丝滑，包装也很精美。会继续购买！",
+      "customer_id": "customer_001",
+      "timestamp": "2024-01-15T10:30:00Z",
+      "region": "北京",
+      "age_group": "25-34"
+    },
+    {
+      "score": 3,
+      "comment": "金典牛奶的价格太贵了，而且最近几次买的都有股怪味。很失望。test@email.com 联系我：138-0013-8000",
+      "customer_id": "customer_002", 
+      "timestamp": "2024-01-15T11:45:00Z",
+      "region": "上海",
+      "age_group": "35-44"
+    },
+    {
+      "score": 8,
+      "comment": "伊利的产品质量不错，特别是舒化奶，我有乳糖不耐受，这个产品解决了我的问题。但是希望包装能更环保一些。",
+      "customer_id": "customer_003",
+      "timestamp": "2024-01-15T14:20:00Z", 
+      "region": "广州",
+      "age_group": "18-24"
+    },
+    {
+      "score": 2,
+      "comment": "买了优酸乳给孩子喝，但是感觉糖分太高了。现在都不敢给孩子喝了。蒙牛的简醇酸奶感觉更健康。",
+      "customer_id": "customer_004",
+      "timestamp": "2024-01-15T16:10:00Z",
+      "region": "深圳", 
+      "age_group": "35-44"
+    },
+    {
+      "score": 10,
+      "comment": "伊利真的是民族品牌的骄傲！安慕希希腊酸奶的口感和营养都很棒，包装设计也很时尚。支持国产！",
+      "customer_id": "customer_005",
+      "timestamp": "2024-01-15T18:30:00Z",
+      "region": "成都",
+      "age_group": "25-34"
+    },
+    {
+      "score": 6,
+      "comment": "伊利的牛奶质量还可以，但是感觉创新不够。希望能推出更多适合老年人的低脂、高钙产品。",
+      "customer_id": "customer_006",
+      "timestamp": "2024-01-15T19:45:00Z",
+      "region": "武汉",
+      "age_group": "55+"
+    }
+  ],
+  "metadata": {
+    "survey_title": "伊利集团2024年9月客户满意度调研",
+    "survey_period": "2024-09-01 至 2024-09-01",
+    "survey_method": "在线问卷 + 电话访谈",
+    "target_population": "过去6个月购买过伊利产品的消费者",
+    "sample_size": 36,
+    "response_rate": "87.5%",
+    "confidence_level": "95%",
+    "margin_of_error": "±5.7%",
+    "survey_language": "中文",
+    "geographical_coverage": [
+      "华东", "华北", "华南", "华中", "西南", "西北", "东北"
+    ],
+    "product_categories": [
+      "液态奶", "酸奶", "奶粉", "冰淇淋", "乳饮料"
+    ],
+    "age_segments": [
+      "18-24", "25-34", "35-44", "45-54", "55-64"
+    ]
+  },
+  "optional_data": {
+    "competitor_benchmarks": {
+      "蒙牛": {
+        "nps_score": 61.2,
+        "market_share": "23.8%",
+        "brand_awareness": "89.5%"
+      },
+      "光明": {
+        "nps_score": 54.7,
+        "market_share": "8.2%", 
+        "brand_awareness": "76.3%"
+      },
+      "三元": {
+        "nps_score": 48.9,
+        "market_share": "4.1%",
+        "brand_awareness": "62.7%"
+      }
+    },
+    "yili_products": [
+      "安慕希", "金典", "舒化", "优酸乳", "味可滋", 
+      "QQ星", "伊小欢", "巧乐兹", "金领冠", "每益添"
+    ],
+    "market_context": {
+      "seasonal_factors": "秋季开学季，乳制品需求上升",
+      "economic_environment": "消费者价格敏感度增加",
+      "health_trends": "功能性乳制品需求增长",
+      "regulatory_changes": "新食品安全标准实施"
+    },
+    "analysis_focus": [
+      "产品质量与口感满意度",
+      "价格接受度与性价比评估", 
+      "品牌忠诚度与推荐意愿",
+      "竞品对比与市场地位",
+      "创新需求与发展方向"
+    ],
+    "yili_products_csv": [
+      {"product_name": "安慕希", "category": "酸奶", "product_line": "高端"},
+      {"product_name": "金典", "category": "牛奶", "product_line": "高端"},
+      {"product_name": "舒化奶", "category": "牛奶", "product_line": "功能"},
+      {"product_name": "优酸乳", "category": "酸奶", "product_line": "大众"},
+      {"product_name": "QQ星", "category": "奶粉", "product_line": "儿童"},
+      {"product_name": "伊小欢", "category": "乳饮料", "product_line": "年轻"},
+      {"product_name": "巧乐兹", "category": "冰淇淋", "product_line": "大众"},
+      {"product_name": "味可滋", "category": "乳饮料", "product_line": "年轻"},
+      {"product_name": "金领冠", "category": "奶粉", "product_line": "高端"},
+      {"product_name": "每益添", "category": "酸奶", "product_line": "功能"}
+    ]
+  },
+  "persist_outputs": true
+}

@@ -1,0 +1,635 @@
+"""
+B2 - Passive Analyst Agent
+Analysis Pass Agent for analyzing passive customer conversion opportunities.
+"""
+
+import logging
+from typing import Dict, Any, List, Optional
+import re
+
+from ..base import AnalysisAgent, AgentResult, AgentStatus
+from ...llm import LLMClient
+
+logger = logging.getLogger(__name__)
+
+
+class PassiveAnalystAgent(AnalysisAgent):
+    """
+    B2 - Passive Analyst Agent
+
+    Responsibilities:
+    - Identify conversion opportunities for passive customers (NPS 7-8)
+    - Analyze barriers preventing promotion to advocates
+    - Create conversion probability scoring
+    - Implement improvement priority ranking for passive segment
+    """
+
+    def __init__(self, agent_id: str = "B2", agent_name: str = "Passive Analyst Agent",
+                 llm_client: Optional[LLMClient] = None, **kwargs):
+        super().__init__(agent_id, agent_name, **kwargs)
+        self.llm_client = llm_client
+
+        # Passive customer conversion patterns
+        self.conversion_patterns = {
+            "satisfaction_gaps": {
+                "keywords": ["还可以", "一般", "凑合", "还行", "差不多", "普通"],
+                "barriers": ["质量不够稳定", "价格偏高", "选择不够丰富", "服务待改进"]
+            },
+            "expectation_misalignment": {
+                "keywords": ["没想象中", "期望", "以为", "应该", "觉得会"],
+                "barriers": ["产品功效未达预期", "体验与宣传不符", "性价比不够突出"]
+            },
+            "competitive_concerns": {
+                "keywords": ["别的牌子", "竞品", "其他家", "比较", "对比"],
+                "barriers": ["竞品优势明显", "品牌差异化不足", "价格竞争力弱"]
+            },
+            "usage_friction": {
+                "keywords": ["不太方便", "麻烦", "复杂", "难找", "不习惯"],
+                "barriers": ["使用体验不够顺畅", "购买渠道限制", "产品使用门槛高"]
+            }
+        }
+
+        # Conversion opportunity types
+        self.opportunity_types = {
+            "product_enhancement": "产品功能/质量提升",
+            "price_optimization": "价格策略优化",
+            "service_improvement": "服务体验改善",
+            "brand_communication": "品牌沟通加强",
+            "channel_expansion": "渠道便利性提升"
+        }
+
+    async def process(self, state: Dict[str, Any]) -> AgentResult:
+        """
+        Process passive customer analysis.
+
+        Args:
+            state: Current workflow state
+
+        Returns:
+            AgentResult with passive conversion insights
+        """
+        try:
+            # Get NPS results and passive customers
+            nps_results = state.get("nps_results", {})
+            tagged_responses = state.get("tagged_responses", [])
+
+            # Filter passive customers (NPS score 7-8)
+            passive_responses = self._filter_passive_responses(tagged_responses, nps_results)
+
+            if not passive_responses:
+                logger.warning("No passive customer responses found")
+                return AgentResult(
+                    agent_id=self.agent_id,
+                    status=AgentStatus.COMPLETED,
+                    data={
+                        "passive_analysis": {
+                            "total_passive": 0,
+                            "conversion_opportunities": [],
+                            "barriers": [],
+                            "recommendations": []
+                        }
+                    },
+                    insights=["No passive customers found for analysis"],
+                    confidence_score=1.0
+                )
+
+            # Analyze barriers and opportunities
+            barriers = await self._analyze_barriers(passive_responses)
+            opportunities = await self._identify_opportunities(passive_responses, barriers)
+            conversion_scores = self._calculate_conversion_scores(opportunities)
+            recommendations = self._generate_recommendations(opportunities, conversion_scores)
+
+            # Generate passive customer insights
+            insights = self._generate_passive_insights(
+                passive_responses, barriers, opportunities, conversion_scores
+            )
+
+            logger.info(f"Analyzed {len(passive_responses)} passive customers")
+
+            return AgentResult(
+                agent_id=self.agent_id,
+                status=AgentStatus.COMPLETED,
+                data={
+                    "passive_analysis": {
+                        "total_passive": len(passive_responses),
+                        "conversion_opportunities": opportunities,
+                        "barriers": barriers,
+                        "conversion_scores": conversion_scores,
+                        "recommendations": recommendations,
+                        "passive_insights": insights
+                    }
+                },
+                insights=insights,
+                confidence_score=0.85
+            )
+
+        except Exception as e:
+            logger.error(f"Passive analysis failed: {e}")
+            return AgentResult(
+                agent_id=self.agent_id,
+                status=AgentStatus.FAILED,
+                data={},
+                errors=[str(e)],
+                confidence_score=0.0
+            )
+
+    def _filter_passive_responses(
+        self,
+        tagged_responses: List[Dict[str, Any]],
+        nps_results: Dict[str, Any]
+    ) -> List[Dict[str, Any]]:
+        """
+        Filter responses from passive customers (NPS 7-8).
+
+        Args:
+            tagged_responses: All tagged responses
+            nps_results: NPS calculation results
+
+        Returns:
+            List of passive customer responses
+        """
+        passive_responses = []
+
+        for response in tagged_responses:
+            nps_score = response.get("nps_score")
+            if nps_score is not None and 7 <= nps_score <= 8:
+                passive_responses.append(response)
+
+        return passive_responses
+
+    async def _analyze_barriers(
+        self,
+        passive_responses: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
+        """
+        Analyze barriers preventing passive customers from becoming promoters.
+
+        Args:
+            passive_responses: Passive customer responses
+
+        Returns:
+            List of identified barriers
+        """
+        barriers = []
+        barrier_counts = {}
+
+        # Pattern-based barrier detection
+        for response in passive_responses:
+            text = response.get("original_text", "")
+            response_id = response.get("response_id", "")
+
+            for pattern_type, patterns in self.conversion_patterns.items():
+                if any(keyword in text for keyword in patterns["keywords"]):
+                    for barrier in patterns["barriers"]:
+                        if self._fuzzy_match(barrier, text):
+                            if barrier not in barrier_counts:
+                                barrier_counts[barrier] = {
+                                    "count": 0,
+                                    "responses": [],
+                                    "pattern_type": pattern_type
+                                }
+                            barrier_counts[barrier]["count"] += 1
+                            barrier_counts[barrier]["responses"].append(response_id)
+
+        # Enhanced LLM-based barrier analysis
+        if self.llm_client and passive_responses:
+            llm_barriers = await self._llm_analyze_barriers(passive_responses)
+            for barrier in llm_barriers:
+                barrier_id = barrier.get("barrier_description", "")
+                if barrier_id not in barrier_counts:
+                    barrier_counts[barrier_id] = {
+                        "count": barrier.get("frequency", 1),
+                        "responses": barrier.get("related_responses", []),
+                        "pattern_type": "llm_identified",
+                        "severity": barrier.get("severity", "medium")
+                    }
+
+        # Convert to list format
+        for barrier_desc, data in barrier_counts.items():
+            barriers.append({
+                "barrier_id": f"barrier_{len(barriers)}",
+                "description": barrier_desc,
+                "frequency": data["count"],
+                "severity": data.get("severity", self._assess_barrier_severity(data["count"], len(passive_responses))),
+                "pattern_type": data["pattern_type"],
+                "related_responses": data["responses"],
+                "impact_score": self._calculate_barrier_impact(data["count"], len(passive_responses))
+            })
+
+        # Sort by impact
+        barriers.sort(key=lambda x: x["impact_score"], reverse=True)
+
+        return barriers
+
+    async def _identify_opportunities(
+        self,
+        passive_responses: List[Dict[str, Any]],
+        barriers: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
+        """
+        Identify conversion opportunities based on barriers.
+
+        Args:
+            passive_responses: Passive customer responses
+            barriers: Identified barriers
+
+        Returns:
+            List of conversion opportunities
+        """
+        opportunities = []
+
+        # Map barriers to opportunities
+        for barrier in barriers:
+            opportunity = {
+                "opportunity_id": f"opp_{len(opportunities)}",
+                "title": self._barrier_to_opportunity(barrier["description"]),
+                "type": self._classify_opportunity_type(barrier["description"]),
+                "barrier_addressed": barrier["barrier_id"],
+                "potential_impact": barrier["impact_score"],
+                "difficulty": self._assess_implementation_difficulty(barrier["pattern_type"]),
+                "target_customers": barrier["frequency"],
+                "related_responses": barrier["related_responses"]
+            }
+            opportunities.append(opportunity)
+
+        # LLM-based opportunity enhancement
+        if self.llm_client and opportunities:
+            enhanced_opportunities = await self._llm_enhance_opportunities(opportunities, passive_responses)
+            opportunities.extend(enhanced_opportunities)
+
+        return opportunities
+
+    def _calculate_conversion_scores(
+        self,
+        opportunities: List[Dict[str, Any]]
+    ) -> Dict[str, Any]:
+        """
+        Calculate conversion probability scores for opportunities.
+
+        Args:
+            opportunities: List of opportunities
+
+        Returns:
+            Conversion scoring results
+        """
+        scores = {}
+
+        for opp in opportunities:
+            # Base conversion score calculation
+            impact = opp.get("potential_impact", 0)
+            difficulty = opp.get("difficulty", "medium")
+            target_size = opp.get("target_customers", 1)
+
+            # Difficulty multiplier
+            difficulty_multipliers = {"easy": 1.2, "medium": 1.0, "hard": 0.8, "very_hard": 0.6}
+            multiplier = difficulty_multipliers.get(difficulty, 1.0)
+
+            # Calculate conversion probability
+            base_score = min(impact * multiplier * 10, 100)
+
+            # Size-adjusted score
+            size_bonus = min(target_size * 2, 20)
+            final_score = min(base_score + size_bonus, 100)
+
+            scores[opp["opportunity_id"]] = {
+                "conversion_probability": round(final_score, 1),
+                "confidence_level": self._assess_confidence_level(final_score, target_size),
+                "expected_conversions": round(target_size * (final_score / 100)),
+                "roi_potential": self._assess_roi_potential(final_score, difficulty)
+            }
+
+        return scores
+
+    def _generate_recommendations(
+        self,
+        opportunities: List[Dict[str, Any]],
+        conversion_scores: Dict[str, Any]
+    ) -> List[Dict[str, Any]]:
+        """
+        Generate prioritized recommendations for passive customer conversion.
+
+        Args:
+            opportunities: List of opportunities
+            conversion_scores: Conversion scores
+
+        Returns:
+            List of recommendations
+        """
+        recommendations = []
+
+        # Sort opportunities by conversion probability
+        scored_opportunities = []
+        for opp in opportunities:
+            score = conversion_scores.get(opp["opportunity_id"], {})
+            scored_opportunities.append((opp, score.get("conversion_probability", 0)))
+
+        scored_opportunities.sort(key=lambda x: x[1], reverse=True)
+
+        # Generate recommendations for top opportunities
+        for i, (opp, score) in enumerate(scored_opportunities[:5]):  # Top 5
+            rec = {
+                "recommendation_id": f"rec_{i}",
+                "priority": self._get_priority_level(i, score),
+                "title": f"实施{opp['title']}",
+                "description": self._generate_recommendation_description(opp),
+                "opportunity_type": opp["type"],
+                "expected_impact": conversion_scores.get(opp["opportunity_id"], {}).get("expected_conversions", 0),
+                "implementation_difficulty": opp.get("difficulty", "medium"),
+                "timeline": self._estimate_timeline(opp.get("difficulty", "medium")),
+                "resources_needed": self._estimate_resources(opp["type"], opp.get("difficulty", "medium")),
+                "success_metrics": self._define_success_metrics(opp["type"])
+            }
+            recommendations.append(rec)
+
+        return recommendations
+
+    def _generate_passive_insights(
+        self,
+        passive_responses: List[Dict[str, Any]],
+        barriers: List[Dict[str, Any]],
+        opportunities: List[Dict[str, Any]],
+        conversion_scores: Dict[str, Any]
+    ) -> List[str]:
+        """
+        Generate insights from passive customer analysis.
+
+        Args:
+            passive_responses: Passive responses
+            barriers: Identified barriers
+            opportunities: Conversion opportunities
+            conversion_scores: Conversion scores
+
+        Returns:
+            List of insights
+        """
+        insights = []
+
+        # Overall passive segment insights
+        total_passive = len(passive_responses)
+        insights.append(f"被动推荐客户群体共{total_passive}人，占重要转化机会")
+
+        # Barrier insights
+        if barriers:
+            top_barrier = barriers[0]
+            insights.append(f"最主要转化障碍：{top_barrier['description']}（影响{top_barrier['frequency']}位客户）")
+
+            high_impact_barriers = [b for b in barriers if b["impact_score"] > 0.3]
+            if high_impact_barriers:
+                insights.append(f"共识别{len(high_impact_barriers)}个高影响障碍，需要优先解决")
+
+        # Opportunity insights
+        if opportunities:
+            high_prob_opps = [opp for opp in opportunities
+                             if conversion_scores.get(opp["opportunity_id"], {}).get("conversion_probability", 0) > 70]
+            if high_prob_opps:
+                insights.append(f"{len(high_prob_opps)}个高概率转化机会，预期可转化{sum(conversion_scores.get(opp['opportunity_id'], {}).get('expected_conversions', 0) for opp in high_prob_opps)}位客户")
+
+        # Type distribution insights
+        if opportunities:
+            type_counts = {}
+            for opp in opportunities:
+                opp_type = opp["type"]
+                type_counts[opp_type] = type_counts.get(opp_type, 0) + 1
+
+            if type_counts:
+                top_type = max(type_counts.items(), key=lambda x: x[1])
+                insights.append(f"转化机会主要集中在{top_type[0]}领域（{top_type[1]}项机会）")
+
+        # Actionability insight
+        easy_wins = [opp for opp in opportunities if opp.get("difficulty") == "easy"]
+        if easy_wins:
+            insights.append(f"存在{len(easy_wins)}个易实施的快赢机会，建议优先执行")
+
+        return insights
+
+    # Helper methods
+    def _fuzzy_match(self, pattern: str, text: str) -> bool:
+        """Fuzzy match pattern in text."""
+        keywords = pattern.split()
+        matches = sum(1 for keyword in keywords if keyword in text)
+        return matches >= len(keywords) * 0.5
+
+    def _assess_barrier_severity(self, frequency: int, total_responses: int) -> str:
+        """Assess barrier severity based on frequency."""
+        ratio = frequency / total_responses if total_responses > 0 else 0
+        if ratio > 0.5: return "critical"
+        elif ratio > 0.3: return "high"
+        elif ratio > 0.1: return "medium"
+        else: return "low"
+
+    def _calculate_barrier_impact(self, frequency: int, total_responses: int) -> float:
+        """Calculate barrier impact score."""
+        return frequency / total_responses if total_responses > 0 else 0
+
+    def _barrier_to_opportunity(self, barrier_desc: str) -> str:
+        """Convert barrier description to opportunity title."""
+        opportunity_map = {
+            "质量不够稳定": "提升产品质量稳定性",
+            "价格偏高": "优化价格策略",
+            "选择不够丰富": "扩展产品线选择",
+            "服务待改进": "改善客户服务体验"
+        }
+        return opportunity_map.get(barrier_desc, f"解决{barrier_desc}问题")
+
+    def _classify_opportunity_type(self, barrier_desc: str) -> str:
+        """Classify opportunity type based on barrier."""
+        if any(keyword in barrier_desc for keyword in ["质量", "功能", "口感", "配方"]):
+            return "product_enhancement"
+        elif any(keyword in barrier_desc for keyword in ["价格", "成本", "优惠"]):
+            return "price_optimization"
+        elif any(keyword in barrier_desc for keyword in ["服务", "客服", "配送", "售后"]):
+            return "service_improvement"
+        elif any(keyword in barrier_desc for keyword in ["品牌", "形象", "宣传", "沟通"]):
+            return "brand_communication"
+        else:
+            return "channel_expansion"
+
+    def _assess_implementation_difficulty(self, pattern_type: str) -> str:
+        """Assess implementation difficulty based on pattern type."""
+        difficulty_map = {
+            "satisfaction_gaps": "medium",
+            "expectation_misalignment": "hard",
+            "competitive_concerns": "hard",
+            "usage_friction": "easy",
+            "llm_identified": "medium"
+        }
+        return difficulty_map.get(pattern_type, "medium")
+
+    def _assess_confidence_level(self, score: float, target_size: int) -> str:
+        """Assess confidence level for conversion score."""
+        if score > 80 and target_size >= 5: return "high"
+        elif score > 60 and target_size >= 3: return "medium-high"
+        elif score > 40: return "medium"
+        else: return "low"
+
+    def _assess_roi_potential(self, score: float, difficulty: str) -> str:
+        """Assess ROI potential."""
+        roi_map = {"easy": 1.2, "medium": 1.0, "hard": 0.8, "very_hard": 0.6}
+        adjusted_score = score * roi_map.get(difficulty, 1.0)
+
+        if adjusted_score > 70: return "high"
+        elif adjusted_score > 50: return "medium"
+        else: return "low"
+
+    def _get_priority_level(self, rank: int, score: float) -> str:
+        """Get priority level based on rank and score."""
+        if rank == 0 and score > 70: return "critical"
+        elif rank < 2 and score > 60: return "high"
+        elif rank < 4: return "medium"
+        else: return "low"
+
+    def _generate_recommendation_description(self, opportunity: Dict[str, Any]) -> str:
+        """Generate detailed recommendation description."""
+        return f"针对{opportunity['title']}，预期影响{opportunity['target_customers']}位被动客户"
+
+    def _estimate_timeline(self, difficulty: str) -> str:
+        """Estimate implementation timeline."""
+        timeline_map = {
+            "easy": "1-2个月",
+            "medium": "3-6个月",
+            "hard": "6-12个月",
+            "very_hard": "12个月以上"
+        }
+        return timeline_map.get(difficulty, "3-6个月")
+
+    def _estimate_resources(self, opp_type: str, difficulty: str) -> List[str]:
+        """Estimate required resources."""
+        base_resources = {
+            "product_enhancement": ["产品研发团队", "质量控制"],
+            "price_optimization": ["定价策略团队", "市场分析"],
+            "service_improvement": ["客服团队", "培训资源"],
+            "brand_communication": ["品牌营销团队", "传播渠道"],
+            "channel_expansion": ["渠道开发", "运营支持"]
+        }
+
+        resources = base_resources.get(opp_type, ["跨部门协作"])
+
+        if difficulty in ["hard", "very_hard"]:
+            resources.append("高级管理层支持")
+
+        return resources
+
+    def _define_success_metrics(self, opp_type: str) -> List[str]:
+        """Define success metrics for opportunity type."""
+        metrics_map = {
+            "product_enhancement": ["产品满意度提升", "质量指标改善", "NPS提升"],
+            "price_optimization": ["价格敏感度下降", "购买意愿提升", "复购率增长"],
+            "service_improvement": ["服务满意度提升", "响应时间改善", "投诉率下降"],
+            "brand_communication": ["品牌认知度提升", "推荐意愿增强", "品牌忠诚度提升"],
+            "channel_expansion": ["渠道便利性提升", "购买频次增长", "客户触达率提升"]
+        }
+        return metrics_map.get(opp_type, ["客户满意度提升", "NPS得分提升"])
+
+    async def _llm_analyze_barriers(self, passive_responses: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Use LLM to analyze barriers for passive customers."""
+        if not self.llm_client:
+            return []
+
+        try:
+            # Sample responses for LLM analysis
+            sample_texts = [resp.get("original_text", "") for resp in passive_responses[:10]]
+            combined_text = "\n".join(f"反馈{i+1}: {text}" for i, text in enumerate(sample_texts) if text)
+
+            prompt = f"""
+分析以下被动推荐客户（NPS 7-8分）的反馈，识别阻碍他们成为积极推荐者的关键障碍：
+
+{combined_text}
+
+请识别：
+1. 具体的转化障碍（产品、服务、价格、体验等）
+2. 障碍的严重程度（critical/high/medium/low）
+3. 受影响的客户数量估计
+4. 障碍类型分类
+
+以JSON格式返回：
+[
+    {{
+        "barrier_description": "具体障碍描述",
+        "severity": "critical/high/medium/low",
+        "frequency": 估计受影响客户数,
+        "category": "product/service/price/experience/other",
+        "related_responses": [相关反馈编号],
+        "conversion_impact": "对转化的影响描述"
+    }}
+]
+"""
+
+            response = await self.llm_client.generate(prompt, temperature=0.3)
+
+            import json
+            barriers_data = json.loads(response)
+
+            return barriers_data
+
+        except Exception as e:
+            logger.debug(f"LLM barrier analysis failed: {e}")
+            return []
+
+    async def _llm_enhance_opportunities(
+        self,
+        opportunities: List[Dict[str, Any]],
+        passive_responses: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
+        """Use LLM to enhance and discover additional opportunities."""
+        if not self.llm_client:
+            return []
+
+        try:
+            # Create opportunity summary for LLM
+            opp_summary = "\n".join([
+                f"机会{i+1}: {opp['title']} - {opp['type']}"
+                for i, opp in enumerate(opportunities[:5])
+            ])
+
+            prompt = f"""
+基于当前识别的转化机会和被动客户反馈，建议额外的创新转化策略：
+
+现有机会：
+{opp_summary}
+
+请提出3-5个创新的转化机会，重点关注：
+1. 数字化体验改进
+2. 个性化服务提升
+3. 社区建设和口碑营销
+4. 产品生态扩展
+5. 客户成功管理
+
+以JSON格式返回：
+[
+    {{
+        "title": "机会标题",
+        "type": "opportunity类型",
+        "description": "详细描述",
+        "innovation_level": "incremental/breakthrough",
+        "potential_impact": 0.1-1.0,
+        "difficulty": "easy/medium/hard",
+        "target_customers": 估计目标客户数
+    }}
+]
+"""
+
+            response = await self.llm_client.generate(prompt, temperature=0.5)
+
+            import json
+            enhanced_opportunities = []
+            opps_data = json.loads(response)
+
+            for i, opp_data in enumerate(opps_data):
+                enhanced_opp = {
+                    "opportunity_id": f"enhanced_opp_{i}",
+                    "title": opp_data.get("title", ""),
+                    "type": opp_data.get("type", "other"),
+                    "description": opp_data.get("description", ""),
+                    "potential_impact": opp_data.get("potential_impact", 0.5),
+                    "difficulty": opp_data.get("difficulty", "medium"),
+                    "target_customers": opp_data.get("target_customers", 10),
+                    "innovation_level": opp_data.get("innovation_level", "incremental"),
+                    "related_responses": []
+                }
+                enhanced_opportunities.append(enhanced_opp)
+
+            return enhanced_opportunities
+
+        except Exception as e:
+            logger.debug(f"LLM opportunity enhancement failed: {e}")
+            return []

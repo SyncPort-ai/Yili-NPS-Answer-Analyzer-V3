@@ -1,0 +1,35 @@
+{
+  "nps_scoring_rules": {
+    "promoter_range": [9, 10],
+    "passive_range": [7, 8], 
+    "detractor_range": [0, 6],
+    "excellent_threshold": 50,
+    "good_threshold": 0,
+    "poor_threshold": -50,
+    "industry_benchmark": 30
+  },
+  "quality_thresholds": {
+    "data_completeness_min": 0.8,
+    "sample_size_min": 30,
+    "reliability_min": 0.7,
+    "consistency_min": 0.75,
+    "validity_min": 0.75,
+    "accuracy_min": 0.8,
+    "timeliness_max_days": 30,
+    "uniqueness_min": 0.9
+  },
+  "risk_alerts": {
+    "nps_critical": -20,
+    "nps_warning": 0,
+    "detractor_rate_critical": 30,
+    "detractor_rate_warning": 20,
+    "data_quality_warning": 0.6,
+    "sample_size_warning": 20
+  },
+  "analysis_parameters": {
+    "min_text_length": 2,
+    "max_analysis_duration_minutes": 20,
+    "retry_attempts": 3,
+    "confidence_threshold": 0.7
+  }
+}

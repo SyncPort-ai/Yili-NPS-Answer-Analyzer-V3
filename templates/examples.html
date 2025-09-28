@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}示例与脚本 · 伊利智能 NPS 研究中心{% endblock %}
+{% block header_title %}示例与脚本库{% endblock %}
+{% block header_desc %}快速浏览知识库维护、测试脚本与多智能体演示，支撑日常开发与运维。{% endblock %}
+{% block content %}
+  <section class="card p-6">
+    <h2 class="text-lg font-semibold text-slate-900 mb-2">可复用脚本</h2>
+    <p class="text-xs text-slate-500 mb-4">所有示例均位于代码仓库根目录，可根据需要调整并融入流水线。</p>
+    <div class="space-y-4 text-sm text-slate-600">
+      {% for ex in examples %}
+      <div class="rounded-lg border border-slate-100 px-4 py-4">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <p class="font-medium text-slate-900">{{ ex.name }}</p>
+            <p class="text-xs text-slate-500 mt-1">{{ ex.description }}</p>
+          </div>
+          <span class="badge bg-slate-100 text-slate-600">{{ ex.category }}</span>
+        </div>
+        <p class="text-xs text-slate-400 mt-3">路径：<code class="bg-slate-100 px-1 py-0.5 rounded">{{ ex.filename }}</code></p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,569 @@
+"""
+A2 - Qualitative Analysis Agent
+Foundation Pass Agent for text analysis and semantic tagging.
+"""
+
+import logging
+from typing import Dict, Any, List, Optional, Literal
+import re
+import jieba
+from collections import Counter
+
+from ..base import FoundationAgent, AgentResult, AgentStatus
+from ...state import TaggedResponse, CleanedData
+from ...llm import LLMClient
+
+logger = logging.getLogger(__name__)
+
+
+class QualitativeAnalysisAgent(FoundationAgent):
+    """
+    A2 - Qualitative Analysis Agent
+
+    Responsibilities:
+    - Analyze text comments and feedback
+    - Extract sentiment and emotions
+    - Identify key themes and topics
+    - Tag responses with semantic labels
+    - Extract key phrases and entities
+    """
+
+    def __init__(self, llm_client: Optional[LLMClient] = None, **kwargs):
+        super().__init__(**kwargs)
+        self.llm_client = llm_client
+
+        # Initialize Chinese NLP
+        self._init_chinese_nlp()
+
+        # Predefined tags for Yili dairy products
+        self.product_tags = {
+            "口感": ["口感", "味道", "香味", "浓稠", "清淡", "甜度", "酸甜", "顺滑"],
+            "品质": ["品质", "质量", "新鲜", "纯净", "天然", "营养", "健康", "安全"],
+            "包装": ["包装", "瓶子", "盒子", "设计", "便携", "密封", "外观", "标签"],
+            "价格": ["价格", "价钱", "实惠", "性价比", "便宜", "贵", "划算", "优惠"],
+            "服务": ["配送", "服务", "售后", "客服", "物流", "速度", "态度", "体验"],
+            "功效": ["营养", "补钙", "助消化", "增强免疫", "改善肠道", "美容", "减肥"]
+        }
+
+        # Emotion lexicon
+        self.emotion_words = {
+            "positive": ["喜欢", "满意", "很好", "不错", "优秀", "棒", "赞", "推荐", "完美", "超值"],
+            "negative": ["差", "失望", "不好", "糟糕", "难喝", "不满", "垃圾", "欺骗", "假", "坏了"],
+            "neutral": ["一般", "还行", "普通", "可以", "凑合", "马马虎虎"]
+        }
+
+    def _init_chinese_nlp(self):
+        """Initialize Chinese NLP components."""
+        # Load custom dictionary for dairy terms
+        dairy_terms = [
+            "安慕希", "金典", "舒化", "优酸乳", "味可滋", "QQ星",
+            "益生菌", "乳酸菌", "脱脂", "全脂", "低脂", "无糖",
+            "蒙牛", "光明", "君乐宝", "三元"  # Competitors
+        ]
+
+        for term in dairy_terms:
+            jieba.add_word(term)
+
+    async def process(self, state: Dict[str, Any]) -> AgentResult:
+        """
+        Execute qualitative analysis on text comments.
+
+        Args:
+            state: Current workflow state with cleaned_data
+
+        Returns:
+            AgentResult with tagged responses
+        """
+        try:
+            cleaned_data = state.get("cleaned_data")
+
+            if not cleaned_data:
+                return AgentResult(
+                    agent_id=self.agent_id,
+                    status=AgentStatus.FAILED,
+                    errors=["No cleaned data available"],
+                    data={}
+                )
+
+            responses = cleaned_data.get("cleaned_responses", [])
+
+            # Debug: Log what we're actually receiving
+            logger.debug(f"A2 Agent received {len(responses)} responses")
+            if responses:
+                sample = responses[0]
+                logger.debug(f"Sample response structure: {list(sample.keys())}")
+                logger.debug(f"Sample has comment: {'comment' in sample}")
+                logger.debug(f"Sample has feedback_text: {'feedback_text' in sample}")
+                if 'feedback_text' in sample:
+                    logger.debug(f"Sample feedback_text: {sample['feedback_text'][:50]}...")
+
+            # Filter responses with comments (check both 'comment' and 'feedback_text')
+            responses_with_comments = [
+                r for r in responses
+                if (r.get("comment") and len(r["comment"]) > 0) or
+                   (r.get("feedback_text") and len(r["feedback_text"]) > 0)
+            ]
+
+            if not responses_with_comments:
+                logger.warning("No responses with comments to analyze")
+                return AgentResult(
+                    agent_id=self.agent_id,
+                    status=AgentStatus.COMPLETED,
+                    data={
+                        "tagged_responses": [],
+                        "summary": {
+                            "total_analyzed": 0,
+                            "sentiment_distribution": {},
+                            "top_themes": [],
+                            "key_phrases": []
+                        }
+                    }
+                )
+
+            # Process each response
+            tagged_responses = []
+
+            for response in responses_with_comments:
+                tagged = await self._analyze_response(response)
+
+                if tagged:
+                    tagged_responses.append(tagged)
+
+            # Aggregate analysis
+            summary = self._aggregate_analysis(tagged_responses)
+
+            # Extract insights
+            insights = await self._generate_qualitative_insights(tagged_responses, summary)
+
+            logger.info(
+                f"Qualitative analysis complete: {len(tagged_responses)} responses analyzed"
+            )
+
+            return AgentResult(
+                agent_id=self.agent_id,
+                status=AgentStatus.COMPLETED,
+                data={
+                    "tagged_responses": tagged_responses,
+                    "summary": summary,
+                    "qualitative_insights": insights
+                }
+            )
+
+        except Exception as e:
+            logger.error(f"Qualitative analysis failed: {e}")
+            return AgentResult(
+                agent_id=self.agent_id,
+                status=AgentStatus.FAILED,
+                errors=[str(e)],
+                data={}
+            )
+
+    async def _analyze_response(self, response: Dict[str, Any]) -> Optional[TaggedResponse]:
+        """
+        Analyze individual response text.
+
+        Args:
+            response: Survey response with comment
+
+        Returns:
+            TaggedResponse with analysis
+        """
+        try:
+            # Support both 'comment' and 'feedback_text' field names
+            comment = response.get("comment") or response.get("feedback_text", "")
+
+            if not comment:
+                return None
+
+            # Basic text analysis
+            tags = self._extract_tags(comment)
+            sentiment = self._analyze_sentiment(comment)
+            emotion_scores = self._analyze_emotions(comment)
+            key_phrases = self._extract_key_phrases(comment)
+
+            # LLM-based deep analysis (if available)
+            if self.llm_client and len(comment) > 20:
+                llm_analysis = await self._llm_analyze(comment, response.get("nps_score"))
+
+                # Merge LLM results
+                if llm_analysis:
+                    tags.extend(llm_analysis.get("tags", []))
+                    tags = list(set(tags))  # Remove duplicates
+
+                    # Refine sentiment with LLM
+                    if llm_analysis.get("sentiment"):
+                        sentiment = llm_analysis["sentiment"]
+
+                    # Add LLM-extracted phrases
+                    if llm_analysis.get("key_points"):
+                        key_phrases.extend(llm_analysis["key_points"])
+
+            return TaggedResponse(
+                response_id=response.get("response_id"),
+                original_text=comment,
+                tags=tags,
+                sentiment=sentiment,
+                emotion_scores=emotion_scores,
+                key_phrases=key_phrases[:5],
+                nps_score=response.get("nps_score"),
+                product_line=response.get("product_line"),
+                customer_segment=response.get("customer_segment"),
+                channel=response.get("channel"),
+                metadata=response.get("metadata", {})
+            )
+
+        except Exception as e:
+            logger.error(f"Failed to analyze response: {e}")
+            return None
+
+    def _extract_tags(self, text: str) -> List[str]:
+        """
+        Extract semantic tags from text.
+
+        Args:
+            text: Input text
+
+        Returns:
+            List of tags
+        """
+        tags = []
+
+        # Check each tag category
+        for category, keywords in self.product_tags.items():
+            for keyword in keywords:
+                if keyword in text:
+                    tags.append(category)
+                    break
+
+        # Product mentions
+        products = ["安慕希", "金典", "舒化", "优酸乳", "味可滋", "QQ星"]
+
+        for product in products:
+            if product in text:
+                tags.append(f"产品_{product}")
+
+        # Competitor mentions
+        competitors = ["蒙牛", "光明", "君乐宝", "三元"]
+
+        for competitor in competitors:
+            if competitor in text:
+                tags.append(f"竞品_{competitor}")
+
+        return list(set(tags))
+
+    def _analyze_sentiment(self, text: str) -> Literal["positive", "negative", "neutral", "mixed"]:
+        """
+        Analyze sentiment of text.
+
+        Args:
+            text: Input text
+
+        Returns:
+            Sentiment label
+        """
+        pos_count = sum(1 for word in self.emotion_words["positive"] if word in text)
+        neg_count = sum(1 for word in self.emotion_words["negative"] if word in text)
+        neu_count = sum(1 for word in self.emotion_words["neutral"] if word in text)
+
+        # Negation handling
+        negations = ["不", "没", "无", "非", "别", "莫", "未"]
+        has_negation = any(neg in text for neg in negations)
+
+        if has_negation:
+            # Swap positive and negative if negation present
+            pos_count, neg_count = neg_count, pos_count
+
+        # Determine sentiment
+        if pos_count > 0 and neg_count > 0:
+            return "mixed"
+        elif pos_count > neg_count:
+            return "positive"
+        elif neg_count > pos_count:
+            return "negative"
+        elif neu_count > 0:
+            return "neutral"
+        else:
+            # Default based on text length and punctuation
+            if "!" in text or "！" in text:
+                return "positive" if len(text) < 50 else "mixed"
+            elif "?" in text or "？" in text:
+                return "negative"
+            else:
+                return "neutral"
+
+    def _analyze_emotions(self, text: str) -> Dict[str, float]:
+        """
+        Analyze emotion scores in text.
+
+        Args:
+            text: Input text
+
+        Returns:
+            Dictionary of emotion scores
+        """
+        emotions = {
+            "joy": 0.0,
+            "trust": 0.0,
+            "anticipation": 0.0,
+            "surprise": 0.0,
+            "sadness": 0.0,
+            "disgust": 0.0,
+            "anger": 0.0,
+            "fear": 0.0
+        }
+
+        # Simple keyword-based emotion detection
+        emotion_keywords = {
+            "joy": ["喜欢", "开心", "快乐", "愉快", "满意", "高兴"],
+            "trust": ["信任", "放心", "可靠", "安全", "品质", "保证"],
+            "anticipation": ["期待", "希望", "想要", "盼望", "等待"],
+            "surprise": ["惊喜", "意外", "没想到", "竟然", "居然"],
+            "sadness": ["失望", "难过", "遗憾", "可惜", "伤心"],
+            "disgust": ["恶心", "讨厌", "难喝", "倒胃口", "反感"],
+            "anger": ["生气", "愤怒", "不满", "投诉", "差评"],
+            "fear": ["担心", "害怕", "忧虑", "不安", "恐惧"]
+        }
+
+        # Count keyword occurrences
+        for emotion, keywords in emotion_keywords.items():
+            count = sum(1 for keyword in keywords if keyword in text)
+
+            if count > 0:
+                emotions[emotion] = min(1.0, count * 0.3)
+
+        # Normalize scores
+        total = sum(emotions.values())
+
+        if total > 0:
+            for emotion in emotions:
+                emotions[emotion] = round(emotions[emotion] / total, 2)
+
+        return emotions
+
+    def _extract_key_phrases(self, text: str) -> List[str]:
+        """
+        Extract key phrases from text.
+
+        Args:
+            text: Input text
+
+        Returns:
+            List of key phrases
+        """
+        # Segment text using jieba
+        words = jieba.lcut(text)
+
+        # Filter stop words
+        stop_words = {"的", "了", "是", "我", "你", "他", "她", "它", "们", "这", "那", "有", "在", "和", "与"}
+        words = [w for w in words if w not in stop_words and len(w) > 1]
+
+        # Extract noun phrases (simple approach)
+        phrases = []
+
+        for i in range(len(words) - 1):
+            # Two-word phrases
+            phrase = words[i] + words[i + 1]
+
+            if len(phrase) >= 3:
+                phrases.append(phrase)
+
+        # Add important single words
+        important_words = [w for w in words if len(w) >= 2 and w in text]
+        phrases.extend(important_words)
+
+        # Count frequencies
+        phrase_counts = Counter(phrases)
+
+        # Return top phrases
+        return [phrase for phrase, _ in phrase_counts.most_common(10)]
+
+    async def _llm_analyze(self, comment: str, nps_score: Optional[int]) -> Optional[Dict[str, Any]]:
+        """
+        Use LLM for deep text analysis.
+
+        Args:
+            comment: Comment text
+            nps_score: NPS score
+
+        Returns:
+            LLM analysis results
+        """
+        if not self.llm_client:
+            return None
+
+        try:
+            prompt = f"""
+分析以下客户反馈，提取关键信息：
+
+NPS评分：{nps_score if nps_score is not None else "未知"}
+客户评论：{comment}
+
+请提供：
+1. 情感倾向（positive/negative/neutral/mixed）
+2. 主要关注点（不超过3个）
+3. 关键标签（不超过5个）
+4. 改进建议（如果有）
+
+以JSON格式返回：
+{{
+    "sentiment": "...",
+    "key_points": ["...", "..."],
+    "tags": ["...", "..."],
+    "improvement": "..."
+}}
+"""
+
+            response = await self.llm_client.generate(prompt, temperature=0.3)
+
+            # Parse JSON response
+            import json
+            result = json.loads(response)
+
+            return result
+
+        except Exception as e:
+            logger.debug(f"LLM analysis failed: {e}")
+            return None
+
+    def _aggregate_analysis(self, tagged_responses: List[TaggedResponse]) -> Dict[str, Any]:
+        """
+        Aggregate analysis across all responses.
+
+        Args:
+            tagged_responses: List of analyzed responses
+
+        Returns:
+            Aggregated summary
+        """
+        summary = {
+            "total_analyzed": len(tagged_responses),
+            "sentiment_distribution": {},
+            "top_themes": [],
+            "key_phrases": [],
+            "emotion_summary": {}
+        }
+
+        if not tagged_responses:
+            return summary
+
+        # Sentiment distribution
+        sentiments = [r["sentiment"] for r in tagged_responses]
+        sentiment_counts = Counter(sentiments)
+        total = len(sentiments)
+
+        summary["sentiment_distribution"] = {
+            sentiment: {
+                "count": count,
+                "percentage": round((count / total) * 100, 1)
+            }
+            for sentiment, count in sentiment_counts.items()
+        }
+
+        # Top themes (tags)
+        all_tags = []
+
+        for r in tagged_responses:
+            all_tags.extend(r.get("tags", []))
+
+        tag_counts = Counter(all_tags)
+        summary["top_themes"] = [
+            {"theme": tag, "count": count}
+            for tag, count in tag_counts.most_common(10)
+        ]
+
+        # Key phrases
+        all_phrases = []
+
+        for r in tagged_responses:
+            all_phrases.extend(r.get("key_phrases", []))
+
+        phrase_counts = Counter(all_phrases)
+        summary["key_phrases"] = [
+            phrase for phrase, _ in phrase_counts.most_common(20)
+        ]
+
+        # Emotion summary
+        emotion_totals = {}
+
+        for r in tagged_responses:
+            for emotion, score in r.get("emotion_scores", {}).items():
+                if emotion not in emotion_totals:
+                    emotion_totals[emotion] = []
+                emotion_totals[emotion].append(score)
+
+        summary["emotion_summary"] = {
+            emotion: round(sum(scores) / len(scores), 2)
+            for emotion, scores in emotion_totals.items()
+            if scores
+        }
+
+        return summary
+
+    async def _generate_qualitative_insights(
+        self,
+        tagged_responses: List[TaggedResponse],
+        summary: Dict[str, Any]
+    ) -> List[str]:
+        """
+        Generate qualitative insights.
+
+        Args:
+            tagged_responses: Analyzed responses
+            summary: Aggregated summary
+
+        Returns:
+            List of insights
+        """
+        insights = []
+
+        # Sentiment insights
+        sentiment_dist = summary.get("sentiment_distribution", {})
+
+        if sentiment_dist:
+            pos_pct = sentiment_dist.get("positive", {}).get("percentage", 0)
+            neg_pct = sentiment_dist.get("negative", {}).get("percentage", 0)
+
+            if pos_pct > 60:
+                insights.append(f"客户情感以正面为主({pos_pct:.1f}%)，整体满意度较高")
+            elif neg_pct > 40:
+                insights.append(f"负面情感占比较高({neg_pct:.1f}%)，需要重点关注客户不满")
+            else:
+                insights.append("客户情感呈现多样化，正负面评价并存")
+
+        # Theme insights
+        top_themes = summary.get("top_themes", [])
+
+        if top_themes:
+            top_3 = [t["theme"] for t in top_themes[:3]]
+            insights.append(f"客户主要关注：{', '.join(top_3)}")
+
+        # Key phrase insights
+        key_phrases = summary.get("key_phrases", [])
+
+        if key_phrases:
+            product_phrases = [p for p in key_phrases if any(prod in p for prod in ["安慕希", "金典", "舒化"])]
+
+            if product_phrases:
+                insights.append(f"产品相关高频词：{', '.join(product_phrases[:5])}")
+
+        # Emotion insights
+        emotion_summary = summary.get("emotion_summary", {})
+
+        if emotion_summary:
+            dominant_emotion = max(emotion_summary.items(), key=lambda x: x[1])
+
+            if dominant_emotion[1] > 0.3:
+                emotion_map = {
+                    "joy": "愉悦",
+                    "trust": "信任",
+                    "anticipation": "期待",
+                    "surprise": "惊喜",
+                    "sadness": "失望",
+                    "disgust": "反感",
+                    "anger": "愤怒",
+                    "fear": "担忧"
+                }
+                emotion_cn = emotion_map.get(dominant_emotion[0], dominant_emotion[0])
+                insights.append(f"客户主要情绪为{emotion_cn}({dominant_emotion[1]:.1%})")
+
+        return insights

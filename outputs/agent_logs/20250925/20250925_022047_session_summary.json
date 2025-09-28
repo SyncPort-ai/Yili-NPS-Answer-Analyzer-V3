@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "session_id": "20250925_022047",
+    "start_time": "2025-09-25T02:20:47.066288",
+    "agents_executed": [],
+    "total_execution_time_ms": 0,
+    "errors": [],
+    "warnings": []
+  },
+  "agent_outputs": {},
+  "workflow_result_summary": {
+    "workflow_id": "workflow_d181f0e8",
+    "workflow_phase": "completed",
+    "workflow_start_time": "2025-09-25 02:20:47.070359",
+    "workflow_version": "3.0.0",
+    "raw_data": [
+      {
+        "response_id": "...",
+        "customer_data": "...",
+        "nps_score": "...",
+        "feedback_text": "...",
+        "metadata": "..."
+      },
+      {
+        "response_id": "...",
+        "customer_data": "...",
+        "nps_score": "...",
+        "feedback_text": "...",
+        "metadata": "..."
+      },
+      {
+        "response_id": "...",
+        "customer_data": "...",
+        "nps_score": "...",
+        "feedback_text": "...",
+        "metadata": "..."
+      }
+    ],
+    "input_metadata": {},
+    "agent_outputs": {},
+    "agent_sequence": [],
+    "checkpoints": [],
+    "total_tokens_used": 0,
+    "total_llm_calls": 0,
+    "total_processing_time_ms": 0,
+    "memory_peak_mb": 0.0,
+    "errors": [],
+    "warnings": [],
+    "retry_count": 0,
+    "failed_agents": [],
+    "language": "zh-CN",
+    "report_format_preferences": {},
+    "emphasis_areas": [],
+    "...": "(37 more items)"
+  }
+}

@@ -1,0 +1,803 @@
+"""
+B3 - Detractor Analyst Agent
+Analysis Pass Agent for analyzing detractor customers and churn risk.
+"""
+
+import logging
+from typing import Dict, Any, List, Optional
+import re
+
+from ..base import AnalysisAgent, AgentResult, AgentStatus
+from ...llm import LLMClient
+
+logger = logging.getLogger(__name__)
+
+
+class DetractorAnalystAgent(AnalysisAgent):
+    """
+    B3 - Detractor Analyst Agent
+
+    Responsibilities:
+    - Extract and analyze pain points from detractor feedback (NPS 0-6)
+    - Assess severity and impact of negative experiences
+    - Create churn risk assessment for detractors
+    - Generate recovery strategy suggestions and action plans
+    """
+
+    def __init__(self, agent_id: str = "B3", agent_name: str = "Detractor Analyst Agent",
+                 llm_client: Optional[LLMClient] = None, **kwargs):
+        super().__init__(agent_id, agent_name, **kwargs)
+        self.llm_client = llm_client
+
+        # Pain point categories and patterns
+        self.pain_point_patterns = {
+            "product_quality": {
+                "keywords": ["质量差", "变质", "异味", "过期", "坏了", "不新鲜", "口感差", "太甜", "太淡"],
+                "severity": "high",
+                "impact": "brand_reputation"
+            },
+            "service_failure": {
+                "keywords": ["客服态度", "不理人", "处理慢", "推诿", "没解决", "服务差", "不负责"],
+                "severity": "high",
+                "impact": "customer_satisfaction"
+            },
+            "delivery_issues": {
+                "keywords": ["配送慢", "没送到", "包装破损", "送错", "丢件", "延迟", "物流"],
+                "severity": "medium",
+                "impact": "convenience"
+            },
+            "pricing_concerns": {
+                "keywords": ["太贵", "涨价", "不值", "性价比差", "比别家贵", "价格高"],
+                "severity": "medium",
+                "impact": "value_perception"
+            },
+            "availability_problems": {
+                "keywords": ["缺货", "没有", "买不到", "断货", "限购", "抢不到"],
+                "severity": "medium",
+                "impact": "accessibility"
+            },
+            "expectation_failure": {
+                "keywords": ["不如宣传", "失望", "骗人", "虚假广告", "夸大", "误导"],
+                "severity": "high",
+                "impact": "trust"
+            }
+        }
+
+        # Churn risk factors
+        self.churn_risk_factors = {
+            "repeat_negative": 3.0,  # Multiple negative experiences
+            "high_severity": 2.5,   # High severity issues
+            "trust_issues": 2.0,    # Trust-related problems
+            "competitive_mention": 1.8,  # Mentioned competitors
+            "service_failure": 1.6, # Service-related failures
+            "unresolved_issue": 1.4 # No resolution mentioned
+        }
+
+    async def process(self, state: Dict[str, Any]) -> AgentResult:
+        """
+        Process detractor analysis.
+
+        Args:
+            state: Current workflow state
+
+        Returns:
+            AgentResult with detractor insights and recovery strategies
+        """
+        try:
+            # Get NPS results and detractor customers
+            nps_results = state.get("nps_results", {})
+            tagged_responses = state.get("tagged_responses", [])
+
+            # Filter detractor customers (NPS score 0-6)
+            detractor_responses = self._filter_detractor_responses(tagged_responses, nps_results)
+
+            if not detractor_responses:
+                logger.warning("No detractor responses found")
+                return AgentResult(
+                    agent_id=self.agent_id,
+                    status=AgentStatus.COMPLETED,
+                    data={
+                        "detractor_analysis": {
+                            "total_detractors": 0,
+                            "pain_points": [],
+                            "churn_risks": [],
+                            "recovery_strategies": []
+                        }
+                    },
+                    insights=["No detractor customers found for analysis"],
+                    confidence_score=1.0
+                )
+
+            # Analyze pain points
+            pain_points = await self._analyze_pain_points(detractor_responses)
+
+            # Assess churn risks
+            churn_risks = self._assess_churn_risks(detractor_responses, pain_points)
+
+            # Generate recovery strategies
+            recovery_strategies = await self._generate_recovery_strategies(pain_points, churn_risks)
+
+            # Calculate urgency and impact scores
+            urgency_analysis = self._calculate_urgency_scores(pain_points, churn_risks)
+
+            # Generate detractor insights
+            insights = self._generate_detractor_insights(
+                detractor_responses, pain_points, churn_risks, recovery_strategies
+            )
+
+            logger.info(f"Analyzed {len(detractor_responses)} detractors with {len(pain_points)} pain points")
+
+            return AgentResult(
+                agent_id=self.agent_id,
+                status=AgentStatus.COMPLETED,
+                data={
+                    "detractor_analysis": {
+                        "total_detractors": len(detractor_responses),
+                        "pain_points": pain_points,
+                        "churn_risks": churn_risks,
+                        "recovery_strategies": recovery_strategies,
+                        "urgency_analysis": urgency_analysis,
+                        "detractor_insights": insights
+                    }
+                },
+                insights=insights,
+                confidence_score=0.85
+            )
+
+        except Exception as e:
+            logger.error(f"Detractor analysis failed: {e}")
+            return AgentResult(
+                agent_id=self.agent_id,
+                status=AgentStatus.FAILED,
+                data={},
+                errors=[str(e)],
+                confidence_score=0.0
+            )
+
+    def _filter_detractor_responses(
+        self,
+        tagged_responses: List[Dict[str, Any]],
+        nps_results: Dict[str, Any]
+    ) -> List[Dict[str, Any]]:
+        """
+        Filter responses from detractor customers (NPS 0-6).
+
+        Args:
+            tagged_responses: All tagged responses
+            nps_results: NPS calculation results
+
+        Returns:
+            List of detractor responses
+        """
+        detractor_responses = []
+
+        for response in tagged_responses:
+            nps_score = response.get("nps_score")
+            if nps_score is not None and nps_score <= 6:
+                detractor_responses.append(response)
+
+        return detractor_responses
+
+    async def _analyze_pain_points(
+        self,
+        detractor_responses: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
+        """
+        Analyze pain points from detractor feedback.
+
+        Args:
+            detractor_responses: Detractor responses
+
+        Returns:
+            List of pain points with severity and impact assessment
+        """
+        pain_points = []
+        pain_point_counts = {}
+
+        # Pattern-based pain point detection
+        for response in detractor_responses:
+            text = response.get("original_text", "")
+            response_id = response.get("response_id", "")
+            nps_score = response.get("nps_score", 0)
+
+            for category, patterns in self.pain_point_patterns.items():
+                if any(keyword in text for keyword in patterns["keywords"]):
+                    # Extract specific pain points
+                    specific_points = self._extract_specific_pain_points(text, category)
+
+                    for point in specific_points:
+                        point_key = f"{category}_{point[:50]}"
+
+                        if point_key not in pain_point_counts:
+                            pain_point_counts[point_key] = {
+                                "category": category,
+                                "description": point,
+                                "count": 0,
+                                "responses": [],
+                                "severity_scores": [],
+                                "base_severity": patterns["severity"],
+                                "impact_area": patterns["impact"]
+                            }
+
+                        pain_point_counts[point_key]["count"] += 1
+                        pain_point_counts[point_key]["responses"].append(response_id)
+                        pain_point_counts[point_key]["severity_scores"].append(self._score_severity_from_nps(nps_score))
+
+        # Enhanced LLM-based pain point analysis
+        if self.llm_client and detractor_responses:
+            llm_pain_points = await self._llm_analyze_pain_points(detractor_responses)
+            for pain in llm_pain_points:
+                point_key = f"llm_{pain.get('description', '')[:50]}"
+                if point_key not in pain_point_counts:
+                    pain_point_counts[point_key] = {
+                        "category": pain.get("category", "other"),
+                        "description": pain.get("description", ""),
+                        "count": pain.get("frequency", 1),
+                        "responses": pain.get("related_responses", []),
+                        "severity_scores": [pain.get("severity_score", 0.5)],
+                        "base_severity": pain.get("severity", "medium"),
+                        "impact_area": pain.get("impact_area", "satisfaction")
+                    }
+
+        # Convert to structured pain points
+        for point_key, data in pain_point_counts.items():
+            avg_severity = sum(data["severity_scores"]) / len(data["severity_scores"]) if data["severity_scores"] else 0.5
+
+            pain_point = {
+                "pain_point_id": f"pain_{len(pain_points)}",
+                "category": data["category"],
+                "description": data["description"],
+                "frequency": data["count"],
+                "severity_score": round(avg_severity, 2),
+                "severity_level": self._severity_score_to_level(avg_severity),
+                "impact_area": data["impact_area"],
+                "related_responses": data["responses"],
+                "business_impact": self._assess_business_impact(data["category"], data["count"], avg_severity),
+                "resolution_urgency": self._calculate_resolution_urgency(data["count"], avg_severity)
+            }
+            pain_points.append(pain_point)
+
+        # Sort by urgency and severity
+        pain_points.sort(key=lambda x: (x["resolution_urgency"], x["severity_score"]), reverse=True)
+
+        return pain_points
+
+    def _assess_churn_risks(
+        self,
+        detractor_responses: List[Dict[str, Any]],
+        pain_points: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
+        """
+        Assess churn risk for each detractor.
+
+        Args:
+            detractor_responses: Detractor responses
+            pain_points: Identified pain points
+
+        Returns:
+            List of churn risk assessments
+        """
+        churn_risks = []
+
+        for response in detractor_responses:
+            response_id = response.get("response_id", "")
+            text = response.get("original_text", "")
+            nps_score = response.get("nps_score", 0)
+
+            # Calculate base churn risk from NPS score
+            base_risk = self._nps_to_churn_risk(nps_score)
+
+            # Apply risk factors
+            risk_multiplier = 1.0
+            applied_factors = []
+
+            for factor, multiplier in self.churn_risk_factors.items():
+                if self._check_risk_factor(text, factor):
+                    risk_multiplier *= multiplier
+                    applied_factors.append(factor)
+
+            # Final churn risk score
+            final_risk = min(base_risk * risk_multiplier, 1.0)
+
+            # Get related pain points
+            related_pain_points = [p for p in pain_points if response_id in p["related_responses"]]
+
+            churn_risk = {
+                "customer_id": response_id,
+                "churn_probability": round(final_risk, 3),
+                "risk_level": self._risk_score_to_level(final_risk),
+                "risk_factors": applied_factors,
+                "related_pain_points": [p["pain_point_id"] for p in related_pain_points],
+                "intervention_window": self._calculate_intervention_window(final_risk),
+                "recovery_difficulty": self._assess_recovery_difficulty(applied_factors, related_pain_points)
+            }
+            churn_risks.append(churn_risk)
+
+        # Sort by churn probability
+        churn_risks.sort(key=lambda x: x["churn_probability"], reverse=True)
+
+        return churn_risks
+
+    async def _generate_recovery_strategies(
+        self,
+        pain_points: List[Dict[str, Any]],
+        churn_risks: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
+        """
+        Generate recovery strategies for detractors.
+
+        Args:
+            pain_points: Identified pain points
+            churn_risks: Churn risk assessments
+
+        Returns:
+            List of recovery strategies
+        """
+        strategies = []
+
+        # Generate strategies for high-priority pain points
+        high_priority_points = [p for p in pain_points if p["resolution_urgency"] > 0.7]
+
+        for pain_point in high_priority_points[:5]:  # Top 5 pain points
+            strategy = {
+                "strategy_id": f"strategy_{len(strategies)}",
+                "target_pain_point": pain_point["pain_point_id"],
+                "strategy_type": self._determine_strategy_type(pain_point["category"]),
+                "title": self._generate_strategy_title(pain_point),
+                "description": self._generate_strategy_description(pain_point),
+                "immediate_actions": self._define_immediate_actions(pain_point),
+                "long_term_actions": self._define_long_term_actions(pain_point),
+                "success_metrics": self._define_recovery_metrics(pain_point),
+                "timeline": self._estimate_recovery_timeline(pain_point["category"]),
+                "resources_required": self._estimate_recovery_resources(pain_point),
+                "risk_reduction": self._estimate_risk_reduction(pain_point)
+            }
+            strategies.append(strategy)
+
+        # Generate personalized strategies for high-risk customers
+        critical_risks = [r for r in churn_risks if r["risk_level"] in ["critical", "high"]][:3]
+
+        for risk in critical_risks:
+            personalized_strategy = await self._generate_personalized_strategy(risk, pain_points)
+            if personalized_strategy:
+                strategies.append(personalized_strategy)
+
+        return strategies
+
+    def _calculate_urgency_scores(
+        self,
+        pain_points: List[Dict[str, Any]],
+        churn_risks: List[Dict[str, Any]]
+    ) -> Dict[str, Any]:
+        """
+        Calculate urgency and impact scores for prioritization.
+
+        Args:
+            pain_points: Pain points
+            churn_risks: Churn risks
+
+        Returns:
+            Urgency analysis results
+        """
+        # Critical issues requiring immediate attention
+        critical_issues = [p for p in pain_points if p["severity_level"] == "critical"]
+        high_risk_customers = [r for r in churn_risks if r["risk_level"] in ["critical", "high"]]
+
+        # Overall urgency indicators
+        urgency_analysis = {
+            "critical_pain_points": len(critical_issues),
+            "high_risk_customers": len(high_risk_customers),
+            "immediate_attention_needed": len(critical_issues) > 0 or len(high_risk_customers) > 3,
+            "priority_actions": [],
+            "escalation_required": len(critical_issues) > 2 or any(r["churn_probability"] > 0.8 for r in high_risk_customers)
+        }
+
+        # Priority actions
+        if critical_issues:
+            urgency_analysis["priority_actions"].append(f"立即处理{len(critical_issues)}个严重问题")
+
+        if high_risk_customers:
+            urgency_analysis["priority_actions"].append(f"紧急挽回{len(high_risk_customers)}位高风险客户")
+
+        # Calculate overall risk score
+        if churn_risks:
+            avg_risk = sum(r["churn_probability"] for r in churn_risks) / len(churn_risks)
+            urgency_analysis["overall_risk_score"] = round(avg_risk, 3)
+            urgency_analysis["overall_risk_level"] = self._risk_score_to_level(avg_risk)
+
+        return urgency_analysis
+
+    def _generate_detractor_insights(
+        self,
+        detractor_responses: List[Dict[str, Any]],
+        pain_points: List[Dict[str, Any]],
+        churn_risks: List[Dict[str, Any]],
+        recovery_strategies: List[Dict[str, Any]]
+    ) -> List[str]:
+        """
+        Generate insights from detractor analysis.
+
+        Args:
+            detractor_responses: Detractor responses
+            pain_points: Pain points
+            churn_risks: Churn risks
+            recovery_strategies: Recovery strategies
+
+        Returns:
+            List of insights
+        """
+        insights = []
+
+        # Overall detractor situation
+        total_detractors = len(detractor_responses)
+        insights.append(f"负面推荐客户共{total_detractors}人，需要重点关注和挽回")
+
+        # Pain point insights
+        if pain_points:
+            critical_points = [p for p in pain_points if p["severity_level"] == "critical"]
+            if critical_points:
+                insights.append(f"发现{len(critical_points)}个严重问题，需要立即解决")
+
+            # Most common pain point
+            top_pain = pain_points[0]
+            insights.append(f"最主要问题：{top_pain['description']}（{top_pain['frequency']}位客户反映）")
+
+            # Category distribution
+            category_counts = {}
+            for point in pain_points:
+                cat = point["category"]
+                category_counts[cat] = category_counts.get(cat, 0) + point["frequency"]
+
+            if category_counts:
+                top_category = max(category_counts.items(), key=lambda x: x[1])
+                insights.append(f"问题主要集中在{top_category[0]}领域（{top_category[1]}次反映）")
+
+        # Churn risk insights
+        if churn_risks:
+            high_risk = [r for r in churn_risks if r["risk_level"] in ["critical", "high"]]
+            if high_risk:
+                insights.append(f"{len(high_risk)}位客户面临高流失风险，需要紧急干预")
+
+            # Average churn probability
+            avg_churn = sum(r["churn_probability"] for r in churn_risks) / len(churn_risks)
+            insights.append(f"负面客户平均流失概率{avg_churn:.1%}，需要系统性挽回措施")
+
+        # Recovery potential
+        if recovery_strategies:
+            high_impact_strategies = [s for s in recovery_strategies if s.get("risk_reduction", 0) > 0.3]
+            if high_impact_strategies:
+                insights.append(f"制定了{len(high_impact_strategies)}个高效挽回策略，预期可显著降低流失风险")
+
+        # Actionable insights
+        if pain_points and churn_risks:
+            quick_wins = [p for p in pain_points if p["category"] in ["service_failure", "delivery_issues"]]
+            if quick_wins:
+                insights.append(f"发现{len(quick_wins)}个可快速改善的问题，建议优先处理")
+
+        return insights
+
+    # Helper methods
+    def _extract_specific_pain_points(self, text: str, category: str) -> List[str]:
+        """Extract specific pain points from text for a category."""
+        # Simple extraction - in real implementation, could be more sophisticated
+        if category == "product_quality":
+            if "质量差" in text: return ["产品质量不符合期望"]
+            if "变质" in text: return ["产品变质问题"]
+            if "口感差" in text: return ["口感体验不佳"]
+        elif category == "service_failure":
+            if "客服" in text: return ["客服服务体验差"]
+            if "处理慢" in text: return ["问题处理速度慢"]
+        elif category == "delivery_issues":
+            if "配送慢" in text: return ["配送速度慢"]
+            if "包装破损" in text: return ["包装保护不足"]
+
+        return [f"{category}相关问题"]
+
+    def _score_severity_from_nps(self, nps_score: int) -> float:
+        """Convert NPS score to severity score."""
+        if nps_score <= 3: return 1.0  # Critical
+        elif nps_score <= 5: return 0.8  # High
+        elif nps_score <= 6: return 0.6  # Medium
+        else: return 0.4  # Low
+
+    def _severity_score_to_level(self, score: float) -> str:
+        """Convert severity score to level."""
+        if score >= 0.8: return "critical"
+        elif score >= 0.6: return "high"
+        elif score >= 0.4: return "medium"
+        else: return "low"
+
+    def _assess_business_impact(self, category: str, frequency: int, severity: float) -> str:
+        """Assess business impact of pain point."""
+        impact_weights = {
+            "product_quality": 1.0,
+            "service_failure": 0.8,
+            "expectation_failure": 0.9,
+            "delivery_issues": 0.6,
+            "pricing_concerns": 0.7,
+            "availability_problems": 0.5
+        }
+
+        weight = impact_weights.get(category, 0.5)
+        impact_score = frequency * severity * weight
+
+        if impact_score > 5: return "critical"
+        elif impact_score > 3: return "high"
+        elif impact_score > 1.5: return "medium"
+        else: return "low"
+
+    def _calculate_resolution_urgency(self, frequency: int, severity: float) -> float:
+        """Calculate resolution urgency score."""
+        return min((frequency * severity) / 5, 1.0)
+
+    def _nps_to_churn_risk(self, nps_score: int) -> float:
+        """Convert NPS score to base churn risk."""
+        risk_map = {0: 0.9, 1: 0.8, 2: 0.7, 3: 0.6, 4: 0.5, 5: 0.4, 6: 0.3}
+        return risk_map.get(nps_score, 0.5)
+
+    def _check_risk_factor(self, text: str, factor: str) -> bool:
+        """Check if risk factor is present in text."""
+        factor_indicators = {
+            "repeat_negative": ["又", "再次", "多次", "一直"],
+            "high_severity": ["严重", "恶劣", "糟糕", "极差"],
+            "trust_issues": ["不信任", "骗人", "假的", "欺骗"],
+            "competitive_mention": ["别的牌子", "竞品", "其他家", "换成"],
+            "service_failure": ["客服", "服务", "态度", "处理"],
+            "unresolved_issue": ["没解决", "不管", "推诿", "敷衍"]
+        }
+
+        indicators = factor_indicators.get(factor, [])
+        return any(indicator in text for indicator in indicators)
+
+    def _risk_score_to_level(self, score: float) -> str:
+        """Convert risk score to risk level."""
+        if score >= 0.8: return "critical"
+        elif score >= 0.6: return "high"
+        elif score >= 0.4: return "medium"
+        else: return "low"
+
+    def _calculate_intervention_window(self, risk_score: float) -> str:
+        """Calculate intervention time window."""
+        if risk_score >= 0.8: return "立即（24小时内）"
+        elif risk_score >= 0.6: return "紧急（1周内）"
+        elif risk_score >= 0.4: return "尽快（1月内）"
+        else: return "常规跟进"
+
+    def _assess_recovery_difficulty(self, risk_factors: List[str], related_pain_points: List[Dict]) -> str:
+        """Assess difficulty of customer recovery."""
+        difficulty_score = len(risk_factors) * 0.2
+        if "trust_issues" in risk_factors: difficulty_score += 0.4
+        if "repeat_negative" in risk_factors: difficulty_score += 0.3
+
+        if difficulty_score >= 0.8: return "very_hard"
+        elif difficulty_score >= 0.6: return "hard"
+        elif difficulty_score >= 0.4: return "medium"
+        else: return "easy"
+
+    # Strategy generation methods
+    def _determine_strategy_type(self, category: str) -> str:
+        """Determine strategy type based on pain point category."""
+        strategy_map = {
+            "product_quality": "quality_improvement",
+            "service_failure": "service_recovery",
+            "delivery_issues": "logistics_optimization",
+            "pricing_concerns": "value_communication",
+            "availability_problems": "supply_chain",
+            "expectation_failure": "expectation_management"
+        }
+        return strategy_map.get(category, "general_improvement")
+
+    def _generate_strategy_title(self, pain_point: Dict[str, Any]) -> str:
+        """Generate strategy title."""
+        category = pain_point["category"]
+        titles = {
+            "product_quality": "产品质量提升计划",
+            "service_failure": "服务恢复行动",
+            "delivery_issues": "物流体验优化",
+            "pricing_concerns": "价值认知提升",
+            "availability_problems": "供应保障改善",
+            "expectation_failure": "期望管理改进"
+        }
+        return titles.get(category, "客户挽回计划")
+
+    def _generate_strategy_description(self, pain_point: Dict[str, Any]) -> str:
+        """Generate strategy description."""
+        return f"针对{pain_point['description']}问题，影响{pain_point['frequency']}位客户的挽回策略"
+
+    def _define_immediate_actions(self, pain_point: Dict[str, Any]) -> List[str]:
+        """Define immediate actions for pain point."""
+        category = pain_point["category"]
+        actions_map = {
+            "product_quality": ["立即召回问题产品", "质检流程加强", "客户补偿方案"],
+            "service_failure": ["客服培训强化", "升级处理流程", "主动联系客户道歉"],
+            "delivery_issues": ["物流合作商评估", "配送流程优化", "包装标准提升"],
+            "pricing_concerns": ["价格策略分析", "价值传播加强", "促销活动设计"],
+            "availability_problems": ["供应链分析", "库存预警机制", "替代方案准备"],
+            "expectation_failure": ["营销内容审核", "产品描述优化", "客户教育加强"]
+        }
+        return actions_map.get(category, ["问题根因分析", "改进方案制定", "客户沟通"])
+
+    def _define_long_term_actions(self, pain_point: Dict[str, Any]) -> List[str]:
+        """Define long-term actions for pain point."""
+        category = pain_point["category"]
+        actions_map = {
+            "product_quality": ["质量体系重建", "供应商管理加强", "产品研发改进"],
+            "service_failure": ["服务标准体系", "客户满意度监控", "服务文化建设"],
+            "delivery_issues": ["物流网络优化", "配送标准化", "客户体验提升"],
+            "pricing_concerns": ["定价策略优化", "价值创新", "品牌价值提升"],
+            "availability_problems": ["供应链数字化", "需求预测改善", "库存优化"],
+            "expectation_failure": ["品牌定位优化", "沟通策略改进", "客户教育体系"]
+        }
+        return actions_map.get(category, ["系统性改进", "流程优化", "文化建设"])
+
+    def _define_recovery_metrics(self, pain_point: Dict[str, Any]) -> List[str]:
+        """Define success metrics for recovery."""
+        category = pain_point["category"]
+        metrics_map = {
+            "product_quality": ["产品合格率提升", "质量投诉下降", "客户满意度恢复"],
+            "service_failure": ["服务响应时间", "问题解决率", "客服满意度"],
+            "delivery_issues": ["准时率提升", "破损率下降", "配送满意度"],
+            "pricing_concerns": ["价格敏感度", "性价比认知", "购买意愿"],
+            "availability_problems": ["库存充足率", "缺货率下降", "购买便利性"],
+            "expectation_failure": ["期望匹配度", "品牌信任度", "复购意愿"]
+        }
+        return metrics_map.get(category, ["客户满意度", "NPS提升", "流失率下降"])
+
+    def _estimate_recovery_timeline(self, category: str) -> str:
+        """Estimate recovery timeline."""
+        timeline_map = {
+            "product_quality": "3-6个月",
+            "service_failure": "1-3个月",
+            "delivery_issues": "2-4个月",
+            "pricing_concerns": "1-2个月",
+            "availability_problems": "2-3个月",
+            "expectation_failure": "3-6个月"
+        }
+        return timeline_map.get(category, "2-4个月")
+
+    def _estimate_recovery_resources(self, pain_point: Dict[str, Any]) -> List[str]:
+        """Estimate required resources."""
+        category = pain_point["category"]
+        severity = pain_point["severity_level"]
+
+        base_resources = {
+            "product_quality": ["品质管理团队", "研发资源"],
+            "service_failure": ["客服团队", "培训资源"],
+            "delivery_issues": ["物流团队", "运营支持"],
+            "pricing_concerns": ["营销团队", "定价分析"],
+            "availability_problems": ["供应链团队", "采购资源"],
+            "expectation_failure": ["品牌团队", "传播资源"]
+        }
+
+        resources = base_resources.get(category, ["专项团队"])
+
+        if severity in ["critical", "high"]:
+            resources.extend(["高管支持", "专项预算", "跨部门协作"])
+
+        return resources
+
+    def _estimate_risk_reduction(self, pain_point: Dict[str, Any]) -> float:
+        """Estimate risk reduction potential."""
+        severity = pain_point["severity_level"]
+        frequency = pain_point["frequency"]
+
+        base_reduction = {"critical": 0.6, "high": 0.5, "medium": 0.4, "low": 0.3}
+        reduction = base_reduction.get(severity, 0.3)
+
+        # Adjust for frequency
+        if frequency > 5: reduction += 0.1
+        if frequency > 10: reduction += 0.1
+
+        return min(reduction, 0.8)
+
+    async def _generate_personalized_strategy(
+        self,
+        risk: Dict[str, Any],
+        pain_points: List[Dict[str, Any]]
+    ) -> Optional[Dict[str, Any]]:
+        """Generate personalized recovery strategy for high-risk customer."""
+        if not self.llm_client:
+            return None
+
+        try:
+            customer_id = risk["customer_id"]
+            risk_factors = risk["risk_factors"]
+            related_points = [p for p in pain_points if p["pain_point_id"] in risk.get("related_pain_points", [])]
+
+            pain_descriptions = [p["description"] for p in related_points]
+
+            prompt = f"""
+为流失风险高的客户制定个性化挽回策略：
+
+客户ID: {customer_id}
+流失概率: {risk['churn_probability']:.1%}
+风险因素: {', '.join(risk_factors)}
+相关问题: {', '.join(pain_descriptions)}
+
+请制定个性化挽回方案：
+1. 立即干预措施（24-48小时内）
+2. 补偿/挽回方案
+3. 长期关系修复策略
+4. 预期效果评估
+
+以JSON格式返回：
+{{
+    "strategy_type": "personalized_recovery",
+    "immediate_interventions": ["措施1", "措施2"],
+    "compensation_plan": "补偿方案描述",
+    "relationship_repair": ["修复策略1", "修复策略2"],
+    "success_probability": 0.1-1.0,
+    "timeline": "时间安排",
+    "resource_requirements": ["资源1", "资源2"]
+}}
+"""
+
+            response = await self.llm_client.generate(prompt, temperature=0.3)
+
+            import json
+            strategy_data = json.loads(response)
+
+            return {
+                "strategy_id": f"personalized_{customer_id}",
+                "target_customer": customer_id,
+                "strategy_type": "personalized_recovery",
+                "title": f"高风险客户{customer_id}个性化挽回",
+                "immediate_interventions": strategy_data.get("immediate_interventions", []),
+                "compensation_plan": strategy_data.get("compensation_plan", ""),
+                "relationship_repair": strategy_data.get("relationship_repair", []),
+                "success_probability": strategy_data.get("success_probability", 0.5),
+                "timeline": strategy_data.get("timeline", "2-4周"),
+                "resource_requirements": strategy_data.get("resource_requirements", []),
+                "risk_reduction": min(strategy_data.get("success_probability", 0.5) * 0.8, 0.7)
+            }
+
+        except Exception as e:
+            logger.debug(f"Personalized strategy generation failed: {e}")
+            return None
+
+    async def _llm_analyze_pain_points(self, detractor_responses: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Use LLM to analyze pain points from detractor feedback."""
+        if not self.llm_client:
+            return []
+
+        try:
+            # Sample responses for LLM analysis
+            sample_texts = [resp.get("original_text", "") for resp in detractor_responses[:10]]
+            combined_text = "\n".join(f"反馈{i+1}: {text}" for i, text in enumerate(sample_texts) if text)
+
+            prompt = f"""
+分析以下负面推荐客户（NPS 0-6分）的反馈，识别关键痛点问题：
+
+{combined_text}
+
+请识别：
+1. 具体的痛点问题（产品、服务、价格、体验等）
+2. 问题严重程度（critical/high/medium/low）
+3. 受影响客户数量估计
+4. 业务影响领域分类
+
+以JSON格式返回：
+[
+    {{
+        "description": "具体痛点描述",
+        "category": "product_quality/service_failure/delivery_issues/pricing_concerns/other",
+        "severity": "critical/high/medium/low",
+        "severity_score": 0.0-1.0,
+        "frequency": 估计受影响客户数,
+        "impact_area": "business_impact_area",
+        "related_responses": [相关反馈编号],
+        "churn_impact": "对客户流失的影响描述"
+    }}
+]
+"""
+
+            response = await self.llm_client.generate(prompt, temperature=0.3)
+
+            import json
+            pain_points_data = json.loads(response)
+
+            return pain_points_data
+
+        except Exception as e:
+            logger.debug(f"LLM pain point analysis failed: {e}")
+            return []

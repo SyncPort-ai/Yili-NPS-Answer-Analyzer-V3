@@ -63,3 +63,5 @@ uvicorn==0.30.6
 wcwidth==0.2.13
 xxhash==3.5.0
 zstandard==0.24.0
+model-context-protocol==0.1.0
+pyppeteer==1.0.2

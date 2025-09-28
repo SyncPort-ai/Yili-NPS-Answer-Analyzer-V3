@@ -1,0 +1,852 @@
+"""
+B5 - Driver Analysis Agent
+Analysis Pass Agent for importance vs satisfaction matrix analysis.
+"""
+
+import logging
+from typing import Dict, Any, List, Optional, Tuple
+import math
+from collections import defaultdict
+
+from ..base import AnalysisAgent, AgentResult, AgentStatus
+from ...llm import LLMClient
+
+logger = logging.getLogger(__name__)
+
+
+class DriverAnalysisAgent(AnalysisAgent):
+    """
+    B5 - Driver Analysis Agent
+
+    Responsibilities:
+    - Implement importance vs satisfaction matrix from multi-choice data
+    - Add quadrant classification (Critical/High/Medium/Low priority)
+    - Create correlation analysis between attributes and NPS scores
+    - Generate priority recommendations for improvement initiatives
+    """
+
+    def __init__(self, agent_id: str = "B5", agent_name: str = "Driver Analysis Agent",
+                 llm_client: Optional[LLMClient] = None, **kwargs):
+        super().__init__(agent_id, agent_name, **kwargs)
+        self.llm_client = llm_client
+
+        # Dairy industry driver attributes
+        self.driver_attributes = {
+            "product_quality": {
+                "name": "产品质量",
+                "indicators": ["新鲜", "口感", "质地", "纯度", "安全", "营养"],
+                "category": "product",
+                "weight": 1.0
+            },
+            "taste_flavor": {
+                "name": "口味口感",
+                "indicators": ["好喝", "香浓", "甜度", "酸度", "顺滑", "醇厚"],
+                "category": "product",
+                "weight": 1.0
+            },
+            "packaging": {
+                "name": "包装设计",
+                "indicators": ["包装", "设计", "便携", "密封", "环保", "美观"],
+                "category": "product",
+                "weight": 0.7
+            },
+            "price_value": {
+                "name": "价格性价比",
+                "indicators": ["价格", "便宜", "实惠", "划算", "值得", "贵"],
+                "category": "value",
+                "weight": 1.2
+            },
+            "availability": {
+                "name": "购买便利性",
+                "indicators": ["方便", "买得到", "有货", "渠道", "店里", "网上"],
+                "category": "convenience",
+                "weight": 0.8
+            },
+            "brand_trust": {
+                "name": "品牌信赖度",
+                "indicators": ["伊利", "信任", "放心", "品牌", "知名", "可靠"],
+                "category": "brand",
+                "weight": 0.9
+            },
+            "customer_service": {
+                "name": "客户服务",
+                "indicators": ["客服", "服务", "态度", "响应", "处理", "解决"],
+                "category": "service",
+                "weight": 0.8
+            },
+            "delivery_logistics": {
+                "name": "配送物流",
+                "indicators": ["配送", "快递", "物流", "送到", "及时", "包装"],
+                "category": "service",
+                "weight": 0.6
+            }
+        }
+
+        # Matrix quadrants for importance-satisfaction analysis
+        self.quadrants = {
+            "critical": {"name": "关键改进区", "importance": "high", "satisfaction": "low"},
+            "maintain": {"name": "保持优势区", "importance": "high", "satisfaction": "high"},
+            "opportunity": {"name": "潜在机会区", "importance": "low", "satisfaction": "low"},
+            "over_investment": {"name": "过度投资区", "importance": "low", "satisfaction": "high"}
+        }
+
+    async def process(self, state: Dict[str, Any]) -> AgentResult:
+        """
+        Process driver analysis.
+
+        Args:
+            state: Current workflow state
+
+        Returns:
+            AgentResult with driver analysis and importance-satisfaction matrix
+        """
+        try:
+            # Get data from state
+            tagged_responses = state.get("tagged_responses", [])
+            nps_results = state.get("nps_results", {})
+
+            if not tagged_responses:
+                logger.warning("No responses available for driver analysis")
+                return AgentResult(
+                    agent_id=self.agent_id,
+                    status=AgentStatus.COMPLETED,
+                    data={
+                        "driver_analysis": {
+                            "total_responses": 0,
+                            "driver_scores": {},
+                            "importance_satisfaction_matrix": [],
+                            "quadrant_analysis": {},
+                            "correlations": {},
+                            "recommendations": []
+                        }
+                    },
+                    insights=["No responses available for driver analysis"],
+                    confidence_score=1.0
+                )
+
+            # Calculate driver importance and satisfaction scores
+            driver_scores = self._calculate_driver_scores(tagged_responses)
+
+            # Perform correlation analysis with NPS
+            correlations = self._analyze_correlations(driver_scores, tagged_responses)
+
+            # Create importance-satisfaction matrix
+            matrix_data = self._create_importance_satisfaction_matrix(driver_scores, correlations)
+
+            # Perform quadrant analysis
+            quadrant_analysis = self._perform_quadrant_analysis(matrix_data)
+
+            # Generate priority recommendations
+            recommendations = await self._generate_recommendations(quadrant_analysis, correlations)
+
+            # Calculate driver impact scores
+            impact_analysis = self._analyze_driver_impacts(correlations, driver_scores)
+
+            # Generate insights
+            insights = self._generate_driver_insights(driver_scores, correlations, quadrant_analysis)
+
+            logger.info(f"Analyzed {len(self.driver_attributes)} drivers across {len(tagged_responses)} responses")
+
+            return AgentResult(
+                agent_id=self.agent_id,
+                status=AgentStatus.COMPLETED,
+                data={
+                    "driver_analysis": {
+                        "total_responses": len(tagged_responses),
+                        "driver_scores": driver_scores,
+                        "importance_satisfaction_matrix": matrix_data,
+                        "quadrant_analysis": quadrant_analysis,
+                        "correlations": correlations,
+                        "impact_analysis": impact_analysis,
+                        "recommendations": recommendations,
+                        "driver_insights": insights
+                    }
+                },
+                insights=insights,
+                confidence_score=0.8
+            )
+
+        except Exception as e:
+            logger.error(f"Driver analysis failed: {e}")
+            return AgentResult(
+                agent_id=self.agent_id,
+                status=AgentStatus.FAILED,
+                data={},
+                errors=[str(e)],
+                confidence_score=0.0
+            )
+
+    def _calculate_driver_scores(self, tagged_responses: List[Dict[str, Any]]) -> Dict[str, Dict[str, float]]:
+        """
+        Calculate importance and satisfaction scores for each driver.
+
+        Args:
+            tagged_responses: Tagged responses
+
+        Returns:
+            Driver scores with importance and satisfaction metrics
+        """
+        driver_scores = {}
+
+        for driver_id, driver_info in self.driver_attributes.items():
+            mentions = []
+            satisfaction_scores = []
+            importance_indicators = 0
+
+            for response in tagged_responses:
+                text = response.get("original_text", "")
+                nps_score = response.get("nps_score", 5)
+
+                # Check for driver mentions
+                mention_count = 0
+                for indicator in driver_info["indicators"]:
+                    if indicator in text:
+                        mention_count += 1
+
+                if mention_count > 0:
+                    mentions.append({
+                        "response_id": response.get("response_id", ""),
+                        "mentions": mention_count,
+                        "nps_score": nps_score,
+                        "sentiment": self._extract_sentiment_for_driver(text, driver_info["indicators"])
+                    })
+
+                    # Calculate satisfaction based on sentiment and NPS
+                    driver_satisfaction = self._calculate_satisfaction_score(text, driver_info["indicators"], nps_score)
+                    satisfaction_scores.append(driver_satisfaction)
+
+                    # Importance based on mention frequency and context
+                    if mention_count >= 2 or self._is_emphasized(text, driver_info["indicators"]):
+                        importance_indicators += 1
+
+            # Calculate final scores
+            total_responses = len(tagged_responses)
+            mention_frequency = len(mentions) / total_responses if total_responses > 0 else 0
+
+            # Importance score (0-1)
+            importance_score = min(
+                (mention_frequency * 2) + (importance_indicators / total_responses) * driver_info["weight"],
+                1.0
+            )
+
+            # Satisfaction score (0-1)
+            avg_satisfaction = sum(satisfaction_scores) / len(satisfaction_scores) if satisfaction_scores else 0.5
+
+            driver_scores[driver_id] = {
+                "name": driver_info["name"],
+                "category": driver_info["category"],
+                "importance": round(importance_score, 3),
+                "satisfaction": round(avg_satisfaction, 3),
+                "mention_count": len(mentions),
+                "mention_frequency": round(mention_frequency, 3),
+                "response_coverage": round(mention_frequency, 3),
+                "mentions_detail": mentions[:10]  # Top 10 mentions for detail
+            }
+
+        return driver_scores
+
+    def _extract_sentiment_for_driver(self, text: str, indicators: List[str]) -> float:
+        """Extract sentiment for specific driver indicators."""
+        positive_words = ["好", "很好", "不错", "满意", "喜欢", "棒", "优秀", "完美"]
+        negative_words = ["差", "不好", "糟糕", "失望", "不满", "讨厌", "烂", "垃圾"]
+
+        sentiment_score = 0.0
+        context_window = 10  # Characters around indicator
+
+        for indicator in indicators:
+            if indicator in text:
+                # Get context around indicator
+                pos = text.find(indicator)
+                start = max(0, pos - context_window)
+                end = min(len(text), pos + len(indicator) + context_window)
+                context = text[start:end]
+
+                # Check sentiment in context
+                for pos_word in positive_words:
+                    if pos_word in context:
+                        sentiment_score += 1.0
+
+                for neg_word in negative_words:
+                    if neg_word in context:
+                        sentiment_score -= 1.0
+
+        return max(-1.0, min(1.0, sentiment_score / len(indicators)))
+
+    def _calculate_satisfaction_score(self, text: str, indicators: List[str], nps_score: int) -> float:
+        """Calculate satisfaction score for a driver."""
+        # Base satisfaction from NPS score
+        base_satisfaction = nps_score / 10.0
+
+        # Adjust based on sentiment
+        sentiment = self._extract_sentiment_for_driver(text, indicators)
+
+        # Weighted combination
+        final_satisfaction = (base_satisfaction * 0.7) + ((sentiment + 1) / 2 * 0.3)
+
+        return max(0.0, min(1.0, final_satisfaction))
+
+    def _is_emphasized(self, text: str, indicators: List[str]) -> bool:
+        """Check if driver indicators are emphasized in text."""
+        emphasis_markers = ["特别", "非常", "很", "超级", "极其", "相当", "十分", "最"]
+
+        for indicator in indicators:
+            if indicator in text:
+                # Check for emphasis markers near the indicator
+                pos = text.find(indicator)
+                context = text[max(0, pos-10):pos+len(indicator)+10]
+                if any(marker in context for marker in emphasis_markers):
+                    return True
+        return False
+
+    def _analyze_correlations(
+        self,
+        driver_scores: Dict[str, Dict[str, float]],
+        tagged_responses: List[Dict[str, Any]]
+    ) -> Dict[str, Dict[str, float]]:
+        """
+        Analyze correlations between drivers and NPS scores.
+
+        Args:
+            driver_scores: Driver scores
+            tagged_responses: Tagged responses
+
+        Returns:
+            Correlation analysis results
+        """
+        correlations = {}
+
+        # Extract NPS scores
+        nps_scores = [r.get("nps_score", 5) for r in tagged_responses if r.get("nps_score") is not None]
+
+        if not nps_scores:
+            return correlations
+
+        for driver_id, driver_data in driver_scores.items():
+            if driver_data["mention_count"] >= 3:  # Minimum mentions for reliable correlation
+
+                # Get satisfaction scores for responses mentioning this driver
+                driver_satisfactions = []
+                corresponding_nps = []
+
+                for mention in driver_data["mentions_detail"]:
+                    if mention["nps_score"] is not None:
+                        driver_satisfactions.append(
+                            (mention["sentiment"] + 1) / 2  # Convert to 0-1 scale
+                        )
+                        corresponding_nps.append(mention["nps_score"])
+
+                if len(driver_satisfactions) >= 3:
+                    # Calculate Pearson correlation
+                    correlation = self._calculate_pearson_correlation(driver_satisfactions, corresponding_nps)
+
+                    # Calculate impact score
+                    impact_score = abs(correlation) * driver_data["importance"]
+
+                    correlations[driver_id] = {
+                        "name": driver_data["name"],
+                        "correlation": round(correlation, 3),
+                        "impact_score": round(impact_score, 3),
+                        "significance": self._assess_significance(abs(correlation), len(driver_satisfactions)),
+                        "direction": "positive" if correlation > 0 else "negative",
+                        "sample_size": len(driver_satisfactions)
+                    }
+
+        return correlations
+
+    def _calculate_pearson_correlation(self, x: List[float], y: List[float]) -> float:
+        """Calculate Pearson correlation coefficient."""
+        n = len(x)
+        if n < 2:
+            return 0.0
+
+        sum_x = sum(x)
+        sum_y = sum(y)
+        sum_xy = sum(x[i] * y[i] for i in range(n))
+        sum_x2 = sum(xi ** 2 for xi in x)
+        sum_y2 = sum(yi ** 2 for yi in y)
+
+        numerator = n * sum_xy - sum_x * sum_y
+        denominator = math.sqrt((n * sum_x2 - sum_x ** 2) * (n * sum_y2 - sum_y ** 2))
+
+        if denominator == 0:
+            return 0.0
+
+        return numerator / denominator
+
+    def _assess_significance(self, correlation: float, sample_size: int) -> str:
+        """Assess statistical significance of correlation."""
+        if sample_size < 3:
+            return "insufficient"
+        elif correlation > 0.7 and sample_size >= 10:
+            return "high"
+        elif correlation > 0.5 and sample_size >= 5:
+            return "medium"
+        elif correlation > 0.3:
+            return "low"
+        else:
+            return "negligible"
+
+    def _create_importance_satisfaction_matrix(
+        self,
+        driver_scores: Dict[str, Dict[str, float]],
+        correlations: Dict[str, Dict[str, float]]
+    ) -> List[Dict[str, Any]]:
+        """
+        Create importance-satisfaction matrix data.
+
+        Args:
+            driver_scores: Driver scores
+            correlations: Correlation data
+
+        Returns:
+            Matrix data for visualization
+        """
+        matrix_data = []
+
+        for driver_id, scores in driver_scores.items():
+            # Enhanced importance calculation using correlation
+            base_importance = scores["importance"]
+            correlation_data = correlations.get(driver_id, {})
+            correlation_boost = correlation_data.get("impact_score", 0) * 0.3
+
+            final_importance = min(base_importance + correlation_boost, 1.0)
+
+            # Determine quadrant
+            quadrant = self._determine_quadrant(final_importance, scores["satisfaction"])
+
+            matrix_point = {
+                "driver_id": driver_id,
+                "name": scores["name"],
+                "category": scores["category"],
+                "importance": round(final_importance, 3),
+                "satisfaction": scores["satisfaction"],
+                "mention_count": scores["mention_count"],
+                "quadrant": quadrant,
+                "correlation": correlation_data.get("correlation", 0),
+                "priority_score": self._calculate_priority_score(final_importance, scores["satisfaction"], quadrant)
+            }
+
+            matrix_data.append(matrix_point)
+
+        # Sort by priority score
+        matrix_data.sort(key=lambda x: x["priority_score"], reverse=True)
+
+        return matrix_data
+
+    def _determine_quadrant(self, importance: float, satisfaction: float) -> str:
+        """Determine which quadrant a driver falls into."""
+        importance_threshold = 0.5
+        satisfaction_threshold = 0.5
+
+        if importance >= importance_threshold and satisfaction < satisfaction_threshold:
+            return "critical"
+        elif importance >= importance_threshold and satisfaction >= satisfaction_threshold:
+            return "maintain"
+        elif importance < importance_threshold and satisfaction < satisfaction_threshold:
+            return "opportunity"
+        else:
+            return "over_investment"
+
+    def _calculate_priority_score(self, importance: float, satisfaction: float, quadrant: str) -> float:
+        """Calculate priority score for improvement recommendations."""
+        quadrant_weights = {
+            "critical": 1.0,      # Highest priority
+            "maintain": 0.6,      # Medium priority (maintain excellence)
+            "opportunity": 0.4,   # Lower priority (potential gains)
+            "over_investment": 0.2 # Lowest priority (reduce investment)
+        }
+
+        base_score = importance * (1 - satisfaction)  # Higher when important but unsatisfying
+        quadrant_weight = quadrant_weights.get(quadrant, 0.5)
+
+        return base_score * quadrant_weight
+
+    def _perform_quadrant_analysis(self, matrix_data: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """
+        Perform detailed quadrant analysis.
+
+        Args:
+            matrix_data: Matrix data
+
+        Returns:
+            Quadrant analysis results
+        """
+        quadrant_analysis = {
+            "quadrant_distribution": {"critical": 0, "maintain": 0, "opportunity": 0, "over_investment": 0},
+            "quadrant_details": {},
+            "strategic_focus": [],
+            "resource_allocation": {}
+        }
+
+        # Group by quadrant
+        quadrant_groups = defaultdict(list)
+        for point in matrix_data:
+            quadrant = point["quadrant"]
+            quadrant_groups[quadrant].append(point)
+            quadrant_analysis["quadrant_distribution"][quadrant] += 1
+
+        # Analyze each quadrant
+        for quadrant, points in quadrant_groups.items():
+            if points:
+                avg_importance = sum(p["importance"] for p in points) / len(points)
+                avg_satisfaction = sum(p["satisfaction"] for p in points) / len(points)
+                top_drivers = sorted(points, key=lambda x: x["priority_score"], reverse=True)[:3]
+
+                quadrant_analysis["quadrant_details"][quadrant] = {
+                    "name": self.quadrants[quadrant]["name"],
+                    "count": len(points),
+                    "avg_importance": round(avg_importance, 3),
+                    "avg_satisfaction": round(avg_satisfaction, 3),
+                    "top_drivers": [{"name": d["name"], "priority_score": d["priority_score"]} for d in top_drivers],
+                    "strategic_action": self._get_quadrant_strategy(quadrant)
+                }
+
+        # Strategic focus recommendations
+        critical_count = quadrant_analysis["quadrant_distribution"]["critical"]
+        maintain_count = quadrant_analysis["quadrant_distribution"]["maintain"]
+
+        if critical_count > 0:
+            quadrant_analysis["strategic_focus"].append(f"立即改进{critical_count}个关键驱动因素")
+        if maintain_count > 0:
+            quadrant_analysis["strategic_focus"].append(f"保持{maintain_count}个优势驱动因素的表现")
+
+        # Resource allocation suggestions
+        total_drivers = len(matrix_data)
+        if total_drivers > 0:
+            quadrant_analysis["resource_allocation"] = {
+                "critical_focus": f"{(critical_count / total_drivers * 100):.0f}%的资源用于关键改进",
+                "maintain_investment": f"{(maintain_count / total_drivers * 100):.0f}%的资源用于优势保持",
+                "explore_opportunities": f"考虑在机会领域进行适度投资"
+            }
+
+        return quadrant_analysis
+
+    def _get_quadrant_strategy(self, quadrant: str) -> str:
+        """Get strategic action for quadrant."""
+        strategies = {
+            "critical": "立即行动改进，投入主要资源解决满意度问题",
+            "maintain": "保持现有优势，防止满意度下降",
+            "opportunity": "评估投资价值，考虑适度改进以提升重要性",
+            "over_investment": "减少资源投入，将重点转移到其他领域"
+        }
+        return strategies.get(quadrant, "需要进一步分析")
+
+    async def _generate_recommendations(
+        self,
+        quadrant_analysis: Dict[str, Any],
+        correlations: Dict[str, Dict[str, float]]
+    ) -> List[Dict[str, Any]]:
+        """
+        Generate priority recommendations based on driver analysis.
+
+        Args:
+            quadrant_analysis: Quadrant analysis results
+            correlations: Correlation data
+
+        Returns:
+            List of priority recommendations
+        """
+        recommendations = []
+
+        # Critical quadrant recommendations
+        critical_details = quadrant_analysis.get("quadrant_details", {}).get("critical", {})
+        if critical_details and critical_details.get("count", 0) > 0:
+            for driver in critical_details.get("top_drivers", [])[:3]:  # Top 3 critical
+                rec = {
+                    "recommendation_id": f"critical_{len(recommendations)}",
+                    "priority": "critical",
+                    "title": f"紧急改进{driver['name']}",
+                    "description": f"{driver['name']}重要性高但满意度低，需要立即改进",
+                    "quadrant": "critical",
+                    "expected_impact": "high",
+                    "timeline": "立即执行（1-2个月）",
+                    "resource_requirement": "high",
+                    "success_metrics": self._define_driver_metrics(driver["name"]),
+                    "action_items": self._generate_action_items(driver["name"], "critical")
+                }
+                recommendations.append(rec)
+
+        # Maintain quadrant recommendations
+        maintain_details = quadrant_analysis.get("quadrant_details", {}).get("maintain", {})
+        if maintain_details and maintain_details.get("count", 0) > 0:
+            for driver in maintain_details.get("top_drivers", [])[:2]:  # Top 2 maintain
+                rec = {
+                    "recommendation_id": f"maintain_{len(recommendations)}",
+                    "priority": "high",
+                    "title": f"保持{driver['name']}优势",
+                    "description": f"继续保持{driver['name']}的高满意度表现",
+                    "quadrant": "maintain",
+                    "expected_impact": "medium",
+                    "timeline": "持续执行",
+                    "resource_requirement": "medium",
+                    "success_metrics": self._define_driver_metrics(driver["name"]),
+                    "action_items": self._generate_action_items(driver["name"], "maintain")
+                }
+                recommendations.append(rec)
+
+        # High correlation drivers (regardless of quadrant)
+        high_impact_correlations = [
+            (driver_id, data) for driver_id, data in correlations.items()
+            if data.get("impact_score", 0) > 0.3 and data.get("significance") in ["high", "medium"]
+        ]
+
+        for driver_id, corr_data in high_impact_correlations[:2]:  # Top 2 high impact
+            rec = {
+                "recommendation_id": f"correlation_{len(recommendations)}",
+                "priority": "medium" if corr_data["significance"] == "medium" else "high",
+                "title": f"优化{corr_data['name']}以提升NPS",
+                "description": f"{corr_data['name']}与NPS有显著相关性（r={corr_data['correlation']}），优化该驱动因素可直接提升整体满意度",
+                "quadrant": "data_driven",
+                "expected_impact": "high" if abs(corr_data["correlation"]) > 0.6 else "medium",
+                "correlation": corr_data["correlation"],
+                "timeline": "3-6个月",
+                "resource_requirement": "medium",
+                "success_metrics": [f"NPS提升", f"{corr_data['name']}满意度提升"],
+                "action_items": self._generate_correlation_actions(corr_data["name"], corr_data["correlation"])
+            }
+            recommendations.append(rec)
+
+        # Enhanced recommendations with LLM
+        if self.llm_client and recommendations:
+            enhanced_recs = await self._enhance_recommendations_with_llm(recommendations, quadrant_analysis)
+            if enhanced_recs:
+                recommendations.extend(enhanced_recs)
+
+        return recommendations[:8]  # Top 8 recommendations
+
+    def _define_driver_metrics(self, driver_name: str) -> List[str]:
+        """Define success metrics for driver improvement."""
+        metric_map = {
+            "产品质量": ["质量投诉下降", "产品满意度提升", "复购率增长"],
+            "口味口感": ["口感评分提升", "味道满意度提升", "推荐意愿增强"],
+            "包装设计": ["包装满意度提升", "便携性评价改善", "环保认知提升"],
+            "价格性价比": ["性价比评分提升", "价格敏感度下降", "购买意愿增强"],
+            "购买便利性": ["购买便利度提升", "渠道满意度提升", "购买频次增长"],
+            "品牌信赖度": ["品牌信任度提升", "品牌推荐率增长", "忠诚度提升"],
+            "客户服务": ["服务满意度提升", "响应时间改善", "问题解决率提升"],
+            "配送物流": ["配送满意度提升", "准时率提升", "包装完好率提升"]
+        }
+        return metric_map.get(driver_name, [f"{driver_name}满意度提升", "NPS得分提升"])
+
+    def _generate_action_items(self, driver_name: str, context: str) -> List[str]:
+        """Generate specific action items for driver improvement."""
+        action_map = {
+            "critical": {
+                "产品质量": ["质量控制体系升级", "供应商审核加强", "生产流程优化"],
+                "口味口感": ["口味研发改进", "消费者口味测试", "配方优化调整"],
+                "包装设计": ["包装设计升级", "材料选择优化", "用户体验改善"],
+                "价格性价比": ["价格策略调整", "成本优化分析", "价值传播加强"],
+                "购买便利性": ["渠道网络扩展", "在线购买优化", "库存管理改善"],
+                "品牌信赖度": ["品牌形象提升", "质量承诺加强", "透明度改善"],
+                "客户服务": ["客服培训加强", "响应流程优化", "服务标准提升"],
+                "配送物流": ["物流合作优化", "配送时效提升", "包装保护加强"]
+            },
+            "maintain": {
+                "产品质量": ["质量标准维护", "持续监控体系", "最佳实践保持"],
+                "口味口感": ["口味一致性保证", "定期口味评估", "消费者反馈收集"],
+                "包装设计": ["设计标准维护", "包装质量监控", "创新设计探索"],
+                "价格性价比": ["价格竞争力维护", "价值宣传持续", "成本效率保持"],
+                "购买便利性": ["渠道关系维护", "购买体验监控", "便利性持续优化"],
+                "品牌信赖度": ["品牌声誉维护", "信任关系加深", "品牌价值传播"],
+                "客户服务": ["服务水准维护", "客户满意度监控", "服务创新探索"],
+                "配送物流": ["配送质量维护", "物流效率保持", "服务标准监控"]
+            }
+        }
+
+        context_actions = action_map.get(context, {})
+        return context_actions.get(driver_name, [f"{driver_name}改进计划制定", "执行监控机制建立", "效果评估体系"])
+
+    def _generate_correlation_actions(self, driver_name: str, correlation: float) -> List[str]:
+        """Generate actions based on correlation strength and direction."""
+        if correlation > 0.5:  # Strong positive correlation
+            return [
+                f"加强{driver_name}的投资和改进",
+                f"建立{driver_name}与NPS的监控联动",
+                f"在{driver_name}方面超越竞争对手"
+            ]
+        elif correlation < -0.5:  # Strong negative correlation
+            return [
+                f"紧急解决{driver_name}的负面影响",
+                f"调查{driver_name}问题的根本原因",
+                f"制定{driver_name}的修复计划"
+            ]
+        else:  # Moderate correlation
+            return [
+                f"适度改进{driver_name}",
+                f"监控{driver_name}的影响变化",
+                f"评估{driver_name}的投资回报"
+            ]
+
+    def _analyze_driver_impacts(
+        self,
+        correlations: Dict[str, Dict[str, float]],
+        driver_scores: Dict[str, Dict[str, float]]
+    ) -> Dict[str, Any]:
+        """Analyze overall impact of drivers on business metrics."""
+        impact_analysis = {
+            "high_impact_drivers": [],
+            "improvement_potential": {},
+            "roi_estimates": {},
+            "risk_assessment": {}
+        }
+
+        # Identify high impact drivers
+        for driver_id, corr_data in correlations.items():
+            impact_score = corr_data.get("impact_score", 0)
+            if impact_score > 0.3:
+                driver_name = corr_data["name"]
+                satisfaction = driver_scores.get(driver_id, {}).get("satisfaction", 0.5)
+
+                # Estimate improvement potential
+                improvement_potential = (1 - satisfaction) * impact_score
+
+                impact_analysis["high_impact_drivers"].append({
+                    "name": driver_name,
+                    "impact_score": impact_score,
+                    "correlation": corr_data["correlation"],
+                    "current_satisfaction": satisfaction,
+                    "improvement_potential": round(improvement_potential, 3)
+                })
+
+        # Sort by improvement potential
+        impact_analysis["high_impact_drivers"].sort(key=lambda x: x["improvement_potential"], reverse=True)
+
+        return impact_analysis
+
+    def _generate_driver_insights(
+        self,
+        driver_scores: Dict[str, Dict[str, float]],
+        correlations: Dict[str, Dict[str, float]],
+        quadrant_analysis: Dict[str, Any]
+    ) -> List[str]:
+        """Generate actionable insights from driver analysis."""
+        insights = []
+
+        # Overall driver landscape
+        total_drivers = len(driver_scores)
+        insights.append(f"分析了{total_drivers}个关键驱动因素的重要性和满意度表现")
+
+        # Quadrant insights
+        quadrant_dist = quadrant_analysis.get("quadrant_distribution", {})
+        critical_count = quadrant_dist.get("critical", 0)
+        maintain_count = quadrant_dist.get("maintain", 0)
+
+        if critical_count > 0:
+            insights.append(f"{critical_count}个驱动因素处于关键改进区，需要立即关注")
+        if maintain_count > 0:
+            insights.append(f"{maintain_count}个驱动因素表现优秀，需要保持优势")
+
+        # Top performing and underperforming drivers
+        if driver_scores:
+            # Best performing driver
+            best_driver = max(driver_scores.items(), key=lambda x: x[1]["satisfaction"])
+            insights.append(f"表现最佳的驱动因素：{best_driver[1]['name']}（满意度{best_driver[1]['satisfaction']:.2f}）")
+
+            # Most important driver
+            most_important = max(driver_scores.items(), key=lambda x: x[1]["importance"])
+            insights.append(f"最重要的驱动因素：{most_important[1]['name']}（重要性{most_important[1]['importance']:.2f}）")
+
+        # Correlation insights
+        if correlations:
+            strongest_correlation = max(correlations.items(), key=lambda x: abs(x[1]["correlation"]))
+            corr_value = strongest_correlation[1]["correlation"]
+            direction = "正向" if corr_value > 0 else "负向"
+            insights.append(f"与NPS{direction}相关性最强：{strongest_correlation[1]['name']}（相关系数{corr_value:.2f}）")
+
+        # Strategic insights
+        if critical_count > maintain_count:
+            insights.append("当前处于改进驱动阶段，需要重点解决满意度问题")
+        elif maintain_count > critical_count:
+            insights.append("当前优势明显，应重点保持现有高满意度驱动因素")
+
+        # Category insights
+        category_performance = defaultdict(list)
+        for driver_id, data in driver_scores.items():
+            category_performance[data["category"]].append(data["satisfaction"])
+
+        for category, satisfactions in category_performance.items():
+            if satisfactions:
+                avg_satisfaction = sum(satisfactions) / len(satisfactions)
+                if avg_satisfaction > 0.7:
+                    insights.append(f"{category}类驱动因素整体表现良好（平均满意度{avg_satisfaction:.2f}）")
+                elif avg_satisfaction < 0.4:
+                    insights.append(f"{category}类驱动因素需要重点改进（平均满意度{avg_satisfaction:.2f}）")
+
+        return insights
+
+    async def _enhance_recommendations_with_llm(
+        self,
+        recommendations: List[Dict[str, Any]],
+        quadrant_analysis: Dict[str, Any]
+    ) -> List[Dict[str, Any]]:
+        """Use LLM to enhance and generate additional strategic recommendations."""
+        if not self.llm_client:
+            return []
+
+        try:
+            # Create summary for LLM
+            rec_summary = "\n".join([
+                f"推荐{i+1}: {rec['title']} - 优先级{rec['priority']}"
+                for i, rec in enumerate(recommendations[:5])
+            ])
+
+            critical_drivers = quadrant_analysis.get("quadrant_details", {}).get("critical", {}).get("top_drivers", [])
+            maintain_drivers = quadrant_analysis.get("quadrant_details", {}).get("maintain", {}).get("top_drivers", [])
+
+            prompt = f"""
+基于驱动因素分析结果，提供战略性改进建议：
+
+现有推荐：
+{rec_summary}
+
+关键改进区驱动因素：{[d['name'] for d in critical_drivers]}
+优势保持区驱动因素：{[d['name'] for d in maintain_drivers]}
+
+请提供3-5个创新的战略建议，重点关注：
+1. 跨驱动因素的协同改进
+2. 资源配置优化策略
+3. 长期竞争优势构建
+4. 数字化/智能化改进机会
+5. 客户体验整体提升
+
+以JSON格式返回：
+[
+    {{
+        "title": "战略建议标题",
+        "description": "详细描述",
+        "strategic_level": "tactical/strategic/transformational",
+        "expected_impact": "high/medium/low",
+        "timeline": "时间安排",
+        "cross_driver_synergy": "跨驱动因素协同说明",
+        "innovation_opportunity": "创新机会描述"
+    }}
+]
+"""
+
+            response = await self.llm_client.generate(prompt, temperature=0.4)
+
+            import json
+            enhanced_data = json.loads(response)
+
+            enhanced_recommendations = []
+            for i, rec_data in enumerate(enhanced_data):
+                enhanced_rec = {
+                    "recommendation_id": f"strategic_{i}",
+                    "priority": "strategic",
+                    "title": rec_data.get("title", ""),
+                    "description": rec_data.get("description", ""),
+                    "strategic_level": rec_data.get("strategic_level", "strategic"),
+                    "expected_impact": rec_data.get("expected_impact", "medium"),
+                    "timeline": rec_data.get("timeline", "6-12个月"),
+                    "quadrant": "strategic",
+                    "resource_requirement": "high" if rec_data.get("strategic_level") == "transformational" else "medium",
+                    "cross_driver_synergy": rec_data.get("cross_driver_synergy", ""),
+                    "innovation_opportunity": rec_data.get("innovation_opportunity", "")
+                }
+                enhanced_recommendations.append(enhanced_rec)
+
+            return enhanced_recommendations[:3]  # Top 3 strategic recommendations
+
+        except Exception as e:
+            logger.debug(f"LLM recommendation enhancement failed: {e}")
+            return []

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}日程与里程碑 · 伊利智能 NPS 研究中心{% endblock %}
+{% block header_title %}日程与里程碑{% endblock %}
+{% block header_desc %}同步调研节奏、会议安排与提醒，保障跨团队协同。{% endblock %}
+{% block content %}
+  <section class="grid gap-6 lg:grid-cols-[3fr,2fr]">
+    <div class="card p-6">
+      <h2 class="text-lg font-semibold text-slate-900 mb-2">项目时间轴</h2>
+      <p class="text-xs text-slate-500 mb-4">追踪关键里程碑与责任团队，保障产出节奏。</p>
+      <ul class="space-y-4 text-sm text-slate-600">
+        {% for item in timeline %}
+        <li class="flex items-center gap-4">
+          <div class="w-20 text-sm font-medium text-slate-500">{{ item.date }}</div>
+          <div class="flex-1 rounded-lg border border-slate-100 px-4 py-3">
+            <div class="flex items-center justify-between">
+              <p class="text-sm font-medium text-slate-900">{{ item.title }}</p>
+              <span class="badge bg-slate-100 text-slate-600">{{ item.status }}</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-1">责任团队：{{ item.owner }}</p>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="space-y-6">
+      <div class="card p-6">
+        <h3 class="text-lg font-semibold text-slate-900 mb-2">固定会议/评审</h3>
+        <ul class="space-y-3 text-sm text-slate-600">
+          {% for review in reviews %}
+          <li class="rounded-lg border border-slate-100 px-4 py-3">
+            <p class="text-sm font-medium text-slate-900">{{ review.title }}</p>
+            <p class="text-xs text-slate-500 mt-1">时间：{{ review.time }}</p>
+            <p class="text-xs text-slate-500 mt-1">参与团队：{{ review.participants }}</p>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="card p-6">
+        <h3 class="text-lg font-semibold text-slate-900 mb-2">提醒事项</h3>
+        <ul class="space-y-2 text-sm text-slate-600">
+          {% for remind in reminders %}
+          <li class="rounded-lg border border-slate-100 px-4 py-3">{{ remind }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
+{% endblock %}

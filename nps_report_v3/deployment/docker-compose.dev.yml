@@ -1,0 +1,210 @@
+# NPS V3 Analysis System - Development Docker Compose Configuration
+# Simplified setup for local development and testing
+
+version: '3.8'
+
+services:
+  # Main NPS V3 Analysis API Service (Development Mode)
+  nps-v3-api-dev:
+    build:
+      context: ../
+      dockerfile: deployment/Dockerfile.dev
+      args:
+        - BUILD_ENV=development
+    image: nps-v3-analyzer:dev-latest
+    container_name: nps-v3-api-dev
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+      - "8001:8001"  # Debug port
+    environment:
+      # Development Configuration
+      - NPS_V3_ENV=development
+      - NPS_V3_LOG_LEVEL=DEBUG
+      - NPS_V3_WORKERS=2
+      - NPS_V3_DEBUG=true
+      - NPS_V3_RELOAD=true
+
+      # Database Configuration
+      - NPS_V3_REDIS_URL=redis://redis-dev:6379/0
+      - NPS_V3_DATABASE_URL=mongodb://root:devpass@mongodb-dev:27017/nps_v3_dev?authSource=admin
+
+      # LLM Configuration (Use development keys)
+      - OPENAI_API_KEY=${OPENAI_API_KEY_DEV}
+      - AZURE_OPENAI_ENDPOINT=${AZURE_OPENAI_ENDPOINT_DEV}
+      - AZURE_OPENAI_API_KEY=${AZURE_OPENAI_API_KEY_DEV}
+
+      # Monitoring Configuration (More lenient for development)
+      - NPS_MONITOR_ERROR_RATE_THRESHOLD=0.10
+      - NPS_MONITOR_DURATION_THRESHOLD=60.0
+      - NPS_MONITOR_CPU_THRESHOLD=90.0
+      - NPS_MONITOR_MEMORY_THRESHOLD=90.0
+      - NPS_MONITOR_LOG_LEVEL=DEBUG
+
+      # Development Tools
+      - PYTHONPATH=/app
+      - WATCHDOG_ENABLED=true
+
+    volumes:
+      # Mount source code for live reload
+      - ../nps_report_v3:/app/nps_report_v3
+      - ../tests:/app/tests
+      - ./logs:/app/logs
+      - ./outputs:/app/outputs
+      - ./data:/app/data
+      - ./config:/app/config:ro
+    depends_on:
+      - redis-dev
+      - mongodb-dev
+    networks:
+      - nps-network-dev
+    command: >
+      python -m uvicorn nps_report_v3.api:app
+      --host 0.0.0.0
+      --port 8000
+      --reload
+      --log-level debug
+      --reload-dir /app/nps_report_v3
+
+  # Redis Cache Service (Development)
+  redis-dev:
+    image: redis:7.2-alpine
+    container_name: nps-v3-redis-dev
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
+    networks:
+      - nps-network-dev
+
+  # MongoDB Database Service (Development)
+  mongodb-dev:
+    image: mongo:7.0
+    container_name: nps-v3-mongodb-dev
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=devpass
+      - MONGO_INITDB_DATABASE=nps_v3_dev
+    volumes:
+      - mongodb-dev-data:/data/db
+    networks:
+      - nps-network-dev
+
+  # Prometheus (Development - Optional)
+  prometheus-dev:
+    image: prom/prometheus:v2.48.0
+    container_name: nps-v3-prometheus-dev
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./config/prometheus/prometheus-dev.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-dev-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.enable-lifecycle'
+      - '--storage.tsdb.retention.time=7d'  # Shorter retention for dev
+    networks:
+      - nps-network-dev
+    profiles:
+      - monitoring
+
+  # Grafana (Development - Optional)
+  grafana-dev:
+    image: grafana/grafana:10.2.0
+    container_name: nps-v3-grafana-dev
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=devadmin
+      - GF_USERS_ALLOW_SIGN_UP=true
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+    volumes:
+      - grafana-dev-data:/var/lib/grafana
+      - ./config/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./config/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    depends_on:
+      - prometheus-dev
+    networks:
+      - nps-network-dev
+    profiles:
+      - monitoring
+
+  # Jupyter Notebook for Development and Analysis
+  jupyter-dev:
+    image: jupyter/scipy-notebook:python-3.11
+    container_name: nps-v3-jupyter-dev
+    restart: unless-stopped
+    ports:
+      - "8888:8888"
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - JUPYTER_TOKEN=nps-v3-dev-token
+    volumes:
+      - ../notebooks:/home/jovyan/notebooks
+      - ../nps_report_v3:/home/jovyan/nps_report_v3:ro
+      - ../data:/home/jovyan/data
+      - ../outputs:/home/jovyan/outputs
+    networks:
+      - nps-network-dev
+    profiles:
+      - jupyter
+
+  # MinIO for File Storage (Development)
+  minio-dev:
+    image: minio/minio:RELEASE.2023-11-20T22-40-07Z
+    container_name: nps-v3-minio-dev
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+    volumes:
+      - minio-dev-data:/data
+    networks:
+      - nps-network-dev
+    command: server /data --console-address ":9001"
+    profiles:
+      - storage
+
+  # Development Tools Container
+  devtools:
+    build:
+      context: ../
+      dockerfile: deployment/Dockerfile.devtools
+    container_name: nps-v3-devtools
+    restart: "no"
+    volumes:
+      - ../:/workspace
+      - devtools-cache:/root/.cache
+    networks:
+      - nps-network-dev
+    profiles:
+      - tools
+    command: sleep infinity
+
+# Networks
+networks:
+  nps-network-dev:
+    driver: bridge
+
+# Development Volumes
+volumes:
+  mongodb-dev-data:
+    driver: local
+  prometheus-dev-data:
+    driver: local
+  grafana-dev-data:
+    driver: local
+  minio-dev-data:
+    driver: local
+  devtools-cache:
+    driver: local

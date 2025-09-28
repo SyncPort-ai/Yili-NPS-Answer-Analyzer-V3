@@ -1,0 +1,411 @@
+{
+  "survey_metadata": {
+    "survey_type": "product_nps",
+    "survey_title": "定量智能体-产品NPS调研模板", 
+    "data_source": "定量智能体-产品NPS调研模板_答案文本数据列表_202509101906.xlsx",
+    "export_timestamp": "2025-09-10T19:06:00Z",
+    "version": "2.0.0"
+  },
+  "survey_config": {
+    "nps_question": {
+      "question_id": "Q1",
+      "question_text": "您向朋友或同事推荐我们的可能性多大？",
+      "scale": {
+        "min": 0,
+        "max": 10,
+        "format": "分值制"
+      }
+    },
+    "factor_questions": {
+      "negative_factors": {
+        "question_id": "Q2",
+        "question_text": "您不愿意推荐我们的主要因素有哪些？",
+        "factor_list": [
+          "不喜欢品牌或代言人、赞助综艺等宣传内容",
+          "包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）",
+          "产品价格太贵，性价比不高",
+          "促销活动不好（如对赠品、活动力度/规则等不满意）",
+          "产品口味口感不好",
+          "饮用后感觉不舒服（如身体有腹胀、腹泻等不良反应）",
+          "产品品质不稳定性（如发生变质、有异物等）",
+          "没有感知到产品宣传的功能",
+          "物流配送、门店导购、售后等服务体验不好",
+          "其他"
+        ]
+      },
+      "positive_factors": {
+        "question_id": "Q4",
+        "question_text": "您愿意推荐我们的主要因素有哪些？",
+        "factor_list": [
+          "喜欢品牌或代言人、赞助综艺等宣传内容",
+          "包装设计好（如醒目、美观，材质好，便携、方便打开等）",
+          "产品物有所值、性价比高",
+          "对促销活动满意（如赠品、活动力度/规则等）",
+          "产品口味口感好",
+          "饮用后体感舒适，无不良反应",
+          "满意产品宣传的功能（如促进消化、增强免疫、助睡眠等）",
+          "物流配送、门店导购、售后等服务体验好",
+          "其他"
+        ]
+      }
+    },
+    "open_ended_questions": [
+      {
+        "question_id": "Q3",
+        "question_text": "您不愿意推荐我们的具体原因是什么？",
+        "question_type": "specific_reason"
+      },
+      {
+        "question_id": "Q5",
+        "question_text": "您愿意推荐我们的具体原因是什么？", 
+        "question_type": "specific_reason"
+      }
+    ]
+  },
+  "response_data": [
+    {
+      "response_metadata": {
+        "user_id": "8",
+        "response_id": "8Gwk7wzV",
+        "response_type": "正式",
+        "distribution_method": "链接二维码",
+        "status": "已完成",
+        "timing": {
+          "start_time": "2025-09-01T16:49:34",
+          "submit_time": "2025-09-01T16:51:19",
+          "duration": "1分钟45秒"
+        },
+        "annotation": {
+          "ai_status": "未标记",
+          "ai_reason": "",
+          "manual_status": "未标记",
+          "manual_reason": ""
+        }
+      },
+      "nps_score": {
+        "value": 5,
+        "raw_value": "5分",
+        "category": "detractor"
+      },
+      "factor_responses": {
+        "negative_factors": {
+          "selected": ["不喜欢品牌或代言人、赞助综艺等宣传内容"],
+          "other_specified": "1"
+        },
+        "positive_factors": {
+          "selected": [],
+          "other_specified": null
+        }
+      },
+      "open_responses": {
+        "expectations": null,
+        "suggestions": null,
+        "specific_reasons": {
+          "negative": "不了解",
+          "positive": ""
+        }
+      }
+    },
+    {
+      "response_metadata": {
+        "user_id": "7",
+        "response_id": "9O43aMa0",
+        "response_type": "正式",
+        "distribution_method": "链接二维码",
+        "status": "已完成",
+        "timing": {
+          "start_time": "2025-09-01T15:53:58",
+          "submit_time": "2025-09-01T15:54:26",
+          "duration": "28秒"
+        },
+        "annotation": {
+          "ai_status": "未标记",
+          "ai_reason": "",
+          "manual_status": "未标记",
+          "manual_reason": ""
+        }
+      },
+      "nps_score": {
+        "value": 5,
+        "raw_value": "5分",
+        "category": "detractor"
+      },
+      "factor_responses": {
+        "negative_factors": {
+          "selected": ["不喜欢品牌或代言人、赞助综艺等宣传内容", "包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）", "没有感知到产品宣传的功能"],
+          "other_specified": null
+        },
+        "positive_factors": {
+          "selected": [],
+          "other_specified": null
+        }
+      },
+      "open_responses": {
+        "expectations": null,
+        "suggestions": null,
+        "specific_reasons": {
+          "negative": "宣传内容（如活动组织设计、代言人赞助综艺、宣传内容清晰易懂/真实准确等）",
+          "positive": ""
+        }
+      }
+    },
+    {
+      "response_metadata": {
+        "user_id": "6",
+        "response_id": "GkMbEwKa",
+        "response_type": "正式",
+        "distribution_method": "链接二维码",
+        "status": "已完成",
+        "timing": {
+          "start_time": "2025-09-01T15:53:34",
+          "submit_time": "2025-09-01T15:55:50",
+          "duration": "2分钟15秒"
+        },
+        "annotation": {
+          "ai_status": "未标记",
+          "ai_reason": "",
+          "manual_status": "未标记",
+          "manual_reason": ""
+        }
+      },
+      "nps_score": {
+        "value": 10,
+        "raw_value": "10分",
+        "category": "promoter"
+      },
+      "factor_responses": {
+        "negative_factors": {
+          "selected": [],
+          "other_specified": null
+        },
+        "positive_factors": {
+          "selected": ["产品物有所值、性价比高"],
+          "other_specified": null
+        }
+      },
+      "open_responses": {
+        "expectations": null,
+        "suggestions": null,
+        "specific_reasons": {
+          "negative": "",
+          "positive": "口味比较多，选择很多"
+        }
+      }
+    },
+    {
+      "response_metadata": {
+        "user_id": "5",
+        "response_id": "k9wV94gZ",
+        "response_type": "正式",
+        "distribution_method": "链接二维码",
+        "status": "已完成",
+        "timing": {
+          "start_time": "2025-09-01T15:52:57",
+          "submit_time": "2025-09-01T15:53:00",
+          "duration": "3秒"
+        },
+        "annotation": {
+          "ai_status": "未标记",
+          "ai_reason": "",
+          "manual_status": "未标记",
+          "manual_reason": ""
+        }
+      },
+      "nps_score": {
+        "value": 8,
+        "raw_value": "8分",
+        "category": "passive"
+      },
+      "factor_responses": {
+        "negative_factors": {
+          "selected": [],
+          "other_specified": null
+        },
+        "positive_factors": {
+          "selected": [],
+          "other_specified": null
+        }
+      },
+      "open_responses": {
+        "expectations": null,
+        "suggestions": null,
+        "specific_reasons": {
+          "negative": "",
+          "positive": ""
+        }
+      }
+    },
+    {
+      "response_metadata": {
+        "user_id": "4",
+        "response_id": "2X1eq1rD",
+        "response_type": "正式",
+        "distribution_method": "链接二维码",
+        "status": "已完成",
+        "timing": {
+          "start_time": "2025-09-01T15:51:47",
+          "submit_time": "2025-09-01T15:52:57",
+          "duration": "1分钟9秒"
+        },
+        "annotation": {
+          "ai_status": "未标记",
+          "ai_reason": "",
+          "manual_status": "未标记",
+          "manual_reason": ""
+        }
+      },
+      "nps_score": {
+        "value": 4,
+        "raw_value": "4分",
+        "category": "detractor"
+      },
+      "factor_responses": {
+        "negative_factors": {
+          "selected": ["不喜欢品牌或代言人、赞助综艺等宣传内容", "包装设计不好（如不够醒目、美观，材质不好，不便携、不方便打开等）", "饮用后感觉不舒服（如身体有腹胀、腹泻等不良反应）"],
+          "other_specified": "1"
+        },
+        "positive_factors": {
+          "selected": [],
+          "other_specified": null
+        }
+      },
+      "open_responses": {
+        "expectations": null,
+        "suggestions": null,
+        "specific_reasons": {
+          "negative": "在网页/店铺内不容易找到",
+          "positive": ""
+        }
+      }
+    },
+    {
+      "response_metadata": {
+        "user_id": "3",
+        "response_id": "bKwXYM2X",
+        "response_type": "正式",
+        "distribution_method": "链接二维码",
+        "status": "已完成",
+        "timing": {
+          "start_time": "2025-09-01T15:51:41",
+          "submit_time": "2025-09-01T15:52:02",
+          "duration": "21秒"
+        },
+        "annotation": {
+          "ai_status": "未标记",
+          "ai_reason": "",
+          "manual_status": "未标记",
+          "manual_reason": ""
+        }
+      },
+      "nps_score": {
+        "value": 7,
+        "raw_value": "7分",
+        "category": "passive"
+      },
+      "factor_responses": {
+        "negative_factors": {
+          "selected": [],
+          "other_specified": null
+        },
+        "positive_factors": {
+          "selected": [],
+          "other_specified": null
+        }
+      },
+      "open_responses": {
+        "expectations": null,
+        "suggestions": null,
+        "specific_reasons": {
+          "negative": "",
+          "positive": ""
+        }
+      }
+    },
+    {
+      "response_metadata": {
+        "user_id": "2",
+        "response_id": "pV4dmw0B",
+        "response_type": "正式",
+        "distribution_method": "链接二维码",
+        "status": "已完成",
+        "timing": {
+          "start_time": "2025-09-01T15:51:39",
+          "submit_time": "2025-09-01T15:52:11",
+          "duration": "31秒"
+        },
+        "annotation": {
+          "ai_status": "未标记",
+          "ai_reason": "",
+          "manual_status": "未标记",
+          "manual_reason": ""
+        }
+      },
+      "nps_score": {
+        "value": 10,
+        "raw_value": "10分",
+        "category": "promoter"
+      },
+      "factor_responses": {
+        "negative_factors": {
+          "selected": [],
+          "other_specified": null
+        },
+        "positive_factors": {
+          "selected": ["喜欢品牌或代言人、赞助综艺等宣传内容", "对促销活动满意（如赠品、活动力度/规则等）", "产品口味口感好", "饮用后体感舒适，无不良反应"],
+          "other_specified": null
+        }
+      },
+      "open_responses": {
+        "expectations": null,
+        "suggestions": null,
+        "specific_reasons": {
+          "negative": "",
+          "positive": "好喝、包装好看"
+        }
+      }
+    },
+    {
+      "response_metadata": {
+        "user_id": "1",
+        "response_id": "dowR54JZ",
+        "response_type": "测试",
+        "distribution_method": "链接二维码",
+        "status": "进行中",
+        "timing": {
+          "start_time": "2025-09-01T15:44:29",
+          "submit_time": null,
+          "duration": ""
+        },
+        "annotation": {
+          "ai_status": "未标记",
+          "ai_reason": "",
+          "manual_status": "未标记",
+          "manual_reason": ""
+        }
+      },
+      "nps_score": {
+        "value": 5,
+        "raw_value": "5分",
+        "category": "detractor"
+      },
+      "factor_responses": {
+        "negative_factors": {
+          "selected": ["不喜欢品牌或代言人、赞助综艺等宣传内容", "产品品质不稳定性（如发生变质、有异物等）"],
+          "other_specified": null
+        },
+        "positive_factors": {
+          "selected": [],
+          "other_specified": null
+        }
+      },
+      "open_responses": {
+        "expectations": null,
+        "suggestions": null,
+        "specific_reasons": {
+          "negative": "",
+          "positive": ""
+        }
+      }
+    }
+  ]
+}

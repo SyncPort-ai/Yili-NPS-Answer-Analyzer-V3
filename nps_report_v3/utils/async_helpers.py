@@ -460,7 +460,7 @@ class AsyncRateLimiter:
         yield
 
 
-async def async_timeout(
+def async_timeout(
     seconds: float,
     error_message: str = "Operation timed out"
 ) -> Callable:

@@ -10,6 +10,7 @@ import asyncio
 import logging
 from datetime import datetime
 from enum import Enum
+import inspect
 
 logger = logging.getLogger(__name__)
 
@@ -65,7 +66,8 @@ class BaseAgent(ABC):
                     raise ValueError(f"Input validation failed: {validation_errors}")
 
                 # Process with agent-specific logic
-                result = await self.process(state)
+                processed = self.process(state)
+                result = await processed if inspect.isawaitable(processed) else processed
 
                 # Validate output
                 self._validate_output(result)
@@ -154,8 +156,12 @@ class AnalysisAgent(BaseAgent):
 
         if "pass1_foundation" not in state:
             errors.append("Analysis agents require pass1_foundation results in state")
-        elif state.get("pass1_foundation") and not state["pass1_foundation"].get("nps_metrics"):
-            errors.append("Analysis agents require NPS calculation results from foundation")
+        else:
+            foundation = state.get("pass1_foundation") or {}
+            has_metrics = bool(foundation.get("nps_metrics"))
+            has_calculation = bool(foundation.get("nps_calculation"))
+            if not (has_metrics or has_calculation):
+                errors.append("Analysis agents require NPS calculation results from foundation")
 
         return errors if errors else None
 
@@ -198,11 +204,21 @@ class ConfidenceConstrainedAgent(ConsultingAgent):
 
     async def execute(self, state: Dict[str, Any]) -> AgentResult:
         """Override execute to apply confidence constraints"""
-        confidence_level = (
-            state.get("pass1_foundation", {})
-            .get("confidence_assessment", {})
-            .get("overall_confidence_text", "low")
-        )
+        foundation = state.get("pass1_foundation", {})
+        confidence_assessment = foundation.get("confidence_assessment", {})
+
+        confidence_level = confidence_assessment.get("overall_confidence_text")
+        confidence_level = confidence_level or confidence_assessment.get("confidence_label")
+        confidence_level = confidence_level or confidence_assessment.get("level")
+        confidence_level = confidence_level or foundation.get("confidence_level")
+
+        if isinstance(confidence_level, str):
+            confidence_level = confidence_level.lower()
+        else:
+            confidence_level = None
+
+        if not confidence_level:
+            confidence_level = "low"
 
         result = await super().execute(state)
 

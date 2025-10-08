@@ -70,6 +70,9 @@ class TestSemaphoreManager:
         # Start holding task
         holder = asyncio.create_task(hold_semaphore())
 
+        # Ensure holder task acquires the semaphore before attempting another acquire
+        await asyncio.sleep(0.02)
+
         # Try to acquire with timeout
         with pytest.raises(asyncio.TimeoutError):
             async with manager.acquire("timeout_test"):

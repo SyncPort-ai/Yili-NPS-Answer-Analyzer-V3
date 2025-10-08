@@ -18,7 +18,48 @@ except ImportError:
     LANGGRAPH_AVAILABLE = False
 
 from ..agents.factory import AgentFactory
+from ..agents.base import AgentResult, AgentStatus
 from ..state import NPSAnalysisState
+
+
+def _compose_error_message(agent_id: str, result: Any) -> str:
+    """Format error details from an agent result or exception."""
+    if isinstance(result, AgentResult):
+        details = result.errors or ["Unknown error"]
+        return f"{agent_id}: {'; '.join(details)}"
+    errors_attr = getattr(result, "errors", None)
+    if errors_attr:
+        if isinstance(errors_attr, (list, tuple)):
+            details = [str(item) for item in errors_attr]
+        else:
+            details = [str(errors_attr)]
+        return f"{agent_id}: {'; '.join(details)}"
+    error_attr = getattr(result, "error", None)
+    if error_attr:
+        return f"{agent_id}: {error_attr}"
+    status = getattr(result, "status", None)
+    status_value = getattr(status, "value", None)
+    if status_value:
+        return f"{agent_id}: status={status_value}"
+    return f"{agent_id}: {result}"
+
+
+def _is_success_result(result: Any) -> bool:
+    """Determine if a result represents a successful agent run."""
+    if isinstance(result, AgentResult):
+        return result.status == AgentStatus.COMPLETED
+    status = getattr(result, "status", None)
+    status_value = getattr(status, "value", None)
+    return status_value == "completed"
+
+
+def _iter_warnings(result: Any) -> List[str]:
+    warnings_attr = getattr(result, "warnings", None)
+    if not warnings_attr:
+        return []
+    if isinstance(warnings_attr, (list, tuple)):
+        return [str(item) for item in warnings_attr]
+    return [str(warnings_attr)]
 
 logger = logging.getLogger(__name__)
 
@@ -52,6 +93,7 @@ class AnalysisPassState(TypedDict):
     completed_agents: List[str]
     failed_agents: List[str]
     errors: List[str]
+    warnings: List[str]
 
 
 class AnalysisPassWorkflow:
@@ -163,7 +205,8 @@ class AnalysisPassWorkflow:
             current_group="segment_analysis",
             completed_agents=[],
             failed_agents=[],
-            errors=[]
+            errors=[],
+            warnings=[]
         )
 
     def _prepare_output_state(self, analysis_state: AnalysisPassState, original_state: Dict[str, Any]) -> Dict[str, Any]:
@@ -196,6 +239,14 @@ class AnalysisPassWorkflow:
         result_state["completed_agents"] = analysis_state.get("completed_agents", [])
         result_state["failed_agents"] = analysis_state.get("failed_agents", [])
 
+        if analysis_state.get("errors"):
+            result_state.setdefault("errors", [])
+            result_state["errors"].extend(analysis_state["errors"])
+
+        if analysis_state.get("warnings"):
+            result_state.setdefault("warnings", [])
+            result_state["warnings"].extend(analysis_state["warnings"])
+
         return result_state
 
     async def _execute_simplified(self, state: AnalysisPassState) -> AnalysisPassState:
@@ -221,22 +272,28 @@ class AnalysisPassWorkflow:
 
         # Process results
         for agent_id, result in results.items():
-            if result["success"]:
+            if _is_success_result(result):
                 state["completed_agents"].append(agent_id)
 
                 # Store agent-specific outputs
-                if agent_id == "B1" and result["data"]:
-                    state["technical_requirements"] = result["data"].get("technical_requirements", [])
-                elif agent_id == "B2" and result["data"]:
-                    state["passive_analysis"] = result["data"]
-                elif agent_id == "B3" and result["data"]:
-                    state["detractor_analysis"] = result["data"]
+                result_data = getattr(result, "data", None)
+                if agent_id == "B1" and result_data:
+                    state["technical_requirements"] = result_data.get("technical_requirements", [])
+                elif agent_id == "B2" and result_data:
+                    state["passive_analysis"] = result_data
+                elif agent_id == "B3" and result_data:
+                    state["detractor_analysis"] = result_data
 
+                warnings = _iter_warnings(result)
+                if warnings:
+                    state["warnings"].extend([f"{agent_id}: {warn}" for warn in warnings])
             else:
                 state["failed_agents"].append(agent_id)
-                state["errors"].append(f"{agent_id}: {result.get('error', 'Unknown error')}")
+                error_msg = _compose_error_message(agent_id, result)
+                state["errors"].append(error_msg)
 
-        logger.info(f"Segment analysis completed. Success: {len([r for r in results.values() if r['success']])}/{len(agents)}")
+        success_count = len([r for r in results.values() if _is_success_result(r)])
+        logger.info(f"Segment analysis completed. Success: {success_count}/{len(agents)}")
         return state
 
     async def _execute_advanced_analytics(self, state: AnalysisPassState) -> AnalysisPassState:
@@ -250,20 +307,26 @@ class AnalysisPassWorkflow:
 
         # Process results
         for agent_id, result in results.items():
-            if result["success"]:
+            if _is_success_result(result):
                 state["completed_agents"].append(agent_id)
 
                 # Store agent-specific outputs
-                if agent_id == "B4" and result["data"]:
-                    state["text_clustering"] = result["data"]
-                elif agent_id == "B5" and result["data"]:
-                    state["driver_analysis"] = result["data"]
+                result_data = getattr(result, "data", None)
+                if agent_id == "B4" and result_data:
+                    state["text_clustering"] = result_data
+                elif agent_id == "B5" and result_data:
+                    state["driver_analysis"] = result_data
 
+                warnings = _iter_warnings(result)
+                if warnings:
+                    state["warnings"].extend([f"{agent_id}: {warn}" for warn in warnings])
             else:
                 state["failed_agents"].append(agent_id)
-                state["errors"].append(f"{agent_id}: {result.get('error', 'Unknown error')}")
+                error_msg = _compose_error_message(agent_id, result)
+                state["errors"].append(error_msg)
 
-        logger.info(f"Advanced analytics completed. Success: {len([r for r in results.values() if r['success']])}/{len(agents)}")
+        success_count = len([r for r in results.values() if _is_success_result(r)])
+        logger.info(f"Advanced analytics completed. Success: {success_count}/{len(agents)}")
         return state
 
     async def _execute_dimensional_analysis(self, state: AnalysisPassState) -> AnalysisPassState:
@@ -277,22 +340,28 @@ class AnalysisPassWorkflow:
 
         # Process results
         for agent_id, result in results.items():
-            if result["success"]:
+            if _is_success_result(result):
                 state["completed_agents"].append(agent_id)
 
                 # Store agent-specific outputs
-                if agent_id == "B6" and result["data"]:
-                    state["product_dimension_analysis"] = result["data"]
-                elif agent_id == "B7" and result["data"]:
-                    state["geographic_dimension_analysis"] = result["data"]
-                elif agent_id == "B8" and result["data"]:
-                    state["channel_dimension_analysis"] = result["data"]
+                result_data = getattr(result, "data", None)
+                if agent_id == "B6" and result_data:
+                    state["product_dimension_analysis"] = result_data
+                elif agent_id == "B7" and result_data:
+                    state["geographic_dimension_analysis"] = result_data
+                elif agent_id == "B8" and result_data:
+                    state["channel_dimension_analysis"] = result_data
 
+                warnings = _iter_warnings(result)
+                if warnings:
+                    state["warnings"].extend([f"{agent_id}: {warn}" for warn in warnings])
             else:
                 state["failed_agents"].append(agent_id)
-                state["errors"].append(f"{agent_id}: {result.get('error', 'Unknown error')}")
+                error_msg = _compose_error_message(agent_id, result)
+                state["errors"].append(error_msg)
 
-        logger.info(f"Dimensional analysis completed. Success: {len([r for r in results.values() if r['success']])}/{len(agents)}")
+        success_count = len([r for r in results.values() if _is_success_result(r)])
+        logger.info(f"Dimensional analysis completed. Success: {success_count}/{len(agents)}")
         return state
 
     async def _execute_synthesis(self, state: AnalysisPassState) -> AnalysisPassState:
@@ -306,18 +375,24 @@ class AnalysisPassWorkflow:
 
         # Process results
         for agent_id, result in results.items():
-            if result["success"]:
+            if _is_success_result(result):
                 state["completed_agents"].append(agent_id)
 
                 # Store synthesis results
-                if agent_id == "B9" and result["data"]:
-                    state["analysis_synthesis"] = result["data"]
+                result_data = getattr(result, "data", None)
+                if agent_id == "B9" and result_data:
+                    state["analysis_synthesis"] = result_data
 
+                warnings = _iter_warnings(result)
+                if warnings:
+                    state["warnings"].extend([f"{agent_id}: {warn}" for warn in warnings])
             else:
                 state["failed_agents"].append(agent_id)
-                state["errors"].append(f"{agent_id}: {result.get('error', 'Unknown error')}")
+                error_msg = _compose_error_message(agent_id, result)
+                state["errors"].append(error_msg)
 
-        logger.info(f"Analysis synthesis completed. Success: {len([r for r in results.values() if r['success']])}/{len(agents)}")
+        success_count = len([r for r in results.values() if _is_success_result(r)])
+        logger.info(f"Analysis synthesis completed. Success: {success_count}/{len(agents)}")
         return state
 
     async def _execute_agent_group(self, agent_ids: List[str], state: AnalysisPassState) -> Dict[str, Dict[str, Any]]:
@@ -332,16 +407,14 @@ class AnalysisPassWorkflow:
         results = await asyncio.gather(*tasks, return_exceptions=True)
 
         # Process results
-        agent_results = {}
-        for i, result in enumerate(results):
-            agent_id = agent_ids[i]
-
+        agent_results: Dict[str, Any] = {}
+        for agent_id, result in zip(agent_ids, results):
             if isinstance(result, Exception):
-                agent_results[agent_id] = {
-                    "success": False,
-                    "error": str(result),
-                    "data": None
-                }
+                agent_results[agent_id] = AgentResult(
+                    agent_id=agent_id,
+                    status=AgentStatus.FAILED,
+                    errors=[str(result)]
+                )
             else:
                 agent_results[agent_id] = result
 
@@ -361,19 +434,15 @@ class AnalysisPassWorkflow:
             # Execute agent
             result = await agent.execute(agent_state)
 
-            return {
-                "success": result.success,
-                "error": result.error if not result.success else None,
-                "data": result.output if result.success else None
-            }
+            return result
 
         except Exception as e:
             logger.error(f"Agent {agent_id} execution failed: {e}")
-            return {
-                "success": False,
-                "error": str(e),
-                "data": None
-            }
+            return AgentResult(
+                agent_id=agent_id,
+                status=AgentStatus.FAILED,
+                errors=[str(e)]
+            )
 
     def _convert_state_for_agent(self, state: AnalysisPassState) -> Dict[str, Any]:
         """Convert workflow state to format expected by agents."""

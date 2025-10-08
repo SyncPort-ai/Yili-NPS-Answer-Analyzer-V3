@@ -13,7 +13,14 @@ from pathlib import Path
 from datetime import datetime
 import uuid
 
-from ..models.response import NPSAnalysisResponse
+from ..models.response import (
+    NPSAnalysisResponse,
+    NPSMetrics,
+    ConfidenceAssessment,
+    ExecutiveDashboard,
+    AgentInsight,
+    BusinessRecommendation
+)
 from ..state.state_definition import NPSAnalysisState
 from ..generators.html_report_generator import HTMLReportGenerator
 from ..utils.file_utils import ensure_directory_exists, safe_write_file, generate_safe_filename
@@ -188,7 +195,7 @@ class DualOutputGenerator:
 
         # Prepare JSON data
         json_data = {
-            "analysis_results": analysis_response.dict(),
+            "analysis_results": analysis_response.model_dump(mode='json'),
         }
 
         if include_metadata:
@@ -310,7 +317,7 @@ class DualOutputGenerator:
                 "generator_version": "3.0",
                 "company_name": self.company_name
             },
-            "analysis_results": analysis_response.dict()
+            "analysis_results": analysis_response.model_dump(mode='json')
         }
 
         main_json_path = await asyncio.to_thread(safe_write_file, main_json_path, json_data)
@@ -321,9 +328,9 @@ class DualOutputGenerator:
             executive_json_path = self.json_dir / f"{report_id}_executive_summary.json"
             executive_data = {
                 "report_id": report_id,
-                "nps_metrics": analysis_response.nps_metrics.dict(),
-                "executive_dashboard": analysis_response.executive_dashboard.dict(),
-                "confidence_assessment": analysis_response.confidence_assessment.dict()
+                "nps_metrics": analysis_response.nps_metrics.model_dump(mode='json'),
+                "executive_dashboard": analysis_response.executive_dashboard.model_dump(mode='json'),
+                "confidence_assessment": analysis_response.confidence_assessment.model_dump(mode='json')
             }
 
             executive_json_path = await asyncio.to_thread(safe_write_file, executive_json_path, executive_data)
@@ -333,9 +340,9 @@ class DualOutputGenerator:
         if options.get("generate_raw_insights", False):
             insights_json_path = self.json_dir / f"{report_id}_raw_insights.json"
             insights_data = {
-                "foundation_insights": [insight.dict() for insight in analysis_response.foundation_insights],
-                "analysis_insights": [insight.dict() for insight in analysis_response.analysis_insights],
-                "consulting_recommendations": [rec.dict() for rec in analysis_response.consulting_recommendations]
+                "foundation_insights": [insight.model_dump(mode='json') for insight in analysis_response.foundation_insights],
+                "analysis_insights": [insight.model_dump(mode='json') for insight in analysis_response.analysis_insights],
+                "consulting_recommendations": [rec.model_dump(mode='json') for rec in analysis_response.consulting_recommendations]
             }
 
             insights_json_path = await asyncio.to_thread(safe_write_file, insights_json_path, insights_data)
@@ -404,6 +411,7 @@ class DualOutputGenerator:
                           analysis_response.nps_metrics.detractor_count)
 
         package = {
+            "report_id": report_id,
             "package_info": {
                 "report_id": report_id,
                 "generation_time": generation_time.isoformat(),
@@ -544,20 +552,199 @@ class DualOutputGenerator:
         short_uuid = uuid.uuid4().hex[:8]
         return f"nps_v3_{timestamp}_{short_uuid}"
 
+    def _coerce_nps_metrics(self, metrics_data: Optional[Union[NPSMetrics, Dict[str, Any]]], context: Dict[str, Any]) -> NPSMetrics:
+        """Coerce raw metrics data into NPSMetrics."""
+        if isinstance(metrics_data, NPSMetrics):
+            return metrics_data
+
+        metrics_dict = metrics_data or {}
+
+        promoters = metrics_dict.get("promoters_count", metrics_dict.get("promoter_count", 0))
+        passives = metrics_dict.get("passives_count", metrics_dict.get("passive_count", 0))
+        detractors = metrics_dict.get("detractors_count", metrics_dict.get("detractor_count", 0))
+        sample_size = metrics_dict.get("sample_size")
+
+        if sample_size is None:
+            sample_size = context.get("sample_size")
+        if sample_size is None:
+            sample_size = promoters + passives + detractors
+
+        return NPSMetrics(
+            nps_score=float(metrics_dict.get("nps_score", 0.0)),
+            promoter_count=int(promoters),
+            passive_count=int(passives),
+            detractor_count=int(detractors),
+            sample_size=int(sample_size),
+            statistical_significance=bool(metrics_dict.get("statistical_significance", False))
+        )
+
+    def _coerce_confidence_assessment(
+        self,
+        confidence_data: Optional[Union[ConfidenceAssessment, Dict[str, Any]]]
+    ) -> ConfidenceAssessment:
+        """Coerce raw confidence data into ConfidenceAssessment."""
+        if isinstance(confidence_data, ConfidenceAssessment):
+            return confidence_data
+
+        data = confidence_data or {}
+        overall_score = float(data.get("overall_confidence_score", 0.6))
+        confidence_text = data.get("overall_confidence_text") or (
+            "high" if overall_score >= 0.8 else "medium" if overall_score >= 0.6 else "low"
+        )
+
+        return ConfidenceAssessment(
+            overall_confidence_score=overall_score,
+            overall_confidence_text=str(confidence_text),
+            data_quality_score=float(data.get("data_quality_score", 0.6)),
+            analysis_completeness_score=float(data.get("analysis_completeness_score", 0.6)),
+            statistical_significance_score=float(data.get("statistical_significance_score", 0.6))
+        )
+
+    def _coerce_executive_dashboard(
+        self,
+        dashboard_data: Optional[Union[ExecutiveDashboard, Dict[str, Any]]],
+        metrics: NPSMetrics,
+        confidence: ConfidenceAssessment
+    ) -> ExecutiveDashboard:
+        """Coerce raw executive dashboard data into ExecutiveDashboard."""
+        if isinstance(dashboard_data, ExecutiveDashboard):
+            return dashboard_data
+
+        data = dashboard_data or {}
+
+        key_insights = data.get("key_insights") or ["暂无关键洞察，建议补充分析数据"]
+        critical_actions = data.get("critical_actions") or ["补充数据并重新运行分析"]
+        strategic_priorities = data.get("strategic_priorities") or ["加强客户反馈收集", "提升服务满意度"]
+        recommendation_summary = data.get("recommendation_summary") or {
+            "strategic": 0,
+            "product": 0,
+            "operational": 0
+        }
+
+        performance_indicators = data.get("performance_indicators") or {
+            "nps": {"score": metrics.nps_score, "trend": "+0"},
+            "retention": {"rate": "--", "trend": "0%"}
+        }
+
+        return ExecutiveDashboard(
+            overall_health_score=float(data.get("overall_health_score", max(min(metrics.nps_score + 50, 100), 0))),
+            nps_summary=metrics,
+            key_insights=key_insights,
+            critical_actions=critical_actions,
+            strategic_priorities=strategic_priorities,
+            risk_alerts=data.get("risk_alerts") or [],
+            performance_indicators=performance_indicators,
+            recommendation_summary=recommendation_summary,
+            confidence_overview=confidence,
+            next_review_date=data.get("next_review_date")
+        )
+
+    def _coerce_agent_insights(
+        self,
+        insights: Optional[Union[List[AgentInsight], List[Dict[str, Any]]]]
+    ) -> List[AgentInsight]:
+        """Coerce raw insights into AgentInsight list."""
+        if not insights:
+            return []
+
+        formatted: List[AgentInsight] = []
+        for item in insights:
+            if isinstance(item, AgentInsight):
+                formatted.append(item)
+            elif isinstance(item, dict):
+                try:
+                    formatted.append(AgentInsight(**item))
+                except Exception:
+                    logger.debug("Skipping invalid agent insight entry: %s", item)
+        return formatted
+
+    def _coerce_business_recommendations(
+        self,
+        recommendations: Optional[Union[List[BusinessRecommendation], List[Dict[str, Any]]]]
+    ) -> List[BusinessRecommendation]:
+        """Coerce raw recommendations into BusinessRecommendation list."""
+        if not recommendations:
+            return []
+
+        formatted: List[BusinessRecommendation] = []
+        for item in recommendations:
+            if isinstance(item, BusinessRecommendation):
+                formatted.append(item)
+            elif isinstance(item, dict):
+                try:
+                    formatted.append(BusinessRecommendation(**item))
+                except Exception:
+                    logger.debug("Skipping invalid business recommendation entry: %s", item)
+        return formatted
+
     def _ensure_response_format(self, analysis_result: Union[NPSAnalysisState, NPSAnalysisResponse]) -> NPSAnalysisResponse:
         """Ensure analysis result is in NPSAnalysisResponse format."""
+        if analysis_result is None:
+            raise ValueError("Analysis result cannot be None")
+
         if isinstance(analysis_result, NPSAnalysisResponse):
             return analysis_result
-        elif isinstance(analysis_result, dict):
-            # Convert from state dict - this would need full implementation
-            # For now, create a minimal response
-            return NPSAnalysisResponse(
-                response_id=analysis_result.get("workflow_id", "converted"),
-                nps_metrics=analysis_result.get("nps_metrics", {}),
-                executive_dashboard=analysis_result.get("executive_dashboard", {})
-            )
+
+        if hasattr(analysis_result, "model_dump"):
+            analysis_dict = analysis_result.model_dump()
+        elif hasattr(analysis_result, "dict"):
+            analysis_dict = analysis_result.dict()
         else:
-            raise ValueError(f"Unsupported analysis result type: {type(analysis_result)}")
+            try:
+                analysis_dict = dict(analysis_result)
+            except TypeError as exc:
+                raise ValueError(f"Unsupported analysis result type: {type(analysis_result)}") from exc
+
+        if not analysis_dict or not analysis_dict.get("nps_metrics"):
+            raise ValueError("Analysis result missing essential NPS metrics")
+
+        metrics = self._coerce_nps_metrics(analysis_dict.get("nps_metrics"), analysis_dict)
+        confidence = self._coerce_confidence_assessment(
+            analysis_dict.get("confidence_assessment")
+        )
+        executive_dashboard = self._coerce_executive_dashboard(
+            analysis_dict.get("executive_dashboard"),
+            metrics,
+            confidence
+        )
+
+        agent_insights = self._coerce_agent_insights(analysis_dict.get("agent_insights"))
+        foundation_insights = self._coerce_agent_insights(analysis_dict.get("foundation_insights"))
+        analysis_insights = self._coerce_agent_insights(analysis_dict.get("analysis_insights"))
+        consulting_recommendations = self._coerce_business_recommendations(
+            analysis_dict.get("consulting_recommendations")
+        )
+        business_recommendations = self._coerce_business_recommendations(
+            analysis_dict.get("business_recommendations")
+        ) or consulting_recommendations
+
+        sample_size = analysis_dict.get("sample_size", metrics.sample_size)
+        input_summary = analysis_dict.get("input_summary") or {
+            "total_responses": sample_size,
+            "valid_responses": sample_size,
+            "sources": analysis_dict.get("response_sources", ["survey"])
+        }
+
+        return NPSAnalysisResponse(
+            response_id=analysis_dict.get("response_id") or analysis_dict.get("workflow_id", "converted"),
+            workflow_id=analysis_dict.get("workflow_id", "converted"),
+            input_summary=input_summary,
+            sample_size=sample_size,
+            language=analysis_dict.get("language", "zh"),
+            nps_metrics=metrics,
+            confidence_assessment=confidence,
+            agent_insights=agent_insights,
+            foundation_insights=foundation_insights,
+            analysis_insights=analysis_insights,
+            consulting_recommendations=consulting_recommendations,
+            business_recommendations=business_recommendations,
+            executive_dashboard=executive_dashboard,
+            workflow_status=analysis_dict.get("workflow_status", "completed"),
+            completed_passes=analysis_dict.get("completed_passes") or ["foundation", "analysis", "consulting"],
+            completed_agents=analysis_dict.get("completed_agents") or [],
+            failed_agents=analysis_dict.get("failed_agents") or [],
+            skipped_agents=analysis_dict.get("skipped_agents") or []
+        )
 
     def _validate_analysis_results(self, analysis_response: NPSAnalysisResponse) -> Dict[str, Any]:
         """Validate analysis results for completeness and quality."""

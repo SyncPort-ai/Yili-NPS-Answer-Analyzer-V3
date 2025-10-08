@@ -330,7 +330,7 @@ class HTMLReportGenerator:
                 "company_name": self.company_name,
                 "version": "3.0"
             },
-            "analysis_results": analysis_response.dict()
+            "analysis_results": analysis_response.model_dump(mode='json')
         }
 
         with open(output_path, 'w', encoding='utf-8') as f:
@@ -564,7 +564,7 @@ def validate_report_quality(html_content: str) -> Dict[str, Any]:
 
     # Check HTML structure
     has_title = "<title>" in html_content
-    has_header = "<header>" in html_content
+    has_header = "<header" in html_content or "<h1" in html_content
     has_charts = "Chart.js" in html_content or "canvas" in html_content
     has_responsive = "viewport" in html_content
 

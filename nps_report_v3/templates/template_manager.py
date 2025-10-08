@@ -147,6 +147,7 @@ class TemplateManager:
 
         # Calculate derived metrics
         total_responses = nps_metrics.promoter_count + nps_metrics.passive_count + nps_metrics.detractor_count
+        business_recommendations = analysis_response.business_recommendations or analysis_response.consulting_recommendations
 
         return {
             # Basic Info
@@ -169,13 +170,19 @@ class TemplateManager:
             'detractor_count': nps_metrics.detractor_count,
             'detractor_percentage': self._calculate_percentage(nps_metrics.detractor_count, total_responses),
 
+            # Overall Business Health
+            'overall_health_score': getattr(executive_dashboard, 'overall_health_score', 70),
+            'confidence_overview': executive_dashboard.confidence_overview,
+
             # Executive Recommendations
             'executive_recommendations': self._format_executive_recommendations(
-                executive_dashboard.top_recommendations
+                business_recommendations
             ),
 
             # Key Insights
-            'key_insights': executive_dashboard.executive_summary.split('\n')[:5] if executive_dashboard.executive_summary else [],
+            'key_insights': executive_dashboard.key_insights,
+            'critical_actions': executive_dashboard.critical_actions,
+            'strategic_priorities': executive_dashboard.strategic_priorities,
 
             # Risk Assessment
             'risk_assessment': self._format_risk_assessment(executive_dashboard.risk_alerts)
@@ -215,9 +222,9 @@ class TemplateManager:
 
             # Prioritized Insights
             'total_insights': len(analysis_response.analysis_insights) + len(analysis_response.consulting_recommendations),
-            'high_priority_insights': len([i for i in analysis_response.analysis_insights if i.priority == "高"]),
-            'medium_priority_insights': len([i for i in analysis_response.analysis_insights if i.priority == "中"]),
-            'actionable_insights': len([i for i in analysis_response.consulting_recommendations if i.implementation_timeline]),
+            'high_priority_insights': len([i for i in analysis_response.analysis_insights if self._get_priority_score(i.priority) >= 3]),
+            'medium_priority_insights': len([i for i in analysis_response.analysis_insights if self._get_priority_score(i.priority) == 2]),
+            'actionable_insights': len([i for i in analysis_response.consulting_recommendations if getattr(i, 'timeline', None)]),
             'prioritized_insights': self._create_prioritized_insights(analysis_response)
         })
 
@@ -250,16 +257,48 @@ class TemplateManager:
             })
         return risks
 
+    def _get_insight_metadata(self, insight: AgentInsight) -> Dict[str, Any]:
+        """Safely access metadata from an insight."""
+        metadata = getattr(insight, 'metadata', {})
+        return metadata or {}
+
+    def _get_insight_summary(self, insight: AgentInsight) -> str:
+        """Fallback summary text for insights."""
+        metadata = self._get_insight_metadata(insight)
+        return metadata.get('summary') or insight.description
+
+    def _get_insight_content(self, insight: AgentInsight) -> str:
+        """Fallback content text for insights."""
+        metadata = self._get_insight_metadata(insight)
+        return metadata.get('content') or insight.description
+
+    def _get_insight_category(self, insight: AgentInsight) -> str:
+        metadata = self._get_insight_metadata(insight)
+        return metadata.get('category', 'general').lower()
+
+    def _get_insight_impact_score(self, insight: AgentInsight) -> float:
+        metadata = self._get_insight_metadata(insight)
+        return float(metadata.get('impact_score', insight.confidence))
+
+    def _get_insight_keywords(self, insight: AgentInsight) -> List[str]:
+        metadata = self._get_insight_metadata(insight)
+        return metadata.get('keywords', [])
+
     def _format_semantic_clusters(self, foundation_insights: List[AgentInsight]) -> List[Dict[str, Any]]:
         """Format semantic clusters from foundation insights."""
         clusters = []
         for insight in foundation_insights:
-            if 'cluster' in insight.category.lower() or 'semantic' in insight.category.lower():
+            category = self._get_insight_category(insight)
+            if 'cluster' in category or 'semantic' in category:
+                content = self._get_insight_content(insight)
+                keywords = self._get_insight_keywords(insight)
+                if not keywords and content:
+                    keywords = [token for token in content.replace('，', ',').split(',') if token][:5]
                 clusters.append({
                     'name': insight.title,
-                    'size': insight.impact_score * 10,  # Estimated size
-                    'keywords': insight.content.split(':', 1)[-1].split(',')[:5] if ':' in insight.content else ['关键词1', '关键词2'],
-                    'description': insight.summary
+                    'size': int(self._get_insight_impact_score(insight) * 10) or 10,
+                    'keywords': keywords or ['关键词1', '关键词2'],
+                    'description': self._get_insight_summary(insight)
                 })
 
         # Add default clusters if none found
@@ -276,12 +315,16 @@ class TemplateManager:
         """Format analysis agents results for template."""
         agents = []
         for insight in analysis_insights:
+            summary_text = self._get_insight_summary(insight)
+            content_text = self._get_insight_content(insight)
+            key_findings = [line.strip() for line in content_text.replace('。', '\n').split('\n') if line.strip()][:3]
+
             agents.append({
-                'agent_name': insight.agent_id,
-                'summary': insight.summary,
+                'agent_name': getattr(insight, 'agent_name', insight.agent_id),
+                'summary': summary_text,
                 'confidence_score': f"{insight.confidence * 100:.1f}%",
                 'confidence_level': self._get_confidence_level_text(insight.confidence),
-                'key_findings': insight.content.split('\n')[:3],
+                'key_findings': key_findings or [summary_text],
                 'insights': [{
                     'title': insight.title,
                     'priority_color': self._get_priority_color(insight.priority)
@@ -302,10 +345,10 @@ class TemplateManager:
             consultant_groups[consultant_type].append(rec)
 
         for consultant_type, recommendations in consultant_groups.items():
-            confidence = sum(r.confidence_score for r in recommendations) / len(recommendations) if recommendations else 0.5
+            confidence = 0.75 if recommendations else 0.5
 
             agents.append({
-                'agent_name': f"{consultant_type} 顾问",
+                'agent_name': f"{consultant_type.capitalize()} 顾问",
                 'executive_summary': recommendations[0].description if recommendations else '',
                 'confidence_level': self._get_confidence_level_text(confidence),
                 'confidence_color': self._get_priority_color(self._get_confidence_level_text(confidence)),
@@ -314,8 +357,8 @@ class TemplateManager:
                     'description': rec.description,
                     'priority': rec.priority,
                     'priority_color': self._get_priority_color(rec.priority),
-                    'expected_impact': rec.expected_impact or '中等',
-                    'implementation_steps': rec.implementation_timeline.split('\n')[:3] if rec.implementation_timeline else ['制定详细计划', '分阶段实施', '持续监控效果']
+                    'expected_impact': rec.expected_impact,
+                    'implementation_steps': (rec.timeline.split('\n')[:3] if rec.timeline else ['制定详细计划', '分阶段实施', '持续监控效果'])
                 } for rec in recommendations[:3]]  # Top 3 recommendations per consultant
             })
 
@@ -328,9 +371,9 @@ class TemplateManager:
 
         for product in products:
             # Find insights mentioning this product
-            product_insights = [i for i in analysis_insights if product in i.content]
+            product_insights = [i for i in analysis_insights if product in self._get_insight_content(i)]
             if product_insights:
-                avg_score = sum(i.impact_score for i in product_insights) / len(product_insights)
+                avg_score = sum(self._get_insight_impact_score(i) for i in product_insights) / len(product_insights)
                 nps_score = int(avg_score * 100 - 50)  # Convert to NPS-like score
             else:
                 nps_score = 45  # Default score
@@ -378,8 +421,8 @@ class TemplateManager:
         for insight in analysis_response.analysis_insights:
             all_insights.append({
                 'title': insight.title,
-                'description': insight.summary,
-                'category': insight.category,
+                'description': self._get_insight_summary(insight),
+                'category': self._get_insight_category(insight),
                 'priority_color': self._get_priority_color(insight.priority),
                 'confidence_score': f"{insight.confidence * 100:.1f}%",
                 'confidence_level': self._get_confidence_level_text(insight.confidence),
@@ -390,15 +433,16 @@ class TemplateManager:
 
         # Add consulting recommendations as insights
         for rec in analysis_response.consulting_recommendations:
+            confidence = 0.75
             all_insights.append({
                 'title': rec.title,
                 'description': rec.description,
-                'category': rec.category or 'Strategic',
+                'category': rec.category or 'strategic',
                 'priority_color': self._get_priority_color(rec.priority),
-                'confidence_score': f"{rec.confidence_score * 100:.1f}%",
-                'confidence_level': self._get_confidence_level_text(rec.confidence_score),
-                'source_agent': 'Consulting',
-                'impact_level': rec.expected_impact or '中等',
+                'confidence_score': f"{confidence * 100:.1f}%",
+                'confidence_level': self._get_confidence_level_text(confidence),
+                'source_agent': rec.source_agent,
+                'impact_level': rec.expected_impact,
                 'priority_score': self._get_priority_score(rec.priority)
             })
 
@@ -469,8 +513,12 @@ class TemplateManager:
         priority_colors = {
             '高': 'red',
             'high': 'red',
+            'critical': 'red',
+            'immediate': 'red',
             '中': 'amber',
             'medium': 'amber',
+            'short_term': 'amber',
+            'medium_term': 'amber',
             '低': 'green',
             'low': 'green'
         }
@@ -481,10 +529,15 @@ class TemplateManager:
         priority_scores = {
             '高': 3,
             'high': 3,
+            'critical': 4,
+            'immediate': 4,
             '中': 2,
             'medium': 2,
+            'short_term': 2,
+            'medium_term': 2,
             '低': 1,
-            'low': 1
+            'low': 1,
+            'long_term': 1
         }
         return priority_scores.get(priority.lower(), 1)
 

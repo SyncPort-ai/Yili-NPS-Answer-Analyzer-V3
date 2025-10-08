@@ -18,7 +18,95 @@ except ImportError:
     LANGGRAPH_AVAILABLE = False
 
 from ..agents.factory import AgentFactory
+from ..agents.base import AgentResult, AgentStatus
 from ..state import NPSAnalysisState
+
+
+def _compose_error_message(agent_id: str, result: Any) -> str:
+    """Format error details from an agent result or exception."""
+    if isinstance(result, AgentResult):
+        details = result.errors or ["Unknown error"]
+        return f"{agent_id}: {'; '.join(details)}"
+    errors_attr = getattr(result, "errors", None)
+    if errors_attr:
+        if isinstance(errors_attr, (list, tuple)):
+            details = [str(item) for item in errors_attr]
+        else:
+            details = [str(errors_attr)]
+        return f"{agent_id}: {'; '.join(details)}"
+    error_attr = getattr(result, "error", None)
+    if error_attr:
+        return f"{agent_id}: {error_attr}"
+    status = getattr(result, "status", None)
+    status_value = getattr(status, "value", None)
+    if status_value:
+        return f"{agent_id}: status={status_value}"
+    return f"{agent_id}: {result}"
+
+
+def _apply_low_confidence_warning(result: AgentResult) -> None:
+    """Annotate an AgentResult to reflect low confidence inputs."""
+    warnings_attr = getattr(result, "warnings", None)
+    if warnings_attr is None:
+        warnings_list = []
+        try:
+            setattr(result, "warnings", warnings_list)
+        except Exception:
+            warnings_list = []
+    else:
+        if isinstance(warnings_attr, list):
+            warnings_list = warnings_attr
+        elif isinstance(warnings_attr, tuple):
+            warnings_list = list(warnings_attr)
+            try:
+                setattr(result, "warnings", warnings_list)
+            except Exception:
+                pass
+        else:
+            warnings_list = [warnings_attr]
+            try:
+                setattr(result, "warnings", warnings_list)
+            except Exception:
+                pass
+    warnings_list.append("Underlying data confidence is low; review before execution.")
+
+    confidence_score = getattr(result, "confidence_score", None)
+    if confidence_score is not None:
+        try:
+            setattr(result, "confidence_score", min(float(confidence_score), 0.5))
+        except Exception:
+            pass
+    else:
+        try:
+            setattr(result, "confidence_score", 0.5)
+        except Exception:
+            pass
+
+    metadata = getattr(result, "metadata", None)
+    if not isinstance(metadata, dict):
+        metadata = {}
+        try:
+            setattr(result, "metadata", metadata)
+        except Exception:
+            pass
+    metadata["confidence_level"] = "low"
+
+
+def _is_success_result(result: Any) -> bool:
+    if isinstance(result, AgentResult):
+        return result.status == AgentStatus.COMPLETED
+    status = getattr(result, "status", None)
+    status_value = getattr(status, "value", None)
+    return status_value == "completed"
+
+
+def _iter_warnings(result: Any) -> List[str]:
+    warnings_attr = getattr(result, "warnings", None)
+    if not warnings_attr:
+        return []
+    if isinstance(warnings_attr, (list, tuple)):
+        return [str(item) for item in warnings_attr]
+    return [str(warnings_attr)]
 
 logger = logging.getLogger(__name__)
 
@@ -57,6 +145,7 @@ class ConsultingPassState(TypedDict):
     failed_agents: List[str]
     skipped_agents: List[str]
     errors: List[str]
+    warnings: List[str]
 
 
 class ConsultingPassWorkflow:
@@ -106,12 +195,9 @@ class ConsultingPassWorkflow:
         workflow.add_node("executive_synthesis", self._execute_executive_synthesis)
         workflow.add_node("low_confidence_fallback", self._execute_low_confidence_fallback)
 
-        # Define conditional routing based on confidence
+        # Define conditional routing based on confidence (always reach advisors)
         def route_after_confidence(state):
-            if state["consulting_confidence"] >= 0.5:
-                return "strategic_advisors"
-            else:
-                return "low_confidence_fallback"
+            return "strategic_advisors"
 
         # Define flow
         workflow.add_edge("confidence_assessment", route_after_confidence)
@@ -186,7 +272,8 @@ class ConsultingPassWorkflow:
             completed_agents=[],
             failed_agents=[],
             skipped_agents=[],
-            errors=[]
+            errors=[],
+            warnings=[]
         )
 
     def _prepare_output_state(self, consulting_state: ConsultingPassState, original_state: Dict[str, Any]) -> Dict[str, Any]:
@@ -211,6 +298,14 @@ class ConsultingPassWorkflow:
         result_state["consulting_confidence"] = consulting_state.get("consulting_confidence", 0.0)
         result_state["confidence_assessment"] = consulting_state.get("confidence_assessment", {})
 
+        if consulting_state.get("errors"):
+            result_state.setdefault("errors", [])
+            result_state["errors"].extend(consulting_state["errors"])
+
+        if consulting_state.get("warnings"):
+            result_state.setdefault("warnings", [])
+            result_state["warnings"].extend(consulting_state["warnings"])
+
         # Update workflow metadata
         result_state["workflow_phase"] = "consulting_completed"
         result_state["completed_agents"] = consulting_state.get("completed_agents", [])
@@ -223,15 +318,11 @@ class ConsultingPassWorkflow:
         """Simplified execution without LangGraph."""
         logger.info("Executing simplified Consulting Pass workflow")
 
-        # Assess confidence
+        # Assess confidence but always execute full consulting stack
         state = await self._assess_confidence(state)
 
-        # Execute based on confidence
-        if state["consulting_confidence"] >= 0.5:
-            state = await self._execute_strategic_advisors(state)
-            state = await self._execute_executive_synthesis(state)
-        else:
-            state = await self._execute_low_confidence_fallback(state)
+        state = await self._execute_strategic_advisors(state)
+        state = await self._execute_executive_synthesis(state)
 
         return state
 
@@ -282,13 +373,21 @@ class ConsultingPassWorkflow:
         overall_confidence = sum(score for _, score in confidence_factors) / len(confidence_factors)
 
         state["consulting_confidence"] = overall_confidence
+        if overall_confidence >= 0.75:
+            confidence_label = "high"
+        elif overall_confidence >= 0.5:
+            confidence_label = "medium"
+        else:
+            confidence_label = "low"
+
         state["confidence_assessment"] = {
             "factors": dict(confidence_factors),
             "overall_confidence": overall_confidence,
             "meets_minimum_threshold": overall_confidence >= 0.5,
             "sample_size": sample_size,
             "data_quality": data_quality,
-            "nps_score": nps_score
+            "nps_score": nps_score,
+            "confidence_label": confidence_label
         }
 
         logger.info(f"Consulting confidence assessment: {overall_confidence:.2f}")
@@ -301,43 +400,48 @@ class ConsultingPassWorkflow:
         state["current_group"] = "strategic_advisors"
         all_agents = self.agent_groups["strategic_advisors"]
 
-        # Filter agents based on confidence requirements
-        viable_agents = []
-        for agent_id in all_agents:
-            if self._agent_meets_confidence_requirements(agent_id, state):
-                viable_agents.append(agent_id)
-            else:
-                state["skipped_agents"].append(agent_id)
-                logger.warning(f"Skipping agent {agent_id} due to insufficient confidence")
+        low_confidence_agents = {
+            agent_id for agent_id in all_agents
+            if not self._agent_meets_confidence_requirements(agent_id, state)
+        }
 
-        if not viable_agents:
-            logger.warning("No strategic advisors meet confidence requirements, running C1 with reduced expectations")
-            viable_agents = ["C1"]  # Always run at least C1
+        for agent_id in low_confidence_agents:
+            logger.warning(
+                f"Consulting agent {agent_id} executing under low confidence conditions "
+                f"({state['consulting_confidence']:.2f})"
+            )
 
-        # Execute viable agents
-        results = await self._execute_agent_group(viable_agents, state)
+        # Execute all agents and annotate outputs instead of skipping
+        results = await self._execute_agent_group(all_agents, state)
 
         # Process results
         for agent_id, result in results.items():
-            if result["success"]:
+            if _is_success_result(result):
                 state["completed_agents"].append(agent_id)
 
-                # Store agent-specific outputs
-                if agent_id == "C1" and result["data"]:
-                    state["strategic_recommendations"] = result["data"].get("strategic_recommendations", [])
-                elif agent_id == "C2" and result["data"]:
-                    state["product_recommendations"] = result["data"].get("product_recommendations", [])
-                elif agent_id == "C3" and result["data"]:
-                    state["marketing_recommendations"] = result["data"].get("marketing_recommendations", [])
-                elif agent_id == "C4" and result["data"]:
-                    state["risk_assessments"] = result["data"].get("risk_assessments", [])
+                if agent_id in low_confidence_agents:
+                    _apply_low_confidence_warning(result)
+
+                if agent_id == "C1" and result.data:
+                    state["strategic_recommendations"] = result.data.get("strategic_recommendations", [])
+                elif agent_id == "C2" and result.data:
+                    state["product_recommendations"] = result.data.get("product_recommendations", [])
+                elif agent_id == "C3" and result.data:
+                    state["marketing_recommendations"] = result.data.get("marketing_recommendations", [])
+                elif agent_id == "C4" and result.data:
+                    state["risk_assessments"] = result.data.get("risk_assessments", [])
+
+                warnings = _iter_warnings(result)
+                if warnings:
+                    state["warnings"].extend([f"{agent_id}: {warn}" for warn in warnings])
 
             else:
                 state["failed_agents"].append(agent_id)
-                state["errors"].append(f"{agent_id}: {result.get('error', 'Unknown error')}")
+                error_msg = _compose_error_message(agent_id, result)
+                state["errors"].append(error_msg)
 
-        success_count = len([r for r in results.values() if r["success"]])
-        logger.info(f"Strategic advisors completed. Success: {success_count}/{len(viable_agents)}")
+        success_count = len([r for r in results.values() if _is_success_result(r)])
+        logger.info(f"Strategic advisors completed. Success: {success_count}/{len(all_agents)}")
         return state
 
     async def _execute_executive_synthesis(self, state: ConsultingPassState) -> ConsultingPassState:
@@ -351,66 +455,31 @@ class ConsultingPassWorkflow:
 
         # Process results
         for agent_id, result in results.items():
-            if result["success"]:
+            if _is_success_result(result):
                 state["completed_agents"].append(agent_id)
 
-                # Store synthesis results
-                if agent_id == "C5" and result["data"]:
-                    state["executive_recommendations"] = result["data"].get("executive_recommendations", [])
-                    state["executive_dashboard"] = result["data"].get("executive_dashboard", {})
+                warnings = _iter_warnings(result)
+                if warnings:
+                    state["warnings"].extend([f"{agent_id}: {warn}" for warn in warnings])
+
+                if agent_id == "C5" and result.data:
+                    state["executive_recommendations"] = result.data.get("executive_recommendations", [])
+                    state["executive_dashboard"] = result.data.get("executive_dashboard", {})
 
             else:
                 state["failed_agents"].append(agent_id)
-                state["errors"].append(f"{agent_id}: {result.get('error', 'Unknown error')}")
+                error_msg = _compose_error_message(agent_id, result)
+                state["errors"].append(error_msg)
 
-        logger.info(f"Executive synthesis completed. Success: {len([r for r in results.values() if r['success']])}/{len(agents)}")
+        success_count = len([r for r in results.values() if _is_success_result(r)])
+        logger.info(f"Executive synthesis completed. Success: {success_count}/{len(agents)}")
         return state
 
     async def _execute_low_confidence_fallback(self, state: ConsultingPassState) -> ConsultingPassState:
-        """Execute minimal consulting with low confidence data."""
-        logger.info("Executing low confidence fallback")
-
+        """Legacy fallback retained for LangGraph routing; now a no-op."""
+        logger.info("Low confidence fallback no longer alters execution; continuing with existing state")
         state["current_group"] = "low_confidence_fallback"
         state["low_confidence_fallback"] = True
-
-        # Only run C1 (Strategic Recommendations) with minimal expectations
-        try:
-            agent = self.factory.create_agent("C1")
-            agent_state = self._convert_state_for_agent(state)
-
-            # Add low confidence flag to agent state
-            agent_state["low_confidence_mode"] = True
-
-            result = await agent.execute(agent_state)
-
-            if result.success:
-                state["completed_agents"].append("C1")
-                state["strategic_recommendations"] = result.output.get("strategic_recommendations", [])
-
-                # Create minimal executive dashboard
-                state["executive_dashboard"] = {
-                    "low_confidence_mode": True,
-                    "recommendations_count": len(state["strategic_recommendations"]),
-                    "confidence_warning": "建议基于有限数据，需要谨慎评估",
-                    "data_quality": state["confidence_assessment"].get("data_quality", "low")
-                }
-
-                logger.info("Low confidence fallback completed successfully")
-            else:
-                state["failed_agents"].append("C1")
-                state["errors"].append(f"C1 (fallback): {result.error}")
-                logger.error("Low confidence fallback failed")
-
-        except Exception as e:
-            state["failed_agents"].append("C1")
-            state["errors"].append(f"C1 (fallback): {str(e)}")
-            logger.error(f"Low confidence fallback exception: {e}")
-
-        # Skip all other agents
-        for agent_id in ["C2", "C3", "C4", "C5"]:
-            if agent_id not in state["completed_agents"]:
-                state["skipped_agents"].append(agent_id)
-
         return state
 
     def _agent_meets_confidence_requirements(self, agent_id: str, state: ConsultingPassState) -> bool:
@@ -445,7 +514,7 @@ class ConsultingPassWorkflow:
 
         return meets_threshold
 
-    async def _execute_agent_group(self, agent_ids: List[str], state: ConsultingPassState) -> Dict[str, Dict[str, Any]]:
+    async def _execute_agent_group(self, agent_ids: List[str], state: ConsultingPassState) -> Dict[str, AgentResult]:
         """Execute a group of agents in parallel."""
         tasks = []
 
@@ -457,22 +526,20 @@ class ConsultingPassWorkflow:
         results = await asyncio.gather(*tasks, return_exceptions=True)
 
         # Process results
-        agent_results = {}
-        for i, result in enumerate(results):
-            agent_id = agent_ids[i]
-
+        agent_results: Dict[str, AgentResult] = {}
+        for agent_id, result in zip(agent_ids, results):
             if isinstance(result, Exception):
-                agent_results[agent_id] = {
-                    "success": False,
-                    "error": str(result),
-                    "data": None
-                }
+                agent_results[agent_id] = AgentResult(
+                    agent_id=agent_id,
+                    status=AgentStatus.FAILED,
+                    errors=[str(result)]
+                )
             else:
                 agent_results[agent_id] = result
 
         return agent_results
 
-    async def _execute_single_agent(self, agent_id: str, state: ConsultingPassState) -> Dict[str, Any]:
+    async def _execute_single_agent(self, agent_id: str, state: ConsultingPassState) -> AgentResult:
         """Execute a single agent."""
         try:
             logger.debug(f"Executing consulting agent {agent_id}")
@@ -486,19 +553,15 @@ class ConsultingPassWorkflow:
             # Execute agent
             result = await agent.execute(agent_state)
 
-            return {
-                "success": result.success,
-                "error": result.error if not result.success else None,
-                "data": result.output if result.success else None
-            }
+            return result
 
         except Exception as e:
             logger.error(f"Consulting agent {agent_id} execution failed: {e}")
-            return {
-                "success": False,
-                "error": str(e),
-                "data": None
-            }
+            return AgentResult(
+                agent_id=agent_id,
+                status=AgentStatus.FAILED,
+                errors=[str(e)]
+            )
 
     def _convert_state_for_agent(self, state: ConsultingPassState) -> Dict[str, Any]:
         """Convert workflow state to format expected by agents."""

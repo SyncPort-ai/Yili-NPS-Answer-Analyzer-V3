@@ -31,6 +31,7 @@ from nps_report_v3.models.response import (
 )
 from nps_report_v3.generators.dual_output_generator import DualOutputGenerator
 from nps_report_v3.templates.template_manager import TemplateManager
+from .test_generators import TestNPSDataFactory
 
 
 # Pytest configuration
@@ -91,123 +92,31 @@ def temp_directory():
 @pytest.fixture
 def sample_nps_metrics():
     """Provide sample NPS metrics for testing."""
-    return NPSMetrics(
-        nps_score=45,
-        promoter_count=50,
-        passive_count=30,
-        detractor_count=20,
-        sample_size=100,
-        statistical_significance=True
-    )
+    return TestNPSDataFactory.create_nps_metrics()
 
 
 @pytest.fixture
 def sample_confidence_assessment():
     """Provide sample confidence assessment for testing."""
-    return ConfidenceAssessment(
-        overall_confidence_score=0.75,
-        overall_confidence_text="中",
-        data_quality_score=0.80,
-        analysis_completeness_score=0.70,
-        statistical_significance_score=0.75
-    )
+    return TestNPSDataFactory.create_confidence_assessment()
 
 
 @pytest.fixture
 def sample_agent_insights():
     """Provide sample agent insights for testing."""
-    return [
-        AgentInsight(
-            agent_id="B1",
-            title="技术需求分析结果",
-            summary="客户对产品技术功能的需求分析",
-            content="通过分析客户反馈，识别出以下技术改进需求：1）提升产品稳定性；2）优化用户界面设计；3）增加智能化功能。建议优先改进产品稳定性，这是客户最关注的技术问题。",
-            category="技术分析",
-            priority="高",
-            confidence=0.82,
-            impact_score=0.78,
-            timestamp=datetime.now().isoformat()
-        ),
-        AgentInsight(
-            agent_id="B2",
-            title="被动客户转化分析",
-            summary="7-8分被动客户的转化潜力分析",
-            content="被动客户主要关注性价比和服务质量。转化策略建议：1）推出更多优惠活动；2）改善客户服务响应时间；3）提供个性化产品推荐。预计通过这些措施可以将30%的被动客户转化为推荐者。",
-            category="客户分析",
-            priority="中",
-            confidence=0.75,
-            impact_score=0.68,
-            timestamp=datetime.now().isoformat()
-        ),
-        AgentInsight(
-            agent_id="B3",
-            title="贬损客户挽回分析",
-            summary="0-6分贬损客户的问题识别和挽回策略",
-            content="贬损客户的主要问题：1）产品质量不稳定（45%）；2）客服响应慢（30%）；3）价格偏高（25%）。挽回策略：建立快速响应机制、提供质量保证、制定挽回补偿方案。预计可以挽回40%的贬损客户。",
-            category="风险管理",
-            priority="高",
-            confidence=0.79,
-            impact_score=0.85,
-            timestamp=datetime.now().isoformat()
-        )
-    ]
+    return TestNPSDataFactory.create_agent_insights()
 
 
 @pytest.fixture
 def sample_business_recommendations():
     """Provide sample business recommendations for testing."""
-    return [
-        BusinessRecommendation(
-            title="建立全面的客户体验管理体系",
-            description="构建从数据收集、分析、改进到监控的完整客户体验管理流程，确保客户满意度的持续提升。",
-            category="战略建议",
-            priority="高",
-            expected_impact="全面提升客户满意度和品牌忠诚度",
-            confidence_score=0.88,
-            implementation_timeline="6-12个月内建立完整体系，包括组织架构调整、流程优化、系统建设等关键环节。"
-        ),
-        BusinessRecommendation(
-            title="产品创新与差异化发展策略",
-            description="基于深度客户需求洞察，开发具有差异化竞争优势的产品功能和服务，提升市场竞争力。",
-            category="产品策略",
-            priority="中",
-            expected_impact="增强市场竞争力，扩大市场份额",
-            confidence_score=0.75,
-            implementation_timeline="3-6个月完成产品创新规划，12-18个月实现市场化。"
-        ),
-        BusinessRecommendation(
-            title="客户服务质量提升计划",
-            description="通过服务流程优化、人员培训、技术升级等手段，全面提升客户服务质量和满意度。",
-            category="服务改进",
-            priority="高",
-            expected_impact="显著改善客户服务体验，降低客户流失率",
-            confidence_score=0.82,
-            implementation_timeline="1-3个月完成培训和流程优化，持续监控和改进。"
-        )
-    ]
+    return TestNPSDataFactory.create_consulting_recommendations()
 
 
 @pytest.fixture
 def sample_executive_dashboard(sample_business_recommendations):
     """Provide sample executive dashboard for testing."""
-    return ExecutiveDashboard(
-        executive_summary="整体客户满意度处于中等水平，NPS得分45分，存在明显提升空间。推荐者占50%，被动客户30%，贬损客户20%。主要改进领域包括产品质量稳定性、客户服务响应速度、以及价格竞争力。通过系统性的客户体验管理和产品创新，预计可将NPS提升至60分以上。",
-        top_recommendations=sample_business_recommendations,
-        risk_alerts=[
-            "产品质量不稳定性可能导致客户流失加剧，需要立即关注生产质量管控。",
-            "客服响应时间过长影响客户体验，建议优化服务流程和增加人力投入。",
-            "价格竞争压力增大，需要平衡成本控制与价值提升的策略。",
-            "竞争对手推出新产品，市场份额可能受到冲击，需要加快产品创新步伐。"
-        ],
-        key_performance_indicators={
-            "客户满意度": "75%",
-            "产品质量评分": "4.2/5.0",
-            "服务响应时间": "24小时",
-            "市场份额": "32%",
-            "客户留存率": "85%",
-            "品牌知名度": "78%"
-        }
-    )
+    return TestNPSDataFactory.create_executive_dashboard()
 
 
 @pytest.fixture
@@ -219,60 +128,7 @@ def complete_nps_response(
     sample_executive_dashboard
 ):
     """Provide complete NPS analysis response for testing."""
-    return NPSAnalysisResponse(
-        response_id="test_analysis_complete_001",
-        nps_metrics=sample_nps_metrics,
-        confidence_assessment=sample_confidence_assessment,
-        foundation_insights=[
-            AgentInsight(
-                agent_id="A0",
-                title="数据清洗与质量评估",
-                summary="完成原始数据的清洗和质量评估",
-                content="处理了100条原始响应数据，清洗后得到100条有效数据。数据质量评估：完整性95%，准确性92%，一致性90%。已完成PII脱敏处理，数据符合隐私保护要求。",
-                category="数据处理",
-                priority="低",
-                confidence=0.95,
-                impact_score=0.85,
-                timestamp=datetime.now().isoformat()
-            ),
-            AgentInsight(
-                agent_id="A1",
-                title="NPS基础计算结果",
-                summary="完成NPS得分计算和统计分析",
-                content="计算得出NPS得分为45分。推荐者（9-10分）50人，占50%；被动客户（7-8分）30人，占30%；贬损客户（0-6分）20人，占20%。样本量100，具有统计显著性。",
-                category="统计分析",
-                priority="中",
-                confidence=0.92,
-                impact_score=0.90,
-                timestamp=datetime.now().isoformat()
-            ),
-            AgentInsight(
-                agent_id="A2",
-                title="响应内容标注结果",
-                summary="完成客户反馈内容的智能标注",
-                content="对客户反馈进行了多维度标注：情感极性（正面60%、中性25%、负面15%），主题分类（产品质量40%、服务体验35%、价格因素25%），关键词提取（质量、服务、价格、口感、包装等）。",
-                category="文本分析",
-                priority="中",
-                confidence=0.88,
-                impact_score=0.75,
-                timestamp=datetime.now().isoformat()
-            ),
-            AgentInsight(
-                agent_id="A3",
-                title="语义聚类分析结果",
-                summary="识别客户反馈的主要话题聚类",
-                content="识别出5个主要话题聚类：1）产品质量与口感（30条）；2）服务体验与态度（25条）；3）价格与性价比（20条）；4）包装与外观（15条）；5）购买便利性（10条）。每个聚类都提取了核心关键词和典型评论。",
-                category="话题分析",
-                priority="中",
-                confidence=0.85,
-                impact_score=0.80,
-                timestamp=datetime.now().isoformat()
-            )
-        ],
-        analysis_insights=sample_agent_insights,
-        consulting_recommendations=sample_business_recommendations,
-        executive_dashboard=sample_executive_dashboard
-    )
+    return TestNPSDataFactory.create_complete_analysis_response()
 
 
 @pytest.fixture
